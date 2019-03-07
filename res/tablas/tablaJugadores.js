@@ -18,9 +18,6 @@ $(function() {
                     "data": "apellido"
                 },
                 {
-                    "data": "foto"
-                },
-                {
                     "data": "dui"
                 },
                 {

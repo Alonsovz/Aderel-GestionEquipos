@@ -8,9 +8,9 @@ class DaoJugadores extends DaoBase {
     }
 
     public function registrarJugador(){
-        $query = "Insert into jugadores values ('".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
-        '".$this->objeto->getFoto()."','".$this->objeto->getDui()."','".$this->objeto->getFechaNacimiento()."',
-        '".$this->objeto->getIdEquipo()."','".$this->objeto->getIdCategoria()."');";
+        $query = "Insert into jugadores values (null,'".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
+        '".$this->objeto->getDui()."','".$this->objeto->getFoto()."','".$this->objeto->getFechaNacimiento()."',
+        '".$this->objeto->getIdEquipo()."','".$this->objeto->getIdCategoria()."',1);";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -37,7 +37,7 @@ class DaoJugadores extends DaoBase {
 
             $object = json_encode($fila);
 
-           $foto = '<img src="data:image/jpeg;base64,'.base64_encode( $fila['foto'] ).'" width="10px" height="10px"/> ';
+           
             $btnEditar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEditar icon blue small button\"><i class=\"edit icon\"></i></button>';
             $btnEliminar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i></button>';
 

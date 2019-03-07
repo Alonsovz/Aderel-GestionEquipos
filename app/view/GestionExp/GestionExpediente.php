@@ -141,7 +141,6 @@
                                         <th style="background-color: #E6C404;">N°</th>
                                         <th style="background-color: #E6C404;">Nombre del Jugador</th>
                                         <th style="background-color: #E6C404;">Apellido</th>
-                                        <th style="background-color: #E6C404;">Foto</th>
                                         <th style="background-color: #E6C404;">Dui</th>
                                         <th style="background-color: #E6C404;">Fecha de Nacimiento</th>
                                         <th style="background-color: #E6C404;">Equipo</th>
