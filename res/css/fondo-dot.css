@@ -1,0 +1,12 @@
+#fondo-dot {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    margin: auto;
+    background: #fafafa;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    overflow: hidden;
+
+}
