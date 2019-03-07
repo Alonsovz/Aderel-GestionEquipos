@@ -27,15 +27,15 @@ class GestionExpController extends ControladorBase {
     }
 
     public function guardarJugador() {
-        $nombre = $_REQUEST["nombre"];
-        $apellido = $_REQUEST["apellido"];
-        $foto = $_REQUEST["foto"];
+        // var_dump($_REQUEST);
+        $nombre = $_REQUEST["nombreJ"];
+        $apellido = $_REQUEST["apellidoJ"];
         $dui = $_REQUEST["dui"];
-        $fechaNac = $_REQUEST["fecha"];
+        $fechaNac = $_REQUEST["fechaNac"];
         $equipo = $_REQUEST["equipo"];
         $categoria = $_REQUEST["categoria"];
 
-        $foto = addslashes(file_get_contents($_FILES['foto']['tmp_name']));
+        $foto = addslashes(file_get_contents($_FILES['Imagen']['tmp_name']));
         
 
         $dao = new DaoJugadores();

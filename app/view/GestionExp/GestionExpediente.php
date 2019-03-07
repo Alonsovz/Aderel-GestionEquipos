@@ -216,7 +216,7 @@
         <i class="male icon"></i><i class="trophy icon"></i><i class="futbol icon"></i> Agregar nuevo Jugador
         </div>
         <div class="content" class="ui equal width form">
-            <form class="ui form" id="frmJugador" method="POST" enctype="multipart/form-data"> 
+            <form class="ui form" id="frmJugador" method="POST" enctype="multipart/form-data" action='?1=GestionExpController&2=guardarJugador'> 
                 <div class="field">
                     <div class="fields">
                             <div class="eight wide field">
@@ -275,7 +275,6 @@
                                 </div>
                         </div>
                 </div>
-                
             </form>
         </div>
             <div class="actions">
@@ -403,50 +402,46 @@ function cerrarCambiosJugador() {
 //esta es la funcion para enviar datos
 $(function(){
             $('#btnGuardarJugador').click(function() {
+                const form = $('#frmJugador');
 
-              var  nombreJ = $('#nombreJ').val();
-              var  apellidoJ = $('#apellidoJ').val();
-              var  dui = $('#dui').val();
-              var fecha = $('#fechaNac').val();
-              var  equipo = $('#equipo').val();
-              var  categoria = $('#categoria').val();
+                const datosFormulario = new FormData(form[0]);
+            //   var  nombreJ = $('#nombreJ').val();
+            //   var  apellidoJ = $('#apellidoJ').val();
+            //   var  dui = $('#dui').val();
+            //   var fecha = $('#fechaNac').val();
+            //   var  equipo = $('#equipo').val();
+            //   var  categoria = $('#categoria').val();
                 
-               var   formdata = new FormData();
-               var file =$("#Imagen").prop('files')[0];
-                formdata.append("Imagen", file);
+            //    var   formdata = new FormData();
+            //    var file =$("#Imagen").prop('files')[0];
+            //     formdata.append("Imagen", file);
         
             $.ajax({
-                    contentType: false,
-                    processData: false,
-                    type: 'POST',
-                    url: '?1=GestionExpController&2=guardarJugador',
-					data: {
-                        nombre: nombreJ,
-                        apellido: apellidoJ,
-                       foto: formdata,
-                        dui: dui,
-                        fecha: fecha,
-                        equipo: equipo,
-                        categoria: categoria,
-                    },
-                    success: function(r) {
-                                    if(r == 1) {
-                                        $('#modalAgregarJugador').modal('hide');
-                                        swal({
-                                            title: 'Registrado',
-                                            text: 'Guardado con éxito',
-                                            type: 'success',
-                                            showConfirmButton: false,
-                                             timer: 1700
+                enctype: 'multipart/form-data',
+                contentType: false,
+                processData: false,
+                cache: false,
+                type: 'POST',
+                url: '?1=GestionExpController&2=guardarJugador',
+                data: datosFormulario,
+                success: function(r) {
+                    if(r == 1) {
+                        $('#modalAgregarJugador').modal('hide');
+                        swal({
+                            title: 'Registrado',
+                            text: 'Guardado con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
 
-                                        }).then((result) => {
-                                            if (result.value) {
-                                                location.href = '?';
-                                            }
-                                        }); 
-                                        
-                                    } 
-                                }
+                        }).then((result) => {
+                            if (result.value) {
+                                location.href = '?';
+                            }
+                        }); 
+                        
+                    } 
+                }
             });
             });
 });
