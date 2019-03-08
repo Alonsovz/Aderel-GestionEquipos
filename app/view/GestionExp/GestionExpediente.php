@@ -243,6 +243,7 @@
                                             style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
                                             Completa este campo
                                             </div>
+                                        <input type="hidden" name="img" id='img'>
                                 </div>                               
                                 <div class="six wide field">
                                 <label><i class="address card icon"></i>N° Dui del Jugador</label>
@@ -302,6 +303,17 @@ window.onload =  function ()
 
 
 $(function(){
+
+    $('#Imagen').change(e=>{
+        let reader= new FileReader();
+
+        reader.readAsDataURL(e.target.files[0]);
+
+        reader.onload=(e)=>{
+            $('#img').val(e.target.result);
+        }
+    })
+
     $("#btnVerTorneos").click(function(){
         
         $("#btnVerTorneos").removeClass('ui yellow  inverted segment');

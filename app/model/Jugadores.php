@@ -9,6 +9,7 @@ class Jugadores extends ModeloBase{
     private $fechaNacimento;
     private $idEquipo;
     private $idCategoria;
+    private $img;
 
     public function __construct() {
 
@@ -154,6 +155,23 @@ class Jugadores extends ModeloBase{
     public function setIdCategoria($idCategoria)
     {
         $this->idCategoria = $idCategoria;
+
+        return $this;
+    }
+
+    public function getImg()
+    {
+        return $this->img;
+    }
+
+    /**
+     * Set the value of apellido
+     *
+     * @return  self
+     */ 
+    public function setImg($img)
+    {
+        $this->img = $img;
 
         return $this;
     }

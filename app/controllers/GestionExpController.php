@@ -34,19 +34,21 @@ class GestionExpController extends ControladorBase {
         $fechaNac = $_REQUEST["fechaNac"];
         $equipo = $_REQUEST["equipo"];
         $categoria = $_REQUEST["categoria"];
+        $img= $_REQUEST["img"];
 
-        $foto = addslashes(file_get_contents($_FILES['Imagen']['tmp_name']));
+        // $foto = addslashes(file_get_contents($_FILES['Imagen']['tmp_name']));
         
 
         $dao = new DaoJugadores();
 
         $dao->objeto->setNombre($nombre);
         $dao->objeto->setApellido($apellido);
-        $dao->objeto->setFoto($foto);
+        // $dao->objeto->setFoto($foto);
         $dao->objeto->setDui($dui);
         $dao->objeto->setFechaNacimiento($fechaNac);
         $dao->objeto->setIdEquipo($equipo);
         $dao->objeto->setIdCategoria($categoria);
+        $dao->objeto->setImg($img);
 
 
         echo $dao->registrarJugador();

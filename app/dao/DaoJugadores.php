@@ -10,7 +10,7 @@ class DaoJugadores extends DaoBase {
     public function registrarJugador(){
         $query = "Insert into jugadores values (null,'".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
         '".$this->objeto->getDui()."','".$this->objeto->getFoto()."','".$this->objeto->getFechaNacimiento()."',
-        '".$this->objeto->getIdEquipo()."','".$this->objeto->getIdCategoria()."',1);";
+        '".$this->objeto->getIdEquipo()."','".$this->objeto->getIdCategoria()."',1,'".$this->objeto->getImg()."');";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -29,28 +29,45 @@ class DaoJugadores extends DaoBase {
         inner join categorias c on c.idCategoria = j.idCategoria
          where j.idEliminado = 1";
 
-        $resultado = $this->con->ejecutar($_query);
+        // $resultado = $this->con->ejecutar($_query);
 
-        $_json = '';
 
-        while($fila = $resultado->fetch_assoc()) {
+        // if($datos=$this->con->ejecutar($_query)){
+		// 	$datosATabla = array();
+		// 	while ($fila =$datos->fetch_assoc()) {
+		// 		$datosATabla[]=$fila;	
+		// 	}
+		// }else{
+		// 	// SENTENCIA NO EJECUTADA CORRECTAMENTE
+		// 	return $datosATabla=false;
+        // }
 
-            $object = json_encode($fila);
+        // print_r($datosATabla);
+        // foreach ($datosATabla as $registro) {
 
-           
-            $btnEditar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEditar icon blue small button\"><i class=\"edit icon\"></i></button>';
-            $btnEliminar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i></button>';
+            $resultado = $this->con->ejecutar($_query);
 
-            $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.'"';
+            $_json = '';
+    
+            while($fila = $resultado->fetch_assoc()) {
+    
+                $object = json_encode($fila);
+    
+               
+                $btnEditar = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnEditar icon blue small button\"><i class=\"edit icon\"></i></button>';
+                $btnEliminar = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i></button>';
+                $imagen='<img src="'.$fila['img'].'">';
 
-            $object = substr_replace($object, $acciones, strlen($object) -1, 0);
-
-            $_json .= $object.',';
-        }
-
-        $_json = substr($_json,0, strlen($_json) - 1);
-
-        return '{"data": ['.$_json .']}';
+                $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.'","imagen": "'.$imagen.'"';
+    
+                $object = substr_replace($object, $acciones, strlen($object) -1, 0);
+    
+                $_json .= $object.',';
+            }
+    
+            $_json = substr($_json,0, strlen($_json) - 1);
+    
+            return '{"data": ['.$_json .']}';
     }
 
 }
