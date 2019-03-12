@@ -58,38 +58,43 @@ mes varchar(10),
 anio varchar(10)
 );
 
+create table categorias(
+idCategoria int primary key auto_increment,
+nombreCategoria varchar(100),
+edadMinima int,
+edadMaxima int,
+idEliminado int
+);
+
 create table equipos(
 idEquipo int primary key auto_increment,
 nombre varchar(200),
 encargado varchar(200),
+idCategoria int,
 idEliminado int
 );
 
 
-create table categorias(
-idCategoria int primary key auto_increment,
-nombreCategoria varchar(100),
-rango varchar(100),
-idEliminado int
-);
+
 
 create table jugadores(
 idJugador int primary key auto_increment,
 nombre varchar(50),
 apellido varchar(50),
 dui varchar(15),
-foto LONGBLOB,
+foto longtext,
 fechaNacimiento date,
+edad int,
 idEquipo int,
-idCategoria int,
 idEliminado int
 );
+
 
 
 alter table usuario add constraint fk_usuario_rol foreign key (codigoRol) references rol(codigoRol);
 
 alter table jugadores add constraint fk_jugadores_equipo foreign key (idEquipo) references equipos(idEquipo);
-alter table jugadores add constraint fk_jugadores_categorias foreign key (idCategoria) references categorias(idCategoria);
+alter table equipos add constraint fk_equipos_categorias foreign key (idCategoria) references categorias(idCategoria);
 
 insert into rol values(1,'Administrador');
 insert into usuario values(null,'Fabio Alonso','Mejia Velasquez','mejia','fabiomejiash@gmail.com',sha1('123'),1,1);
@@ -101,8 +106,9 @@ insert into egresos values(null,4089,'Pago de impuestos de la renta',1000,160,84
 
 insert into remanentes values(null,5000,10000,4000,500,300,7000,'03','2019');
 
-insert into equipos values (null, 'Aderel F.C','Elvis Ramirez',1);
-insert into categorias values (null, 'Liga menor','12-18',1);
+insert into equipos values (null, 'Aderel F.C','Elvis Ramirez',1,1);
+insert into categorias values (null, 'Liga menor',12,18,1);
+insert into jugadores values(null,'Fabio','Mejia','01234356-1','yo.jpg','2019-03-28',1,1);
 
 
 -- ===========================================================================
@@ -321,15 +327,19 @@ $$
 delimiter $$
 create procedure mostrarEquipos()
 begin
-	select * from equipos
-    where  idEliminado=1;
+	select e.*, c.nombreCategoria as Categoria from equipos e
+    inner join categorias c on c.idCategoria = e.idCategoria
+    where  e.idEliminado=1;
 end	
 $$
+
+
 
 delimiter $$
 create procedure mostrarCategorias()
 begin
-	select * from equipos
+	select * from categorias
     where  idEliminado=1;
 end	
 $$
+
