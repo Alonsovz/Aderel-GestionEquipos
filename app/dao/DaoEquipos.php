@@ -104,6 +104,23 @@ class DaoEquipos extends DaoBase {
         return '['.$json.']';
     }
 
+
+    public function mostrarEquipoCmb() {
+        $_query = "select * from equipos where idEliminado=1";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+            $json .= '{"val": '.$fila['idEquipo'].', "text": "'.$fila['nombre'].'"},';
+        }
+
+        $json = substr($json,0, strlen($json) - 1);
+
+        return '['.$json.']';
+    }
+
 }
 
 ?>

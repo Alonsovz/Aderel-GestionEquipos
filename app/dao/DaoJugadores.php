@@ -70,6 +70,35 @@ class DaoJugadores extends DaoBase {
             return 0;
         }
     }
+
+    
+
+
+
+    public function cargarDatosJugador() {
+
+        $_query = "select * from jugadores
+        where idJugador = ".$this->objeto->getIdJugador();
+
+        $resultado = $this->con->ejecutar($_query);
+        $_json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+                    
+            $object = json_encode($fila);
+
+                $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
+                $acciones = ', "imagen": "'.$imagen.'"';
+
+                $object = substr_replace($object, $acciones, strlen($object) -1,0);
+    
+          $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+    
+        return $_json;
+    }
     
 
 }

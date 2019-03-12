@@ -9,6 +9,7 @@ class JugadoresController extends ControladorBase {
         $daoU = new DaoEquipos();
         $equiposCMB = $daoU->mostrarEquiposCmb();
 
+        $equipoCMB = $daoU->mostrarEquipoCmb();
 
         require_once './app/view/GestionExp/GestionJugadores.php';
     }
@@ -52,6 +53,16 @@ class JugadoresController extends ControladorBase {
 
         echo $dao->registrarJugador();
 
+    }
+
+    public function cargarDatosJugadores() {
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setIdJugador($id);
+
+        echo $dao->cargarDatosJugador();
     }
 
 }

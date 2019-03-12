@@ -1,29 +1,21 @@
-<?php
-            $fechaMaxima = date('d/m/Y');
-            $fechaMax = strtotime ( '- day' , strtotime ( $fechaMaxima ) ) ;
-            $fechaMax = date ( 'd/m/Y' , $fechaMax );
-             
-            $fechaMinima = date('Y-m-d');
-            $fechaMin = strtotime ( '-1 day' , strtotime ( $fechaMinima ) ) ;
-            $fechaMin = date ( 'd/m/Y' , $fechaMin );
+<script>
+    console.log(<?php echo $equipoCMB;?>)
 
-            $anio= date('Y');
-            $mes = date('M');
-            $mesN = date('m')
-?>
+
+</script>
 
 <div id="appJ">
 
 <modal-eliminar id_form="frmEliminarJ" id="modalEliminarJ" url="?1=JugadoresController&2=eliminar" titulo="Eliminar Jugador"
         sub_titulo="¿Está seguro de querer eliminar este jugador?" :campos="campos_eliminarJ" tamanio='tiny'></modal-eliminar>
 
-
+        <modal-editar id_form="frmEditarJ" id="modalEditarJ" url="?1=JugadoresController&2=editar" titulo="Editar Jugador"
+:campos="campos_editarJ" tamanio='tiny'></modal-editar>
         <div class="ui grid">
                         <div class="row">
                                 <div class="titulo">
                                     <i class="team icon"></i>
                                     Jugadores<font color="#DFD102" size="20px">.</font>
-                                <?php echo $fechaMin; ?>
                                 </div>
                         </div>
                         <div class="row title-bar">
@@ -114,14 +106,18 @@
                         </div>
                         
             </div>   
-
+            <div id="age">
             <div class="field">
             <div class="fields">
-            <div class="four wide field"></div>
-                <div class="eight wide field">
-                <input type="text" id="edad" name="edad">
+                <div class="three wide field"></div>
+            <div class="five wide field">
+                <label>La edad del jugador es:</label>
+            </div>
+                <div class="five wide field">
+                 <input type="text" id="edad" name="edad" readonly>
                 </div>
-            <div class="four wide field"></div>
+            <div class="three wide field"></div>
+            </div>
             </div>
             </div>
                 <div class="field">
@@ -167,21 +163,46 @@ var appJ = new Vue({
         el: "#appJ",
         data: {
             
-            campos_editar: [{
-                    label: 'Nombre del Equipo',
-                    name: 'nombreEquipo',
+            campos_editarJ: [
+                {
+                    label: 'Foto:',
+                    name: 'foto',
+                    type: 'img : src',
+                },
+                {
+                    label: 'Nombre del Jugador',
+                    name: 'nombre',
                     type: 'text'
                 },
                 {
-                    label: 'Encargado del Equipo:',
-                    name: 'encargado',
+                    label: 'Apellido del Jugador:',
+                    name: 'apellido',
                     type: 'text'
                 },
                 {
-                    label: 'Categoría del Equipo:',
-                    name: 'selectCategoria',
+                    label: 'DUI:',
+                    name: 'dui',
+                    type: 'text', 
+                },
+                {
+                    label: 'Fecha de Nacimiento:',
+                    name: 'fechaNacimiento',
+                    type: 'date', 
+                },
+                {
+                    label: 'Edad:',
+                    name: 'edad',
+                    type: 'number', 
+                },
+                {
+                    label: 'Equipo:',
+                    name: 'equipo',
                     type: 'select',
-                    
+                    options: <?php echo $equipoCMB;?>,
+                },
+                {
+                    name: 'idDetalleE',
+                    type: 'hidden'
                 }
                
                 
@@ -199,10 +220,11 @@ var appJ = new Vue({
 
                 
             },
-            cargarDatosE() {
+            
+            cargarDatosJ() {
                 var id = $("#idDetalleE").val();
 
-                fetch("?1=EquipoController&2=cargarDatosEquipo&id=" + id)
+                fetch("?1=JugadoresController&2=cargarDatosJugadores&id=" + id)
                     .then(response => {
                         return response.json();
                     })
@@ -210,10 +232,14 @@ var appJ = new Vue({
 
                         console.log(dat);
 
-                        // $('#frmEditar input[name="idDetalle"]').val(dat.codigoUsuari);
-                        $('#frmEditarE input[name="nombre"]').val(dat.nombre);
-                        $('#frmEditarE input[name="encargado"]').val(dat.encargado);
-                        $('#frmEditarE select[name="selectCategoria"]').dropdown('set selected', dat.idCategoria);
+
+                        $('#frmEditarJ input[name="foto"]').val(dat.imagen);
+                        $('#frmEditarJ input[name="nombre"]').val(dat.nombre);
+                        $('#frmEditarJ input[name="apellido"]').val(dat.apellido);
+                        $('#frmEditarJ input[name="dui"]').val(dat.dui);
+                        $('#frmEditarJ input[name="fechaNacimiento"]').val(dat.fechaNacimiento);
+                        $('#frmEditarJ input[name="edad"]').val(dat.edad);
+                        $('#frmEditarJ select[name="equipo"]').dropdown('set selected', dat.idEquipo);
                     })
                     .catch(err => {
                         console.log(err);
@@ -227,12 +253,19 @@ var appJ = new Vue({
     });
 </script>
 <script type="text/javascript">
-
+$(document).ready(function(){
+    $("#age").hide();
+});
 $(document).on("click", ".btnEliminarJ", function () {
   $('#modalEliminarJ').modal('setting', 'closable', false).modal('show');
   $('#idEliminar').val($(this).attr("id"));
 });
 
+$(document).on("click", ".btnEditarJ", function () {
+            $('#modalEditarJ').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+            $('#idDetalleE').val($(this).attr("id"));
+            appJ.cargarDatosJ();
+        });
 
 </script>
 <script>
@@ -286,7 +319,7 @@ $('#modalAgregarJugador').modal('setting', 'autofocus', false).modal('setting', 
                             }
                         }); 
                         $('#dtJugadores').DataTable().ajax.reload();
-                        
+                        cerrarCambiosJugador();
                     } 
                 }
             });
@@ -306,14 +339,13 @@ $(function() {
             });
         });
 
-        function cerrarCambiosJugador() {      
-                $("#edad").text('');
+        function cerrarCambiosJugador() {   
+                $("#age").hide();   
                 $('#nombreJ').val('');
                 $('#apellidoJ').val('');
                 $('#dui').val('');
                 $('#fechaNac').val('');
-                $('#equipo').val('');
-                $('#categoria').val('');
+                $('#equipo').prop('selected', false).find('option:first').prop('selected', true);
                 $('#Imagen').val('');
                 $('#modalAgregarJugador').modal('hide');
             }   
@@ -341,7 +373,7 @@ function resultado(){
     var fecha = document.getElementById('fechaNac').value;
 
 var edad = Edad(fecha);
-
+$("#age").show();
 $("#edad").val(edad);
 }
 
