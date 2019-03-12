@@ -105,8 +105,9 @@ Vue.component('modal-editar', {
                 <h4 v-if="sub_titulo">{{sub_titulo}}</h4>
                     <form action="" class="ui equal width form" :id="id_form">
                         <div v-for="campo in campos" class="field">
+                            <div v-if='campo.type == "img"' v-html='campo.val'></div>
                             <label>{{campo.label}} </label>
-                            <select class="ui dropdown" v-if="campo.type == 'select'" :name="campo.name">
+                            <select class="ui dropdown" v-else-if="campo.type == 'select'" :name="campo.name">
                                 <option v-for="(op,i) in campo.options" :value="op.val" :key='i'>
                                     {{op.text}}
                                 </option>  

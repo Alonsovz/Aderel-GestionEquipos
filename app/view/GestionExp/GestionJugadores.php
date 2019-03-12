@@ -167,7 +167,8 @@ var appJ = new Vue({
                 {
                     label: 'Foto:',
                     name: 'foto',
-                    type: 'img : src',
+                    type: 'img',
+                    val:''
                 },
                 {
                     label: 'Nombre del Jugador',
@@ -233,7 +234,8 @@ var appJ = new Vue({
                         console.log(dat);
 
 
-                        $('#frmEditarJ input[name="foto"]').val(dat.imagen);
+                        // $('#frmEditarJ input[name="foto"]').val(dat.imagen);
+                        this.campos_editarJ[0].val=dat.imagen;
                         $('#frmEditarJ input[name="nombre"]').val(dat.nombre);
                         $('#frmEditarJ input[name="apellido"]').val(dat.apellido);
                         $('#frmEditarJ input[name="dui"]').val(dat.dui);
