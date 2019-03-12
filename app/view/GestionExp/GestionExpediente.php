@@ -42,7 +42,7 @@
      
 </div>
 
-
+<script src="./res/tablas/tablaJugadores.js"></script>
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>

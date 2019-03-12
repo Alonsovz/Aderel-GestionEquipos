@@ -27,6 +27,9 @@ $(function() {
                     "data": "fechaNacimiento"
                 },
                 {
+                    "data": "edad"
+                },
+                {
                     "data" : "Equipo"
                 }
                 

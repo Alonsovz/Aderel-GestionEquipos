@@ -1,3 +1,17 @@
+<?php
+            $fechaMaxima = date('d/m/Y');
+            $fechaMax = strtotime ( '- day' , strtotime ( $fechaMaxima ) ) ;
+            $fechaMax = date ( 'd/m/Y' , $fechaMax );
+             
+            $fechaMinima = date('Y-m-d');
+            $fechaMin = strtotime ( '-1 day' , strtotime ( $fechaMinima ) ) ;
+            $fechaMin = date ( 'd/m/Y' , $fechaMin );
+
+            $anio= date('Y');
+            $mes = date('M');
+            $mesN = date('m')
+?>
+
 <div id="appJ">
 
 <modal-eliminar id_form="frmEliminarJ" id="modalEliminarJ" url="?1=JugadoresController&2=eliminar" titulo="Eliminar Jugador"
@@ -9,7 +23,7 @@
                                 <div class="titulo">
                                     <i class="team icon"></i>
                                     Jugadores<font color="#DFD102" size="20px">.</font>
-                                
+                                <?php echo $fechaMin; ?>
                                 </div>
                         </div>
                         <div class="row title-bar">
@@ -37,6 +51,7 @@
                                         <th style="background-color: #FACC2E;">Apellido</th>
                                         <th style="background-color: #FACC2E;">Dui</th>
                                         <th style="background-color: #FACC2E;">Fecha de Nacimiento</th>
+                                        <th style="background-color: #FACC2E;">Edad del Jugador</th>
                                         <th style="background-color: #FACC2E;">Equipo</th>
                                        
                                         
@@ -52,7 +67,7 @@
                     
         </div>
 
-<div class="ui tiny modal" id="modalAgregarJugador">
+<div class="ui tiny modal" id="modalAgregarJugador"  style="overflow: scroll;">
 
 <div class="header">
 <i class="male icon"></i><i class="trophy icon"></i><i class="futbol icon"></i> Agregar nuevo Jugador
@@ -87,7 +102,30 @@
                                     Completa este campo
                                     </div>
                                 <input type="hidden" name="img" id='img'>
-                        </div>                               
+                        </div>    
+                        <div class="six wide field">
+                            <label><i class="calendar icon"></i>Fecha de Nacimiento</label>
+                                <input type="date" id="fechaNac" name="fechaNac">
+                                    <div class="ui red pointing label"  id="labelFecha"
+                                        style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                        Completa este campo</div>
+                                    </div>                              
+                        
+                        </div>
+                        
+            </div>   
+
+            <div class="field">
+            <div class="fields">
+            <div class="four wide field"></div>
+                <div class="eight wide field">
+                <input type="text" id="edad" name="edad">
+                </div>
+            <div class="four wide field"></div>
+            </div>
+            </div>
+                <div class="field">
+                        <div class="fields">
                         <div class="six wide field">
                         <label><i class="address card icon"></i>N° Dui del Jugador</label>
                             <input type="text" name="dui" placeholder="DUI del jugador" id="dui">
@@ -96,18 +134,7 @@
                                     Completa este campo
                                     </div>
                         </div>
-                        
-            </div>   
-                <div class="field">
-                        <div class="fields">
-                            <div class="six wide field">
-                            <label><i class="calendar icon"></i>Fecha de Nacimiento</label>
-                                <input type="date" id="fechaNac" name="fechaNac">
-                                    <div class="ui red pointing label"  id="labelFecha"
-                                        style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
-                                        Completa este campo</div>
-                                    </div>   
-                            <div class="eight wide field">
+                            <div class="ten wide field">
                             <label><i class="calendar icon"></i>Nombre del Equipo</label>
                             <select name="equipo" id="equipo" class="ui search dropdown">
                             </select>
@@ -116,9 +143,10 @@
                             
                         </div>
                 </div>
+                
         </div>
     </form>
-</div>
+
     <div class="actions">
         <button id="btncerrar" onclick="cerrarCambiosJugador()" class="ui yellow button">
             Cancelar
@@ -279,7 +307,7 @@ $(function() {
         });
 
         function cerrarCambiosJugador() {      
-                
+                $("#edad").text('');
                 $('#nombreJ').val('');
                 $('#apellidoJ').val('');
                 $('#dui').val('');
@@ -289,5 +317,42 @@ $(function() {
                 $('#Imagen').val('');
                 $('#modalAgregarJugador').modal('hide');
             }   
+
+function Edad(FechaNacimiento) {
+
+var fechaNace = new Date(FechaNacimiento);
+var fechaActual = new Date()
+
+var mes = fechaActual.getMonth();
+var dia = fechaActual.getDate();
+var año = fechaActual.getFullYear();
+
+fechaActual.setDate(dia);
+fechaActual.setMonth(mes);
+fechaActual.setFullYear(año);
+
+edad = Math.floor(((fechaActual - fechaNace) / (1000 * 60 * 60 * 24) / 365));
+
+return edad;
+}
+
+
+function resultado(){
+    var fecha = document.getElementById('fechaNac').value;
+
+var edad = Edad(fecha);
+
+$("#edad").val(edad);
+}
+
+
+$("#fechaNac").change(function(){
+    var fecha = document.getElementById('fechaNac').value;
+Edad(fecha);
+
+resultado();
+
+
+});
 
 </script>

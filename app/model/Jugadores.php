@@ -4,12 +4,13 @@ class Jugadores extends ModeloBase{
     private $idJugador;
     private $nombre;
     private $apellido;
-    private $foto;
+    private $edad;
     private $dui;
     private $fechaNacimento;
     private $idEquipo;
     private $idCategoria;
     private $img;
+    
 
     public function __construct() {
 
@@ -70,9 +71,9 @@ class Jugadores extends ModeloBase{
     }
 
 
-    public function getFoto()
+    public function getEdad()
     {
-        return $this->foto;
+        return $this->edad;
     }
 
     /**
@@ -80,9 +81,9 @@ class Jugadores extends ModeloBase{
      *
      * @return  self
      */ 
-    public function setFoto($foto)
+    public function setEdad($edad)
     {
-        $this->foto = $foto;
+        $this->edad = $edad;
 
         return $this;
     }

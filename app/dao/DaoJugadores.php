@@ -10,6 +10,7 @@ class DaoJugadores extends DaoBase {
     public function registrarJugador(){
         $query = "Insert into jugadores values (null,'".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
         '".$this->objeto->getDui()."','".$this->objeto->getImg()."','".$this->objeto->getFechaNacimiento()."',
+        '".$this->objeto->getEdad()."',
         '".$this->objeto->getIdEquipo()."',1);";
 
         $resultado = $this->con->ejecutar($query);
@@ -47,10 +48,6 @@ class DaoJugadores extends DaoBase {
 
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
                 
-                
-                $foto = ', "image": "'.$imagen.'" ';
-
-                //$acciones .=$foto.',';
 
                 $object = substr_replace($object, $acciones, strlen($object) -1,0);
     

@@ -33,6 +33,7 @@ class JugadoresController extends ControladorBase {
         $equipo = $_REQUEST["equipo"];
        // $categoria = $_REQUEST["categoria"];
         $img= $_REQUEST["img"];
+        $edad= $_REQUEST["edad"];
 
         // $foto = addslashes(file_get_contents($_FILES['Imagen']['tmp_name']));
         
@@ -41,7 +42,7 @@ class JugadoresController extends ControladorBase {
 
         $dao->objeto->setNombre($nombre);
         $dao->objeto->setApellido($apellido);
-        // $dao->objeto->setFoto($foto);
+        $dao->objeto->setEdad($edad);
         $dao->objeto->setDui($dui);
         $dao->objeto->setFechaNacimiento($fechaNac);
         $dao->objeto->setIdEquipo($equipo);
