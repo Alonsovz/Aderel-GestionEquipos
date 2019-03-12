@@ -18,6 +18,9 @@ $(function() {
                     "data": "encargado"
                 },
                 {
+                    "data": "Categoria"
+                },
+                {
                     "data": "Acciones"
                 }
                 

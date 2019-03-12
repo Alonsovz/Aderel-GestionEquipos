@@ -12,6 +12,9 @@ $(function() {
                     "data": "idJugador"
                 },
                 {
+                    "data" : "Acciones"
+                },
+                {
                     "data": "nombre"
                 },
                 {
@@ -25,13 +28,8 @@ $(function() {
                 },
                 {
                     "data" : "Equipo"
-                },
-                {
-                    "data": "Categoria"
-                },
-                {
-                    "data" : "Acciones"
                 }
+                
                 
             ],
             "order": [

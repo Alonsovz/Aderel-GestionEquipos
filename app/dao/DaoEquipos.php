@@ -20,8 +20,8 @@ class DaoEquipos extends DaoBase {
             $object = json_encode($fila);
 
            
-            $btnEditar = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnEditar icon blue small button\"><i class=\"edit icon\"></i></button>';
-            $btnEliminar = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i></button>';
+            $btnEditar = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnEditarE icon yellow small button\"><i class=\"edit icon\"></i></button>';
+            $btnEliminar = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnEliminarE icon negative small button\"><i class=\"trash icon\"></i></button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.'"';
 
@@ -33,6 +33,75 @@ class DaoEquipos extends DaoBase {
         $_json = substr($_json,0, strlen($_json) - 1);
 
         return '{"data": ['.$_json .']}';
+    }
+
+
+    public function registrar() {
+        $_query = "insert into equipos values(null,'".$this->objeto->getNombreEquipo()."', '".$this->objeto->getEncargado()."',
+        '".$this->objeto->getIdCategoria()."',1)";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public function eliminar() {
+        $_query = "update equipos set idEliminado=2 where idEquipo = ".$this->objeto->getIdEquipo();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function editar() {
+        $_query = "update equipos set nombre ='".$this->objeto->getNombreEquipo()."',encargado = '".$this->objeto->getEncargado()."',
+        idCategoria = '".$this->objeto->getIdCategoria()."'
+         where idEquipo = ".$this->objeto->getIdEquipo();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function cargarDatosEquipo() {
+
+        $_query = "select * from equipos
+        where idEquipo = ".$this->objeto->getIdEquipo();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $json = json_encode($resultado->fetch_assoc());
+
+        return $json;
+    }
+
+    public function mostrarEquiposCmb() {
+        $_query = "select * from equipos where idEliminado=1";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+            $json .= json_encode($fila).',';
+        }
+
+        $json = substr($json,0, strlen($json) - 1);
+
+        return '['.$json.']';
     }
 
 }

@@ -21,7 +21,7 @@ $(function() {
 
     <modal-registrar id_form="frmRegistrar" id="modalRegistrar" url="?1=EgresosController&2=registrar" titulo="Registrar Egreso"
         :campos="campos_registro" tamanio='tiny'></modal-registrar>
-
+    
     <modal-editar id_form="frmEditar" id="modalEditar" url="?1=EgresosController&2=editar" titulo="Editar Egreso"
         :campos="campos_editar" tamanio='tiny'></modal-editar>
 

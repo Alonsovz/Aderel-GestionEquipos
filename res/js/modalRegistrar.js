@@ -81,11 +81,15 @@ Vue.component('modal-registrar', {
                                 showConfirmButton: false,
                                 timer: 1500
                             });
+                            
                             $('#' + this.id_form).removeClass('loading');
                             $('#' + this.id).modal('hide');
                             this.$parent.refrescarTabla();
+
                             resetFrm(this.id_form, "#btnRegistrar");
+                           
                         }
+                        
                     }).catch(res => {
                         console.log(res);
                     });
@@ -96,6 +100,8 @@ Vue.component('modal-registrar', {
         }
 
     },
+
+    
 
 
     template: `<div :class="['ui','modal',tamanio]" :id="id">

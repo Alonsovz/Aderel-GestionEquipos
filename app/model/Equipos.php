@@ -4,12 +4,30 @@ class Equipos extends ModeloBase{
     private $idEquipo;
     private $nombreEquipo;
     private $encargado;
-    
+    private $idCategoria;
 
 
     public function __construct() {
 
     }
+
+    public function getIdCategoria()
+    {
+        return $this->idCategoria;
+    }
+
+    /**
+     * Set the value of fecha
+     *
+     * @return  self
+     */ 
+    public function setIdCategoria($idCategoria)
+    {
+        $this->idCategoria = $idCategoria;
+
+        return $this;
+    }
+
 
     public function getIdEquipo()
     {

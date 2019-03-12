@@ -15,7 +15,10 @@ $(function() {
                     "data": "nombreCategoria"
                 },
                 {
-                    "data": "rango"
+                    "data": "edadMinima"
+                },
+                {
+                    "data": "edadMaxima"
                 },
                 {
                     "data": "Acciones"

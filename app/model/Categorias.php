@@ -3,7 +3,8 @@
 class Categorias extends ModeloBase{
     private $idCategoria;
     private $nombreCategoria;
-    private $rango;
+    private $edadMinima;
+    private $edadMaxima;
 
 
     public function __construct() {
@@ -45,9 +46,9 @@ class Categorias extends ModeloBase{
     }
 
 
-    public function getRango()
+    public function getEdadMinima()
     {
-        return $this->rango;
+        return $this->edadMinima;
     }
 
     /**
@@ -55,9 +56,26 @@ class Categorias extends ModeloBase{
      *
      * @return  self
      */ 
-    public function setRango($rango)
+    public function setEdadMinima($edadMinima)
     {
-        $this->rango = $rango;
+        $this->edadMinima = $edadMinima;
+
+        return $this;
+    }
+
+    public function getEdadMaxima()
+    {
+        return $this->edadMaxima;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setEdadMaxima($edadMaxima)
+    {
+        $this->edadMaxima = $edadMaxima;
 
         return $this;
     }
