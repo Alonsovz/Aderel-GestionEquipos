@@ -92,6 +92,15 @@ Vue.component('modal-editar', {
         },
         cancelar() {
             resetFrm(this.id_form, "#btnEditar");
+        }, 
+        nuevaImagen(e){
+            let reader= new FileReader();
+
+            reader.readAsDataURL(e.target.files[0]);
+
+            reader.onload=(e)=>{
+                $('[name=imagenNueva]').val(e.target.result);
+            }
         }
     },
 
@@ -128,6 +137,7 @@ Vue.component('modal-editar', {
 
                             <input v-else-if="campo.type == 'hidden'" :type="campo.type" :id="campo.name" :name="campo.name">
 
+                            <input v-else-if='campo.type == "file"' class="requerido" :type="campo.type" :mask="campo.mask" :name="campo.name" @change='nuevaImagen'>
                             <input v-else-if='campo.type != "img"' class="requerido" :type="campo.type" :mask="campo.mask" :name="campo.name">
                             
                             <div class="ui red pointing label" style="display: none;">

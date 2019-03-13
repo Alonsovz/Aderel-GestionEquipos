@@ -105,7 +105,7 @@ class DaoJugadores extends DaoBase {
         $_query = "update jugadores set nombre='".$this->objeto->getNombre()."', apellido = '".$this->objeto->getApellido()."',
         dui= '".$this->objeto->getDui()."', 
         fechaNacimiento = '".$this->objeto->getFechaNacimiento()."', 
-        edad ='".$this->objeto->getEdad()."', idEquipo = '".$this->objeto->getIdEquipo()."'
+        edad ='".$this->objeto->getEdad()."', idEquipo = '".$this->objeto->getIdEquipo()."', foto='".$this->objeto->getImg()."'
          where idJugador = ".$this->objeto->getIdJugador();
 
         $resultado = $this->con->ejecutar($_query);
@@ -119,4 +119,3 @@ class DaoJugadores extends DaoBase {
     
 
 }
-
