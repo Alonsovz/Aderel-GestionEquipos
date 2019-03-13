@@ -106,9 +106,8 @@ insert into egresos values(null,4089,'Pago de impuestos de la renta',1000,160,84
 
 insert into remanentes values(null,5000,10000,4000,500,300,7000,'03','2019');
 
-insert into equipos values (null, 'Aderel F.C','Elvis Ramirez',1,1);
 insert into categorias values (null, 'Liga menor',12,18,1);
-insert into jugadores values(null,'Fabio','Mejia','01234356-1','yo.jpg','2019-03-28',1,1);
+insert into equipos values (null, 'Aderel F.C','Elvis Ramirez',1,1);
 
 
 -- ===========================================================================
