@@ -58,6 +58,8 @@ mes varchar(10),
 anio varchar(10)
 );
 
+
+
 create table categorias(
 idCategoria int primary key auto_increment,
 nombreCategoria varchar(100),
@@ -66,15 +68,30 @@ edadMaxima int,
 idEliminado int
 );
 
+
+
+
+create table torneos(
+idTorneo int primary key auto_increment,
+nombreTorneo varchar(100),
+numeroEquipos int,
+idCategoria int,
+idEliminado int
+);
+
+create table inscripcion(
+idInscripcion int primary key auto_increment,
+estado varchar(20)
+);
 create table equipos(
 idEquipo int primary key auto_increment,
 nombre varchar(200),
 encargado varchar(200),
 idCategoria int,
+idInscripcion int,
+idTorneo int,
 idEliminado int
 );
-
-
 
 
 create table jugadores(
@@ -95,19 +112,35 @@ alter table usuario add constraint fk_usuario_rol foreign key (codigoRol) refere
 
 alter table jugadores add constraint fk_jugadores_equipo foreign key (idEquipo) references equipos(idEquipo);
 alter table equipos add constraint fk_equipos_categorias foreign key (idCategoria) references categorias(idCategoria);
+alter table equipos add constraint fk_equipos_torneos foreign key (idTorneo) references torneos(idTorneo);
+alter table equipos add constraint fk_equipos_inscripcion foreign key (idInscripcion) references inscripcion(idInscripcion);
+alter table torneos add constraint fk_torneos_categorias foreign key (idCategoria) references categorias(idCategoria);
 
 insert into rol values(1,'Administrador');
 insert into usuario values(null,'Fabio Alonso','Mejia Velasquez','mejia','fabiomejiash@gmail.com',sha1('123'),1,1);
 insert into usuario values(null,'Alonso','Mejia','alonso','mejiafabio383@gmail.com',sha1('123'),1,1);
 
-insert into ingresos values (null,'Escuela','2019-03-02',2000,'#140E93','#E6C404','03','2019',1);
+insert into ingresos values (null,'Escuela','2019-03-12',2000,'#140E93','#E6C404','03','2019',1);
+insert into ingresos values (null,'Fondo Común','2019-03-11',2000,'#140E93','#E6C404','03','2019',1);
 
-insert into egresos values(null,4089,'Pago de impuestos de la renta',1000,160,840,'2019-03-05','03','2019',1);
+insert into egresos values(null,4089,'Pago de impuestos de la renta',1000,160,840,'2019-03-11','03','2019',1);
+insert into egresos values(null,4090,'Pago de recibos',1000,160,840,'2019-03-12','03','2019',1);
 
 insert into remanentes values(null,5000,10000,4000,500,300,7000,'03','2019');
 
+insert into categorias values (null, 'Sin Categoria',0,0,1);
 insert into categorias values (null, 'Liga menor',12,18,1);
-insert into equipos values (null, 'Aderel F.C','Elvis Ramirez',1,1);
+
+insert into inscripcion values(null,'Aun no inscrito');
+insert into inscripcion values(null,'Inscrito');
+
+insert into torneos values(null,'No se ha inscrito en torneo',0,1,1);
+insert into torneos values(null,'Torneo Aderel',20,2,1);
+
+
+insert into equipos values (null, 'Aderel F.C','Elvis Ramirez',2,1,1,1);
+
+
 
 
 -- ===========================================================================
@@ -326,11 +359,13 @@ $$
 delimiter $$
 create procedure mostrarEquipos()
 begin
-	select e.*, c.nombreCategoria as Categoria from equipos e
+	select e.*, c.nombreCategoria as Categoria, i.estado as estado from equipos e
     inner join categorias c on c.idCategoria = e.idCategoria
+    inner join inscripcion i on i.idInscripcion = e.idInscripcion
     where  e.idEliminado=1;
 end	
 $$
+
 
 
 
@@ -338,7 +373,10 @@ delimiter $$
 create procedure mostrarCategorias()
 begin
 	select * from categorias
-    where  idEliminado=1;
+    where  idEliminado=1 and idCategoria>1;
 end	
 $$
 
+
+
+    

@@ -1,27 +1,24 @@
-var tablaEquipos;
+var tablaTorneos;
 
 $(function() {
-    if($('#dtEquipos').length) {
-        tablaEquipos = $('#dtEquipos').DataTable({
+    if($('#dtTorneos').length) {
+        tablaTorneos = $('#dtTorneos').DataTable({
             "ajax": {
-                "url": "?1=GestionExpController&2=mostrarEquipos",
+                "url": "?1=GestionExpController&2=mostrarTorneos",
                 "type": "POST"
             },
             "columns": [
                 {
-                    "data": "idEquipo"
+                    "data": "idTorneo"
                 },
                 {
-                    "data": "nombre"
+                    "data": "nombreTorneo"
                 },
                 {
-                    "data": "encargado"
+                    "data": "numeroEquipos"
                 },
                 {
-                    "data": "Categoria"
-                },
-                {
-                    "data": "estado"
+                    "data": "categoria"
                 },
                 {
                     "data": "Acciones"
@@ -58,6 +55,6 @@ $(function() {
         });
 
          // Ocultar columna de id de Usuario
-         tablaEquipos.column(0).visible(false);
+         tablaTorneos.column(0).visible(false);
     }
 });

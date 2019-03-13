@@ -51,6 +51,7 @@ sub_titulo="¿Está seguro de querer eliminar esta equipo?" :campos="campos_elim
                                         <th style="background-color: #217CD1; color:white;">Nombre del  Equipo</th>
                                         <th style="background-color: #217CD1; color:white;">Encargado del Equipo</th>
                                         <th style="background-color: #217CD1; color:white;">Categoría del Equipo</th>
+                                        <th style="background-color: #217CD1; color:white;">Estado</th>
                                         <th style="background-color: #217CD1; color:white;">Acciones</th>
                                     </tr>
                                 </thead>

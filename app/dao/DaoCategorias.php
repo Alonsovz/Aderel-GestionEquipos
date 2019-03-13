@@ -9,7 +9,8 @@ class DaoCategorias extends DaoBase {
 
     public function mostrarCategorias()
     {
-        $_query = "call mostrarCategorias()";
+        $_query = "select * from categorias
+        where  idEliminado=1 and idCategoria>1;";
 
         $resultado = $this->con->ejecutar($_query);
 
