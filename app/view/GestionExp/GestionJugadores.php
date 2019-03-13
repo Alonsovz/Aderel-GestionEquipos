@@ -10,7 +10,7 @@
         sub_titulo="¿Está seguro de querer eliminar este jugador?" :campos="campos_eliminarJ" tamanio='tiny'></modal-eliminar>
 
 <modal-editar id_form="frmEditarJ" id="modalEditarJ" url="?1=JugadoresController&2=editar" titulo="Editar Jugador"
-:campos="campos_editarJ" tamanio='tiny'></modal-editar>
+:campos="campos_editarJ" tamanio='tiny' style="overflow: scroll;"></modal-editar>
         <div class="ui grid">
                         <div class="row">
                                 <div class="titulo">
@@ -144,7 +144,7 @@
     </form>
 
     <div class="actions">
-        <button id="btncerrar" onclick="cerrarCambiosJugador()" class="ui yellow button">
+        <button id="btnCerrar" class="ui yellow button">
             Cancelar
         </button>
         <button class="ui blue button" id="btnGuardarJugador" >
@@ -177,7 +177,7 @@ var appJ = new Vue({
                 },
                 {
                     name: 'imagenNueva',
-                    type: 'text'
+                    type: 'hidden'
                 },
                 {
                     label: 'Nombre del Jugador',
@@ -267,12 +267,27 @@ var appJ = new Vue({
 $(document).ready(function(){
     $("#age").hide();
 });
-const eliminarJugador=(ele)=>{
+
+$(function(){
+$('#btnCerrar').click(function() { 
+                $("#age").hide();   
+                $('#nombreJ').val('');
+                $('#apellidoJ').val('');
+                $('#dui').val('');
+                $('#fechaNac').val('');
+                $('#equipo').prop('selected', false).find('option:first').prop('selected', true);
+                $('#Imagen').val('');
+                $('#modalAgregarJugador').modal('hide');
+            });
+        });
+
+
+var eliminarJugador=(ele)=>{
   $('#modalEliminarJ').modal('setting', 'closable', false).modal('show');
   $('#idEliminar').val($(ele).attr("id"));
 }
 
-const editarJugador=(ele)=>{
+var editarJugador=(ele)=>{
             $('#modalEditarJ').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
             $('#idDetalleE').val($(ele).attr("id"));
             appJ.cargarDatosJ();
@@ -343,7 +358,7 @@ $('#modalAgregarJugador').modal('setting', 'autofocus', false).modal('setting', 
                             }
                         }); 
                         $('#dtJugadores').DataTable().ajax.reload();
-                        cerrarCambiosJugador();
+                        
                     } 
                 }
             });
@@ -363,16 +378,7 @@ $(function() {
             });
         });
 
-        function cerrarCambiosJugador() {   
-                $("#age").hide();   
-                $('#nombreJ').val('');
-                $('#apellidoJ').val('');
-                $('#dui').val('');
-                $('#fechaNac').val('');
-                $('#equipo').prop('selected', false).find('option:first').prop('selected', true);
-                $('#Imagen').val('');
-                $('#modalAgregarJugador').modal('hide');
-            }   
+         
 
 function Edad(FechaNacimiento) {
 
@@ -410,6 +416,15 @@ var edad = Edad(fecha);
 $('#frmEditarJ input[name="edad"]').val(edad);
 }
 
+$('#fechaNac').change(function(){
+    var fecha =  document.getElementById('fechaNac').value;
+
+Edad(fecha);
+
+resultado();
+
+
+});
 
 $('#frmEditarJ input[name="fechaNacimiento"]').change(function(){
     var fecha = $('#frmEditarJ input[name="fechaNacimiento"]').val();

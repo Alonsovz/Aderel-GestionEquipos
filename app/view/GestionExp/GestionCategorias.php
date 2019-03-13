@@ -144,14 +144,14 @@ var appC = new Vue({
 
 <script type="text/javascript">
 
-const eliminarCategoria=(ele)=>{
+var eliminarCategoria=(ele)=>{
   $('#modalEliminarC').modal('setting', 'closable', false).modal('show');
-  $('#idEliminar').val($(this).attr("id"));
+  $('#idEliminar').val($(ele).attr("id"));
 }
 
 // $(document).on("click", ".btnEditarC", function () {
 // });
-const editarCategoria=(ele)=>{
+var editarCategoria=(ele)=>{
     $('#modalEditarC').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
      $('#idDetalleC').val($(ele).attr("id"));
     appC.cargarDatosC();

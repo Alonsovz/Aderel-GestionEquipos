@@ -103,8 +103,8 @@ class DaoJugadores extends DaoBase {
 
     public function EDITAR() {
         $_query = "update jugadores set nombre='".$this->objeto->getNombre()."', apellido = '".$this->objeto->getApellido()."',
-        dui= '".$this->objeto->getDui()."', foto = '".$this->objeto->getImg()."', 
-          fechaNacimiento = '".$this->objeto->getFechaNacimiento()."', 
+        dui= '".$this->objeto->getDui()."', 
+        fechaNacimiento = '".$this->objeto->getFechaNacimiento()."', 
         edad ='".$this->objeto->getEdad()."', idEquipo = '".$this->objeto->getIdEquipo()."'
          where idJugador = ".$this->objeto->getIdJugador();
 

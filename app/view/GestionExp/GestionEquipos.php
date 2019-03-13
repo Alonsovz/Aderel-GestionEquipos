@@ -10,6 +10,7 @@
 
 <modal-editar id_form="frmEditarE" id="modalEditarE" url="?1=EquipoController&2=editar" titulo="Editar Equipo"
 :campos="campos_editarE" tamanio='tiny'></modal-editar>
+
 <modal-eliminar id_form="frmEliminarE" id="modalEliminarE" url="?1=EquipoController&2=eliminar" titulo="Eliminar Equipo"
 sub_titulo="¿Está seguro de querer eliminar esta equipo?" :campos="campos_eliminarE" tamanio='tiny'></modal-eliminar>
 
@@ -156,13 +157,13 @@ var appE = new Vue({
     });
 </script>
 <script>
-const eliminarEquipo=(ele)=>{
+var eliminarEquipo=(ele)=>{
   $('#modalEliminarE').modal('setting', 'closable', false).modal('show');
-  $('#idEliminar').val($(this).attr("id"));
+  $('#idEliminar').val($(ele).attr("id"));
 }
 
 
-const editarEquipo=(ele)=>{
+var editarEquipo=(ele)=>{
             $('#modalEditarE').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
             $('#idDetalleE').val($(ele).attr("id"));
             appE.cargarDatosE();

@@ -21,7 +21,7 @@
 </a>
 
 
-<a href="?1=TorneosExpController&2=gestion" class="item menu-it" style="color:#E6C404;">
+<a href="?1=TorneosController&2=gestion" class="item menu-it" style="color:#E6C404;">
     <i class="trophy icon"></i>
     Torneos-Tablas de Posiciones
 </a>
