@@ -9,7 +9,7 @@
 <modal-eliminar id_form="frmEliminarJ" id="modalEliminarJ" url="?1=JugadoresController&2=eliminar" titulo="Eliminar Jugador"
         sub_titulo="¿Está seguro de querer eliminar este jugador?" :campos="campos_eliminarJ" tamanio='tiny'></modal-eliminar>
 
-        <modal-editar id_form="frmEditarJ" id="modalEditarJ" url="?1=JugadoresController&2=editar" titulo="Editar Jugador"
+<modal-editar id_form="frmEditarJ" id="modalEditarJ" url="?1=JugadoresController&2=editar" titulo="Editar Jugador"
 :campos="campos_editarJ" tamanio='tiny'></modal-editar>
         <div class="ui grid">
                         <div class="row">
@@ -171,6 +171,15 @@ var appJ = new Vue({
                     val:''
                 },
                 {
+                    label: 'Cambiar Foto',
+                    name: 'nuevaFoto',
+                    type: 'file',
+                },
+                {
+                    name: 'imagenNueva',
+                    type: 'text'
+                },
+                {
                     label: 'Nombre del Jugador',
                     name: 'nombre',
                     type: 'text'
@@ -193,7 +202,7 @@ var appJ = new Vue({
                 {
                     label: 'Edad:',
                     name: 'edad',
-                    type: 'number', 
+                    type: 'text', 
                 },
                 {
                     label: 'Equipo:',
@@ -258,16 +267,16 @@ var appJ = new Vue({
 $(document).ready(function(){
     $("#age").hide();
 });
-$(document).on("click", ".btnEliminarJ", function () {
+const eliminarJugador=(ele)=>{
   $('#modalEliminarJ').modal('setting', 'closable', false).modal('show');
-  $('#idEliminar').val($(this).attr("id"));
-});
+  $('#idEliminar').val($(ele).attr("id"));
+}
 
-$(document).on("click", ".btnEditarJ", function () {
+const editarJugador=(ele)=>{
             $('#modalEditarJ').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
-            $('#idDetalleE').val($(this).attr("id"));
+            $('#idDetalleE').val($(ele).attr("id"));
             appJ.cargarDatosJ();
-        });
+        }
 
 </script>
 <script>
@@ -280,6 +289,19 @@ $('#Imagen').change(e=>{
 
     reader.onload=(e)=>{
         $('#img').val(e.target.result);
+    }
+})
+});
+
+$(function(){
+
+    $('#frmEditarJ input[name="nuevaFoto"]').change(e=>{
+    let reader= new FileReader();
+
+    reader.readAsDataURL(e.target.files[0]);
+
+    reader.onload=(e)=>{
+        $('#frmEditarJ input[name="imagenNueva"]').val(e.target.result);
     }
 })
 });
@@ -380,11 +402,21 @@ $("#edad").val(edad);
 }
 
 
-$("#fechaNac").change(function(){
-    var fecha = document.getElementById('fechaNac').value;
+function resultadoE(){
+    var fecha = $('#frmEditarJ input[name="fechaNacimiento"]').val();
+
+var edad = Edad(fecha);
+
+$('#frmEditarJ input[name="edad"]').val(edad);
+}
+
+
+$('#frmEditarJ input[name="fechaNacimiento"]').change(function(){
+    var fecha = $('#frmEditarJ input[name="fechaNacimiento"]').val();
+
 Edad(fecha);
 
-resultado();
+resultadoE();
 
 
 });

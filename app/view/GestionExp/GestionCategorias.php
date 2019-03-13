@@ -144,10 +144,10 @@ var appC = new Vue({
 
 <script type="text/javascript">
 
-$(document).on("click", ".btnEliminarC", function () {
+const eliminarCategoria=(ele)=>{
   $('#modalEliminarC').modal('setting', 'closable', false).modal('show');
   $('#idEliminar').val($(this).attr("id"));
-});
+}
 
 // $(document).on("click", ".btnEditarC", function () {
 // });

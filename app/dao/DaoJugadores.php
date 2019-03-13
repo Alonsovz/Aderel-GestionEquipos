@@ -42,8 +42,8 @@ class DaoJugadores extends DaoBase {
                
                
 
-                $btnEditar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEditarJ icon blue small button\"><i class=\"edit icon\"></i></button>';
-                $btnEliminar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEliminarJ icon negative small button\"><i class=\"trash icon\"></i></button>';
+                $btnEditar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEditarJ icon blue small button\" onclick=\"editarJugador(this)\"><i class=\"edit icon\"></i></button>';
+                $btnEliminar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEliminarJ icon negative small button\" onclick=\"eliminarJugador(this)\"><i class=\"trash icon\"></i></button>';
                 $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
@@ -98,6 +98,23 @@ class DaoJugadores extends DaoBase {
         $_json = substr($_json,0, strlen($_json) - 1);
     
         return $_json;
+    }
+
+
+    public function EDITAR() {
+        $_query = "update jugadores set nombre='".$this->objeto->getNombre()."', apellido = '".$this->objeto->getApellido()."',
+        dui= '".$this->objeto->getDui()."', foto = '".$this->objeto->getImg()."', 
+          fechaNacimiento = '".$this->objeto->getFechaNacimiento()."', 
+        edad ='".$this->objeto->getEdad()."', idEquipo = '".$this->objeto->getIdEquipo()."'
+         where idJugador = ".$this->objeto->getIdJugador();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
     
 

@@ -156,15 +156,15 @@ var appE = new Vue({
     });
 </script>
 <script>
-$(document).on("click", ".btnEliminarE", function () {
+const eliminarEquipo=(ele)=>{
   $('#modalEliminarE').modal('setting', 'closable', false).modal('show');
   $('#idEliminar').val($(this).attr("id"));
-});
+}
 
 
-$(document).on("click", ".btnEditarE", function () {
+const editarEquipo=(ele)=>{
             $('#modalEditarE').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
-            $('#idDetalleE').val($(this).attr("id"));
+            $('#idDetalleE').val($(ele).attr("id"));
             appE.cargarDatosE();
-        });
+        }
 </script>
