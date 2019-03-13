@@ -149,10 +149,13 @@ $(document).on("click", ".btnEliminarC", function () {
   $('#idEliminar').val($(this).attr("id"));
 });
 
-$(document).on("click", ".btnEditarC", function () {
-           $('#modalEditarC').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
-            $('#idDetalleC').val($(this).attr("id"));
-          appC.cargarDatosC();
-        });
+// $(document).on("click", ".btnEditarC", function () {
+// });
+const editarCategoria=(ele)=>{
+    $('#modalEditarC').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+     $('#idDetalleC').val($(ele).attr("id"));
+    appC.cargarDatosC();
+
+}
 
 </script>
