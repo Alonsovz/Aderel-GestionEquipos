@@ -45,7 +45,8 @@ Vue.component('modal-editar', {
     
     data: function () {
         return {
-            contador: 0
+            contador: 0,
+            img:null
         }
     },
 
@@ -60,7 +61,7 @@ Vue.component('modal-editar', {
             });
 
             gatos = JSON.stringify(gatos);
-            console.log(gatos);
+            // console.log(gatos);
             var param = {
                 method: 'POST',
                 headers: {
@@ -99,6 +100,7 @@ Vue.component('modal-editar', {
             reader.readAsDataURL(e.target.files[0]);
 
             reader.onload=(e)=>{
+                this.img=e.target.result;
                 $('[name=imagenNueva]').val(e.target.result);
             }
         }
@@ -106,7 +108,7 @@ Vue.component('modal-editar', {
 
 
     template: `<div :class="['ui','modal',tamanio]" :id="id">
-
+                <img :src='img'>
                 <div class="header">
                     {{titulo}}
                 </div>
