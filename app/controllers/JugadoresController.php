@@ -66,20 +66,19 @@ class JugadoresController extends ControladorBase {
     }
 
     public function editar() {
-        $datos = $_REQUEST["datos"];
 
-        $datos = json_decode($datos);
+        // $datos = json_decode($datos);
 
         $dao = new DaoJugadores();
 
-        $dao->objeto->setNombre($datos->nombre);
-        $dao->objeto->setApellido($datos->apellido);
-        $dao->objeto->setDui($datos->dui);
-        $dao->objeto->setFechaNacimiento($datos->fechaNacimiento);
-        $dao->objeto->setEdad($datos->edad);
-        $dao->objeto->setIdEquipo($datos->equipo);
-        $dao->objeto->setImg($datos->imagenNueva);
-        $dao->objeto->setIdJugador($datos->idDetalleE);
+        $dao->objeto->setNombre($_REQUEST['nombre']);
+        $dao->objeto->setApellido($_REQUEST['apellido']);
+        $dao->objeto->setDui($_REQUEST['dui']);
+        $dao->objeto->setFechaNacimiento($_REQUEST['fechaNacimiento']);
+        $dao->objeto->setEdad($_REQUEST['edad']);
+        $dao->objeto->setIdEquipo($_REQUEST['equipo']);
+        $dao->objeto->setImg($_REQUEST['imagenNueva']);
+        $dao->objeto->setIdJugador($_REQUEST['idDetalleE']);
 
         echo $dao->editar();
     }

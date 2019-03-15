@@ -56,18 +56,19 @@ Vue.component('modal-editar', {
         
             $('#' + this.id_form).addClass('loading');
 
-            $('#' + this.id_form).find(":input").each(function () {
-                gatos[this.name] = $(this).val();
-            });
+            // $('#' + this.id_form).find(":input").each(function () {
+            //     gatos[this.name] = $(this).val();
+            // });
 
-            gatos = JSON.stringify(gatos);
-            // console.log(gatos);
+            // gatos = JSON.stringify(gatos);
+            let form = new FormData(document.getElementById(this.id_form))
+
             var param = {
                 method: 'POST',
-                headers: {
-                    "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-                },
-                body: "datos=" + gatos,
+                // headers: {
+                //     "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+                // },
+                body: form,
             };
 
             fetch(this.url, param)
@@ -75,6 +76,7 @@ Vue.component('modal-editar', {
                     return response.text();
                 })
                 .then(val => {
+
                     if (val == 1) {
                         swal({
                             title: 'Editado',
@@ -108,7 +110,6 @@ Vue.component('modal-editar', {
 
 
     template: `<div :class="['ui','modal',tamanio]" :id="id">
-                <img :src='img'>
                 <div class="header">
                     {{titulo}}
                 </div>
