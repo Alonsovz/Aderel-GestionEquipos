@@ -75,6 +75,7 @@ create table torneos(
 idTorneo int primary key auto_increment,
 nombreTorneo varchar(100),
 numeroEquipos int,
+disponibles int,
 idCategoria int,
 idEliminado int
 );
@@ -103,6 +104,7 @@ foto longtext,
 fechaNacimiento date,
 edad int,
 idEquipo int,
+idInscripcion int,
 idEliminado int
 );
 
@@ -129,16 +131,16 @@ insert into egresos values(null,4090,'Pago de recibos',1000,160,840,'2019-03-12'
 insert into remanentes values(null,5000,10000,4000,500,300,7000,'03','2019');
 
 insert into categorias values (null, 'Sin Categoria',0,0,1);
-insert into categorias values (null, 'Liga menor',12,18,1);
+
 
 insert into inscripcion values(null,'Aun no inscrito');
 insert into inscripcion values(null,'Inscrito');
 
-insert into torneos values(null,'No se ha inscrito en torneo',0,1,1);
-insert into torneos values(null,'Torneo Aderel',20,2,1);
+insert into torneos values(null,'No se ha inscrito en torneo',0,0,1,1);
 
 
-insert into equipos values (null, 'Aderel F.C','Elvis Ramirez',2,1,1,1);
+
+insert into equipos values (null, 'Sin Equipo','No definido',1,1,1,1);
 
 
 
@@ -359,14 +361,15 @@ $$
 delimiter $$
 create procedure mostrarEquipos()
 begin
-	select e.*, c.nombreCategoria as Categoria, i.estado as estado from equipos e
+	select e.*, c.nombreCategoria as Categoria, i.estado as estado, t.nombreTorneo as torneo from equipos e
     inner join categorias c on c.idCategoria = e.idCategoria
     inner join inscripcion i on i.idInscripcion = e.idInscripcion
-    where  e.idEliminado=1;
+    inner join torneos t on t.idTorneo = e.idTorneo
+    where  e.idEliminado=1 and e.idEquipo>1;
 end	
 $$
 
-
+drop procedure mostrarEquipos
 
 
 delimiter $$
@@ -379,4 +382,3 @@ $$
 
 
 
-    
