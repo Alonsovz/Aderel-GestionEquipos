@@ -24,6 +24,18 @@ class JugadoresController extends ControladorBase {
         echo $dao->eliminar();
     }
 
+    public function inscribirJugador() {
+        $idJ = $_REQUEST["idJ"];
+        $idEquipo = $_REQUEST["idEquipo"];
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setIdJugador($idJ);
+        $dao->objeto->setIdEquipo($idEquipo);
+
+        echo $dao->inscribir();
+    }
+
 
     public function guardarJugador() {
         // var_dump($_REQUEST);
@@ -31,7 +43,7 @@ class JugadoresController extends ControladorBase {
         $apellido = $_REQUEST["apellidoJ"];
         $dui = $_REQUEST["dui"];
         $fechaNac = $_REQUEST["fechaNac"];
-        $equipo = $_REQUEST["equipo"];
+       // $equipo = $_REQUEST["equipo"];
        // $categoria = $_REQUEST["categoria"];
         $img= $_REQUEST["img"];
         $edad= $_REQUEST["edad"];
@@ -46,7 +58,7 @@ class JugadoresController extends ControladorBase {
         $dao->objeto->setEdad($edad);
         $dao->objeto->setDui($dui);
         $dao->objeto->setFechaNacimiento($fechaNac);
-        $dao->objeto->setIdEquipo($equipo);
+        //$dao->objeto->setIdEquipo($equipo);
        // $dao->objeto->setIdCategoria($categoria);
         $dao->objeto->setImg($img);
 

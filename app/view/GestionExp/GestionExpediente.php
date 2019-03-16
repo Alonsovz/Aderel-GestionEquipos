@@ -15,14 +15,16 @@
     </div>
     <div class="row tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
 
+                
+
+                 <button style="width: 27%;" class="ui red  inverted segment"  onclick="cargarContenidoC()" id="btnVerCategorias">
+                <center><i class="chart bar outline icon"></i>
+                Categorías</center>
+                </button>
+
                 <button style="width: 22%;" class="ui green  inverted segment" onclick="cargarContenidoT()" id="btnVerTorneos">
                 <i class="trophy icon"></i>
                 Torneos
-                </button>
-
-                 <button style="width: 22%;" class="ui red  inverted segment"  onclick="cargarContenidoC()" id="btnVerCategorias">
-                <i class="chart bar outline icon"></i>
-                Categorías
                 </button>
 
                 <button style="width: 22%;" class="ui blue inverted segment"  id="btnVerEquipos"
@@ -31,7 +33,7 @@
                 Equipos
                 </button>
 
-                <button style="width: 22%;" class="ui yellow  inverted segment" onclick="cargarContenidoJ()" id="btnVerJugadores">
+                <button style="width: 27%;" class="ui yellow  inverted segment" onclick="cargarContenidoJ()" id="btnVerJugadores">
                 <i class="users icon"></i>
                 Jugadores
                 </button>
@@ -47,9 +49,7 @@
 </div>
 
 
-<script src="./res/js/modalRegistrar.js"></script>
-<script src="./res/js/modalEditar.js"></script>
-<script src="./res/js/modalEliminar.js"></script>
+
 
 <script>
 

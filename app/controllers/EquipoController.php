@@ -8,7 +8,28 @@ class EquipoController extends ControladorBase {
     {
         $daoC = new DaoCategorias();
         $categoriasCMB = $daoC->mostrarCategoriasCmb();
+
+        $daoT = new DaoTorneos();
+        $torneos = $daoT->cargarTorneos();
         require_once './app/view/GestionExp/GestionEquipos.php';
+    }
+
+    public function inscribirEquipo() {
+        $idT = $_REQUEST["idT"];
+        $idEquipo = $_REQUEST["idEquipo"];
+
+        $dao = new DaoEquipos();
+
+        $dao->objeto->setIdTorneo($idT);
+        $dao->objeto->setIdEquipo($idEquipo);
+
+        
+
+        $daoT = new DaoTorneos();
+        $daoT->objeto->setIdTorneo($idT);
+
+        echo $dao->inscribir();
+        echo $daoT->disponibles();
     }
 
 public function registrar() {
@@ -45,6 +66,26 @@ public function registrar() {
         $dao->objeto->setIdEquipo($id);
 
         echo $dao->cargarDatosEquipo();
+    }
+
+    public function cargarEquiposIns() {
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoEquipos();
+
+        $dao->objeto->setIdEquipo($id);
+
+        echo $dao->cargarDatosEquipoIns();
+    }
+
+    public function cargarTorneos() {
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoTorneos();
+
+        $dao->objeto->setIdCategoria($id);
+
+        echo $dao->cargarTorneos();
     }
 
     public function editar() {

@@ -54,6 +54,9 @@ sub_titulo="¿Está seguro de querer eliminar esta categoria?" :campos="campos_e
 
 </div>
 <script src="./res/tablas/tablaCategorias.js"></script>
+<script src="./res/js/modalRegistrar.js"></script>
+<script src="./res/js/modalEditar.js"></script>
+<script src="./res/js/modalEliminar.js"></script>
 <script>
 var appC = new Vue({
         el: "#appC",

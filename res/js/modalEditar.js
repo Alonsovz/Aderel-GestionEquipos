@@ -123,7 +123,7 @@ Vue.component('modal-editar', {
                                 <option v-for="(op,i) in campo.options" :value="op.val" :key='i'>
                                     {{op.text}}
                                 </option>  
-                            </select>
+                            </select> 
                             <div class="ui radio checkbox" v-else-if="campo.type == 'radio'" v-for="(op,index) in campo.options" :key='index'>
                                 <input type="radio" name="campo.name" tabindex="0" class="hidden" v-model='campo.value' :value='op.val' :checked='index==0'>
                                 <label>{{op.text}}</label>

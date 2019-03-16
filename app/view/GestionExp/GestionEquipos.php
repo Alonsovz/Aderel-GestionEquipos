@@ -1,8 +1,4 @@
-<script>
-    console.log(<?php echo $categoriasCMB;?>)
 
-
-</script>
 <div id="appE">
 <modal-registrar id_form="frmRegistrarE" id="modalRegistrarE" url="?1=EquipoController&2=registrar" titulo="Registrar Equipo"
 :campos="campos_registroE" tamanio='tiny' ></modal-registrar>
@@ -12,7 +8,7 @@
 :campos="campos_editarE" tamanio='tiny'></modal-editar>
 
 <modal-eliminar id_form="frmEliminarE" id="modalEliminarE" url="?1=EquipoController&2=eliminar" titulo="Eliminar Equipo"
-sub_titulo="¿Está seguro de querer eliminar esta equipo?" :campos="campos_eliminarE" tamanio='tiny'></modal-eliminar>
+sub_titulo="¿Está seguro de querer eliminar este equipo?" :campos="campos_eliminarE" tamanio='tiny'></modal-eliminar>
 
 <div class="ui grid">
     
@@ -51,7 +47,8 @@ sub_titulo="¿Está seguro de querer eliminar esta equipo?" :campos="campos_elim
                                         <th style="background-color: #217CD1; color:white;">Nombre del  Equipo</th>
                                         <th style="background-color: #217CD1; color:white;">Encargado del Equipo</th>
                                         <th style="background-color: #217CD1; color:white;">Categoría del Equipo</th>
-                                        <th style="background-color: #217CD1; color:white;">Estado</th>
+                                        <th style="background-color: #217CD1; color:white;">Estado en torneo</th>
+                                        <th style="background-color: #217CD1; color:white;">Torneo </th>
                                         <th style="background-color: #217CD1; color:white;">Acciones</th>
                                     </tr>
                                 </thead>
@@ -63,12 +60,56 @@ sub_titulo="¿Está seguro de querer eliminar esta equipo?" :campos="campos_elim
             
  </div>
 </div>
+<div class="ui tiny modal" id="modalInscribirE"  style="overflow: scroll;">
 
+<div class="header">
+<i class="trophy icon"></i><i class="futbol icon"></i> Inscribir Equipo
+</div>
+<div class="content" class="ui equal width form">
+    <form class="ui form" id="frmInscribirE"> 
+        <div class="field">
+            <div class="fields">
+            <div class="eight wide field">
+            <label><i class="users icon"></i>Nombre del equipo</label>
+            <input type="text" name="nombreEquipo" id="nombreEquipo" readonly>
+            </div>
+
+            <div class="eight wide field">
+            <label><i class="chart bar outline icon"></i>Categoría del equipo</label>
+            <input type="text" name="categoria"  id="categoria" readonly>
+            </div>
+            </div>
+        </div>
+        
+        <div class="field">
+            <div class="fields">
+                <div class="eight wide field">
+                <label><i class="trophy icon"></i>Torneos disponibles</label>
+                <select name="torneoIns" id="torneoIns" class="ui search dropdown" style="">
+                        </select>
+                        <input type="hidden" name="idE"  id="idE">   
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+    <div class="actions">
+        <button onclick="cerrar()" class="ui yellow button">
+            Cancelar
+        </button>
+        <button class="ui blue button" id="btnInscribirE" >
+        Guardar
+        </button>
+    </div>
+</div>
 
 
 <script src="./res/tablas/tablaEquipos.js"></script>
-
+<script src="./res/js/modalRegistrar.js"></script>
+<script src="./res/js/modalEditar.js"></script>
+<script src="./res/js/modalEliminar.js"></script>
 <script>
+
 var appE = new Vue({
         el: "#appE",
         data: {
@@ -115,8 +156,6 @@ var appE = new Vue({
                 }
 
             ],
-            
-           
             campos_eliminarE: [{
                 name: 'idEliminar',
                 type: 'hidden'
@@ -150,6 +189,30 @@ var appE = new Vue({
                         console.log(err);
                     });
             },
+
+            cargarDatosT() {
+                var id = $("#idDetalleE").val();
+
+                fetch("?1=EquipoController&2=cargarEquiposIns&id=" + id)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(dat => {
+
+                        console.log(dat);
+
+                        // $('#frmEditar input[name="idDetalle"]').val(dat.codigoUsuari);
+                        $('#frmInscribirE input[name="nombreEquipo"]').val(dat.nombre);
+                        $('#frmInscribirE input[name="categoria"]').val(dat.categorias);
+                        $('#frmInscribirE input[name="IdCategoria"]').val(dat.id);
+                        $('#frmInscribirE input[name="idE"]').val(dat.idEquipo);
+                        //$('#frmInscribir select[name="selectCategoria"]').dropdown('set selected', dat.idCategoria);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
+           
             
            
             
@@ -169,4 +232,75 @@ var editarEquipo=(ele)=>{
             $('#idDetalleE').val($(ele).attr("id"));
             appE.cargarDatosE();
         }
+
+var inscribirEquipo=(ele)=>{
+           $('#modalInscribirE').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+           $('#idDetalleE').val($(ele).attr("id"));
+           appE.cargarDatosT();
+        }
+
+
+    function cerrar(){
+        $('#modalInscribirE').modal('hide');
+    }
+     
+
+
+    
+
+
+        $(function() {
+        
+
+            var option = '';
+            var torneo = '<?php echo $torneos?>';
+
+            $.each(JSON.parse(torneo), function() {
+                option = `<option value="${this.idTorneo}">${this.nombreTorneo} </option>`;
+
+                $('#torneoIns').append(option);
+            });
+
+
+            $('#btnInscribirE').click(function() {
+               var idEquipo = $('#idE').val();
+               var idT = $('#torneoIns').val();
+         
+        
+            $.ajax({
+                type: 'POST',
+                url: '?1=EquipoController&2=inscribirEquipo',
+                data: {
+                    idEquipo : idEquipo,
+                    idT : idT,
+                },
+                success: function(r) {
+                    if(r == 11) {
+                        $('#modalInscribirE').modal('hide');
+                        swal({
+                            title: 'Listo!',
+                            text: 'Equipo inscrito con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            if (result.value) {
+                                location.href = '?';
+                            }
+                        }); 
+                        $('#dtEquipos').DataTable().ajax.reload();
+                        
+                    } 
+                }
+            });
+            });
+
+            
+            
+
+            
+        });
+
+
 </script>

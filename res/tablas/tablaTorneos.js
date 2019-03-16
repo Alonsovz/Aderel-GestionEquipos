@@ -18,6 +18,9 @@ $(function() {
                     "data": "numeroEquipos"
                 },
                 {
+                    "data": "disponibles"
+                },
+                {
                     "data": "categoria"
                 },
                 {

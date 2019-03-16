@@ -19,11 +19,16 @@ class DaoEquipos extends DaoBase {
 
             $object = json_encode($fila);
 
-           
+            if($fila["idInscripcion"]== 1){
+                $btnInscrbir = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnInscribir icon green small button\" onclick=\"inscribirEquipo(this)\"><i class=\"futbol icon\"></i></button>';
+               }
+               else{
+                $btnInscrbir = '';
+               }
             $btnEditar = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnEditarE icon yellow small button\" onclick=\"editarEquipo(this)\"><i class=\"edit icon\"></i></button>';
             $btnEliminar = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnEliminarE icon negative small button\" onclick=\"eliminarEquipo(this)\"><i class=\"trash icon\"></i></button>';
 
-            $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.'"';
+            $acciones = ', "Acciones": "'.$btnInscrbir.''.$btnEditar.' '.$btnEliminar.'"';
 
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
 
@@ -38,7 +43,7 @@ class DaoEquipos extends DaoBase {
 
     public function registrar() {
         $_query = "insert into equipos values(null,'".$this->objeto->getNombreEquipo()."', '".$this->objeto->getEncargado()."',
-        '".$this->objeto->getIdCategoria()."',1)";
+        '".$this->objeto->getIdCategoria()."',1,1,1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -76,6 +81,22 @@ class DaoEquipos extends DaoBase {
         }
     }
 
+    public function inscribir() {
+        $_query = "update equipos set idInscripcion=2, idTorneo='".$this->objeto->getIdTorneo()."'
+         where idEquipo= ".$this->objeto->getIdEquipo();
+         
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    
+
     public function cargarDatosEquipo() {
 
         $_query = "select * from equipos
@@ -88,8 +109,21 @@ class DaoEquipos extends DaoBase {
         return $json;
     }
 
+    public function cargarDatosEquipoIns() {
+
+        $_query = "select e.*, c.nombreCategoria as categorias,c.idCategoria as id from equipos e
+        inner join categorias c on c.idCategoria = e.idCategoria
+        where e.idEquipo= ".$this->objeto->getIdEquipo();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $json = json_encode($resultado->fetch_assoc());
+
+        return $json;
+    }
+
     public function mostrarEquiposCmb() {
-        $_query = "select * from equipos where idEliminado=1";
+        $_query = "select * from equipos where idEliminado=1 and idEquipo>1";
 
         $resultado = $this->con->ejecutar($_query);
 

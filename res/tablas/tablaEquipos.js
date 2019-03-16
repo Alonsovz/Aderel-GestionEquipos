@@ -24,6 +24,9 @@ $(function() {
                     "data": "estado"
                 },
                 {
+                    "data": "torneo"
+                },
+                {
                     "data": "Acciones"
                 }
                 

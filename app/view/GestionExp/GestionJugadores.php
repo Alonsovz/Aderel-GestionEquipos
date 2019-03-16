@@ -1,8 +1,4 @@
-<script>
-    console.log(<?php echo $equipoCMB;?>)
 
-
-</script>
 
 <div id="appJ">
 
@@ -71,6 +67,7 @@
                     <div class="eight wide field">
                         <label><i class="user icon"></i>Nombre del Jugador</label>
                         <input type="text" name="nombreJ" placeholder="Nombre del Jugador" id="nombreJ">
+                            
                             <div class="ui red pointing label"  id="labelNombre"
                             style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
                             Completa este campo</div>
@@ -106,23 +103,17 @@
                         </div>
                         
             </div>   
-            <div id="age">
-            <div class="field">
-            <div class="fields">
-                <div class="three wide field"></div>
-            <div class="five wide field">
-                <label>La edad del jugador es:</label>
-            </div>
-                <div class="five wide field">
-                 <input type="text" id="edad" name="edad" readonly>
-                </div>
-            <div class="three wide field"></div>
-            </div>
-            </div>
-            </div>
+            
                 <div class="field">
                         <div class="fields">
-                        <div class="six wide field">
+                        
+                        <div class="eight wide field">
+                            <div id="age">
+                            <b><label><i class="male icon"></i>La edad del jugador es:</label></b>
+                            <input type="text" id="edad" name="edad" readonly>
+                            </div>
+                        </div>
+                        <div class="eight wide field">
                         <label><i class="address card icon"></i>N° Dui del Jugador</label>
                             <input type="text" name="dui" placeholder="DUI del jugador" id="dui">
                                     <div class="ui red pointing label"  id="labelDui"
@@ -130,11 +121,7 @@
                                     Completa este campo
                                     </div>
                         </div>
-                            <div class="ten wide field">
-                            <label><i class="calendar icon"></i>Nombre del Equipo</label>
-                            <select name="equipo" id="equipo" class="ui search dropdown">
-                            </select>
-                            </div> 
+                       
 
                             
                         </div>
@@ -155,10 +142,60 @@
 
 </div>
 
-<script src="./res/tablas/tablaJugadores.js"></script>
 
+<div class="ui tiny modal" id="modalInscribirJ"  style="overflow: scroll;">
+
+<div class="header">
+<i class="male icon"></i><i class="futbol icon"></i> Inscribir Jugador
+</div>
+<div class="content" class="ui equal width form">
+    <form class="ui form" id="frmInscribirJ"> 
+        <div class="field">
+            <div class="fields">
+            <div class="eight wide field">
+            <label><i class="users icon"></i>Nombre del jugador</label>
+            <input type="text" name="nombreJugador" id="nombreJugador" readonly>
+            </div>
+
+            <div class="eight wide field">
+            <label><i class="chart bar outline icon"></i>Edad del Jugador</label>
+            <input type="text" name="edadJ"  id="edadJ" readonly>
+            <input type="hidden" name="idJ"  id="idJ">
+            </div>
+            </div>
+        </div>
+        
+        <div class="field">
+            <div class="fields">
+            <div class="four wide field"></div>
+                <div class="eight wide field">
+                <label><i class="trophy icon"></i>Equipos disponibles</label>
+                <select name="equipo" id="equipo" class="ui search dropdown" style="">
+                        </select>
+                         
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+    <div class="actions">
+        <button id="btnCerrarJ" class="ui yellow button">
+            Cancelar
+        </button>
+        <button class="ui blue button" id="btnInscribir" >
+        Guardar
+        </button>
+    </div>
+</div>
+
+<script src="./res/tablas/tablaJugadores.js"></script>
+<script src="./res/js/modalRegistrar.js"></script>
+<script src="./res/js/modalEditar.js"></script>
+<script src="./res/js/modalEliminar.js"></script>
 <script>
-    
+ $(document).ready(function(){
+    $('#dui').mask("99999999-9");
+});   
 var appJ = new Vue({
         el: "#appJ",
         data: {
@@ -248,6 +285,7 @@ var appJ = new Vue({
                         $('#frmEditarJ input[name="nombre"]').val(dat.nombre);
                         $('#frmEditarJ input[name="apellido"]').val(dat.apellido);
                         $('#frmEditarJ input[name="dui"]').val(dat.dui);
+                        $('#frmEditarJ input[name="imagenNueva"]').val(dat.foto);
                         $('#frmEditarJ input[name="fechaNacimiento"]').val(dat.fechaNacimiento);
                         $('#frmEditarJ input[name="edad"]').val(dat.edad);
                         $('#frmEditarJ select[name="equipo"]').dropdown('set selected', dat.idEquipo);
@@ -256,6 +294,28 @@ var appJ = new Vue({
                         console.log(err);
                     });
             },
+            cargarDatosJu() {
+                var id = $("#idDetalleE").val();
+
+                fetch("?1=JugadoresController&2=cargarDatosJugadores&id=" + id)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(dat => {
+
+                        console.log(dat);
+
+                        // $('#frmEditar input[name="idDetalle"]').val(dat.codigoUsuari);
+                        $('#frmInscribirJ input[name="nombreJugador"]').val(dat.nombre +' '+ dat.apellido);
+                        $('#frmInscribirJ input[name="edadJ"]').val(dat.edad);
+                        $('#frmInscribirJ input[name="idJ"]').val(dat.idJugador);
+                        //$('#frmInscribirJ input[name="IdCategoria"]').val(dat.id);
+                        //$('#frmInscribir select[name="selectCategoria"]').dropdown('set selected', dat.idCategoria);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
             
            
             
@@ -279,6 +339,12 @@ $('#btnCerrar').click(function() {
                 $('#Imagen').val('');
                 $('#modalAgregarJugador').modal('hide');
             });
+            $('#btnCerrarJ').click(function() { 
+  
+                $('#nombreJugador').val('');
+                $('#edad').val('');
+                $('#modalInscribirJ').modal('hide');
+            });
         });
 
 
@@ -291,6 +357,12 @@ var editarJugador=(ele)=>{
             $('#modalEditarJ').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
             $('#idDetalleE').val($(ele).attr("id"));
             appJ.cargarDatosJ();
+        }
+
+var inscribirJugador=(ele)=>{
+            $('#modalInscribirJ').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+            $('#idDetalleE').val($(ele).attr("id"));
+            appJ.cargarDatosJu();
         }
 
 </script>
@@ -328,7 +400,51 @@ $('#modalAgregarJugador').modal('setting', 'autofocus', false).modal('setting', 
 });
 
             $(function(){
+                $("#nombreJ").keyup(function(){
+                    $("#labelNombre").css("display","none");
+                    $("#btnGuardarJugador").attr("disabled", false);
+                });
+                $("#apellidoJ").keyup(function(){
+                    $("#labelApellido").css("display","none");
+                    $("#btnGuardarJugador").attr("disabled", false);
+                });
+                $("#Imagen").change(function(){
+                    $("#labelFoto").css("display","none");
+                    $("#btnGuardarJugador").attr("disabled", false);
+                });
+                $("#fechaNac").keyup(function(){
+                    $("#labelFecha").css("display","none");
+                    $("#btnGuardarJugador").attr("disabled", false);
+                });
+                $("#dui").keyup(function(){
+                    $("#labelDui").css("display","none");
+                    $("#btnGuardarJugador").attr("disabled", false);
+                });
             $('#btnGuardarJugador').click(function() {
+                if($("#nombreJ").val()=='')
+                {
+                    $("#labelNombre").css("display","block");
+                    $("#btnGuardarJugador").attr("disabled", true);
+                }
+                if($("#apellidoJ").val()==""){
+                    $("#labelApellido").css("display","block");
+                    $("#btnGuardarJugador").attr("disabled", false);
+                }
+                if($("#img").val()==""){
+                    $("#labelFoto").css("display","block");
+                    $("#btnGuardarJugador").attr("disabled", false);
+                }
+                if($("#fechaNac").val()==""){
+                    $("#labelFecha").css("display","block");
+                    $("#btnGuardarJugador").attr("disabled", false);
+                }
+                if($("#dui").val()==""){
+                    $("#labelDui").css("display","block");
+                    $("#btnGuardarJugador").attr("disabled", false);
+                }
+
+                
+                else{
                 const form = $('#frmJugador');
 
                 const datosFormulario = new FormData(form[0]);
@@ -348,6 +464,41 @@ $('#modalAgregarJugador').modal('setting', 'autofocus', false).modal('setting', 
                         swal({
                             title: 'Registrado',
                             text: 'Guardado con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            if (result.value) {
+                                location.href = '?';
+                            }
+                        }); 
+                        $('#dtJugadores').DataTable().ajax.reload();
+                        
+                    } 
+                }
+            });
+        }
+            });
+
+            $('#btnInscribir').click(function() {
+               var idEquipo = $('#equipo').val();
+               var idJ = $('#idJ').val();
+         
+        
+            $.ajax({
+                type: 'POST',
+                url: '?1=JugadoresController&2=inscribirJugador',
+                data: {
+                    idEquipo : idEquipo,
+                    idJ : idJ,
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        $('#modalInscribirJ').modal('hide');
+                        swal({
+                            title: 'Listo!',
+                            text: 'Jugador inscrito con éxito',
                             type: 'success',
                             showConfirmButton: false,
                                 timer: 1700

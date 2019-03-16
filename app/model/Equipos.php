@@ -5,10 +5,27 @@ class Equipos extends ModeloBase{
     private $nombreEquipo;
     private $encargado;
     private $idCategoria;
+    private $idTorneo;
 
 
     public function __construct() {
 
+    }
+    public function getIdTorneo()
+    {
+        return $this->idTorneo;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setIdTorneo($idTorneo)
+    {
+        $this->idTorneo = $idTorneo;
+
+        return $this;
     }
 
     public function getIdCategoria()

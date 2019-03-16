@@ -4,6 +4,7 @@ class Torneos extends ModeloBase{
     private $idTorneo;
     private $nombreTorneo;
     private $numeroEquipos;
+    private $disponibles;
     private $idCategoria;
 
     public function __construct() {
@@ -74,6 +75,23 @@ class Torneos extends ModeloBase{
     public function setNumeroEquipos($numeroEquipos)
     {
         $this->numeroEquipos = $numeroEquipos;
+
+        return $this;
+    }
+
+    public function getDisponibles()
+    {
+        return $this->disponibles;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setDisponibles($disponibles)
+    {
+        $this->disponibles = $disponibles;
 
         return $this;
     }

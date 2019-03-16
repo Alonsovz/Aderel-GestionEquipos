@@ -10,8 +10,7 @@ class DaoJugadores extends DaoBase {
     public function registrarJugador(){
         $query = "Insert into jugadores values (null,'".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
         '".$this->objeto->getDui()."','".$this->objeto->getImg()."','".$this->objeto->getFechaNacimiento()."',
-        '".$this->objeto->getEdad()."',
-        '".$this->objeto->getIdEquipo()."',1);";
+        '".$this->objeto->getEdad()."',1,1,1);";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -39,14 +38,20 @@ class DaoJugadores extends DaoBase {
             while($fila = $resultado->fetch_assoc()) {
                     
                 $object = json_encode($fila);
-               
+
+               if($fila["idEquipo"]== 1){
+                $btnInscrbir = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnInscribir icon green small button\" onclick=\"inscribirJugador(this)\"><i class=\"futbol icon\"></i></button>';
+               }
+               else{
+                $btnInscrbir = '';
+               }
                
 
                 $btnEditar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEditarJ icon blue small button\" onclick=\"editarJugador(this)\"><i class=\"edit icon\"></i></button>';
                 $btnEliminar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEliminarJ icon negative small button\" onclick=\"eliminarJugador(this)\"><i class=\"trash icon\"></i></button>';
                 $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnInscrbir.''.$btnEditar.' '.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
                 
 
                 $object = substr_replace($object, $acciones, strlen($object) -1,0);
@@ -61,6 +66,19 @@ class DaoJugadores extends DaoBase {
 
     public function eliminar() {
         $_query = "update jugadores set idEliminado=2 where idJugador = ".$this->objeto->getIdJugador();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function inscribir() {
+        $_query = "update jugadores set idInscripcion=2, idEquipo= '".$this->objeto->getIdEquipo()."'
+         where idJugador = ".$this->objeto->getIdJugador();
 
         $resultado = $this->con->ejecutar($_query);
 
