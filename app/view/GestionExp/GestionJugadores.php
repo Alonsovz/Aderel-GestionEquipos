@@ -328,6 +328,15 @@ $(document).ready(function(){
     $("#age").hide();
 });
 
+function limpiar(){
+    $("#age").hide(); 
+                $('#nombreJ').val('');
+                $('#apellidoJ').val('');
+                $('#dui').val('');
+                $('#fechaNac').val('');
+                $('#Imagen').val('');
+                
+}
 $(function(){
 $('#btnCerrar').click(function() { 
                 $("#age").hide();   
@@ -335,7 +344,7 @@ $('#btnCerrar').click(function() {
                 $('#apellidoJ').val('');
                 $('#dui').val('');
                 $('#fechaNac').val('');
-                $('#equipo').prop('selected', false).find('option:first').prop('selected', true);
+               // $('#equipo').prop('selected', false).find('option:first').prop('selected', true);
                 $('#Imagen').val('');
                 $('#modalAgregarJugador').modal('hide');
             });
@@ -474,7 +483,7 @@ $('#modalAgregarJugador').modal('setting', 'autofocus', false).modal('setting', 
                             }
                         }); 
                         $('#dtJugadores').DataTable().ajax.reload();
-                        
+                        limpiar();
                     } 
                 }
             });
