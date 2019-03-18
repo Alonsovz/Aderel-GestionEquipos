@@ -14,6 +14,29 @@ class JugadoresController extends ControladorBase {
         require_once './app/view/GestionExp/GestionJugadores.php';
     }
 
+    public static function gestionM(){
+
+        $daoU = new DaoEquipos();
+        $equiposCMB = $daoU->mostrarEquiposCmb();
+
+        $equipoCMB = $daoU->mostrarEquipoCmb();
+
+        require_once './app/view/GestionExp/GestionJugadoresMasculinos.php';
+
+    }
+
+
+    public static function gestionF(){
+
+        $daoU = new DaoEquipos();
+        $equiposCMB = $daoU->mostrarEquiposCmb();
+
+        $equipoCMB = $daoU->mostrarEquipoCmb();
+
+        require_once './app/view/GestionExp/GestionJugadoresFemeninas.php';
+
+    }
+
     public function eliminar() {
         $datos = $_REQUEST["id"];
 

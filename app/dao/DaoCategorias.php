@@ -7,10 +7,10 @@ class DaoCategorias extends DaoBase {
         $this->objeto = new Categorias();
     }
 
-    public function mostrarCategorias()
+    public function mostrarCategoriasM()
     {
         $_query = "select * from categorias
-        where  idEliminado=1 and idCategoria>1;";
+        where  idEliminado=1 and idCategoria>2 and idGenero=2;";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -23,8 +23,39 @@ class DaoCategorias extends DaoBase {
            
             $btnEditar = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editarCategoria(this)\"><i class=\"edit icon\"></i></button>';
             $btnEliminar = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnEliminarC icon yellow small button\" onclick=\"eliminarCategoria(this)\"><i class=\"trash icon\"></i></button>';
+            $btnTorneos = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnTorneos icon green small button\" onclick=\"verTorneos(this)\"><i class=\"trophy icon\"></i></button>';
 
-            $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.'"';
+            $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$btnTorneos.'"';
+
+            $object = substr_replace($object, $acciones, strlen($object) -1, 0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        return '{"data": ['.$_json .']}';
+    }
+
+    public function mostrarCategoriasF()
+    {
+        $_query = "select * from categorias
+        where  idEliminado=1 and idCategoria>1 and idGenero=1;";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $_json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $object = json_encode($fila);
+
+           
+            $btnEditar = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editarCategoria(this)\"><i class=\"edit icon\"></i></button>';
+            $btnEliminar = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnEliminarC icon yellow small button\" onclick=\"eliminarCategoria(this)\"><i class=\"trash icon\"></i></button>';
+            $btnTorneos = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnTorneos icon green small button\" onclick=\"verTorneos(this)\"><i class=\"trophy icon\"></i></button>';
+
+            $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$btnTorneos.'"';
 
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
 
@@ -37,9 +68,22 @@ class DaoCategorias extends DaoBase {
     }
 
 
-    public function registrar() {
+    public function registrarM() {
         $_query = "insert into categorias values(null,'".$this->objeto->getNombreCategoria()."',
-         '".$this->objeto->getEdadMinima()."','".$this->objeto->getEdadMaxima()."',1)";
+         '".$this->objeto->getEdadMinima()."',2,1)";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function registrarF() {
+        $_query = "insert into categorias values(null,'".$this->objeto->getNombreCategoria()."',
+         '".$this->objeto->getEdadMinima()."',1,1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -51,8 +95,8 @@ class DaoCategorias extends DaoBase {
     }
 
 
-    public function eliminar() {
-        $_query = "update categorias set idEliminado=2 where idCategoria = ".$this->objeto->getIdCategoria();
+    public function eliminarM() {
+        $_query = "update categorias set idEliminado=2 where idGenero=2 and idCategoria = ".$this->objeto->getIdCategoria();
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -63,10 +107,10 @@ class DaoCategorias extends DaoBase {
         }
     }
 
-    public function editar() {
+    public function editarM() {
         $_query = "update categorias set nombreCategoria ='".$this->objeto->getNombreCategoria()."',
-        edadMinima = '".$this->objeto->getEdadMinima()."', edadMaxima = '".$this->objeto->getEdadMaxima()."'
-         where idCategoria = ".$this->objeto->getIdCategoria();
+        edadMinima = '".$this->objeto->getEdadMinima()."'
+         where idGenero=2 and idCategoria = ".$this->objeto->getIdCategoria();
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -77,10 +121,10 @@ class DaoCategorias extends DaoBase {
         }
     }
 
-    public function cargarDatosCategoria() {
+    public function cargarDatosCategoriaM() {
 
         $_query = "select * from categorias
-        where idCategoria = ".$this->objeto->getIdCategoria();
+        where idGenero=2 and idCategoria = ".$this->objeto->getIdCategoria();
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -89,8 +133,63 @@ class DaoCategorias extends DaoBase {
         return $json;
     }
 
-    public function mostrarCategoriasCmb() {
-        $_query = "select * from categorias where idEliminado=1 and idCategoria>1";
+
+    public function eliminarF() {
+        $_query = "update categorias set idEliminado=2 where idGenero=1 and idCategoria = ".$this->objeto->getIdCategoria();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function editarF() {
+        $_query = "update categorias set nombreCategoria ='".$this->objeto->getNombreCategoria()."',
+        edadMinima = '".$this->objeto->getEdadMinima()."'
+         where idGenero=1 and idCategoria = ".$this->objeto->getIdCategoria();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function cargarDatosCategoriaF() {
+
+        $_query = "select * from categorias
+        where idGenero=1 and idCategoria = ".$this->objeto->getIdCategoria();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $json = json_encode($resultado->fetch_assoc());
+
+        return $json;
+    }
+
+    public function mostrarCategoriasCmbM() {
+        $_query = "select * from categorias where idEliminado=1 and idCategoria>2 and idGenero=2";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+            $json .= '{"val": '.$fila['idCategoria'].', "text": "'.$fila['nombreCategoria'].'"},';
+        }
+
+        $json = substr($json,0, strlen($json) - 1);
+
+        return '['.$json.']';
+    }
+
+    public function mostrarCategoriasCmbF() {
+        $_query = "select * from categorias where idEliminado=1 and idCategoria>1 and idGenero=1";
 
         $resultado = $this->con->ejecutar($_query);
 

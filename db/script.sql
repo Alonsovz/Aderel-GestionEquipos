@@ -58,13 +58,16 @@ mes varchar(10),
 anio varchar(10)
 );
 
-
+create table genero(
+idGenero int primary key auto_increment,
+genero varchar(15)
+);
 
 create table categorias(
 idCategoria int primary key auto_increment,
 nombreCategoria varchar(100),
 edadMinima int,
-edadMaxima int,
+idGenero int,
 idEliminado int
 );
 
@@ -77,6 +80,7 @@ nombreTorneo varchar(100),
 numeroEquipos int,
 disponibles int,
 idCategoria int,
+idGenero int,
 idEliminado int
 );
 
@@ -91,6 +95,7 @@ encargado varchar(200),
 idCategoria int,
 idInscripcion int,
 idTorneo int,
+idGenero int,
 idEliminado int
 );
 
@@ -105,6 +110,7 @@ fechaNacimiento date,
 edad int,
 idEquipo int,
 idInscripcion int,
+idGenero int,
 idEliminado int
 );
 
@@ -118,6 +124,11 @@ alter table equipos add constraint fk_equipos_torneos foreign key (idTorneo) ref
 alter table equipos add constraint fk_equipos_inscripcion foreign key (idInscripcion) references inscripcion(idInscripcion);
 alter table torneos add constraint fk_torneos_categorias foreign key (idCategoria) references categorias(idCategoria);
 
+alter table jugadores add constraint fk_jugadores_genero foreign key (idGenero) references genero(idGenero);
+alter table torneos add constraint fk_torneos_genero foreign key (idGenero) references genero(idGenero);
+alter table categorias add constraint fk_categorias_genero foreign key (idGenero) references genero(idGenero);
+alter table equipos add constraint fk_equipos_genero foreign key (idGenero) references genero(idGenero);
+
 insert into rol values(1,'Administrador');
 insert into usuario values(null,'Fabio Alonso','Mejia Velasquez','mejia','fabiomejiash@gmail.com',sha1('123'),1,1);
 insert into usuario values(null,'Alonso','Mejia','alonso','mejiafabio383@gmail.com',sha1('123'),1,1);
@@ -130,17 +141,24 @@ insert into egresos values(null,4090,'Pago de recibos',1000,160,840,'2019-03-12'
 
 insert into remanentes values(null,5000,10000,4000,500,300,7000,'03','2019');
 
-insert into categorias values (null, 'Sin Categoria',0,0,1);
+
+insert into genero values(null,'Femenino');
+insert into genero values(null,'Masculino');
+
+insert into categorias values (null, 'Sin Categoria',0,1,1);
+insert into categorias values (null, 'Sin Categoria',0,2,1);
 
 
 insert into inscripcion values(null,'Aun no inscrito');
 insert into inscripcion values(null,'Inscrito');
 
-insert into torneos values(null,'No se ha inscrito en torneo',0,0,1,1);
+insert into torneos values(null,'No se ha inscrito en torneo',0,0,1,1,1);
+insert into torneos values(null,'No se ha inscrito en torneo',0,0,1,2,1);
 
 
 
-insert into equipos values (null, 'Sin Equipo','No definido',1,1,1,1);
+insert into equipos values (null, 'Sin Equipo','No definido',1,1,1,1,1);
+insert into equipos values (null, 'Sin Equipo','No definido',1,1,1,2,1);
 
 
 
@@ -369,7 +387,6 @@ begin
 end	
 $$
 
-drop procedure mostrarEquipos
 
 
 delimiter $$
@@ -381,4 +398,6 @@ end
 $$
 
 
+select * from categorias
+        where  idEliminado=1 and idCategoria>2 and idGenero=2;
 

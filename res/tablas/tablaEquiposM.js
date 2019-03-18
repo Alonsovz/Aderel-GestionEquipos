@@ -1,10 +1,10 @@
-var tablaEquipos;
+var tablaEquiposM;
 
 $(function() {
-    if($('#dtEquipos').length) {
-        tablaEquipos = $('#dtEquipos').DataTable({
+    if($('#dtEquiposM').length) {
+        tablaEquiposM = $('#dtEquiposM').DataTable({
             "ajax": {
-                "url": "?1=GestionExpController&2=mostrarEquipos",
+                "url": "?1=GestionExpController&2=mostrarEquiposM",
                 "type": "POST"
             },
             "columns": [
@@ -61,6 +61,6 @@ $(function() {
         });
 
          // Ocultar columna de id de Usuario
-         tablaEquipos.column(0).visible(false);
+         tablaEquiposM.column(0).visible(false);
     }
 });

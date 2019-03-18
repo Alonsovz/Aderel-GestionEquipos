@@ -9,7 +9,21 @@ class CategoriaController extends ControladorBase {
         require_once './app/view/GestionExp/GestionCategorias.php';
     }
 
-public function registrarC() {
+
+    public static function gestionM()
+    {
+        
+        require_once './app/view/GestionExp/GestionCategoriasMasculinas.php';
+    }
+
+
+    public static function gestionF()
+    {
+        
+        require_once './app/view/GestionExp/GestionCategoriasFemeninas.php';
+    }
+
+public function registrarCM() {
         $datos = $_REQUEST["datos"];
 
         $datos = json_decode($datos);
@@ -17,48 +31,100 @@ public function registrarC() {
         $dao = new DaoCategorias();
 
         $dao->objeto->setNombreCategoria($datos->nombreCategoria);
-        $dao->objeto->setEdadMaxima($datos->edadMaxima);
+        //$dao->objeto->setEdadMaxima($datos->edadMaxima);
         $dao->objeto->setEdadMinima($datos->edadMinima);
 
 
-        echo $dao->registrar();
+        echo $dao->registrarM();
+
+    }
+
+    public function registrarCF() {
+        $datos = $_REQUEST["datos"];
+
+        $datos = json_decode($datos);
+
+        $dao = new DaoCategorias();
+
+        $dao->objeto->setNombreCategoria($datos->nombreCategoria);
+        //$dao->objeto->setEdadMaxima($datos->edadMaxima);
+        $dao->objeto->setEdadMinima($datos->edadMinima);
+
+
+        echo $dao->registrarF();
 
     }
 
 
-    public function eliminar() {
+    public function eliminarM() {
         $datos = $_REQUEST["id"];
 
         $dao = new DaoCategorias();
 
         $dao->objeto->setIdCategoria($datos);
 
-        echo $dao->eliminar();
+        echo $dao->eliminarM();
     }
 
-    public function cargarDatosCategoria() {
+    public function cargarDatosCategoriaM() {
         $id = $_REQUEST["id"];
 
         $dao = new DaoCategorias();
 
         $dao->objeto->setIdCategoria($id);
 
-        echo $dao->cargarDatosCategoria();
+        echo $dao->cargarDatosCategoriaM();
     }
 
-    public function editar() {
-        $datos = $_REQUEST["datos"];
+    public function editarM() {
+       // $datos = $_REQUEST["datos"];
 
-        $datos = json_decode($datos);
+       // $datos = json_decode($datos);
 
         $dao = new DaoCategorias();
 
-        $dao->objeto->setNombreCategoria($datos->nombreCategoria);
-        $dao->objeto->setEdadMaxima($datos->edadMaxima);
-        $dao->objeto->setEdadMinima($datos->edadMinima);
-        $dao->objeto->setIdCategoria($datos->idDetalleC);
+        $dao->objeto->setNombreCategoria($_REQUEST["nombreCategoria"]);
+       // $dao->objeto->setEdadMaxima($_REQUEST["edadMaxima"]);
+        $dao->objeto->setEdadMinima($_REQUEST["edadMinima"]);
+        $dao->objeto->setIdCategoria($_REQUEST["idDetalleC"]);
 
-        echo $dao->editar();
+        echo $dao->editarM();
+    }
+
+
+    public function eliminarF() {
+        $datos = $_REQUEST["id"];
+
+        $dao = new DaoCategorias();
+
+        $dao->objeto->setIdCategoria($datos);
+
+        echo $dao->eliminarF();
+    }
+
+    public function cargarDatosCategoriaF() {
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoCategorias();
+
+        $dao->objeto->setIdCategoria($id);
+
+        echo $dao->cargarDatosCategoriaF();
+    }
+
+    public function editarF() {
+       // $datos = $_REQUEST["datos"];
+
+       // $datos = json_decode($datos);
+
+        $dao = new DaoCategorias();
+
+        $dao->objeto->setNombreCategoria($_REQUEST["nombreCategoria"]);
+       // $dao->objeto->setEdadMaxima($_REQUEST["edadMaxima"]);
+        $dao->objeto->setEdadMinima($_REQUEST["edadMinima"]);
+        $dao->objeto->setIdCategoria($_REQUEST["idDetalleC"]);
+
+        echo $dao->editarF();
     }
 
 

@@ -17,14 +17,17 @@
 
 <a href="?1=GestionExpController&2=gestion" class="item menu-it" style="color:#E6C404;">
     <i class="futbol icon"></i>
-    Equipos-Jugadores-Categorias
+    Control de Expediente General Masculino
 </a>
 
 
-<a href="?1=TorneosController&2=gestion" class="item menu-it" style="color:#E6C404;">
-    <i class="trophy icon"></i>
-    Torneos-Tablas de Posiciones
+<a href="?1=GestionExpControllerF&2=gestionF" class="item menu-it" style="color:#E6C404;">
+    <i class="futbol icon"></i>
+    Control de Expediente General Femenino
 </a>
+
+
+
 
 
 

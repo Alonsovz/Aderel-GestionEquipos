@@ -5,8 +5,8 @@
     <div class="ui grid">
             <div class="row">
                     <div class="titulo">
-                    <i class="team icon"></i>
-                        Equipos-Jugadores-Categorías existentes<font color="#DFD102" size="20px">.</font>
+                    <i class="male icon"></i>
+                    Control  General Categoría Masculino<font color="#DFD102" size="20px">.</font>
                     </div>
                     
             
@@ -48,7 +48,7 @@
      
 </div>
 
-
+<script src="./res/tablas/tablaCategoriasM.js"></script>
 
 
 <script>
@@ -123,7 +123,7 @@ $("#btnVerEquipos").click(function(){
 
         $.ajax({
             data : parametros,
-            url : '?1=JugadoresController&2=gestion',
+            url : '?1=JugadoresController&2=gestionM',
             type : 'POST',
             cache: false,
             success: function(response){
@@ -142,7 +142,7 @@ $("#btnVerEquipos").click(function(){
 
         $.ajax({
             data : parametros,
-            url : '?1=EquipoController&2=gestion',
+            url : '?1=EquipoController&2=gestionM',
             type : 'POST',
             cache: false,
             success: function(response){
@@ -160,7 +160,7 @@ $("#btnVerEquipos").click(function(){
 
         $.ajax({
             data : parametros,
-            url : '?1=CategoriaController&2=gestion',
+            url : '?1=CategoriaController&2=gestionM',
             type : 'POST',
             cache: false,
             success: function(response){
@@ -178,7 +178,7 @@ $("#btnVerEquipos").click(function(){
 
         $.ajax({
             data : parametros,
-            url : '?1=TorneosController&2=gestion',
+            url : '?1=TorneosController&2=gestionM',
             type : 'POST',
             cache: false,
             success: function(response){

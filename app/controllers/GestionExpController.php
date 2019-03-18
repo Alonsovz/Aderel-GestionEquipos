@@ -5,37 +5,37 @@ class GestionExpController extends ControladorBase {
     public static function gestion()
     {
         self::loadMain();
-        $daoU = new DaoEquipos();
-        $equiposCMB = $daoU->mostrarEquiposCmb();
-
-        $daoC = new DaoCategorias();
-        $categoriasCMB = $daoC->mostrarCategoriasCmb();
+        
         require_once './app/view/GestionExp/GestionExpediente.php';
     }
 
-    public function mostrarEquipos() {
+    public function mostrarEquiposM() {
         $dao = new DaoEquipos();
 
-        echo $dao->mostrarEquipos();
+        echo $dao->mostrarEquiposM();
     }
 
-    public function mostrarCategorias() {
+    public function mostrarCategoriasM() {
         $dao = new DaoCategorias();
 
-        echo $dao->mostrarCategorias();
+        echo $dao->mostrarCategoriasM();
     }
 
-    public function mostrarJugadores() {
+    
+
+    public function mostrarJugadoresM() {
         $dao = new DaoJugadores();
 
-        echo $dao->mostrarJugadores();
+        echo $dao->mostrarJugadoresM();
     }
 
-    public function mostrarTorneos() {
+    public function mostrarTorneosM() {
         $dao = new DaoTorneos();
 
-        echo $dao->mostrarTorneos();
+        echo $dao->mostrarTorneosM();
     }
+
+    
 
     
 

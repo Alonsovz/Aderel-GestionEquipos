@@ -1,24 +1,27 @@
-var tablaCategorias;
+var tablaTorneosM;
 
 $(function() {
-    if($('#dtCategorias').length) {
-        tablaCategorias = $('#dtCategorias').DataTable({
+    if($('#dtTorneosM').length) {
+        tablaTorneosM = $('#dtTorneosM').DataTable({
             "ajax": {
-                "url": "?1=GestionExpController&2=mostrarCategorias",
+                "url": "?1=GestionExpController&2=mostrarTorneosM",
                 "type": "POST"
             },
             "columns": [
                 {
-                    "data": "idCategoria"
+                    "data": "idTorneo"
                 },
                 {
-                    "data": "nombreCategoria"
+                    "data": "nombreTorneo"
                 },
                 {
-                    "data": "edadMinima"
+                    "data": "numeroEquipos"
                 },
                 {
-                    "data": "edadMaxima"
+                    "data": "disponibles"
+                },
+                {
+                    "data": "categoria"
                 },
                 {
                     "data": "Acciones"
@@ -55,6 +58,6 @@ $(function() {
         });
 
          // Ocultar columna de id de Usuario
-         tablaCategorias.column(0).visible(false);
+         tablaTorneosM.column(0).visible(false);
     }
 });
