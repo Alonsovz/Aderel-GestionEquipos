@@ -58,7 +58,7 @@ class JugadoresController extends ControladorBase {
         // var_dump($_REQUEST);
         $nombre = $_REQUEST["nombreJ"];
         $apellido = $_REQUEST["apellidoJ"];
-        $dui = $_REQUEST["dui"];
+        $dui = $_REQUEST["duiJ"];
         $fechaNac = $_REQUEST["fechaNac"];
        // $equipo = $_REQUEST["equipo"];
        // $categoria = $_REQUEST["categoria"];
@@ -105,7 +105,7 @@ class JugadoresController extends ControladorBase {
         $dao->objeto->setDui($_REQUEST['dui']);
         $dao->objeto->setFechaNacimiento($_REQUEST['fechaNacimiento']);
         $dao->objeto->setEdad($_REQUEST['edad']);
-        $dao->objeto->setIdEquipo($_REQUEST['equipo']);
+        //$dao->objeto->setIdEquipo($_REQUEST['equipo']);
         $dao->objeto->setImg($_REQUEST['imagenNueva']);
         $dao->objeto->setIdJugador($_REQUEST['idDetalleE']);
 
@@ -140,7 +140,7 @@ class JugadoresController extends ControladorBase {
         // var_dump($_REQUEST);
         $nombre = $_REQUEST["nombreJ"];
         $apellido = $_REQUEST["apellidoJ"];
-        $dui = $_REQUEST["dui"];
+        $dui = $_REQUEST["duiJ"];
         $fechaNac = $_REQUEST["fechaNac"];
        // $equipo = $_REQUEST["equipo"];
        // $categoria = $_REQUEST["categoria"];
@@ -187,7 +187,7 @@ class JugadoresController extends ControladorBase {
         $dao->objeto->setDui($_REQUEST['dui']);
         $dao->objeto->setFechaNacimiento($_REQUEST['fechaNacimiento']);
         $dao->objeto->setEdad($_REQUEST['edad']);
-        $dao->objeto->setIdEquipo($_REQUEST['equipo']);
+        //$dao->objeto->setIdEquipo($_REQUEST['equipo']);
         $dao->objeto->setImg($_REQUEST['imagenNueva']);
         $dao->objeto->setIdJugador($_REQUEST['idDetalleE']);
 

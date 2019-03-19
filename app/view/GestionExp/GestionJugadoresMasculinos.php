@@ -38,7 +38,7 @@
                                         <th style="background-color: #FACC2E;">Cod. Expediente</th>
                                         <th style="background-color: #FACC2E;">Nombre</th>
                                         <th style="background-color: #FACC2E;">Apellido</th>
-                                        <th style="background-color: #FACC2E;">Dui</th>
+                                        <th style="background-color: #FACC2E;">DUI/Carnet Minoridad</th>
                                         <th style="background-color: #FACC2E;">Fecha de Nacimiento</th>
                                         <th style="background-color: #FACC2E;">Edad del Jugador</th>                
                                     </tr>
@@ -110,8 +110,8 @@
                             </div>
                         </div>
                         <div class="eight wide field">
-                        <label><i class="address card icon"></i>N° Dui del Jugador</label>
-                            <input type="text" name="dui" placeholder="DUI del jugador" id="dui">
+                        <label><i class="address card icon"></i>DUI/Carnet Minoridad:</label>
+                            <input type="text" name="duiJ" placeholder="DUI del jugador" id="duiJ">
                                     <div class="ui red pointing label"  id="labelDui"
                                     style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
                                     Completa este campo
@@ -223,11 +223,6 @@ var appJ = new Vue({
                     type: 'text'
                 },
                 {
-                    label: 'DUI:',
-                    name: 'dui',
-                    type: 'text', 
-                },
-                {
                     label: 'Fecha de Nacimiento:',
                     name: 'fechaNacimiento',
                     type: 'date', 
@@ -235,6 +230,11 @@ var appJ = new Vue({
                 {
                     label: 'Edad:',
                     name: 'edad',
+                    type: 'text', 
+                },
+                {
+                    label: 'DUI/Carnet Minoridad:',
+                    name: 'dui',
                     type: 'text', 
                 },
     
@@ -556,6 +556,12 @@ function resultado(){
 var edad = Edad(fecha);
 $("#age").show();
 $("#edad").val(edad);
+if(edad>18){
+    $('#duiJ').mask("99999999-9");
+}
+else{
+    $('#duiJ').mask("9999-999999-999-9");
+}
 }
 
 
@@ -565,13 +571,20 @@ function resultadoE(){
 var edad = Edad(fecha);
 
 $('#frmEditarJ input[name="edad"]').val(edad);
+
+if(edad>18){
+    $('#frmEditarJ input[name="dui"]').mask("99999999-9");
+}
+else{
+    $('#frmEditarJ input[name="dui"]').mask("9999-999999-999-9");
+}
 }
 
 $('#fechaNac').change(function(){
     var fecha =  document.getElementById('fechaNac').value;
 
 Edad(fecha);
-
+$("#duiJ").val('');
 resultado();
 
 
@@ -581,7 +594,7 @@ $('#frmEditarJ input[name="fechaNacimiento"]').change(function(){
     var fecha = $('#frmEditarJ input[name="fechaNacimiento"]').val();
 
 Edad(fecha);
-
+$('#frmEditarJ input[name="dui"]').val('');
 resultadoE();
 
 

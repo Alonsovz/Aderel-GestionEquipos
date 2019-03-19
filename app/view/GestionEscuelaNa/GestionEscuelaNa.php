@@ -1,30 +1,30 @@
 <br><div id="app">
 
-    <modal-registrar id_form="frmRegistrar" id="modalRegistrar" url="?1=GimnasioController&2=registrar"
-     titulo="Registrar Usuario de Gimnasio"
+    <modal-registrar id_form="frmRegistrar" id="modalRegistrar" url="?1=NatacionController&2=registrar"
+     titulo="Registrar Usuario de Natación"
         :campos="campos_registro" tamanio='tiny' style="overflow: scroll;"></modal-registrar>
 
-    <modal-editar id_form="frmEditar" id="modalEditar" url="?1=GimnasioController&2=editar" titulo="Editar Usuario de Gimnasio"
+    <modal-editar id_form="frmEditar" id="modalEditar" url="?1=NatacionController&2=editar" titulo="Editar Usuario de Escuela de Natación"
         :campos="campos_editar" tamanio='tiny'></modal-editar>
 
-    <modal-eliminar id_form="frmEliminar" id="modalEliminar" url="?1=GimnasioController&2=eliminar" titulo="Eliminar Usuario de Gimnasio"
-        sub_titulo="¿Está seguro de querer eliminar este usuario?" :campos="campos_eliminar" tamanio='tiny'></modal-eliminar>
+    <modal-eliminar id_form="frmEliminar" id="modalEliminar" url="?1=NatacionController&2=eliminar" titulo="Eliminar usuario de Escuela de
+     Natación" sub_titulo="¿Está seguro de querer eliminar este usuario?" :campos="campos_eliminar" tamanio='tiny'></modal-eliminar>
 
-        <modal-reinscribir id_form="frmEliminar" id="modalInscribir" url="?1=GimnasioController&2=reinscribir" 
-        titulo="Reeinscribir Usuario del Gimnasio"
+        <modal-reinscribir id_form="frmEliminar" id="modalInscribir" url="?1=NatacionController&2=reinscribir" 
+        titulo="Reeinscribir Usuario de la escuela Natación"
         sub_titulo="¿Está seguro de querer reeinscribir este usuario?" :campos="campos_eliminar" tamanio='tiny'></modal-reinscribir>
 
         <div class="ui grid">
         <div class="row">
                 <div class="titulo">
-                <i class="weight icon"></i>
-                    Gimnasio Aderel<font color="#EF7B2E" size="20px">.</font>
+                <i class="home icon"></i><i class="life ring icon"></i>
+                    Escuela de Natación Aderel<font color="#04B4AE" size="20px">.</font>
                 </div>
         </div>
 
         <div class="row title-bar">
             <div class="sixteen wide column">
-                <button class="ui right floated orange labeled icon button" @click="modalRegistrar">
+                <button class="ui right floated teal labeled icon button" @click="modalRegistrar">
                     <i class="plus icon"></i>
                     Agregar
                 </button>
@@ -38,20 +38,22 @@
         </div>
         <div class="row">
             <div class="sixteen wide column">
-                <table id="dtGimnasio" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                <table id="dtNatacion" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
                     <thead>
                         <tr>
                         
-                            <th style="background-color: #EF7B2E; color:white;">N°</th>
-                            <th style="background-color: #EF7B2E; color:white;">Cod. Expediente</th>
-                            <th style="background-color: #EF7B2E; color:white;">Nombres</th>
-                            <th style="background-color: #EF7B2E; color:white;">Apellido</th>
-                            <th style="background-color: #EF7B2E; color:white;">Fecha de Nacimiento</th>
-                            <th style="background-color: #EF7B2E; color:white;">Edad</th>
-                            <th style="background-color: #EF7B2E; color:white;">DUI / Carnet Minoridad</th>
-                            <th style="background-color: #EF7B2E; color:white;">Fecha de Inscripción</th>
-                            <th style="background-color: #EF7B2E; color:white;">Fecha Final</th>
-                            <th style="background-color: #EF7B2E; color:white;">Acciones</th>
+                            <th style="background-color: #04B4AE; color:white;">N°</th>
+                            <th style="background-color: #04B4AE; color:white;">Cod. Expediente</th>
+                            <th style="background-color: #04B4AE; color:white;">Nombres</th>
+                            <th style="background-color: #04B4AE; color:white;">Apellido</th>
+                            <th style="background-color: #04B4AE; color:white;">Fecha de Nacimiento</th>
+                            <th style="background-color: #04B4AE; color:white;">Edad</th>
+                            <th style="background-color: #04B4AE; color:white;">DUI / Carnet Minoridad</th>
+                            <th style="background-color: #04B4AE; color:white;">Encargado</th>
+                            <th style="background-color: #04B4AE; color:white;">DUI Encargado</th>
+                            <th style="background-color: #04B4AE; color:white;">Fecha de Inscripción</th>
+                            <th style="background-color: #04B4AE; color:white;">Fecha Final</th>
+                            <th style="background-color: #04B4AE; color:white;">Acciones</th>
                            
                         </tr>
                     </thead>
@@ -62,8 +64,7 @@
         </div>
     </div>
 </div>
-
-<script src="./res/tablas/tablaGimnasio.js"></script>
+<script src="./res/tablas/tablaEscuelaNa.js"></script>
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
@@ -98,7 +99,18 @@ var app = new Vue({
                     label: 'Dui/Carnet de Minoridad',
                     name: 'dui',
                     type: 'text'
+                },
+                {
+                    label: 'Encargado:',
+                    name: 'encargado',
+                    type: 'text'
+                },
+                {
+                    label: 'Dui de Encargado:',
+                    name: 'duiEncargado',
+                    type: 'text'
                 }
+                
                
                 
             ],
@@ -129,6 +141,16 @@ var app = new Vue({
                     type: 'text'
                 },
                 {
+                    label: 'Encargado:',
+                    name: 'encargado',
+                    type: 'text'
+                },
+                {
+                    label: 'Dui de Encargado:',
+                    name: 'duiEncargado',
+                    type: 'text'
+                },
+                {
                     name: 'idDetalle',
                     type: 'hidden'
                 }
@@ -141,7 +163,9 @@ var app = new Vue({
         },
         methods: {
             refrescarTabla() {
-                tablaGimnasio.ajax.reload();
+                tablaNatacion.ajax.reload();
+                $('#frmRegistrar input[name="encargado"]').hide();
+            $('#frmRegistrar input[name="duiEncargado"]').hide();
             },
             modalRegistrar() {
                 $('#modalRegistrar').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal(
@@ -150,7 +174,7 @@ var app = new Vue({
             cargarDatos() {
                 var id = $("#idDetalle").val();
 
-                fetch("?1=GimnasioController&2=cargarDatosGimnasio&id=" + id)
+                fetch("?1=NatacionController&2=cargarDatosNatacion&id=" + id)
                     .then(response => {
                         return response.json();
                     })
@@ -163,11 +187,21 @@ var app = new Vue({
                         $('#frmEditar input[name="fechaNac"]').val(dat.fechaNacimiento);
                         $('#frmEditar input[name="edad"]').val(dat.edad);
                         $('#frmEditar input[name="dui"]').val(dat.ddi);
+                        if(dat.encargado==''){
+                            $('#frmEditar input[name="encargado"]').hide();
+                            $('#frmEditar input[name="duiEncargado"]').hide();
+                        }else{
+                            $('#frmEditar input[name="encargado"]').show();
+                            $('#frmEditar input[name="duiEncargado"]').show();
+                        $('#frmEditar input[name="encargado"]').val(dat.encargado);
+                        $('#frmEditar input[name="duiEncargado"]').val(dat.duiEncargado);
+                        }
                     })
                     .catch(err => {
                         console.log(err);
                     });
             },
+            
         }
     });
 </script>
@@ -190,8 +224,13 @@ var editarUsuario=(ele)=>{
 
 </script>
 
-
 <script>
+
+$(document).ready(function(){
+    $('#frmRegistrar input[name="encargado"]').hide();
+    $('#frmRegistrar input[name="duiEncargado"]').hide();
+});
+
 function Edad(FechaNacimiento) {
 
 var fechaNace = new Date(FechaNacimiento);
@@ -219,9 +258,18 @@ $('#frmRegistrar input[name="edad"]').val(edad);
 
 if(edad>18){
     $('#frmRegistrar input[name="dui"]').mask("99999999-9");
+    $('#frmRegistrar input[name="duiEncargado"]').hide();
+    $('#frmRegistrar input[name="encargado"]').hide();
+    $('#frmRegistrar input[name="encargado"]').val('nada');
+    $('#frmRegistrar input[name="duiEncargado"]').val('nada');
 }
 else{
     $('#frmRegistrar input[name="dui"]').mask("9999-999999-999-9");
+    $('#frmRegistrar input[name="duiEncargado"]').show();
+    $('#frmRegistrar input[name="duiEncargado"]').mask("99999999-9");
+    $('#frmRegistrar input[name="encargado"]').show();
+    $('#frmRegistrar input[name="encargado"]').val('');
+    $('#frmRegistrar input[name="duiEncargado"]').val('');
 }
 }
 
@@ -231,6 +279,7 @@ $('#frmRegistrar input[name="fechaNac"]').change(function(){
 
 Edad(fecha);
 $('#frmRegistrar input[name="dui"]').val('');
+
 resultadoE();
 
 
@@ -244,9 +293,18 @@ var edad = Edad(fecha);
 $('#frmEditar input[name="edad"]').val(edad);
 if(edad>18){
     $('#frmEditar input[name="dui"]').mask("99999999-9");
+    $('#frmEditar input[name="duiEncargado"]').hide();
+    $('#frmEditar input[name="encargado"]').hide();
+    $('#frmEditar input[name="encargado"]').val('nada');
+    $('#frmEditar input[name="duiEncargado"]').val('nada');
 }
 else{
     $('#frmEditar input[name="dui"]').mask("9999-999999-999-9");
+    $('#frmEditar input[name="duiEncargado"]').show();
+    $('#frmEditar input[name="duiEncargado"]').mask("99999999-9");
+    $('#frmEditar input[name="encargado"]').show();
+    $('#frmEditar input[name="encargado"]').val('');
+    $('#frmEditar input[name="duiEncargado"]').val('');
 }
 }
 
@@ -257,6 +315,8 @@ $('#frmEditar input[name="fechaNac"]').change(function(){
 Edad(fecha);
 
 $('#frmEditar input[name="dui"]').val('');
+$('#frmRegistrar input[name="encargado"]').hide();
+    $('#frmRegistrar input[name="duiEncargado"]').hide();
 resultadoF();
 
 

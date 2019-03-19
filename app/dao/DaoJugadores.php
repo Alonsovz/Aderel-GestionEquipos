@@ -17,25 +17,25 @@ class DaoJugadores extends DaoBase {
         $idExp = '';
 
         if($fila["id"]<10){
-            $idExp ='FF00000'.$fila['id'].'';
+            $idExp ='FM00000'.$fila['id'].'';
         }
         if($fila["id"]>9){
-            $idExp = 'FF0000'.$fila['id'].'';
+            $idExp = 'FM0000'.$fila['id'].'';
         }
         else if($fila["id"]>99){
-            $idExp = 'FF000'.$fila['id'].'';
+            $idExp = 'FM000'.$fila['id'].'';
 
         }
         else if($fila["id"]>999){
-            $idExp = 'FF00'.$fila['id'].'';
+            $idExp = 'FM00'.$fila['id'].'';
 
         }
         else if($fila["id"]>9999){
-            $idExp = 'FF0'.$fila['id'].'';
+            $idExp = 'FM0'.$fila['id'].'';
         }
 
         else if($fila["id"]>99999){
-            $idExp = 'FF'.$fila['id'].'';
+            $idExp = 'FM'.$fila['id'].'';
         }
 
 

@@ -1,15 +1,15 @@
 <?php 
 
-class DaoGimnasio extends DaoBase {
+class DaoNatacion extends DaoBase {
 
     public function __construct() {
         parent::__construct();
-        $this->objeto = new Gimnasio();
+        $this->objeto = new Natacion();
     }
 
-    public function mostrarGimnasio()
+    public function mostrarNatacion()
     {
-        $_query = "select * from gimnasio
+        $_query = "select * from natacion
         where  idEliminado=1 and idUsuario>1";
 
         $resultado = $this->con->ejecutar($_query);
@@ -50,8 +50,8 @@ class DaoGimnasio extends DaoBase {
         return '{"data": ['.$_json .']}';
     }
 
-    public function registrarGim(){
-        $corr= "(select max(idUsuario)+1 as id from gimnasio)";
+    public function registrar(){
+        $corr= "(select max(idUsuario)+1 as id from natacion)";
 
         $resultado1 = $this->con->ejecutar($corr);
 
@@ -60,32 +60,33 @@ class DaoGimnasio extends DaoBase {
         $idExp = '';
 
         if($fila["id"]<10){
-            $idExp ='GY00000'.$fila['id'].'';
+            $idExp ='EN00000'.$fila['id'].'';
         }
         if($fila["id"]>9){
-            $idExp = 'GY0000'.$fila['id'].'';
+            $idExp = 'EN0000'.$fila['id'].'';
         }
         else if($fila["id"]>99){
-            $idExp = 'GY000'.$fila['id'].'';
+            $idExp = 'EN000'.$fila['id'].'';
 
         }
         else if($fila["id"]>999){
-            $idExp = 'GY00'.$fila['id'].'';
+            $idExp = 'EN00'.$fila['id'].'';
 
         }
         else if($fila["id"]>9999){
-            $idExp = 'GY0'.$fila['id'].'';
+            $idExp = 'EN0'.$fila['id'].'';
         }
 
         else if($fila["id"]>99999){
-            $idExp = 'GY'.$fila['id'].'';
+            $idExp = 'EN'.$fila['id'].'';
         }
 
 
 
-        $query = "Insert into gimnasio values (null,'".$idExp."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
+        $query = "Insert into natacion values (null,'".$idExp."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
         '".$this->objeto->getFechaNacimiento()."','".$this->objeto->getEdad()."',
-        '".$this->objeto->getDui()."',curdate(),ADDDATE(curdate(),INTERVAL 31 DAY),1);";
+        '".$this->objeto->getDui()."','".$this->objeto->getEncargado()."','".$this->objeto->getDuiEncargado()."'
+        ,curdate(),ADDDATE(curdate(),INTERVAL 31 DAY),1);";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -97,22 +98,8 @@ class DaoGimnasio extends DaoBase {
 
     }
 
-    public function editar() {
-        $_query = "update gimnasio set nombre='".$this->objeto->getNombre()."', apellido='".$this->objeto->getApellido()."',
-        fechaNacimiento='".$this->objeto->getFechaNacimiento()."', edad='".$this->objeto->getEdad()."',
-        ddi= '".$this->objeto->getDui()."' where idUsuario = ".$this->objeto->getIdUsuario();
-
-        $resultado = $this->con->ejecutar($_query);
-
-        if($resultado) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
     public function reinscribir() {
-        $_query = "update gimnasio set fechaInscripcion=curdate(),
+        $_query = "update natacion set fechaInscripcion=curdate(),
          fechaFinal=ADDDATE(curdate(),INTERVAL 31 DAY) where idUsuario = ".$this->objeto->getIdUsuario();
 
         $resultado = $this->con->ejecutar($_query);
@@ -125,7 +112,7 @@ class DaoGimnasio extends DaoBase {
     }
 
     public function eliminar() {
-        $_query = "update gimnasio set idEliminado=2 where idUsuario = ".$this->objeto->getIdUsuario();
+        $_query = "update natacion set idEliminado=2 where idUsuario = ".$this->objeto->getIdUsuario();
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -136,9 +123,9 @@ class DaoGimnasio extends DaoBase {
         }
     }
 
-    public function cargarDatosGimnasio() {
+    public function cargarDatosNatacion() {
 
-        $_query = "select * from gimnasio
+        $_query = "select * from natacion
         where idUsuario = ".$this->objeto->getIdUsuario();
 
         $resultado = $this->con->ejecutar($_query);
@@ -148,9 +135,20 @@ class DaoGimnasio extends DaoBase {
         return $json;
     }
 
+    public function editar() {
+        $_query = "update natacion set nombre='".$this->objeto->getNombre()."', apellido='".$this->objeto->getApellido()."',
+        fechaNacimiento='".$this->objeto->getFechaNacimiento()."', edad='".$this->objeto->getEdad()."',
+        ddi= '".$this->objeto->getDui()."',encargado ='".$this->objeto->getEncargado()."',
+        duiEncargado='".$this->objeto->getDuiEncargado()."' where idUsuario = ".$this->objeto->getIdUsuario();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 
 
-}
-
-
-?>
+}   
