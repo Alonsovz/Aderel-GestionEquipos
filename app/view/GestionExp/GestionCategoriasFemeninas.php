@@ -13,14 +13,14 @@ sub_titulo="¿Está seguro de querer eliminar esta categoria?" :campos="campos_e
                     <div class="titulo">
                             <i class="team icon"></i>
                             <i class="chart bar outline icon"></i>
-                            <i class="female icon"></i>  Categorías Femeninas<font color="red" size="20px">.</font>
+                            <i class="female icon"></i>  Categorías Femeninas<font color="#DF01A5" size="20px">.</font>
                         
                       
                     </div>
         </div>
                     <div class="row title-bar">
                             <div class="sixteen wide column">
-                                <button class="ui right floated red labeled icon button" @click="modalRegistrarC" id="btnModalRegistroCategoria">
+                                <button class="ui right floated pink labeled icon button" @click="modalRegistrarC" id="btnModalRegistroCategoria">
                                     <i class="plus icon"></i>
                                     Agregar Categoría
                                 </button>
@@ -37,10 +37,10 @@ sub_titulo="¿Está seguro de querer eliminar esta categoria?" :campos="campos_e
                                 <thead>
                                     <tr>
                                     
-                                        <th style="background-color: #CD2020; color: white;">N°</th>
-                                        <th style="background-color: #CD2020; color: white;">Nombre de la Categoria</th>
-                                        <th style="background-color: #CD2020; color: white;">Edad Mínima</th>
-                                        <th style="background-color: #CD2020; color: white;">Acciones</th>
+                                        <th style="background-color: #purple; color: white;">N°</th>
+                                        <th style="background-color: #DF01A5; color: white;">Nombre de la Categoria</th>
+                                        <th style="background-color: #DF01A5; color: white;">Edad Mínima</th>
+                                        <th style="background-color: #DF01A5; color: white;">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>

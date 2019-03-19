@@ -2,21 +2,21 @@
 
 <div id="appJ">
 
-<modal-eliminar id_form="frmEliminarJ" id="modalEliminarJ" url="?1=JugadoresController&2=eliminar" titulo="Eliminar Jugador"
-        sub_titulo="¿Está seguro de querer eliminar este jugador?" :campos="campos_eliminarJ" tamanio='tiny'></modal-eliminar>
+<modal-eliminar id_form="frmEliminarJ" id="modalEliminarJ" url="?1=JugadoresController&2=eliminarF" titulo="Eliminar Jugador"
+        sub_titulo="¿Está seguro de querer eliminar esta jugadora?" :campos="campos_eliminarJ" tamanio='tiny'></modal-eliminar>
 
-<modal-editar id_form="frmEditarJ" id="modalEditarJ" url="?1=JugadoresController&2=editar" titulo="Editar Jugador"
+<modal-editar id_form="frmEditarJ" id="modalEditarJ" url="?1=JugadoresController&2=editarF" titulo="Editar Jugador"
 :campos="campos_editarJ" tamanio='tiny' style="overflow: scroll;"></modal-editar>
         <div class="ui grid">
                         <div class="row">
                                 <div class="titulo">
                                     <i class="female icon"></i>
-                                    Jugadores Femeninos<font color="#FACC2E" size="20px">.</font>
+                                    Jugadores Femeninos<font color="#7401DF" size="20px">.</font>
                                 </div>
                         </div>
                         <div class="row title-bar">
                             <div class="sixteen wide column">
-                                <button class="ui right floated yellow labeled icon button" id="btnModalRegistroJugador">
+                                <button class="ui right floated violet labeled icon button" id="btnModalRegistroJugador">
                                     <i class="plus icon"></i>
                                     Agregar Jugador
                                 </button>
@@ -29,22 +29,18 @@
                         </div>
                         <div class="row">
                         <div class="sixteen wide column">
-                            <table id="dtJugadores" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                            <table id="dtJugadoresF" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
                                 <thead>
                                     <tr>
                                     
-                                        <th style="background-color: #FACC2E;">N°</th>
-                                        <th style="background-color: #FACC2E;" ></th>
-                                        <th style="background-color: #FACC2E;">Nombre</th>
-                                        <th style="background-color: #FACC2E;">Apellido</th>
-                                        <th style="background-color: #FACC2E;">Dui</th>
-                                        <th style="background-color: #FACC2E;">Fecha de Nacimiento</th>
-                                        <th style="background-color: #FACC2E;">Edad del Jugador</th>
-                                        <th style="background-color: #FACC2E;">Equipo</th>
-                                       
-                                        
-                                        
-                                        
+                                        <th style="background-color: #FACC2E; color:white;">N°</th>
+                                        <th style="background-color: #7401DF; color:white;" ></th>
+                                        <th style="background-color: #7401DF; color:white;">Cod. Expediente</th>
+                                        <th style="background-color: #7401DF; color:white;">Nombre</th>
+                                        <th style="background-color: #7401DF; color:white;">Apellido</th>
+                                        <th style="background-color: #7401DF; color:white;">Dui</th>
+                                        <th style="background-color: #7401DF; color:white;">Fecha de Nacimiento</th>
+                                        <th style="background-color: #7401DF; color:white;">Edad del Jugador</th>        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -58,14 +54,14 @@
 <div class="ui tiny modal" id="modalAgregarJugador"  style="overflow: scroll;">
 
 <div class="header">
-<i class="male icon"></i><i class="trophy icon"></i><i class="futbol icon"></i> Agregar nuevo Jugador
+<i class="female icon"></i><i class="futbol icon"></i> Agregar nueva jugadora
 </div>
 <div class="content" class="ui equal width form">
-    <form class="ui form" id="frmJugador" method="POST" enctype="multipart/form-data" action='?1=JugadoresController&2=guardarJugador'> 
+    <form class="ui form" id="frmJugador" method="POST" enctype="multipart/form-data" action='?1=JugadoresController&2=guardarJugadorF'> 
         <div class="field">
             <div class="fields">
                     <div class="eight wide field">
-                        <label><i class="user icon"></i>Nombre del Jugador</label>
+                        <label><i class="user icon"></i>Nombre de Jugadora</label>
                         <input type="text" name="nombreJ" placeholder="Nombre del Jugador" id="nombreJ">
                             
                             <div class="ui red pointing label"  id="labelNombre"
@@ -73,7 +69,7 @@
                             Completa este campo</div>
                     </div>
                     <div class="eight wide field">
-                        <label><i class="user icon"></i>Apellido del Jugador</label>
+                        <label><i class="user icon"></i>Apellido de Jugadora</label>
                         <input type="text" name="apellidoJ" placeholder="Apellido del Jugador" id="apellidoJ">
                         <div class="ui red pointing label"  id="labelApellido"
                         style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
@@ -109,12 +105,12 @@
                         
                         <div class="eight wide field">
                             <div id="age">
-                            <b><label><i class="male icon"></i>La edad del jugador es:</label></b>
+                            <b><label><i class="male icon"></i>La edad de la jugadora es:</label></b>
                             <input type="text" id="edad" name="edad" readonly>
                             </div>
                         </div>
                         <div class="eight wide field">
-                        <label><i class="address card icon"></i>N° Dui del Jugador</label>
+                        <label><i class="address card icon"></i>N° Dui de Jugadora</label>
                             <input type="text" name="dui" placeholder="DUI del jugador" id="dui">
                                     <div class="ui red pointing label"  id="labelDui"
                                     style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
@@ -146,19 +142,19 @@
 <div class="ui tiny modal" id="modalInscribirJ"  style="overflow: scroll;">
 
 <div class="header">
-<i class="male icon"></i><i class="futbol icon"></i> Inscribir Jugador
+<i class="male icon"></i><i class="futbol icon"></i> Inscribir Jugadora
 </div>
 <div class="content" class="ui equal width form">
     <form class="ui form" id="frmInscribirJ"> 
         <div class="field">
             <div class="fields">
             <div class="eight wide field">
-            <label><i class="users icon"></i>Nombre del jugador</label>
+            <label><i class="users icon"></i>Nombre de jugadora</label>
             <input type="text" name="nombreJugador" id="nombreJugador" readonly>
             </div>
 
             <div class="eight wide field">
-            <label><i class="chart bar outline icon"></i>Edad del Jugador</label>
+            <label><i class="chart bar outline icon"></i>Edad de Jugadora</label>
             <input type="text" name="edadJ"  id="edadJ" readonly>
             <input type="hidden" name="idJ"  id="idJ">
             </div>
@@ -188,7 +184,7 @@
     </div>
 </div>
 
-<script src="./res/tablas/tablaJugadores.js"></script>
+<script src="./res/tablas/tablaJugadoresF.js"></script>
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
@@ -263,7 +259,7 @@ var appJ = new Vue({
         methods: {
             refrescarTabla() {
                 
-                tablaJugadores.ajax.reload();
+                tablaJugadoresF.ajax.reload();
 
                 
             },
@@ -271,7 +267,7 @@ var appJ = new Vue({
             cargarDatosJ() {
                 var id = $("#idDetalleE").val();
 
-                fetch("?1=JugadoresController&2=cargarDatosJugadores&id=" + id)
+                fetch("?1=JugadoresController&2=cargarDatosJugadoresF&id=" + id)
                     .then(response => {
                         return response.json();
                     })
@@ -297,7 +293,7 @@ var appJ = new Vue({
             cargarDatosJu() {
                 var id = $("#idDetalleE").val();
 
-                fetch("?1=JugadoresController&2=cargarDatosJugadores&id=" + id)
+                fetch("?1=JugadoresController&2=cargarDatosJugadoresF&id=" + id)
                     .then(response => {
                         return response.json();
                     })
@@ -465,7 +461,7 @@ $('#modalAgregarJugador').modal('setting', 'autofocus', false).modal('setting', 
                 processData: false,
                 cache: false,
                 type: 'POST',
-                url: '?1=JugadoresController&2=guardarJugador',
+                url: '?1=JugadoresController&2=guardarJugadorF',
                 data: datosFormulario,
                 success: function(r) {
                     if(r == 1) {
@@ -482,7 +478,7 @@ $('#modalAgregarJugador').modal('setting', 'autofocus', false).modal('setting', 
                                 location.href = '?';
                             }
                         }); 
-                        $('#dtJugadores').DataTable().ajax.reload();
+                        $('#dtJugadoresF').DataTable().ajax.reload();
                         limpiar();
                     } 
                 }
@@ -497,7 +493,7 @@ $('#modalAgregarJugador').modal('setting', 'autofocus', false).modal('setting', 
         
             $.ajax({
                 type: 'POST',
-                url: '?1=JugadoresController&2=inscribirJugador',
+                url: '?1=JugadoresController&2=inscribirJugadorF',
                 data: {
                     idEquipo : idEquipo,
                     idJ : idJ,
@@ -517,7 +513,7 @@ $('#modalAgregarJugador').modal('setting', 'autofocus', false).modal('setting', 
                                 location.href = '?';
                             }
                         }); 
-                        $('#dtJugadores').DataTable().ajax.reload();
+                        $('#dtJugadoresF').DataTable().ajax.reload();
                         
                     } 
                 }

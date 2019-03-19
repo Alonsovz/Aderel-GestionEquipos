@@ -4,6 +4,7 @@ class Equipos extends ModeloBase{
     private $idEquipo;
     private $nombreEquipo;
     private $encargado;
+    private $encargadoAux;
     private $idCategoria;
     private $idTorneo;
 
@@ -93,6 +94,24 @@ class Equipos extends ModeloBase{
     public function setEncargado($encargado)
     {
         $this->encargado = $encargado;
+
+        return $this;
+    }
+
+
+    public function getEncargadoAux()
+    {
+        return $this->encargadoAux;
+    }
+
+    /**
+     * Set the value of fecha
+     *
+     * @return  self
+     */ 
+    public function setEncargadoAux($encargadoAux)
+    {
+        $this->encargadoAux = $encargadoAux;
 
         return $this;
     }

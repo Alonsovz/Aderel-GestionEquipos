@@ -63,6 +63,7 @@ public function registrarM() {
 
         $dao->objeto->setNombreEquipo($datos->nombreEquipo);
         $dao->objeto->setEncargado($datos->encargado);
+        $dao->objeto->setEncargadoAux($datos->encargadoAux);
         $dao->objeto->setIdCategoria($datos->selectCategoria);
 
 
@@ -119,6 +120,7 @@ public function registrarM() {
 
         $dao->objeto->setNombreEquipo($_REQUEST["nombre"]);
         $dao->objeto->setEncargado($_REQUEST["encargado"]);
+        $dao->objeto->setEncargadoAux($_REQUEST["encargadoAux"]);
         $dao->objeto->setIdCategoria($_REQUEST["selectCategoria"]);
         $dao->objeto->setIdEquipo($_REQUEST["idDetalleE"]);
 
@@ -155,6 +157,7 @@ public function registrarF() {
 
         $dao->objeto->setNombreEquipo($datos->nombreEquipo);
         $dao->objeto->setEncargado($datos->encargado);
+        $dao->objeto->setEncargadoAux($datos->encargadoAux);
         $dao->objeto->setIdCategoria($datos->selectCategoria);
 
 
@@ -211,6 +214,7 @@ public function registrarF() {
 
         $dao->objeto->setNombreEquipo($_REQUEST["nombre"]);
         $dao->objeto->setEncargado($_REQUEST["encargado"]);
+        $dao->objeto->setEncargadoAux($_REQUEST["encargadoAux"]);
         $dao->objeto->setIdCategoria($_REQUEST["selectCategoria"]);
         $dao->objeto->setIdEquipo($_REQUEST["idDetalleE"]);
 

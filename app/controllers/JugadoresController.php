@@ -5,21 +5,15 @@ class JugadoresController extends ControladorBase {
 
     public static function gestion()
     {
-        
-        $daoU = new DaoEquipos();
-        $equiposCMB = $daoU->mostrarEquiposCmb();
-
-        $equipoCMB = $daoU->mostrarEquipoCmb();
-
         require_once './app/view/GestionExp/GestionJugadores.php';
     }
 
     public static function gestionM(){
 
         $daoU = new DaoEquipos();
-        $equiposCMB = $daoU->mostrarEquiposCmb();
+        $equiposCMB = $daoU->mostrarEquiposCmbM();
 
-        $equipoCMB = $daoU->mostrarEquipoCmb();
+        $equipoCMB = $daoU->mostrarEquipoCmbM();
 
         require_once './app/view/GestionExp/GestionJugadoresMasculinos.php';
 
@@ -29,25 +23,25 @@ class JugadoresController extends ControladorBase {
     public static function gestionF(){
 
         $daoU = new DaoEquipos();
-        $equiposCMB = $daoU->mostrarEquiposCmb();
+        $equiposCMB = $daoU->mostrarEquiposCmbF();
 
-        $equipoCMB = $daoU->mostrarEquipoCmb();
+        $equipoCMB = $daoU->mostrarEquipoCmbF();
 
         require_once './app/view/GestionExp/GestionJugadoresFemeninas.php';
 
     }
 
-    public function eliminar() {
+    public function eliminarF() {
         $datos = $_REQUEST["id"];
 
         $dao = new DaoJugadores();
 
         $dao->objeto->setIdJugador($datos);
 
-        echo $dao->eliminar();
+        echo $dao->eliminarF();
     }
 
-    public function inscribirJugador() {
+    public function inscribirJugadorF() {
         $idJ = $_REQUEST["idJ"];
         $idEquipo = $_REQUEST["idEquipo"];
 
@@ -56,11 +50,11 @@ class JugadoresController extends ControladorBase {
         $dao->objeto->setIdJugador($idJ);
         $dao->objeto->setIdEquipo($idEquipo);
 
-        echo $dao->inscribir();
+        echo $dao->inscribirF();
     }
 
 
-    public function guardarJugador() {
+    public function guardarJugadorF() {
         // var_dump($_REQUEST);
         $nombre = $_REQUEST["nombreJ"];
         $apellido = $_REQUEST["apellidoJ"];
@@ -86,21 +80,21 @@ class JugadoresController extends ControladorBase {
         $dao->objeto->setImg($img);
 
 
-        echo $dao->registrarJugador();
+        echo $dao->registrarJugadorF();
 
     }
 
-    public function cargarDatosJugadores() {
+    public function cargarDatosJugadoresF() {
         $id = $_REQUEST["id"];
 
         $dao = new DaoJugadores();
 
         $dao->objeto->setIdJugador($id);
 
-        echo $dao->cargarDatosJugador();
+        echo $dao->cargarDatosJugadorF();
     }
 
-    public function editar() {
+    public function editarF() {
 
         // $datos = json_decode($datos);
 
@@ -115,7 +109,89 @@ class JugadoresController extends ControladorBase {
         $dao->objeto->setImg($_REQUEST['imagenNueva']);
         $dao->objeto->setIdJugador($_REQUEST['idDetalleE']);
 
-        echo $dao->editar();
+        echo $dao->editarF();
+    }
+
+
+    public function eliminarM() {
+        $datos = $_REQUEST["id"];
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setIdJugador($datos);
+
+        echo $dao->eliminarM();
+    }
+
+    public function inscribirJugadorM() {
+        $idJ = $_REQUEST["idJ"];
+        $idEquipo = $_REQUEST["idEquipo"];
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setIdJugador($idJ);
+        $dao->objeto->setIdEquipo($idEquipo);
+
+        echo $dao->inscribirM();
+    }
+
+
+    public function guardarJugadorM() {
+        // var_dump($_REQUEST);
+        $nombre = $_REQUEST["nombreJ"];
+        $apellido = $_REQUEST["apellidoJ"];
+        $dui = $_REQUEST["dui"];
+        $fechaNac = $_REQUEST["fechaNac"];
+       // $equipo = $_REQUEST["equipo"];
+       // $categoria = $_REQUEST["categoria"];
+        $img= $_REQUEST["img"];
+        $edad= $_REQUEST["edad"];
+
+        // $foto = addslashes(file_get_contents($_FILES['Imagen']['tmp_name']));
+        
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setNombre($nombre);
+        $dao->objeto->setApellido($apellido);
+        $dao->objeto->setEdad($edad);
+        $dao->objeto->setDui($dui);
+        $dao->objeto->setFechaNacimiento($fechaNac);
+        //$dao->objeto->setIdEquipo($equipo);
+       // $dao->objeto->setIdCategoria($categoria);
+        $dao->objeto->setImg($img);
+
+
+        echo $dao->registrarJugadorM();
+
+    }
+
+    public function cargarDatosJugadoresM() {
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setIdJugador($id);
+
+        echo $dao->cargarDatosJugadorM();
+    }
+
+    public function editarM() {
+
+        // $datos = json_decode($datos);
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setNombre($_REQUEST['nombre']);
+        $dao->objeto->setApellido($_REQUEST['apellido']);
+        $dao->objeto->setDui($_REQUEST['dui']);
+        $dao->objeto->setFechaNacimiento($_REQUEST['fechaNacimiento']);
+        $dao->objeto->setEdad($_REQUEST['edad']);
+        $dao->objeto->setIdEquipo($_REQUEST['equipo']);
+        $dao->objeto->setImg($_REQUEST['imagenNueva']);
+        $dao->objeto->setIdJugador($_REQUEST['idDetalleE']);
+
+        echo $dao->editarM();
     }
 
 }

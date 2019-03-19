@@ -17,7 +17,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
     
             <div class="row">
                  <div class="titulo">
-                    <i class="Female icon"></i>Equipos Femeninos<font color="#217CD1" size="20px">.</font>
+                    <i class="Female icon"></i>Equipos Femeninos<font color="#86B404" size="20px">.</font>
                     </div>
             </div>
 
@@ -25,7 +25,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
                     <div class="sixteen wide column">
                     
 
-                        <button class="ui right floated blue labeled icon button" @click="modalRegistrarE" id="btnModalRegistroEquipo">
+                        <button class="ui right floated olive labeled icon button" @click="modalRegistrarE" id="btnModalRegistroEquipo">
                             <i class="plus icon"></i>
                             Agregar Equipo
                         </button>
@@ -46,12 +46,13 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
                                     <tr>
                                     
                                         <th style="background-color: #0174DF;">N°</th>
-                                        <th style="background-color: #217CD1; color:white;">Nombre del  Equipo</th>
-                                        <th style="background-color: #217CD1; color:white;">Encargado del Equipo</th>
-                                        <th style="background-color: #217CD1; color:white;">Categoría del Equipo</th>
-                                        <th style="background-color: #217CD1; color:white;">Estado en torneo</th>
-                                        <th style="background-color: #217CD1; color:white;">Torneo </th>
-                                        <th style="background-color: #217CD1; color:white;">Acciones</th>
+                                        <th style="background-color: #86B404; color:white;">Nombre del  Equipo</th>
+                                        <th style="background-color: #86B404; color:white;">Encargado del Equipo</th>
+                                        <th style="background-color: #86B404; color:white;">Encargado Aux del Equipo</th>
+                                        <th style="background-color: #86B404; color:white;">Categoría del Equipo</th>
+                                        <th style="background-color: #86B404; color:white;">Estado en torneo</th>
+                                        <th style="background-color: #86B404; color:white;">Torneo </th>
+                                        <th style="background-color: #86B404; color:white;">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -122,8 +123,13 @@ var appE = new Vue({
                     type: 'text'
                 },
                 {
-                    label: 'Encargado del Equipo:',
+                    label: 'Encargada del Equipo:',
                     name: 'encargado',
+                    type: 'text'
+                },
+                {
+                    label: 'Encargada Aux del Equipo:',
+                    name: 'encargadoAux',
                     type: 'text'
                 },
                 {
@@ -142,8 +148,13 @@ var appE = new Vue({
                     type: 'text'
                 },
                 {
-                    label: 'Encargado del Equipo',
+                    label: 'Encargada del Equipo',
                     name: 'encargado',
+                    type: 'text'
+                },
+                {
+                    label: 'Encargada Aux del Equipo:',
+                    name: 'encargadoAux',
                     type: 'text'
                 },
                 {
@@ -189,6 +200,7 @@ var appE = new Vue({
                         // $('#frmEditar input[name="idDetalle"]').val(dat.codigoUsuari);
                         $('#frmEditarE input[name="nombre"]').val(dat.nombre);
                         $('#frmEditarE input[name="encargado"]').val(dat.encargado);
+                        $('#frmEditarE input[name="encargadoAux"]').val(dat.encargadoAux);
                         $('#frmEditarE select[name="selectCategoria"]').dropdown('set selected', dat.idCategoria);
                     })
                     .catch(err => {

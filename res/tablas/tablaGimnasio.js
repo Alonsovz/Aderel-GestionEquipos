@@ -1,38 +1,43 @@
-var tablaEquiposM;
+var tablaGimnasio;
 
 $(function() {
-    if($('#dtEquiposM').length) {
-        tablaEquiposM = $('#dtEquiposM').DataTable({
+    if($('#dtGimnasio').length) {
+        tablaGimnasio = $('#dtGimnasio').DataTable({
             "ajax": {
-                "url": "?1=GestionExpController&2=mostrarEquiposM",
+                "url": "?1=GimnasioController&2=mostrarGimnasio",
                 "type": "POST"
             },
             "columns": [
                 {
-                    "data": "idEquipo"
+                    "data": "idUsuario"
+                },
+                {
+                    "data": "correlativo"
                 },
                 {
                     "data": "nombre"
                 },
                 {
-                    "data": "encargado"
+                    "data": "apellido"
                 },
                 {
-                    "data": "encargadoAux"
+                    "data": "fechaNacimiento"
                 },
                 {
-                    "data": "Categoria"
+                    "data": "edad"
                 },
                 {
-                    "data": "estado"
+                    "data": "ddi"
                 },
                 {
-                    "data": "torneo"
+                    "data": "fechaInscripcion"
                 },
                 {
-                    "data": "Acciones"
+                    "data": "fechaFinal"
+                },
+                {
+                    "data": "Acciones"             
                 }
-                
             ],
             "order": [
                 [0, "desc"]
@@ -64,6 +69,6 @@ $(function() {
         });
 
          // Ocultar columna de id de Usuario
-         tablaEquiposM.column(0).visible(false);
+         tablaGimnasio.column(0).visible(false);
     }
 });

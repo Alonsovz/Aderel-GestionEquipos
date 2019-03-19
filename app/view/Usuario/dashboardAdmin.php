@@ -5,7 +5,7 @@
              
             $fechaMinima = date('Y-m-d');
             $fechaMin = strtotime ( '-1 day' , strtotime ( $fechaMinima ) ) ;
-            $fechaMin = date ( 'Y-m-d' , $fechaMin );
+            $fechaMini = date ( 'Y-m-d' , $fechaMin );
 
             $anio= date('Y');
             $mes = date('M');

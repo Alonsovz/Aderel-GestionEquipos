@@ -69,7 +69,8 @@ switch($accion)
     break;
 
     default:
-    $setenciaSQL= $pdo->prepare("call mostrarIngresos()");
+    $setenciaSQL= $pdo->prepare("select id,title,start,format(cantidad,2) as cantidad,
+    color,textColor,mes,anio,idEliminado from ingresos where  idEliminado=1;");
     $setenciaSQL->execute();
    
     $resultado = $setenciaSQL->fetchAll(PDO::FETCH_ASSOC);

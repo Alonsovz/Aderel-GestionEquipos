@@ -22,16 +22,7 @@
 
             $año= date('Y');
 ?>
-$(function() {
-            var option = '';
-            var titulo = '<?php echo $titleCMB?>';
 
-            $.each(JSON.parse(titulo), function() {
-                option = `<option value="${this.title}">${this.title}</option>`;
-
-                $('#txtTitulo').append(option);
-            });
-        });
 
             
 </script>

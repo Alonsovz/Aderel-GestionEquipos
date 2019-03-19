@@ -34,7 +34,8 @@ class DaoIngresos extends DaoBase {
     }
 
     public function mostrarIngresosTabla() {
-        $_query = "call mostrarIngresosTabla()";
+        $_query = "select id,title,format(SUM(Cantidad),2) as cantidad,DATE_FORMAT(start, '%d/%m/%Y') as start from Ingresos where idEliminado=1 
+        group by start,title order by start desc;";
 
         $resultado = $this->con->ejecutar($_query);
 

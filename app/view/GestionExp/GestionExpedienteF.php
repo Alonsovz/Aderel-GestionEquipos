@@ -17,23 +17,23 @@
 
             
 
-             <button style="width: 27%;" class="ui red  inverted segment"  onclick="cargarContenidoC()" id="btnVerCategorias">
+             <button style="width: 27%;" class="ui pink  inverted segment"  onclick="cargarContenidoC()" id="btnVerCategorias">
             <center><i class="chart bar outline icon"></i>
             Categorías</center>
             </button>
 
-            <button style="width: 22%;" class="ui green  inverted segment" onclick="cargarContenidoT()" id="btnVerTorneos">
+            <button style="width: 22%;" class="ui purple  inverted segment" onclick="cargarContenidoT()" id="btnVerTorneos">
             <i class="trophy icon"></i>
             Torneos
             </button>
 
-            <button style="width: 22%;" class="ui blue inverted segment"  id="btnVerEquipos"
+            <button style="width: 22%;" class="ui olive inverted segment"  id="btnVerEquipos"
              onclick="cargarContenidoE()">
             <i class="futbol icon"></i>
             Equipos
             </button>
 
-            <button style="width: 27%;" class="ui yellow  inverted segment" onclick="cargarContenidoJ()" id="btnVerJugadores">
+            <button style="width: 27%;" class="ui violet  inverted segment" onclick="cargarContenidoJ()" id="btnVerJugadores">
             <i class="users icon"></i>
             Jugadores
             </button>
@@ -50,68 +50,68 @@
 
 
 <script src="./res/tablas/tablaCategoriasF.js"></script>
-
+<script src="./res/tablas/tablaEquiposF.js"></script>
 <script>
 
 $("#btnVerEquipos").click(function(){
     
 
-    $("#btnVerEquipos").removeClass('ui blue  inverted segment');
-    $("#btnVerEquipos").addClass('ui blue basic button');
+    $("#btnVerEquipos").removeClass('ui olive  inverted segment');
+    $("#btnVerEquipos").addClass('ui olive basic button');
 
-    $("#btnVerJugadores").removeClass('ui yellow basic button');
-    $("#btnVerJugadores").addClass('ui yellow inverted segment');
-    $("#btnVerCategorias").removeClass('ui red basic button');
-    $("#btnVerCategorias").addClass('ui red inverted segment');
+    $("#btnVerJugadores").removeClass('ui violet basic button');
+    $("#btnVerJugadores").addClass('ui violet inverted segment');
+    $("#btnVerCategorias").removeClass('ui pink basic button');
+    $("#btnVerCategorias").addClass('ui pink inverted segment');
 
-    $("#btnVerTorneos").removeClass('ui green basic button');
-    $("#btnVerTorneos").addClass('ui green  inverted segment');
+    $("#btnVerTorneos").removeClass('ui purple basic button');
+    $("#btnVerTorneos").addClass('ui purple  inverted segment');
 
     
 });
 $("#btnVerJugadores").click(function(){
     
    
-    $("#btnVerJugadores").removeClass('ui yellow  inverted segment');
-    $("#btnVerJugadores").addClass('ui yellow basic button');
-   $("#btnVerEquipos").removeClass('ui blue basic button');
-    $("#btnVerEquipos").addClass('ui blue inverted segment');
-    $("#btnVerCategorias").removeClass('ui red basic button');
-    $("#btnVerCategorias").addClass('ui red inverted segment');
-    $("#btnVerTorneos").removeClass('ui green basic button');
-    $("#btnVerTorneos").addClass('ui green  inverted segment');
+    $("#btnVerJugadores").removeClass('ui violet  inverted segment');
+    $("#btnVerJugadores").addClass('ui violet basic button');
+   $("#btnVerEquipos").removeClass('ui olive basic button');
+    $("#btnVerEquipos").addClass('ui olive inverted segment');
+    $("#btnVerCategorias").removeClass('ui pink basic button');
+    $("#btnVerCategorias").addClass('ui pink inverted segment');
+    $("#btnVerTorneos").removeClass('ui purple basic button');
+    $("#btnVerTorneos").addClass('ui purple  inverted segment');
 
     
 });
 $("#btnVerCategorias").click(function(){
 
 
-    $("#btnVerCategorias").removeClass('ui red  inverted segment');
-    $("#btnVerCategorias").addClass('ui red basic button');
+    $("#btnVerCategorias").removeClass('ui pink  inverted segment');
+    $("#btnVerCategorias").addClass('ui pink basic button');
     
-    $("#btnVerEquipos").removeClass('ui blue basic button');
-    $("#btnVerEquipos").addClass('ui blue inverted segment');
+    $("#btnVerEquipos").removeClass('ui olive basic button');
+    $("#btnVerEquipos").addClass('ui olive inverted segment');
 
-    $("#btnVerJugadores").removeClass('ui yellow basic button');
-    $("#btnVerJugadores").addClass('ui yellow inverted segment');
+    $("#btnVerJugadores").removeClass('ui violet basic button');
+    $("#btnVerJugadores").addClass('ui violet inverted segment');
   
-    $("#btnVerTorneos").removeClass('ui green basic button');
-    $("#btnVerTorneos").addClass('ui green  inverted segment');
+    $("#btnVerTorneos").removeClass('ui purple basic button');
+    $("#btnVerTorneos").addClass('ui purple  inverted segment');
     
 });
 
 $("#btnVerTorneos").click(function(){
 
-    $("#btnVerTorneos").removeClass('ui green  inverted segment');
-$("#btnVerTorneos").addClass('ui green basic button');
+    $("#btnVerTorneos").removeClass('ui purple  inverted segment');
+$("#btnVerTorneos").addClass('ui purple basic button');
 
-$("#btnVerCategorias").removeClass('ui red basic button');
-$("#btnVerCategorias").addClass('ui red inverted segment');
+$("#btnVerCategorias").removeClass('ui pink basic button');
+$("#btnVerCategorias").addClass('ui pink inverted segment');
 
-$("#btnVerEquipos").removeClass('ui blue basic button');
-$("#btnVerEquipos").addClass('ui blue inverted segment');
-$("#btnVerJugadores").removeClass('ui yellow basic button');
-$("#btnVerJugadores").addClass('ui yellow inverted segment');
+$("#btnVerEquipos").removeClass('ui olive basic button');
+$("#btnVerEquipos").addClass('ui olive inverted segment');
+$("#btnVerJugadores").removeClass('ui violet basic button');
+$("#btnVerJugadores").addClass('ui violet inverted segment');
 
 
 });

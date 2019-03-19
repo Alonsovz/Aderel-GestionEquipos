@@ -48,6 +48,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
                                         <th style="background-color: #0174DF;">N°</th>
                                         <th style="background-color: #217CD1; color:white;">Nombre del  Equipo</th>
                                         <th style="background-color: #217CD1; color:white;">Encargado del Equipo</th>
+                                        <th style="background-color: #217CD1; color:white;">Encargado Aux del Equipo</th>
                                         <th style="background-color: #217CD1; color:white;">Categoría del Equipo</th>
                                         <th style="background-color: #217CD1; color:white;">Estado en torneo</th>
                                         <th style="background-color: #217CD1; color:white;">Torneo </th>
@@ -127,6 +128,11 @@ var appE = new Vue({
                     type: 'text'
                 },
                 {
+                    label: 'Encargado Aux del Equipo:',
+                    name: 'encargadoAux',
+                    type: 'text'
+                },
+                {
                     label: 'Categoría del Equipo:',
                     name: 'selectCategoria',
                     type: 'select',
@@ -144,6 +150,11 @@ var appE = new Vue({
                 {
                     label: 'Encargado del Equipo',
                     name: 'encargado',
+                    type: 'text'
+                },
+                {
+                    label: 'Encargado Aux del Equipo:',
+                    name: 'encargadoAux',
                     type: 'text'
                 },
                 {
@@ -189,6 +200,7 @@ var appE = new Vue({
                         // $('#frmEditar input[name="idDetalle"]').val(dat.codigoUsuari);
                         $('#frmEditarE input[name="nombre"]').val(dat.nombre);
                         $('#frmEditarE input[name="encargado"]').val(dat.encargado);
+                        $('#frmEditarE input[name="encargadoAux"]').val(dat.encargadoAux);
                         $('#frmEditarE select[name="selectCategoria"]').dropdown('set selected', dat.idCategoria);
                     })
                     .catch(err => {

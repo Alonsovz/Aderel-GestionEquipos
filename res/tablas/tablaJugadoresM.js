@@ -1,10 +1,10 @@
-var tablaJugadores;
+var tablaJugadoresM;
 
 $(function() {
-    if($('#dtJugadores').length) {
-        tablaJugadores = $('#dtJugadores').DataTable({
+    if($('#dtJugadoresM').length) {
+        tablaJugadoresM = $('#dtJugadoresM').DataTable({
             "ajax": {
-                "url": "?1=GestionExpController&2=mostrarJugadores",
+                "url": "?1=GestionExpController&2=mostrarJugadoresM",
                 "type": "POST"
             },
             "columns": [
@@ -13,6 +13,9 @@ $(function() {
                 },
                 {
                     "data" : "Acciones"
+                },
+                {
+                    "data" : "correlativo"
                 },
                 {
                     "data": "nombre"
@@ -28,9 +31,6 @@ $(function() {
                 },
                 {
                     "data": "edad"
-                },
-                {
-                    "data" : "Equipo"
                 }
                 
                 
@@ -65,6 +65,6 @@ $(function() {
         });
 
          // Ocultar columna de id de Usuario
-         tablaJugadores.column(0).visible(false);
+         tablaJugadoresM.column(0).visible(false);
     }
 });

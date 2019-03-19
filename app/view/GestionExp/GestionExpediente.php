@@ -49,6 +49,7 @@
 </div>
 
 <script src="./res/tablas/tablaCategoriasM.js"></script>
+<script src="./res/tablas/tablaJugadoresM.js"></script>
 
 
 <script>

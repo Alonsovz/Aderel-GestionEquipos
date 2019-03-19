@@ -17,7 +17,7 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
             <div class="row">
                     <div class="titulo">
                     <i class="trophy icon"></i> <i class="futbol icon"></i>
-                        Torneos Femeninos<font color="#1CC647" size="20px">.</font>
+                        Torneos Femeninos<font color="#A901DB" size="20px">.</font>
                     </div>
                     
             
@@ -26,7 +26,7 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
                     <div class="sixteen wide column">
                     
 
-                        <button class="ui right floated green labeled icon button" @click="modalRegistrarT" id="btnModalRegistroEquipo">
+                        <button class="ui right floated purple labeled icon button" @click="modalRegistrarT" id="btnModalRegistroEquipo">
                             <i class="plus icon"></i>
                             Agregar Torneo
                         </button>
@@ -47,11 +47,11 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
                                     <tr>
                                     
                                         <th style="background-color: #FACC2E; color:white;">N°</th>
-                                        <th style="background-color: #1CC647; color:white;">Nombre del Torneo</th>
-                                        <th style="background-color: #1CC647; color:white;">Máximo de Equipos</th>
-                                        <th style="background-color: #1CC647; color:white;">Cupos Disponibles</th>
-                                        <th style="background-color: #1CC647; color:white;">Categoría del Torneo</th>
-                                        <th style="background-color: #1CC647; color:white;">Acciones</th>
+                                        <th style="background-color: #A901DB; color:white;">Nombre del Torneo</th>
+                                        <th style="background-color: #A901DB; color:white;">Máximo de Equipos</th>
+                                        <th style="background-color: #A901DB; color:white;">Cupos Disponibles</th>
+                                        <th style="background-color: #A901DB; color:white;">Categoría del Torneo</th>
+                                        <th style="background-color: #A901DB; color:white;">Acciones</th>
                                        
                                         
                                         
@@ -155,10 +155,6 @@ var appE = new Vue({
                         console.log(err);
                     });
             },
-            
-           
-            
-
         }
     });
 </script>

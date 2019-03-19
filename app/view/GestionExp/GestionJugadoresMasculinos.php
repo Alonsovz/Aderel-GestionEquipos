@@ -2,10 +2,10 @@
 
 <div id="appJ">
 
-<modal-eliminar id_form="frmEliminarJ" id="modalEliminarJ" url="?1=JugadoresController&2=eliminar" titulo="Eliminar Jugador"
+<modal-eliminar id_form="frmEliminarJ" id="modalEliminarJ" url="?1=JugadoresController&2=eliminarM" titulo="Eliminar Jugador"
         sub_titulo="¿Está seguro de querer eliminar este jugador?" :campos="campos_eliminarJ" tamanio='tiny'></modal-eliminar>
 
-<modal-editar id_form="frmEditarJ" id="modalEditarJ" url="?1=JugadoresController&2=editar" titulo="Editar Jugador"
+<modal-editar id_form="frmEditarJ" id="modalEditarJ" url="?1=JugadoresController&2=editarM" titulo="Editar Jugador"
 :campos="campos_editarJ" tamanio='tiny' style="overflow: scroll;"></modal-editar>
         <div class="ui grid">
                         <div class="row">
@@ -29,22 +29,18 @@
                         </div>
                         <div class="row">
                         <div class="sixteen wide column">
-                            <table id="dtJugadores" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                            <table id="dtJugadoresM" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
                                 <thead>
                                     <tr>
                                     
                                         <th style="background-color: #FACC2E;">N°</th>
                                         <th style="background-color: #FACC2E;" ></th>
+                                        <th style="background-color: #FACC2E;">Cod. Expediente</th>
                                         <th style="background-color: #FACC2E;">Nombre</th>
                                         <th style="background-color: #FACC2E;">Apellido</th>
                                         <th style="background-color: #FACC2E;">Dui</th>
                                         <th style="background-color: #FACC2E;">Fecha de Nacimiento</th>
-                                        <th style="background-color: #FACC2E;">Edad del Jugador</th>
-                                        <th style="background-color: #FACC2E;">Equipo</th>
-                                       
-                                        
-                                        
-                                        
+                                        <th style="background-color: #FACC2E;">Edad del Jugador</th>                
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -58,10 +54,10 @@
 <div class="ui tiny modal" id="modalAgregarJugador"  style="overflow: scroll;">
 
 <div class="header">
-<i class="male icon"></i><i class="trophy icon"></i><i class="futbol icon"></i> Agregar nuevo Jugador
+<i class="male icon"></i><i class="futbol icon"></i> Agregar nuevo Jugador
 </div>
 <div class="content" class="ui equal width form">
-    <form class="ui form" id="frmJugador" method="POST" enctype="multipart/form-data" action='?1=JugadoresController&2=guardarJugador'> 
+    <form class="ui form" id="frmJugador" method="POST" enctype="multipart/form-data" action='?1=JugadoresController&2=guardarJugadorM'> 
         <div class="field">
             <div class="fields">
                     <div class="eight wide field">
@@ -188,7 +184,7 @@
     </div>
 </div>
 
-<script src="./res/tablas/tablaJugadores.js"></script>
+<script src="./res/tablas/tablaJugadoresM.js"></script>
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
@@ -241,12 +237,7 @@ var appJ = new Vue({
                     name: 'edad',
                     type: 'text', 
                 },
-                {
-                    label: 'Equipo:',
-                    name: 'equipo',
-                    type: 'select',
-                    options: <?php echo $equipoCMB;?>,
-                },
+    
                 {
                     name: 'idDetalleE',
                     type: 'hidden'
@@ -263,7 +254,7 @@ var appJ = new Vue({
         methods: {
             refrescarTabla() {
                 
-                tablaJugadores.ajax.reload();
+                tablaJugadoresM.ajax.reload();
 
                 
             },
@@ -271,7 +262,7 @@ var appJ = new Vue({
             cargarDatosJ() {
                 var id = $("#idDetalleE").val();
 
-                fetch("?1=JugadoresController&2=cargarDatosJugadores&id=" + id)
+                fetch("?1=JugadoresController&2=cargarDatosJugadoresM&id=" + id)
                     .then(response => {
                         return response.json();
                     })
@@ -288,7 +279,7 @@ var appJ = new Vue({
                         $('#frmEditarJ input[name="imagenNueva"]').val(dat.foto);
                         $('#frmEditarJ input[name="fechaNacimiento"]').val(dat.fechaNacimiento);
                         $('#frmEditarJ input[name="edad"]').val(dat.edad);
-                        $('#frmEditarJ select[name="equipo"]').dropdown('set selected', dat.idEquipo);
+                        //$('#frmEditarJ select[name="equipo"]').dropdown('set selected', dat.idEquipo);
                     })
                     .catch(err => {
                         console.log(err);
@@ -297,7 +288,7 @@ var appJ = new Vue({
             cargarDatosJu() {
                 var id = $("#idDetalleE").val();
 
-                fetch("?1=JugadoresController&2=cargarDatosJugadores&id=" + id)
+                fetch("?1=JugadoresController&2=cargarDatosJugadoresM&id=" + id)
                     .then(response => {
                         return response.json();
                     })
@@ -465,7 +456,7 @@ $('#modalAgregarJugador').modal('setting', 'autofocus', false).modal('setting', 
                 processData: false,
                 cache: false,
                 type: 'POST',
-                url: '?1=JugadoresController&2=guardarJugador',
+                url: '?1=JugadoresController&2=guardarJugadorM',
                 data: datosFormulario,
                 success: function(r) {
                     if(r == 1) {
@@ -482,7 +473,7 @@ $('#modalAgregarJugador').modal('setting', 'autofocus', false).modal('setting', 
                                 location.href = '?';
                             }
                         }); 
-                        $('#dtJugadores').DataTable().ajax.reload();
+                        $('#dtJugadoresM').DataTable().ajax.reload();
                         limpiar();
                     } 
                 }
@@ -497,7 +488,7 @@ $('#modalAgregarJugador').modal('setting', 'autofocus', false).modal('setting', 
         
             $.ajax({
                 type: 'POST',
-                url: '?1=JugadoresController&2=inscribirJugador',
+                url: '?1=JugadoresController&2=inscribirJugadorM',
                 data: {
                     idEquipo : idEquipo,
                     idJ : idJ,
@@ -517,7 +508,7 @@ $('#modalAgregarJugador').modal('setting', 'autofocus', false).modal('setting', 
                                 location.href = '?';
                             }
                         }); 
-                        $('#dtJugadores').DataTable().ajax.reload();
+                        $('#dtJugadoresM').DataTable().ajax.reload();
                         
                     } 
                 }

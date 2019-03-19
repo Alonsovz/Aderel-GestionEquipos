@@ -31,8 +31,8 @@
 
 
 
-
-
+ <script src="./res/tablas/tablaJugadoresF.js"></script>
+ <script src="./res/tablas/tablaJugadoresM.js"></script>
 <script>
 
 $("#btnVerM").click(function(){

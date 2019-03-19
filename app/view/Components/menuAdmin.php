@@ -26,6 +26,10 @@
     Control de Expediente General Femenino
 </a>
 
+<a href="?1=GimnasioController&2=gestion" class="item menu-it" style="color:#E6C404;">
+    <i class="weight icon"></i>
+    Control de Gimnasio
+</a>
 
 
 
