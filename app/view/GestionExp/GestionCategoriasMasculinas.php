@@ -1,4 +1,4 @@
-<div id="appC">
+<br><div id="appC">
     <modal-registrar id_form="frmRegistrarC" id="modalRegistrarC" url="?1=CategoriaController&2=registrarCM" titulo="Registrar Categoría"
         :campos="campos_registroC" tamanio='mini' style="overflow: scroll;"></modal-registrar>
 
@@ -8,13 +8,38 @@
 <modal-eliminar id_form="frmEliminarC" id="modalEliminarC" url="?1=CategoriaController&2=eliminarM" titulo="Eliminar Categoria"
 sub_titulo="¿Está seguro de querer eliminar esta categoria?" :campos="campos_eliminarC" tamanio='tiny'></modal-eliminar>
 
+<modal-detalles :detalles="detalles"></modal-detalles>
+
 <div class="ui grid">
         <div class="row">
                     <div class="titulo">
                             <i class="team icon"></i>
                             <i class="chart bar outline icon"></i>
                             <i class="male icon"></i>  Categorías Masculinas<font color="red" size="20px">.</font>
+                            
                         
+                        <button  class="ui green button">
+                        <a href="?1=TorneosController&2=gestionM" style="color:white;">
+                            <i class="trophy icon"></i>
+                        Torneos
+                        </a>
+                        </button>
+
+                        <button class="ui blue button">
+                        <a href="?1=EquipoController&2=gestionM"  style="color:white;">
+                        <i class="users icon"></i><i class="futbol icon"></i>
+                            Equipos
+                            </a>
+                        </button>
+
+                        
+
+                        <button class="ui yellow button">
+                        <a href="?1=JugadoresController&2=gestionM"  style="color:white;">
+                        <i class="male icon"></i><i class="futbol icon"></i>
+                        Jugadores
+                        </a>
+                        </button>
                       
                     </div>
         </div>
@@ -50,17 +75,61 @@ sub_titulo="¿Está seguro de querer eliminar esta categoria?" :campos="campos_e
                 </div>
 
         </div>
+
+<div class="ui  modal" id="modalTorneo">
+<div class="header">
+<i class="male icon"></i><i class="futbol icon"></i> Torneos de la Categoria
+</div>
+      <div class="content">
+      <div class="row title-bar">
+                            <div class="sixteen wide column">
+                                <div class="ui divider"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                        <div class="sixteen wide column">
+                            <table id="dtTorneosCM" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                                <thead>
+                                    <tr>
+                                    
+                                        <th style="background-color: #CD2020; color: white;">N°</th>
+                                        <th style="background-color: #CD2020; color: white;">Nombre del Torneos</th>
+                                        <th style="background-color: #CD2020; color: white;">Equipos permitidos</th>
+                                        <th style="background-color: #CD2020; color: white;">Cupos Disponibles</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+      </div>
+
+      <div class="actions">
+       <button onclick="cerrarModal()" class="ui yellow button">
+            Cerrar
+        </button>
+      </div>
 </div>
 
 </div>
+
+
+
+</div>
 <script src="./res/tablas/tablaCategoriasM.js"></script>
+<script src="./res/js/modalTorneosC.js"></script>
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
 <script>
+function cerrarModal(){
+    $('#modalTorneo').modal('hide');
+}
 var appC = new Vue({
         el: "#appC",
         data: {
+            detalles: [],
             campos_registroC: [
                 {
                     label: 'Nombre de la Categoria',
@@ -98,6 +167,27 @@ var appC = new Vue({
             }]
         },
         methods: {
+            cargarDetalles(id) {
+
+          this.idCategoria = parseInt(id);
+
+        $('#frmDetalles').addClass('loading');
+         $.ajax({
+        type: 'POST',
+        url: '?1=CategoriaController&2=mostrarTorneosCM',
+         data: {
+          id: id
+         },
+       success: function (data) {
+        appC.detalles = JSON.parse(data);
+        $('#frmDetalles').removeClass('loading');
+         }
+         });
+
+         },
+         cerrarModal() {
+                this.detalles = [];
+            },
             refrescarTabla() {
 
                 tablaCategoriasM.ajax.reload();
@@ -150,5 +240,15 @@ var editarCategoria=(ele)=>{
     appC.cargarDatosC();
 
 }
+var verTorneosM=(ele)=>{
+            $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                .modal('show');
+            appC.cargarDetalles($(ele).attr('id'));
+}
+
+
+
+    
+
 
 </script>

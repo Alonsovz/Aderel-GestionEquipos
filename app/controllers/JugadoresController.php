@@ -10,6 +10,8 @@ class JugadoresController extends ControladorBase {
 
     public static function gestionM(){
 
+        self::loadMain();
+        
         $daoU = new DaoEquipos();
         $equiposCMB = $daoU->mostrarEquiposCmbM();
 
@@ -21,6 +23,8 @@ class JugadoresController extends ControladorBase {
 
 
     public static function gestionF(){
+
+        self::loadMain();
 
         $daoU = new DaoEquipos();
         $equiposCMB = $daoU->mostrarEquiposCmbF();

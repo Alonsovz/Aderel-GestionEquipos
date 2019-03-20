@@ -29,7 +29,7 @@ class DaoTorneos extends DaoBase {
 
                 $btnEditar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEditarT icon blue small button\" onclick=\"editarTorneo(this)\"><i class=\"edit icon\"></i></button>';
                 $btnEliminar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEliminarT icon negative small button\" onclick=\"eliminarTorneo(this)\"><i class=\"trash icon\"></i></button>';
-                $btnVer = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnVerT icon green small button\" onclick=\"verDetalles(this)\"><i class=\"hand point right icon\"></i><i class=\"futbol icon\"></i><i class=\"hand point left icon\"></i></button>';
+                $btnVer = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon green small button\" onclick=\"verEquipos(this)\"><i class=\"hand point right icon\"></i><i class=\"users icon\"></i><i class=\"hand point left icon\"></i></button>';
 
                 $acciones = ', "Acciones": "'.$btnVer.''.$btnEditar.' '.$btnEliminar.'"';
                 
@@ -65,7 +65,7 @@ class DaoTorneos extends DaoBase {
 
                 $btnEditar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEditarT icon blue small button\" onclick=\"editarTorneo(this)\"><i class=\"edit icon\"></i></button>';
                 $btnEliminar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEliminarT icon negative small button\" onclick=\"eliminarTorneo(this)\"><i class=\"trash icon\"></i></button>';
-                $btnVer = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnVerT icon green small button\" onclick=\"verDetalles(this)\"><i class=\"hand point right icon\"></i><i class=\"futbol icon\"></i><i class=\"hand point left icon\"></i></button>';
+                $btnVer = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon green small button\" onclick=\"verEquipos(this)\"><i class=\"hand point right icon\"></i><i class=\"futbol icon\"></i><i class=\"hand point left icon\"></i></button>';
 
                 $acciones = ', "Acciones": "'.$btnVer.''.$btnEditar.' '.$btnEliminar.'"';
                 
@@ -283,6 +283,23 @@ class DaoTorneos extends DaoBase {
         } else {
             return 0;
         }
+    }
+
+
+    public function mostrarEquiposCM(){
+        $_query = "select * from equipos where idEliminado=1 and idGenero=2 and  idTorneo=".$this->objeto->getIdTorneo();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        return $resultado;
+    }
+
+    public function mostrarEquiposCF(){
+        $_query = "select * from equipos where idEliminado=1 and idGenero=1 and  idTorneo=".$this->objeto->getIdTorneo();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        return $resultado;
     }
 
 

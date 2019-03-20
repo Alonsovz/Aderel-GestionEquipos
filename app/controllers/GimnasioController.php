@@ -52,6 +52,15 @@ class GimnasioController extends ControladorBase {
 
     }
 
+    public function getDui()
+    {
+        $dao=new DaoGimnasio();
+        $dui=$_REQUEST["dui"];
+        $dao->objeto->setDui($dui);
+
+        echo $dao->getDdi();
+    }
+
 
     public function eliminar() {
  

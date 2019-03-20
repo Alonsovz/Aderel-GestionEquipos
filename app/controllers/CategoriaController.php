@@ -12,14 +12,14 @@ class CategoriaController extends ControladorBase {
 
     public static function gestionM()
     {
-        
+        self::loadMain();
         require_once './app/view/GestionExp/GestionCategoriasMasculinas.php';
     }
 
 
     public static function gestionF()
     {
-        
+        self::loadMain();
         require_once './app/view/GestionExp/GestionCategoriasFemeninas.php';
     }
 
@@ -110,6 +110,50 @@ public function registrarCM() {
         $dao->objeto->setIdCategoria($id);
 
         echo $dao->cargarDatosCategoriaF();
+    }
+
+    public function mostrarTorneosCM() {
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoCategorias();
+
+        $dao->objeto->setIdCategoria($id);
+
+        $resultado =$dao->mostrarTorneosCM();
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $json .= json_encode($fila).',';
+
+        }
+
+        $json = substr($json, 0, strlen($json) - 1);
+
+        echo'['.$json.']';
+    }
+
+    public function mostrarTorneosCF() {
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoCategorias();
+
+        $dao->objeto->setIdCategoria($id);
+
+        $resultado =$dao->mostrarTorneosCF();
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $json .= json_encode($fila).',';
+
+        }
+
+        $json = substr($json, 0, strlen($json) - 1);
+
+        echo'['.$json.']';
     }
 
     public function editarF() {

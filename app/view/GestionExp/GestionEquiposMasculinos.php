@@ -1,5 +1,5 @@
 
-<div id="appE">
+<br><div id="appE">
 <modal-registrar id_form="frmRegistrarE" id="modalRegistrarE" url="?1=EquipoController&2=registrarM" titulo="Registrar Equipo"
 :campos="campos_registroE" tamanio='tiny' ></modal-registrar>
 
@@ -13,11 +13,34 @@ sub_titulo="¿Está seguro de querer eliminar este equipo?" :campos="campos_elim
 <modal-eliminar id_form="frmFondoComun" id="modalFondo" url="?1=EquipoController&2=fondoComunM" titulo="Enviar a Fondo Común"
 sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="camposFondoComun" tamanio='tiny'></modal-eliminar>
 
+
 <div class="ui grid">
     
             <div class="row">
                  <div class="titulo">
                     <i class="male icon"></i>Equipos Masculinos<font color="#217CD1" size="20px">.</font>
+
+                    <button class="ui red button">
+                    <a href="?1=CategoriaController&2=gestionM"  style="color:white;">
+                        <i class="chart bar outline icon"></i>
+                    Categorías de Torneo
+                    </a>
+                    </button>
+
+                    <button class="ui green button">
+                        <a href="?1=TorneosController&2=gestionM" style="color:white;">
+                        <i class="trophy icon"></i>
+                        Torneos
+                        </a>
+                    </button>
+
+                    <button class="ui yellow button">
+                        <a  href="?1=JugadoresController&2=gestionM" style="color:white;">
+                        <i class="male icon"></i><i class="futbol icon"></i>
+                        Jugadores
+                        </a>
+                    </button>
+
                     </div>
             </div>
 
@@ -63,7 +86,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
             
  </div>
 </div>
-<div class="ui tiny modal" id="modalInscribirE"  style="overflow: scroll;">
+<div class="ui tiny modal" id="modalInscribirE" >
 
 <div class="header">
 <i class="trophy icon"></i><i class="futbol icon"></i> Inscribir Equipo
@@ -108,6 +131,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
 
 
 <script src="./res/tablas/tablaEquiposM.js"></script>
+
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
@@ -116,7 +140,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
 var appE = new Vue({
         el: "#appE",
         data: {
-           
+            detalles: [],
             campos_registroE: [{
                     label: 'Nombre del Equipo',
                     name: 'nombreEquipo',
@@ -229,8 +253,8 @@ var appE = new Vue({
                     .catch(err => {
                         console.log(err);
                     });
-            }
-           
+            },
+            
             
            
             
@@ -262,6 +286,7 @@ var inscribirEquipo=(ele)=>{
            appE.cargarDatosT();
         }
 
+ 
 
     function cerrar(){
         $('#modalInscribirE').modal('hide');

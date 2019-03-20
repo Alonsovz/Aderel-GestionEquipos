@@ -23,7 +23,7 @@ class DaoCategorias extends DaoBase {
            
             $btnEditar = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editarCategoria(this)\"><i class=\"edit icon\"></i></button>';
             $btnEliminar = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnEliminarC icon yellow small button\" onclick=\"eliminarCategoria(this)\"><i class=\"trash icon\"></i></button>';
-            $btnTorneos = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnTorneos icon green small button\" onclick=\"verTorneos(this)\"><i class=\"trophy icon\"></i></button>';
+            $btnTorneos = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui icon green small button\" onclick=\"verTorneosM(this)\"><i class=\"trophy icon\"></i></button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$btnTorneos.'"';
 
@@ -53,7 +53,7 @@ class DaoCategorias extends DaoBase {
            
             $btnEditar = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editarCategoria(this)\"><i class=\"edit icon\"></i></button>';
             $btnEliminar = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnEliminarC icon yellow small button\" onclick=\"eliminarCategoria(this)\"><i class=\"trash icon\"></i></button>';
-            $btnTorneos = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnTorneos icon green small button\" onclick=\"verTorneos(this)\"><i class=\"trophy icon\"></i></button>';
+            $btnTorneos = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui icon green small button\" onclick=\"verTorneosF(this)\"><i class=\"trophy icon\"></i></button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$btnTorneos.'"';
 
@@ -202,6 +202,24 @@ class DaoCategorias extends DaoBase {
         $json = substr($json,0, strlen($json) - 1);
 
         return '['.$json.']';
+    }
+
+    public function mostrarTorneosCM(){
+        $_query = "select t.*, c.nombreCategoria as nombreC from torneos t
+        inner join categorias c on c.idCategoria = t.idCategoria
+         where t.idEliminado=1 and t.idGenero=2 and  t.idCategoria=".$this->objeto->getIdCategoria();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        return $resultado;
+    }
+
+    public function mostrarTorneosCF(){
+        $_query = "select * from torneos where idEliminado=1 and idGenero=1 and  idCategoria=".$this->objeto->getIdCategoria();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        return $resultado;
     }
 
 }

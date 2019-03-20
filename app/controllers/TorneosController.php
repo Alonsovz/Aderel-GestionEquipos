@@ -10,6 +10,7 @@ class TorneosController extends ControladorBase {
 
     public static function gestionM()
     {
+        self::loadMain();
         $daoC = new DaoCategorias();
         $categoriasCMB = $daoC->mostrarCategoriasCmbM();
         require_once './app/view/GestionExp/GestionTorneosMasculinos.php';
@@ -17,6 +18,7 @@ class TorneosController extends ControladorBase {
 
     public static function gestionF()
     {
+        self::loadMain();
         $daoC = new DaoCategorias();
         $categoriasCMB = $daoC->mostrarCategoriasCmbF();
         require_once './app/view/GestionExp/GestionTorneosFemeninas.php';
@@ -129,6 +131,49 @@ class TorneosController extends ControladorBase {
         $dao->objeto->setIdTorneo($datos);
 
         echo $dao->eliminarF();
+    }
+
+    public function mostrarEquiposCM() {
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoTorneos();
+
+        $dao->objeto->setIdTorneo($id);
+
+        $resultado =$dao->mostrarEquiposCM();
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $json .= json_encode($fila).',';
+
+        }
+
+        $json = substr($json, 0, strlen($json) - 1);
+
+        echo'['.$json.']';
+    }
+
+    public function mostrarEquiposCF() {
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoTorneos();
+
+        $dao->objeto->setIdTorneo($id);
+
+        $resultado =$dao->mostrarEquiposCF();
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $json .= json_encode($fila).',';
+
+        }
+        $json = substr($json, 0, strlen($json) - 1);
+
+        echo'['.$json.']';
     }
 
 }

@@ -1,6 +1,6 @@
 
 
-<div id="appT">
+<br><div id="appT">
 
 <modal-registrar id_form="frmRegistrarT" id="modalRegistrarT" url="?1=TorneosController&2=registrarM" titulo="Registrar Torneo"
 :campos="campos_registroT" tamanio='tiny' ></modal-registrar>
@@ -12,19 +12,39 @@
 <modal-eliminar id_form="frmEliminarT" id="modalEliminarT" url="?1=TorneosController&2=eliminarM" titulo="Eliminar Torneo"
 sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_eliminarT" tamanio='tiny'></modal-eliminar>
 
+<modal-detalles :detalles="detalles"></modal-detalles>
 
     <div class="ui grid">
             <div class="row">
                     <div class="titulo">
                     <i class="trophy icon"></i> <i class="futbol icon"></i>
                         Torneos Masculinos<font color="#1CC647" size="20px">.</font>
-                    </div>
                     
-            
+
+                        <button class="ui red button" >
+                            <a href="?1=CategoriaController&2=gestionM" style="color:white;">
+                                <i class="chart bar outline icon"></i>
+                            Categorías de Torneo
+                            </a>
+                        </button> 
+
+                        <button class="ui blue button">
+                            <a href="?1=EquipoController&2=gestionM"  style="color:white;">
+                            <i class="users icon"></i><i class="futbol icon"></i>
+                                Equipos
+                                </a>
+                        </button>
+
+                        <button class="ui yellow button">
+                            <a href="?1=JugadoresController&2=gestionM"  style="color:white;">
+                            <i class="male icon"></i><i class="futbol icon"></i>
+                            Jugadores
+                            </a>
+                            </button>
+                        </div>
             </div>
             <div class="row title-bar">
                     <div class="sixteen wide column">
-                    
 
                         <button class="ui right floated green labeled icon button" @click="modalRegistrarT" id="btnModalRegistroEquipo">
                             <i class="plus icon"></i>
@@ -72,12 +92,12 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
-
+<script src="./res/js/modalDetallesE.js"></script>
 <script>
 var appE = new Vue({
         el: "#appT",
         data: {
-           
+            detalles: [],
             campos_registroT: [{
                     label: 'Nombre del Torneo',
                     name: 'nombreTorneo',
@@ -128,6 +148,28 @@ var appE = new Vue({
             }]
         },
         methods: {
+            cargarDetalles(id) {
+
+            this.idTorneo = parseInt(id);
+
+            $('#frmDetalles').addClass('loading');
+            $.ajax({
+            type: 'POST',
+            url: '?1=TorneosController&2=mostrarEquiposCM',
+            data: {
+            id: id
+            },
+            success: function (data) {
+            appE.detalles = JSON.parse(data);
+            $('#frmDetalles').removeClass('loading');
+            }
+            });
+
+            },
+            cerrarModal() {
+                this.detalles = [];
+            },
+
             refrescarTabla() {
                 tablaTorneosM.ajax.reload();  
             },
@@ -174,4 +216,15 @@ var editarTorneo=(ele)=>{
             $('#idDetalleE').val($(ele).attr("id"));
             appE.cargarDatosE();
         }
+
+var verEquipos=(ele)=>{
+            $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                .modal('show');
+            appE.cargarDetalles($(ele).attr('id'));
+}
+
+
+$("#btnRecargar").click(function(){
+    $("#contenido").load(" #contenido");
+});
 </script>

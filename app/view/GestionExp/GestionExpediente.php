@@ -50,7 +50,7 @@
 
 <script src="./res/tablas/tablaCategoriasM.js"></script>
 <script src="./res/tablas/tablaJugadoresM.js"></script>
-
+<script src="./res/js/modalTorneosC.js"></script>
 
 <script>
 

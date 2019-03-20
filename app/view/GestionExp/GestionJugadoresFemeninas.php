@@ -1,6 +1,6 @@
 
 
-<div id="appJ">
+<br><div id="appJ">
 
 <modal-eliminar id_form="frmEliminarJ" id="modalEliminarJ" url="?1=JugadoresController&2=eliminarF" titulo="Eliminar Jugador"
         sub_titulo="¿Está seguro de querer eliminar esta jugadora?" :campos="campos_eliminarJ" tamanio='tiny'></modal-eliminar>
@@ -12,6 +12,27 @@
                                 <div class="titulo">
                                     <i class="female icon"></i>
                                     Jugadores Femeninos<font color="#7401DF" size="20px">.</font>
+
+                                    <button class="ui pink button">
+                                    <a href="?1=CategoriaController&2=gestionF"  style="color:white;">
+                                        <i class="chart bar outline icon"></i>
+                                    Categorías de Torneo
+                                    </a>
+                                    </button>
+
+                                    <button class="ui purple button">
+                                    <a href="?1=TorneosController&2=gestionF"  style="color:white;">
+                                    <i class="trophy icon"></i>
+                                    Torneos
+                                    </a>
+                                    </button>
+
+                                    <button class="ui olive button">
+                                    <a href="?1=EquipoController&2=gestionF"  style="color:white;">
+                                    <i class="users icon"></i><i class="futbol icon"></i>
+                                    Equipos
+                                    </a>
+                                    </button>
                                 </div>
                         </div>
                         <div class="row title-bar">
@@ -185,7 +206,6 @@
 </div>
 
 <script src="./res/tablas/tablaJugadoresF.js"></script>
-<script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
 <script>

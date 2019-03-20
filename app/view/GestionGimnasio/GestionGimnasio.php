@@ -98,6 +98,10 @@ var app = new Vue({
                     label: 'Dui/Carnet de Minoridad',
                     name: 'dui',
                     type: 'text'
+                },
+                {
+                    name: 'label-error',
+                    type: 'text'
                 }
                
                 
@@ -128,6 +132,7 @@ var app = new Vue({
                     name: 'dui',
                     type: 'text'
                 },
+                
                 {
                     name: 'idDetalle',
                     type: 'hidden'
@@ -146,6 +151,10 @@ var app = new Vue({
             modalRegistrar() {
                 $('#modalRegistrar').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal(
                     'show');
+
+                    $('#frmRegistrar input[name="label-error"]').hide();
+                    $('#frmRegistrar input[name="label-error"]').val('nada');
+                
             },
             cargarDatos() {
                 var id = $("#idDetalle").val();
@@ -262,7 +271,34 @@ resultadoF();
 
 });
 
+$('#frmRegistrar input[name="dui"]').change(function(){
 
+var dui=$('#frmRegistrar input[name="dui"]').val();
+
+     $.ajax({
+     type: 'POST',
+     url: '?1=GimnasioController&2=getDui',
+     data:{dui},
+     success: function(r) {
+
+             if(r==1)
+             {
+                $('#frmRegistrar input[name="label-error"]').show();
+                $('#frmRegistrar input[name="label-error"]').val('Documento de Identidad ya existe');
+                
+                $('#frmRegistrar input[name="label-error"]').css("background-color","#D358F7");
+                $('#frmRegistrar input[name="label-error"]').css("font-size","bold");
+                $('#frmRegistrar input[name="label-error"]').css("color","black");
+                
+             }    
+             else{
+
+                $("#btnGuardar").attr("disabled", false);
+             }  
+     }
+         });
+
+});
 
 
 

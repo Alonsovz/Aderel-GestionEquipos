@@ -148,6 +148,26 @@ class DaoGimnasio extends DaoBase {
         return $json;
     }
 
+    public function getDdi()
+    {
+
+        $_query="select idUsuario,ddi from gimnasio WHERE ddi='".$this->objeto->getDui()."' and idEliminado=1";
+       
+
+        $resultado=$this->con->ejecutar($_query)->fetch_assoc();
+        if($resultado['ddi']!=null)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+        
+        
+
+    }
+
 
 
 }

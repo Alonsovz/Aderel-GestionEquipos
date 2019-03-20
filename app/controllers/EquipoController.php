@@ -22,6 +22,8 @@ class EquipoController extends ControladorBase {
 
         $daoT = new DaoTorneos();
         $torneos = $daoT->cargarTorneosM();
+
+        self::loadMain();
         require_once './app/view/GestionExp/GestionEquiposMasculinos.php';
     }
 
@@ -33,6 +35,9 @@ class EquipoController extends ControladorBase {
 
         $daoT = new DaoTorneos();
         $torneos = $daoT->cargarTorneosF();
+
+        self::loadMain();
+
         require_once './app/view/GestionExp/GestionEquiposFemeninas.php';
     }
 

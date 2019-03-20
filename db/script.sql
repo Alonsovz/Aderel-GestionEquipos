@@ -147,6 +147,36 @@ fechaFinal date,
 idEliminado int
 );
 
+create table nivelEscuela(
+idEscuela int primary key auto_increment,
+nivel varchar(20),
+profesor varchar(50),
+dias varchar(30),
+hora varchar(30),
+edadInicial int,
+edadFinal int,
+cancha int
+);
+
+create table escuelaFut(
+idUsuario int primary key auto_increment,
+correlativo varchar(10),
+nombre varchar(50),
+apellido varchar(50),
+fechaNacimiento date,
+edad int,
+carnet varchar(25),
+encargado varchar(50),
+dui varchar(15),
+telefono varchar(20),
+fechaInscripcion date,
+idEscuela int,
+idEliminado int
+);
+
+
+
+alter table escuelaFut add constraint fk_escuelaFut_nivelEscuela foreign key (idEscuela) references nivelEscuela(idEscuela);
 
 alter table usuario add constraint fk_usuario_rol foreign key (codigoRol) references rol(codigoRol);
 
@@ -194,12 +224,19 @@ insert into equipos values (null, 'Sin Equipo','No definido','No definido',1,1,1
 insert into equipos values (null, 'Sin Equipo','No definido','No definido',1,1,1,2,2,1);
 
 insert into gimnasio values(null,'GY000001','','','2019-02-02',1,'1','2019-02-01','2019-03-01',1);
+;
 
 
 insert into natacion values(null,'EN000001','','','2019-02-02',1,'1','NA','NA','2019-02-01','2019-03-01',1);
 
+insert into nivelEscuela values(null,'1er nivel','Walter Hernandez','Lunes y Miercoles','5:00 pm a 6:00 pm',6,7,1);
+insert into nivelEscuela values(null,'2do nivel','Enrique Pacheco','Lunes y Miercoles','5:00 pm a 6:00 pm',8,9,2);
+insert into nivelEscuela values(null,'3er nivel','Jose Miguel Sanchez','Lunes y Miercoles','6:00 pm a 7:00 pm',10,11,2);
+insert into nivelEscuela values(null,'4to nivel','Carmelo de Jesus Serpas','Lunes y Miercoles','6:00 pm a 7:00 pm',12,13,1);
+insert into nivelEscuela values(null,'5to nivel','Ramiro Villalta','Martes y Jueves','5:00 pm a 6:00 pm',14,15,2);
+insert into nivelEscuela values(null,'6to nivel','Jorge Cardoza','Martes y Jueves','5:00 pm a 6:00 pm',16,17,1);
 
-
+insert into escuelaFut values(null,'','','','1999-02-01',12,'','','','',curdate(),1,1);
 
 -- ===========================================================================
 -- Procedimientos Usuarios
@@ -435,8 +472,5 @@ begin
 end	
 $$
 
-select e.*, c.nombreCategoria as Categoria, i.estado as estado, t.nombreTorneo as torneo from equipos e
-        inner join categorias c on c.idCategoria = e.idCategoria
-        inner join inscripcion i on i.idInscripcion = e.idInscripcion
-        inner join torneos t on t.idTorneo = e.idTorneo
-        where  e.idEliminado=1  and e.idGenero=2 and e.idEquipo>2;
+select * from escuelaFut
+        where  idEliminado=1 and idEscuela=1

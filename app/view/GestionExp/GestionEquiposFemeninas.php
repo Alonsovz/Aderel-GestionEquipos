@@ -1,5 +1,5 @@
 
-<div id="appE">
+<br><div id="appE">
 <modal-registrar id_form="frmRegistrarE" id="modalRegistrarE" url="?1=EquipoController&2=registrarF" titulo="Registrar Equipo"
 :campos="campos_registroE" tamanio='tiny' ></modal-registrar>
 
@@ -18,6 +18,28 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
             <div class="row">
                  <div class="titulo">
                     <i class="Female icon"></i>Equipos Femeninos<font color="#86B404" size="20px">.</font>
+                            
+                            <button class="ui pink button">
+                            <a href="?1=CategoriaController&2=gestionF"  style="color:white;">
+                                <i class="chart bar outline icon"></i>
+                            Categorías de Torneo
+                            </a>
+                            </button>
+
+                            <button class="ui purple button">
+                            <a href="?1=TorneosController&2=gestionF"  style="color:white;">
+                            <i class="trophy icon"></i>
+                            Torneos
+                            </a>
+                            </button>
+
+                            <button class="ui violet button">
+                            <a href="?1=JugadoresController&2=gestionF"  style="color:white;">
+                                <i class="female icon"></i><i class="futbol icon"></i>
+                            Jugadores
+                            </a>
+                            </button>
+
                     </div>
             </div>
 
@@ -63,7 +85,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
             
  </div>
 </div>
-<div class="ui tiny modal" id="modalInscribirE"  style="overflow: scroll;">
+<div class="ui tiny modal" id="modalInscribirE">
 
 <div class="header">
 <i class="trophy icon"></i><i class="futbol icon"></i> Inscribir Equipo
@@ -88,7 +110,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
             <div class="fields">
                 <div class="eight wide field">
                 <label><i class="trophy icon"></i>Torneos disponibles</label>
-                <select name="torneoIns" id="torneoIns" class="ui search dropdown" style="">
+                <select name="torneoIns" id="torneoIns" class="ui  dropdown" style="">
                         </select>
                         <input type="hidden" name="idE"  id="idE">   
                 </div>
