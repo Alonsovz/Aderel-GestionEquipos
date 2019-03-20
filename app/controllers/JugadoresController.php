@@ -35,6 +35,18 @@ class JugadoresController extends ControladorBase {
 
     }
 
+    public function inscripcionM() {
+        $dao = new DaoJugadores();
+
+        echo $dao->inscripcionM();
+    }
+
+    public function inscripcionF() {
+        $dao = new DaoJugadores();
+
+        echo $dao->inscripcionF();
+    }
+
     public function eliminarF() {
         $datos = $_REQUEST["id"];
 
@@ -56,6 +68,8 @@ class JugadoresController extends ControladorBase {
 
         echo $dao->inscribirF();
     }
+
+    
 
 
     public function guardarJugadorF() {
@@ -128,7 +142,7 @@ class JugadoresController extends ControladorBase {
     }
 
     public function inscribirJugadorM() {
-        $idJ = $_REQUEST["idJ"];
+        $idJ = $_REQUEST["idJugador"];
         $idEquipo = $_REQUEST["idEquipo"];
 
         $dao = new DaoJugadores();
@@ -136,7 +150,7 @@ class JugadoresController extends ControladorBase {
         $dao->objeto->setIdJugador($idJ);
         $dao->objeto->setIdEquipo($idEquipo);
 
-        echo $dao->inscribirM();
+        echo $dao->inscribirJugadorM();
     }
 
 

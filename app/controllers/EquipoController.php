@@ -226,6 +226,50 @@ public function registrarF() {
         echo $dao->editarF();
     }
 
+    public function mostrarJugadoresInsM(){
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoEquipos();
+
+        $dao->objeto->setIdEquipo($id);
+
+        $resultado =$dao->mostrarJugadoresInsM();
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $json .= json_encode($fila).',';
+
+        }
+
+        $json = substr($json, 0, strlen($json) - 1);
+
+        echo'['.$json.']';
+    }
+
+    public function mostrarJugadoresInsF(){
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoEquipos();
+
+        $dao->objeto->setIdEquipo($id);
+
+        $resultado =$dao->mostrarJugadoresInsM();
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $json .= json_encode($fila).',';
+
+        }
+
+        $json = substr($json, 0, strlen($json) - 1);
+
+        echo'['.$json.']';
+    }
+
 
 }
 

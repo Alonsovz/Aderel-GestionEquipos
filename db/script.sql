@@ -88,6 +88,7 @@ create table inscripcion(
 idInscripcion int primary key auto_increment,
 estado varchar(20)
 );
+
 create table equipos(
 idEquipo int primary key auto_increment,
 nombre varchar(200),
@@ -96,11 +97,9 @@ encargadoAux varchar(200),
 idCategoria int,
 idInscripcion int,
 idTorneo int,
-idJugador int,
 idGenero int,
 idEliminado int
 );
-
 
 
 create table jugadores(
@@ -112,12 +111,16 @@ dui varchar(25),
 foto longtext,
 fechaNacimiento date,
 edad int,
-idInscripcion int,
 idGenero int,
 idEliminado int
 );
 
 
+create table inscriJugador(
+idEquipo int,
+idJugador int,
+estado int
+);
 
 create table gimnasio(
 idUsuario int primary key auto_increment,
@@ -175,6 +178,8 @@ idEliminado int
 );
 
 
+alter table inscriJugador add constraint fk_inscriJugador_equipos foreign key (idEquipo) references equipos(idEquipo);
+alter table inscriJugador add constraint fk_inscriJugador_jugadores foreign key (idJugador) references jugadores(idJugador);
 
 alter table escuelaFut add constraint fk_escuelaFut_nivelEscuela foreign key (idEscuela) references nivelEscuela(idEscuela);
 
@@ -217,14 +222,13 @@ insert into inscripcion values(null,'Inscrito');
 insert into torneos values(null,'No se ha inscrito en torneo',0,0,1,1,1);
 insert into torneos values(null,'No se ha inscrito en torneo',0,0,1,2,1);
 
-insert into jugadores values(null,'FF000001','nada','nada','nada','nada','1999-02-12',13,1,1,1);
-insert into jugadores values(null,'FF000001','nada','nada','nada','nada','1999-02-12',13,1,2,1);
+insert into jugadores values(null,'FF000001','nada','nada','nada','nada','1999-02-12',13,1,1);
 
-insert into equipos values (null, 'Sin Equipo','No definido','No definido',1,1,1,1,1,1);
-insert into equipos values (null, 'Sin Equipo','No definido','No definido',1,1,1,2,2,1);
+insert into equipos values (null, 'Sin Equipo','No definido','No definido',1,1,1,1,1);
+insert into equipos values (null, 'Sin Equipo','No definido','No definido',1,1,2,2,1);
 
 insert into gimnasio values(null,'GY000001','','','2019-02-02',1,'1','2019-02-01','2019-03-01',1);
-;
+
 
 
 insert into natacion values(null,'EN000001','','','2019-02-02',1,'1','NA','NA','2019-02-01','2019-03-01',1);
@@ -472,5 +476,9 @@ begin
 end	
 $$
 
-select * from escuelaFut
-        where  idEliminado=1 and idEscuela=1
+select j.*,i.estado from inscriJugador i
+inner join equipos e on e.idEquipo = i.idEquipo
+inner join jugadores j on j.idJugador = i.idJugador
+where i.idEquipo=4  and i.estado=2 group by i.idJugador;
+
+select * from equipos

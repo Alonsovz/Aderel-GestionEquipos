@@ -88,6 +88,9 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
 
      
 </div>
+
+
+
 <script src="./res/tablas/tablaTorneosM.js"></script>
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
@@ -98,6 +101,7 @@ var appE = new Vue({
         el: "#appT",
         data: {
             detalles: [],
+            
             campos_registroT: [{
                     label: 'Nombre del Torneo',
                     name: 'nombreTorneo',
@@ -197,6 +201,8 @@ var appE = new Vue({
                         console.log(err);
                     });
             },
+
+            
             
            
             
@@ -209,6 +215,9 @@ var eliminarTorneo=(ele)=>{
   $('#modalEliminarT').modal('setting', 'closable', false).modal('show');
   $('#idEliminar').val($(ele).attr("id"));
 }
+
+
+
 
 
 var editarTorneo=(ele)=>{

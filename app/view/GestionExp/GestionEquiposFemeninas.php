@@ -13,6 +13,8 @@ sub_titulo="¿Está seguro de querer eliminar este equipo?" :campos="campos_elim
 <modal-eliminar id_form="frmFondoComun" id="modalFondo" url="?1=EquipoController&2=fondoComunF" titulo="Enviar a Fondo Común"
 sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="camposFondoComun" tamanio='tiny'></modal-eliminar>
 
+<modal-detalles :detalles="detalles"></modal-detalles>
+
 <div class="ui grid">
     
             <div class="row">
@@ -84,7 +86,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
                 </div>
             
  </div>
-</div>
+
 <div class="ui tiny modal" id="modalInscribirE">
 
 <div class="header">
@@ -128,17 +130,88 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
     </div>
 </div>
 
+<div class="ui longer fullscreen first coupled modal" id="modalCambios">
+<div id="cargandoModal" class="ui inverted dimmer">
+        <div class="ui big loader"></div>
+</div>
 
+<div class="header">
+    Inscribir Jugadora
+</div>
+<div class="content">
+<div style="margin-bottom: 0em !important; width: 100% !important;" class="ui tiny fluid horizontal divided list">
+
+        <div class="item" style="font-size:20px;">
+        <i class="users icon"></i>
+            <div class="content" style="font-size:20px;">
+               {{datosDetalle.nombre}}
+            </div>
+        </div>
+        <div class="item" style="font-size:20px;">
+        <i class="chart bar outline icon"></i>
+            <div class="content" style="font-size:20px;">
+            {{datosDetalle.Categoria}}
+            </div>
+        </div>
+        <div class="item" style="font-size:20px;">
+        <i class="user outline icon"></i>
+            <div class="content" style="font-size:20px;">
+          {{datosDetalle.encargado}}
+          <input type="hidden" id="idEqui" >
+            </div>
+        </div>
+    </div>
+    <div class="ui divider"></div>
+                <div class="row">
+                        <div class="sixteen wide column">
+                            <table id="dtInscriF" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                                <thead>
+                                    <tr>
+                                    
+                                        <th style="background-color: #DF01A5; color:white;">N°</th>
+                                        <th style="background-color: #DF01A5; color:white;" ></th>
+                                        <th style="background-color: #DF01A5; color:white;">Cod. Expediente</th>
+                                        <th style="background-color: #DF01A5; color:white;">Nombre</th>
+                                        <th style="background-color: #DF01A5; color:white;">Apellido</th>
+                                        <th style="background-color: #DF01A5; color:white;">DUI/Carnet Minoridad</th>
+                                        <th style="background-color: #DF01A5; color:white;">Fecha de Nacimiento</th>
+                                        <th style="background-color: #DF01A5; color:white;">Edad del Jugador</th>                
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+</div>
+<div class="actions">
+    <button @click="cerrar()" class="ui black button">
+        Listo
+    </button>
+    
+</div>
+</div>
+</div>
+
+<script src="./res/js/modalDetallesEqui.js"></script>
 <script src="./res/tablas/tablaEquiposF.js"></script>
+<script src="./res/tablas/tablaInscripcionF.js"></script>
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
+
 <script>
+
 
 var appE = new Vue({
         el: "#appE",
         data: {
-           
+            detalles: [],
+            datosDetalle: {
+                nombre: '',
+                Categoria: '',
+                encargado: '',
+            },
             campos_registroE: [{
                     label: 'Nombre del Equipo',
                     name: 'nombreEquipo',
@@ -201,6 +274,28 @@ var appE = new Vue({
             }]
         },
         methods: {
+            cargarDetalles(id, categoria) {
+
+            this.idEquipo = parseInt(id);
+            this.categoria = categoria;
+
+            $('#frmDetalles').addClass('loading');
+            $.ajax({
+            type: 'POST',
+            url: '?1=EquipoController&2=mostrarJugadoresInsM',
+            data: {
+            id: id
+            },
+            success: function (data) {
+            appE.detalles = JSON.parse(data);
+            $('#frmDetalles').removeClass('loading');
+            }
+            });
+
+            },
+            cerrarModal() {
+                this.detalles = [];
+},
             refrescarTabla() {
                 tablaEquiposF.ajax.reload();  
             },
@@ -251,6 +346,10 @@ var appE = new Vue({
                     .catch(err => {
                         console.log(err);
                     });
+            },
+            cerrar()
+            {
+                $('#modalCambios').modal('hide');
             }
            
             
@@ -261,6 +360,57 @@ var appE = new Vue({
     });
 </script>
 <script>
+var inscribir=(ele)=>{
+
+    alertify.confirm("¿Desea  inscribir la  jugadora?",
+            function(){
+                var idEquipo = $("#idEqui").val();
+  var idJugador = $(ele).attr("id");
+
+
+             $.ajax({
+                type: 'POST',
+                url: '?1=JugadoresController&2=inscribirJugadorM',
+                data: {
+                    idEquipo : idEquipo,
+                    idJugador : idJugador,
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        swal({
+                            title: 'Listo!',
+                            text: 'Jugador inscrito con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            if (result.value) {
+                                location.href = '?';
+                            }
+                        }); 
+                        $('#dtInscriF').DataTable().ajax.reload();        
+                    } 
+                }
+             });
+            },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            }); 
+}
+var modalCambiar=(ele)=>{
+                
+                appE.datosDetalle.nombre= $(ele).attr("nombre");
+                appE.datosDetalle.Categoria= $(ele).attr("categoria");
+                appE.datosDetalle.encargado= $(ele).attr("encargado");
+                $("#idEqui").val($(ele).attr("id"));
+                $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+            }
+
+
 var eliminarEquipo=(ele)=>{
   $('#modalEliminarE').modal('setting', 'closable', false).modal('show');
  $('#idEliminar').val($(ele).attr("id"));
@@ -271,6 +421,11 @@ var enviarFondo=(ele)=>{
   $('#idEliminar').val($(ele).attr("id"));
 }
 
+var verJugadoresE=(ele)=>{
+     $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+    appE.cargarDetalles($(ele).attr('id'),$(ele).attr("categoria"));
+  }
 
 var editarEquipo=(ele)=>{
             $('#modalEditarE').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');

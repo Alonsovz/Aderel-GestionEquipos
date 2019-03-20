@@ -57,6 +57,11 @@
     <!-- SweerAlert -->
     <script src="./res/plugins/sweetalert2.js"></script>
 
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/alertify.min.js"></script>
+
+<!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/alertify.min.css"/>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/themes/semantic.min.css"/>
     <!-- Socket.io -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.dev.js"></script> -->
     
@@ -69,4 +74,9 @@
         $('.ui.dropdown')
             .dropdown();
     });
+    alertify.defaults.title = "Confirmación";
+alertify.defaults.transition = "zoom";
+alertify.defaults.theme.ok = "ui blue button";
+alertify.defaults.theme.cancel = "ui red button";
+alertify.defaults.theme.input = "field";
 </script>

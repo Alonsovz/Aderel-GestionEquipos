@@ -51,16 +51,12 @@ Vue.component('modal-editar', {
     },
 
     methods: {
-        editar() {
+        editar:function(){
+            
             var gatos = {};
         
             $('#' + this.id_form).addClass('loading');
 
-            // $('#' + this.id_form).find(":input").each(function () {
-            //     gatos[this.name] = $(this).val();
-            // });
-
-            // gatos = JSON.stringify(gatos);
             let form = new FormData(document.getElementById(this.id_form))
 
             var param = {
@@ -70,13 +66,11 @@ Vue.component('modal-editar', {
                 // },
                 body: form,
             };
-
             fetch(this.url, param)
                 .then(response => {
                     return response.text();
                 })
                 .then(val => {
-
                     if (val == 1) {
                         swal({
                             title: 'Editado',
@@ -92,6 +86,7 @@ Vue.component('modal-editar', {
                 }).catch(res => {
                     console.log(res);
                 });
+            
         },
         cancelar() {
             resetFrm(this.id_form, "#btnEditar");
@@ -105,6 +100,17 @@ Vue.component('modal-editar', {
                 this.img=e.target.result;
                 $('[name=imagenNueva]').val(e.target.result);
             }
+        },
+        confirmar(){
+            alertify.confirm("¿Desea guardar los cambios?",
+            function(){
+               this.editar();
+            },
+            function(){
+
+                alertify.error('Cancelado');
+                
+            }); 
         }
     },
 
@@ -152,7 +158,7 @@ Vue.component('modal-editar', {
                     <button class="ui black deny button" @click="cancelar">
                         Cancelar
                     </button>
-                    <button class="ui right primary button" @click="editar" id="btnEditar">
+                    <button class="ui right primary button" @click="confirmar" id="btnEditar">
                         Guardar Cambios
                     </button>
                 </div>
