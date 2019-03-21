@@ -30,8 +30,9 @@ class DaoTorneos extends DaoBase {
                 $btnEditar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEditarT icon blue small button\" onclick=\"editarTorneo(this)\"><i class=\"edit icon\"></i></button>';
                 $btnEliminar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEliminarT icon negative small button\" onclick=\"eliminarTorneo(this)\"><i class=\"trash icon\"></i></button>';
                 $btnVer = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon green small button\" onclick=\"verEquipos(this)\"><i class=\"hand point right icon\"></i><i class=\"users icon\"></i><i class=\"hand point left icon\"></i></button>';
+                $sorteo = '<button id=\"'.$fila["idTorneo"].'\"  equipos=\"'.$fila["inscritos"]. '\" name=\"'.$fila["nombreTorneo"]. '\"  class=\"ui icon yellow small button\" onclick=\"sorteos(this)\"><i class=\"futbol icon\"></i></button>';
 
-                $acciones = ', "Acciones": "'.$btnVer.''.$btnEditar.' '.$btnEliminar.'"';
+                $acciones = ', "Acciones": "'.$btnVer.''.$sorteo.''.$btnEditar.' '.$btnEliminar.'"';
                 
 
                 $object = substr_replace($object, $acciones, strlen($object) -1,0);
@@ -66,8 +67,9 @@ class DaoTorneos extends DaoBase {
                 $btnEditar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEditarT icon blue small button\" onclick=\"editarTorneo(this)\"><i class=\"edit icon\"></i></button>';
                 $btnEliminar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEliminarT icon negative small button\" onclick=\"eliminarTorneo(this)\"><i class=\"trash icon\"></i></button>';
                 $btnVer = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon green small button\" onclick=\"verEquipos(this)\"><i class=\"hand point right icon\"></i><i class=\"futbol icon\"></i><i class=\"hand point left icon\"></i></button>';
+                $sorteo = '<button id=\"'.$fila["idTorneo"].'\" equipos=\"'.$fila["inscritos"]. '\" class=\"ui icon yellow small button\" onclick=\"sorteos(this)\"><i class=\"futbol icon\"></i></button>';
 
-                $acciones = ', "Acciones": "'.$btnVer.''.$btnEditar.' '.$btnEliminar.'"';
+                $acciones = ', "Acciones": "'.$btnVer.''.$sorteo .''.$btnEditar.' '.$btnEliminar.'"';
                 
 
                 $object = substr_replace($object, $acciones, strlen($object) -1,0);
@@ -82,7 +84,7 @@ class DaoTorneos extends DaoBase {
 
     public function registrarM(){
         $query = "Insert into torneos values (null,'".$this->objeto->getNombreTorneo()."','".$this->objeto->getNumeroEquipos()."',
-        '".$this->objeto->getDisponibles()."',
+        '".$this->objeto->getDisponibles()."',0,
         '".$this->objeto->getIdCategoria()."',2,1);";
 
         $resultado = $this->con->ejecutar($query);
@@ -171,7 +173,9 @@ class DaoTorneos extends DaoBase {
 
     public function disponiblesM() {
         $resta = 1;
-        $_query = "update torneos set disponibles= disponibles - ".$resta." where idGenero=2 and idTorneo = ".$this->objeto->getIdTorneo();
+        $suma =1;
+        $_query = "update torneos set disponibles= disponibles - ".$resta.", inscritos= inscritos + ".$suma."
+         where idGenero=2 and idTorneo = ".$this->objeto->getIdTorneo();
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -185,7 +189,7 @@ class DaoTorneos extends DaoBase {
 
     public function registrarF(){
         $query = "Insert into torneos values (null,'".$this->objeto->getNombreTorneo()."','".$this->objeto->getNumeroEquipos()."',
-        '".$this->objeto->getDisponibles()."',
+        '".$this->objeto->getNumeroEquipos()."',0,
         '".$this->objeto->getIdCategoria()."',1,1);";
 
         $resultado = $this->con->ejecutar($query);
@@ -274,7 +278,8 @@ class DaoTorneos extends DaoBase {
 
     public function disponiblesF() {
         $resta = 1;
-        $_query = "update torneos set disponibles= disponibles - ".$resta." where idGenero=1 and idTorneo = ".$this->objeto->getIdTorneo();
+        $suma =1;
+        $_query = "update torneos set disponibles= disponibles - ".$resta.", inscritos=inscritos + ".$suma." where idGenero=1 and idTorneo = ".$this->objeto->getIdTorneo();
 
         $resultado = $this->con->ejecutar($_query);
 

@@ -51,7 +51,7 @@ Vue.component('modal-editar', {
     },
 
     methods: {
-        editar:function(){
+        editar(){
             
             var gatos = {};
         
@@ -100,17 +100,6 @@ Vue.component('modal-editar', {
                 this.img=e.target.result;
                 $('[name=imagenNueva]').val(e.target.result);
             }
-        },
-        confirmar(){
-            alertify.confirm("¿Desea guardar los cambios?",
-            function(){
-               this.editar();
-            },
-            function(){
-
-                alertify.error('Cancelado');
-                
-            }); 
         }
     },
 
@@ -158,7 +147,7 @@ Vue.component('modal-editar', {
                     <button class="ui black deny button" @click="cancelar">
                         Cancelar
                     </button>
-                    <button class="ui right primary button" @click="confirmar" id="btnEditar">
+                    <button class="ui right primary button" @click="editar" id="btnEditar">
                         Guardar Cambios
                     </button>
                 </div>

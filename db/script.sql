@@ -79,10 +79,13 @@ idTorneo int primary key auto_increment,
 nombreTorneo varchar(100),
 numeroEquipos int,
 disponibles int,
+inscritos int,
 idCategoria int,
 idGenero int,
 idEliminado int
 );
+
+
 
 create table inscripcion(
 idInscripcion int primary key auto_increment,
@@ -219,8 +222,8 @@ insert into categorias values (null, 'Sin Categoria',0,2,1);
 insert into inscripcion values(null,'Aun no inscrito');
 insert into inscripcion values(null,'Inscrito');
 
-insert into torneos values(null,'No se ha inscrito en torneo',0,0,1,1,1);
-insert into torneos values(null,'No se ha inscrito en torneo',0,0,1,2,1);
+insert into torneos values(null,'No se ha inscrito en torneo',0,0,0,1,1,1);
+insert into torneos values(null,'No se ha inscrito en torneo',0,0,0,1,2,1);
 
 insert into jugadores values(null,'FF000001','nada','nada','nada','nada','1999-02-12',13,1,1);
 
@@ -476,9 +479,4 @@ begin
 end	
 $$
 
-select j.*,i.estado from inscriJugador i
-inner join equipos e on e.idEquipo = i.idEquipo
-inner join jugadores j on j.idJugador = i.idJugador
-where i.idEquipo=4  and i.estado=2 group by i.idJugador;
 
-select * from equipos

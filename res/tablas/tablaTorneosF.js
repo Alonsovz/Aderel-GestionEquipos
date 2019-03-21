@@ -21,6 +21,9 @@ $(function() {
                     "data": "disponibles"
                 },
                 {
+                    "data": "inscritos"
+                },
+                {
                     "data": "categoria"
                 },
                 {

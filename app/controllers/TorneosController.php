@@ -16,6 +16,12 @@ class TorneosController extends ControladorBase {
         require_once './app/view/GestionExp/GestionTorneosMasculinos.php';
     }
 
+    public function sorteo()
+    {
+        self::loadMain();
+        require_once './app/view/GestionExp/funciones_liga.php';
+    }
+
     public static function gestionF()
     {
         self::loadMain();

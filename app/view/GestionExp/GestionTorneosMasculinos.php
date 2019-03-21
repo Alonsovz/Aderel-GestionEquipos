@@ -70,6 +70,7 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
                                         <th style="background-color: #1CC647; color:white;">Nombre del Torneo</th>
                                         <th style="background-color: #1CC647; color:white;">Máximo de Equipos</th>
                                         <th style="background-color: #1CC647; color:white;">Cupos Disponibles</th>
+                                        <th style="background-color: #1CC647; color:white;">Equipos Inscritos</th>
                                         <th style="background-color: #1CC647; color:white;">Categoría del Torneo</th>
                                         <th style="background-color: #1CC647; color:white;">Acciones</th>
                                        
@@ -89,6 +90,26 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
      
 </div>
 
+<div class="ui modal" id="sorteos">
+<div class="header">
+<i class="female icon"></i><i class="futbol icon"></i> Realizar sorteo <a id="name"></a>
+</div>
+<div class="content">
+<form method="post" action="?1=TorneosController&2=sorteo">
+
+<input type="text" id="disponibles" name="disponibles">
+
+
+<input type="submit" name="button" id="button" value="Realizar Sorteo" class="ui green button">
+</form>
+
+</div>
+
+<div class="actions">
+<button class="ui blue button" onclick="cerrar()">Listo</button>
+</div>
+
+</div>
 
 
 <script src="./res/tablas/tablaTorneosM.js"></script>
@@ -232,8 +253,15 @@ var verEquipos=(ele)=>{
             appE.cargarDetalles($(ele).attr('id'));
 }
 
+var sorteos=(ele)=>{
+    $("#disponibles").val($(ele).attr("equipos"));
+    $("#name").text($(ele).attr("name"));
+    $('#sorteos').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                .modal('show');
+}
 
-$("#btnRecargar").click(function(){
-    $("#contenido").load(" #contenido");
-});
+
+function cerrar(){
+    $('#sorteos').modal('hide');
+}
 </script>
