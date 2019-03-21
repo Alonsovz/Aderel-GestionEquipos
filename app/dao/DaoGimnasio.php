@@ -25,15 +25,17 @@ class DaoGimnasio extends DaoBase {
 
             $btnEditar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEditarE icon blue small button\" onclick=\"editarUsuario(this)\"><i class=\"edit icon\"></i></button>';
             $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarE icon pink small button\" onclick=\"eliminarUsuario(this)\"><i class=\"trash icon\"></i></button>';
+            $btnVencidos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnVencidos icon red small button\" onclick=\"reinscribirUsuario(this)\"><i class=\"pencil alternate icon\"></i></button>';
+            $btnReporte = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui  icon green small button\" onclick=\"reporte(this)\"><i class=\"list icon\"></i></button>';
             
             if($fila["fechaFinal"] <= $fechaMini){
-                $btnVencidos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnVencidos icon red small button\" onclick=\"reinscribirUsuario(this)\"><i class=\"pencil alternate icon\"></i></button>';
                 
-                $acciones = ', "Acciones": "<div style=background-color:#FFFF00>'.$btnVencidos.''.$btnEditar.' '.$btnEliminar.'</div>"';
+                
+                $acciones = ', "Acciones": "<div style=background-color:#FFFF00>'.$btnVencidos.' '.$btnEliminar.'</div>"';
             }
                else{
                 $btnInscrbir = '';
-                $acciones = ', "Acciones": "'.$btnEditar.''.$btnEliminar.'"';
+                $acciones = ', "Acciones": "'.$btnReporte.''.$btnEditar.''.$btnEliminar.'"';
                }
             
             
@@ -166,6 +168,15 @@ class DaoGimnasio extends DaoBase {
         
         
 
+    }
+
+    public function fichaG(){
+        $query = "select * from gimnasio
+        where idUsuario=".$this->objeto->getIdUsuario();
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
     }
 
 

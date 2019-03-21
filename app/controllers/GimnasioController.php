@@ -90,6 +90,24 @@ class GimnasioController extends ControladorBase {
         echo $dao->cargarDatosGimnasio();
     }
 
+    public function fichaG() {
+        $dao = new DaoGimnasio();
+        
+        require_once './app/reportes/gimnasio.php';
+        
+       // $idA= $_REQUEST["area"];
+        $id = $_REQUEST["id"];
+
+        $reporte = new Reporte();
+
+        //$dao->objeto->setCodigoArea($idA);
+        $dao->objeto->setIdUsuario($id);
+        $resultado = $dao->fichaG();
+        $resultado1 = $dao->fichaG();
+
+        $reporte->gimnasio($id, $resultado, $resultado1);
+    }
+
 
     
 

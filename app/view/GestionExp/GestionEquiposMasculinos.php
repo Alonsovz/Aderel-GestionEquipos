@@ -158,7 +158,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
             <div class="content" style="font-size:20px;">
           {{datosDetalle.encargado}}
             </div>
-            <input type="text" id="idEqui" >
+            <input type="hidden" id="idEqui" >
         </div>
     </div>
     <div class="ui divider"></div>

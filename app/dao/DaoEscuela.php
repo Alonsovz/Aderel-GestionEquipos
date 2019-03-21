@@ -21,9 +21,9 @@ class DaoEscuela extends DaoBase {
             $object = json_encode($fila);
 
            
-            $btnEditar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editarCategoria(this)\"><i class=\"edit icon\"></i></button>';
-            $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminarCategoria(this)\"><i class=\"trash icon\"></i></button>';
-            $btnTorneos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"verTorneosM(this)\"><i class=\"list icon\"></i></button>';
+            $btnEditar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editar(this)\"><i class=\"edit icon\"></i></button>';
+            $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminar(this)\"><i class=\"trash icon\"></i></button>';
+            $btnTorneos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"reporte(this)\"><i class=\"list icon\"></i></button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$btnTorneos.'"';
 
@@ -98,9 +98,9 @@ class DaoEscuela extends DaoBase {
             $object = json_encode($fila);
 
            
-            $btnEditar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editarCategoria(this)\"><i class=\"edit icon\"></i></button>';
-            $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminarCategoria(this)\"><i class=\"trash icon\"></i></button>';
-            $btnTorneos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"verTorneosM(this)\"><i class=\"list icon\"></i></button>';
+            $btnEditar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editar(this)\"><i class=\"edit icon\"></i></button>';
+            $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminar(this)\"><i class=\"trash icon\"></i></button>';
+            $btnTorneos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"reporte(this)\"><i class=\"list icon\"></i></button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$btnTorneos.'"';
 
@@ -175,9 +175,9 @@ class DaoEscuela extends DaoBase {
             $object = json_encode($fila);
 
            
-            $btnEditar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editarCategoria(this)\"><i class=\"edit icon\"></i></button>';
-            $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminarCategoria(this)\"><i class=\"trash icon\"></i></button>';
-            $btnTorneos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"verTorneosM(this)\"><i class=\"list icon\"></i></button>';
+            $btnEditar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editar(this)\"><i class=\"edit icon\"></i></button>';
+            $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminar(this)\"><i class=\"trash icon\"></i></button>';
+            $btnTorneos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"reporte(this)\"><i class=\"list icon\"></i></button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$btnTorneos.'"';
 
@@ -252,10 +252,10 @@ class DaoEscuela extends DaoBase {
             $object = json_encode($fila);
 
            
-            $btnEditar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editarCategoria(this)\"><i class=\"edit icon\"></i></button>';
-            $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminarCategoria(this)\"><i class=\"trash icon\"></i></button>';
-            $btnTorneos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"verTorneosM(this)\"><i class=\"list icon\"></i></button>';
-
+            $btnEditar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editar(this)\"><i class=\"edit icon\"></i></button>';
+            $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminar(this)\"><i class=\"trash icon\"></i></button>';
+            $btnTorneos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"reporte(this)\"><i class=\"list icon\"></i></button>';
+            
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$btnTorneos.'"';
 
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
@@ -329,9 +329,9 @@ class DaoEscuela extends DaoBase {
             $object = json_encode($fila);
 
            
-            $btnEditar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editarCategoria(this)\"><i class=\"edit icon\"></i></button>';
-            $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminarCategoria(this)\"><i class=\"trash icon\"></i></button>';
-            $btnTorneos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"verTorneosM(this)\"><i class=\"list icon\"></i></button>';
+            $btnEditar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editar(this)\"><i class=\"edit icon\"></i></button>';
+            $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminar(this)\"><i class=\"trash icon\"></i></button>';
+            $btnTorneos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"reporte(this)\"><i class=\"list icon\"></i></button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$btnTorneos.'"';
 
@@ -406,9 +406,9 @@ class DaoEscuela extends DaoBase {
             $object = json_encode($fila);
 
            
-            $btnEditar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editarCategoria(this)\"><i class=\"edit icon\"></i></button>';
-            $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminarCategoria(this)\"><i class=\"trash icon\"></i></button>';
-            $btnTorneos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"verTorneosM(this)\"><i class=\"list icon\"></i></button>';
+            $btnEditar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editar(this)\"><i class=\"edit icon\"></i></button>';
+            $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminar(this)\"><i class=\"trash icon\"></i></button>';
+            $btnTorneos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"reporte(this)\"><i class=\"list icon\"></i></button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$btnTorneos.'"';
 
@@ -468,6 +468,58 @@ class DaoEscuela extends DaoBase {
         }
 
     }
+
+    public function cargarDatosPrimerN() {
+
+        $_query = "select * from escuelaFut
+        where idUsuario = ".$this->objeto->getIdJugador();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $json = json_encode($resultado->fetch_assoc());
+
+        return $json;
+    }
+
+    public function editarPrimerN(){
+        $_query = "update escuelaFut set nombre='".$this->objeto->getNombre()."', apellido='".$this->objeto->getApellido()."', 
+        fechaNacimiento='".$this->objeto->getFechaNacimiento()."', edad='".$this->objeto->getEdad()."', 
+        carnet='".$this->objeto->getCarnet()."',encargado='".$this->objeto->getEncargado()."',
+         dui='".$this->objeto->getDui()."', telefono='".$this->objeto->getTelefono()."' where idUsuario =".$this->objeto->getIdJugador();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+
+    }
+    public function eliminarPrimerN() {
+        
+        $_query = "update escuelaFut set idEliminado=2 where idUsuario = ".$this->objeto->getIdJugador();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function ficha() {
+        $query = "select e.*, n.nivel from escuelaFut e
+        inner join nivelEscuela n on n.idEscuela = e.idEscuela
+        where e.idUsuario=".$this->objeto->getIdJugador();
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+
 
 
 

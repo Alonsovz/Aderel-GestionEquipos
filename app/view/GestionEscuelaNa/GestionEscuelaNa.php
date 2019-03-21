@@ -50,6 +50,7 @@
                             <th style="background-color: #04B4AE; color:white;">Edad</th>
                             <th style="background-color: #04B4AE; color:white;">DUI / Carnet Minoridad</th>
                             <th style="background-color: #04B4AE; color:white;">Encargado</th>
+                            <th style="background-color: #04B4AE; color:white;">Tel. Encargado</th>
                             <th style="background-color: #04B4AE; color:white;">DUI Encargado</th>
                             <th style="background-color: #04B4AE; color:white;">Fecha de Inscripción</th>
                             <th style="background-color: #04B4AE; color:white;">Fecha Final</th>
@@ -106,6 +107,11 @@ var app = new Vue({
                     type: 'text'
                 },
                 {
+                    label: 'Telefono:',
+                    name: 'telefono',
+                    type: 'text'
+                },
+                {
                     label: 'Dui de Encargado:',
                     name: 'duiEncargado',
                     type: 'text'
@@ -146,6 +152,11 @@ var app = new Vue({
                     type: 'text'
                 },
                 {
+                    label: 'Telefono:',
+                    name: 'telefono',
+                    type: 'text'
+                },
+                {
                     label: 'Dui de Encargado:',
                     name: 'duiEncargado',
                     type: 'text'
@@ -166,6 +177,7 @@ var app = new Vue({
                 tablaNatacion.ajax.reload();
                 $('#frmRegistrar input[name="encargado"]').hide();
             $('#frmRegistrar input[name="duiEncargado"]').hide();
+            $('#frmRegistrar input[name="telefono"]').hide();
             },
             modalRegistrar() {
                 $('#modalRegistrar').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal(
@@ -190,11 +202,14 @@ var app = new Vue({
                         if(dat.encargado==''){
                             $('#frmEditar input[name="encargado"]').hide();
                             $('#frmEditar input[name="duiEncargado"]').hide();
+                            $('#frmEditar input[name="telefono"]').hide();
                         }else{
                             $('#frmEditar input[name="encargado"]').show();
                             $('#frmEditar input[name="duiEncargado"]').show();
+                            $('#frmEditar input[name="telefono"]').show();
                         $('#frmEditar input[name="encargado"]').val(dat.encargado);
                         $('#frmEditar input[name="duiEncargado"]').val(dat.duiEncargado);
+                        $('#frmEditar input[name="telefono"]').val(dat.telefono);
                         }
                     })
                     .catch(err => {
@@ -206,6 +221,12 @@ var app = new Vue({
     });
 </script>
 <script>
+var reporte=(ele)=>{
+    var id = $(ele).attr("id");
+window.open('?1=NatacionController&2=fichaN&id='+id,'_blank');
+return false;
+}
+
 var eliminarUsuario=(ele)=>{
   $('#modalEliminar').modal('setting', 'closable', false).modal('show');
   $('#idEliminar').val($(ele).attr("id"));
@@ -229,6 +250,7 @@ var editarUsuario=(ele)=>{
 $(document).ready(function(){
     $('#frmRegistrar input[name="encargado"]').hide();
     $('#frmRegistrar input[name="duiEncargado"]').hide();
+    $('#frmRegistrar input[name="telefono"]').hide();
 });
 
 function Edad(FechaNacimiento) {
@@ -262,6 +284,8 @@ if(edad>18){
     $('#frmRegistrar input[name="encargado"]').hide();
     $('#frmRegistrar input[name="encargado"]').val('nada');
     $('#frmRegistrar input[name="duiEncargado"]').val('nada');
+    $('#frmRegistrar input[name="telefono"]').hide();
+    $('#frmRegistrar input[name="telefono"]').val('nada');
 }
 else{
     $('#frmRegistrar input[name="dui"]').mask("9999-999999-999-9");
@@ -270,6 +294,8 @@ else{
     $('#frmRegistrar input[name="encargado"]').show();
     $('#frmRegistrar input[name="encargado"]').val('');
     $('#frmRegistrar input[name="duiEncargado"]').val('');
+    $('#frmRegistrar input[name="telefono"]').show();
+    $('#frmRegistrar input[name="telefono"]').mask("9999-9999");
 }
 }
 
@@ -295,14 +321,18 @@ if(edad>18){
     $('#frmEditar input[name="dui"]').mask("99999999-9");
     $('#frmEditar input[name="duiEncargado"]').hide();
     $('#frmEditar input[name="encargado"]').hide();
+    $('#frmEditar input[name="telefono"]').hide();
     $('#frmEditar input[name="encargado"]').val('nada');
     $('#frmEditar input[name="duiEncargado"]').val('nada');
+    $('#frmEditar input[name="telefono"]').val('nada');
 }
 else{
     $('#frmEditar input[name="dui"]').mask("9999-999999-999-9");
     $('#frmEditar input[name="duiEncargado"]').show();
     $('#frmEditar input[name="duiEncargado"]').mask("99999999-9");
     $('#frmEditar input[name="encargado"]').show();
+    $('#frmEditar input[name="telefono"]').show();
+    $('#frmEditar input[name="telefono"]').mask("9999-9999");
     $('#frmEditar input[name="encargado"]').val('');
     $('#frmEditar input[name="duiEncargado"]').val('');
 }
@@ -315,8 +345,8 @@ $('#frmEditar input[name="fechaNac"]').change(function(){
 Edad(fecha);
 
 $('#frmEditar input[name="dui"]').val('');
-$('#frmRegistrar input[name="encargado"]').hide();
-    $('#frmRegistrar input[name="duiEncargado"]').hide();
+$('#frmEditar input[name="encargado"]').hide();
+    $('#frmEditar input[name="duiEncargado"]').hide();
 resultadoF();
 
 

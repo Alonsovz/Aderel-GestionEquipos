@@ -25,15 +25,16 @@ class DaoNatacion extends DaoBase {
 
             $btnEditar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEditarE icon blue small button\" onclick=\"editarUsuario(this)\"><i class=\"edit icon\"></i></button>';
             $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarE icon pink small button\" onclick=\"eliminarUsuario(this)\"><i class=\"trash icon\"></i></button>';
-            
+            $btnReporte = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui  icon green small button\" onclick=\"reporte(this)\"><i class=\"list icon\"></i></button>';
+            $btnVencidos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnVencidos icon red small button\" onclick=\"reinscribirUsuario(this)\"><i class=\"pencil alternate icon\"></i></button>';
             if($fila["fechaFinal"] <= $fechaMini){
-                $btnVencidos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnVencidos icon red small button\" onclick=\"reinscribirUsuario(this)\"><i class=\"pencil alternate icon\"></i></button>';
                 
-                $acciones = ', "Acciones": "<div style=background-color:#FFFF00>'.$btnVencidos.''.$btnEditar.' '.$btnEliminar.'</div>"';
+                
+                $acciones = ', "Acciones": "<div style=background-color:#FFFF00>'.$btnVencidos.''.$btnReporte.' '.$btnEliminar.'</div>"';
             }
                else{
                 $btnInscrbir = '';
-                $acciones = ', "Acciones": "'.$btnEditar.''.$btnEliminar.'"';
+                $acciones = ', "Acciones": "'.$btnReporte.''.$btnEditar.''.$btnEliminar.'"';
                }
             
             
@@ -86,7 +87,7 @@ class DaoNatacion extends DaoBase {
         $query = "Insert into natacion values (null,'".$idExp."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
         '".$this->objeto->getFechaNacimiento()."','".$this->objeto->getEdad()."',
         '".$this->objeto->getDui()."','".$this->objeto->getEncargado()."','".$this->objeto->getDuiEncargado()."'
-        ,curdate(),ADDDATE(curdate(),INTERVAL 31 DAY),1);";
+        ,'".$this->objeto->getTelefono()."',curdate(),ADDDATE(curdate(),INTERVAL 31 DAY),1);";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -139,7 +140,7 @@ class DaoNatacion extends DaoBase {
         $_query = "update natacion set nombre='".$this->objeto->getNombre()."', apellido='".$this->objeto->getApellido()."',
         fechaNacimiento='".$this->objeto->getFechaNacimiento()."', edad='".$this->objeto->getEdad()."',
         ddi= '".$this->objeto->getDui()."',encargado ='".$this->objeto->getEncargado()."',
-        duiEncargado='".$this->objeto->getDuiEncargado()."' where idUsuario = ".$this->objeto->getIdUsuario();
+        dui='".$this->objeto->getDuiEncargado()."', telefono='".$this->objeto->getTelefono()."' where idUsuario = ".$this->objeto->getIdUsuario();
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -148,6 +149,16 @@ class DaoNatacion extends DaoBase {
         } else {
             return 0;
         }
+    }
+
+    
+    public function fichaN() {
+        $query = "select * from natacion
+        where idUsuario=".$this->objeto->getIdUsuario();
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
     }
 
 

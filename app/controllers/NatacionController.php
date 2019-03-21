@@ -80,10 +80,12 @@ class NatacionController extends ControladorBase {
         if($_REQUEST["edad"] < 18){
             $dao->objeto->setEncargado($_REQUEST["encargado"]);
             $dao->objeto->setDuiEncargado($_REQUEST["duiEncargado"]);
+            $dao->objeto->setTelefono($_REQUEST["telefono"]);
 
         }else{
         $dao->objeto->setEncargado('');
         $dao->objeto->setDuiEncargado('');
+        $dao->objeto->setTelefono('');
 
         }
         $dao->objeto->setDui($_REQUEST["dui"]);
@@ -93,6 +95,24 @@ class NatacionController extends ControladorBase {
 
         echo $dao->editar();
 
+    }
+
+    public function fichaN() {
+        $dao = new DaoNatacion();
+        
+        require_once './app/reportes/escuelaNatacion.php';
+        
+       // $idA= $_REQUEST["area"];
+        $id = $_REQUEST["id"];
+
+        $reporte = new Reporte();
+
+        //$dao->objeto->setCodigoArea($idA);
+        $dao->objeto->setIdUsuario($id);
+        $resultado = $dao->fichaN();
+        $resultado1 = $dao->fichaN();
+
+        $reporte->escuelaNatacion($id, $resultado, $resultado1);
     }
  
 

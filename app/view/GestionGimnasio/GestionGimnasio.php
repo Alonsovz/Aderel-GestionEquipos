@@ -195,7 +195,13 @@ var editarUsuario=(ele)=>{
             $('#modalEditar').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
             $('#idDetalle').val($(ele).attr("id"));
             app.cargarDatos();
-        }
+}
+
+var reporte=(ele)=>{
+    var id = $(ele).attr("id");
+window.open('?1=GimnasioController&2=fichaG&id='+id,'_blank');
+return false;
+}
 
 </script>
 

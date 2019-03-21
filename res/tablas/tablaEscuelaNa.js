@@ -33,7 +33,10 @@ $(function() {
                     "data": "encargado"
                 },
                 {
-                    "data": "duiEncargado"
+                    "data": "telefono"
+                },
+                {
+                    "data": "dui"
                 },
                 {
                     "data": "fechaInscripcion"

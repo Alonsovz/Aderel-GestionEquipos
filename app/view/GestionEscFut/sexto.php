@@ -4,11 +4,12 @@
      titulo="Registrar Usuario de Natación"
         :campos="campos_registro" tamanio='tiny' style="overflow: scroll;"></modal-registrar>
 
-    <modal-editar id_form="frmEditar" id="modalEditar" url="?1=NatacionController&2=editar" titulo="Editar Usuario de Escuela de Natación"
+        <modal-editar id_form="frmEditar" id="modalEditar" url="?1=EscFutbolController&2=editarPrimerN" titulo=""
         :campos="campos_editar" tamanio='tiny'></modal-editar>
 
-    <modal-eliminar id_form="frmEliminar" id="modalEliminar" url="?1=NatacionController&2=eliminar" titulo="Eliminar usuario de Escuela de
-     Natación" sub_titulo="¿Está seguro de querer eliminar este usuario?" :campos="campos_eliminar" tamanio='tiny'></modal-eliminar>
+    <modal-eliminar id_form="frmEliminar" id="modalEliminar" url="?1=EscFutbolController&2=eliminarPrimerN"
+     titulo="Eliminar Jugador de sexto nivel" sub_titulo="¿Está seguro de querer eliminar este usuario?"
+      :campos="campos_eliminar" tamanio='tiny'></modal-eliminar>
 
 
         <div class="ui grid">
@@ -195,12 +196,147 @@
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
-
 <script>
+var app = new Vue({
+        el: "#app",
+        data: {
+            detalles: [],
+            campos_registro: [
+                {
+                    label: 'Nombre de la Categoria',
+                    name: 'nombreCategoria',
+                    type: 'text'
+                },
+                {
+                    label: 'Edad Minima:',
+                    name: 'edadMinima',
+                    type: 'number'
+                },
+                
+            ],
+            campos_editar: [
+                {
+                    label: 'Nombre:',
+                    name: 'nombre',
+                    type: 'text'
+                },
+                {
+                    label: 'Apellido:',
+                    name: 'apellido',
+                    type: 'text'
+                },
+                {
+                    label: 'Fecha de Nacimiento:',
+                    name: 'fechaNac',
+                    type: 'date'
+                },
+                {
+                    label: 'Edad:',
+                    name: 'edad',
+                    type: 'text'
+                },
+                {
+                    name: 'error',
+                    type: 'text'
+                },
+                {
+                    label: 'Carnet Min:',
+                    name: 'carnet',
+                    type: 'text'
+                },
+                {
+                    label: 'Encargado:',
+                    name: 'encargado',
+                    type: 'text'
+                },
+                {
+                    label: 'DUI Encargado:',
+                    name: 'dui',
+                    type: 'text'
+                },
+                {
+                    label: 'Teléfono Encargado:',
+                    name: 'telefono',
+                    type: 'text'
+                },
+                {
+                    name: 'idDetalleC',
+                    type: 'hidden'
+                }
+
+            ],
+
+            campos_eliminar: [{
+                name: 'idEliminar',
+                type: 'hidden'
+            }]
+        },
+        methods: {
+            refrescarTabla() {
+
+                tablaSextoN.ajax.reload();
+
+                
+            },
+            cargarDatos() {
+                var id = $("#idDetalleC").val();
+
+                fetch("?1=EscFutbolController&2=cargarDatosPrimerN&id=" + id)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(dat => {
+
+                        console.log(dat);
+
+                        // $('#frmEditar input[name="idDetalle"]').val(dat.codigoUsuari);
+                        $('#frmEditar input[name="nombre"]').val(dat.nombre);
+                       $('#frmEditar input[name="apellido"]').val(dat.apellido);
+                       $('#frmEditar input[name="fechaNac"]').val(dat.fechaNacimiento);
+                       $('#frmEditar input[name="edad"]').val(dat.edad);
+                       $('#frmEditar input[name="carnet"]').val(dat.carnet);
+                       $('#frmEditar input[name="encargado"]').val(dat.encargado);
+                       $('#frmEditar input[name="dui"]').val(dat.dui);
+                       $('#frmEditar input[name="telefono"]').val(dat.telefono);
+                       $('#frmEditar input[name="error"]').css("display","none");
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            },
+           
+            
+
+        }
+    });
+</script>
+<script>
+var eliminar=(ele)=>{
+  $('#modalEliminar').modal('setting', 'closable', false).modal('show');
+  $('#idEliminar').val($(ele).attr("id"));
+}
+
+var editar=(ele)=>{
+    $('#modalEditar').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+     $('#idDetalleC').val($(ele).attr("id"));
+    app.cargarDatos();
+
+}
+
+var reporte=(ele)=>{
+    var id = $(ele).attr("id");
+window.open('?1=EscFutbolController&2=ficha&id='+id,'_blank');
+return false;
+}
+
 $(document).ready(function(){
     $("#duiJ").mask("9999999-9");
     $("#telefono").mask("9999-9999");
     $("#carnet").mask("9999-999999-999-9");
+    $('#frmEditar input[name="carnet"]').mask("9999-999999-999-9");
+    $('#frmEditar input[name="dui"]').mask("9999999-9");
+    $('#frmEditar input[name="telefono"]').mask("9999-9999");
+    $('#frmEditar input[name="error"]').css("display","none");
 });
 $('#btnModalRegistroJugador').click(function() {
 $('#modalAgregarJugador').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
@@ -216,6 +352,8 @@ function cerrar(){
                  $('#carnet').val('');
                  $('#edad').val('');
                 $('#encargado').val('');
+                $("#validar").css("display","none");
+                 $("#btnGuardarJugador").attr("disabled",false);
                 $('#modalAgregarJugador').modal('hide');
             }
 
@@ -297,6 +435,36 @@ $('#fechaNac').change(function(){
 
 Edad(fecha);
 resultado();
+
+
+});
+
+function resultadoE(){
+    var fecha = $('#frmEditar input[name="fechaNac"]').val();
+
+var edad = Edad(fecha);
+
+$('#frmEditar input[name="edad"]').val(edad);
+
+if(edad > 17 || edad < 16){
+    $('#frmEditar input[name="error"]').val('La edad del jugador no es apta para el nivel');
+    $('#frmEditar input[name="error"]').css("display","block");
+    $('#frmEditar input[name="error"]').css("background-color","#FE2E2E");
+    $('#frmEditar input[name="error"]').css("color","white");
+    $('#frmEditar input[name="error"]').prop("readonly",true);
+    //$("#btnGuardarJugador").attr("disabled",true);
+}else{
+    $('#frmEditar input[name="error"]').css("display","none");
+}
+
+}
+
+$('#frmEditar input[name="fechaNac"]').change(function(){
+    var fecha = $('#frmEditar input[name="fechaNac"]').val();
+
+Edad(fecha);
+$('#frmEditar input[name="carnet"]').val('');
+resultadoE();
 
 
 });

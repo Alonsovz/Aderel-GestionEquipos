@@ -147,11 +147,14 @@ fechaNacimiento date,
 edad int,
 ddi varchar(50),
 encargado varchar(100),
-duiEncargado varchar(100),
+dui varchar(100),
+telefono varchar(20),
 fechaInscripcion date,
 fechaFinal date,
 idEliminado int
 );
+
+
 
 create table nivelEscuela(
 idEscuela int primary key auto_increment,
@@ -234,7 +237,7 @@ insert into gimnasio values(null,'GY000001','','','2019-02-02',1,'1','2019-02-01
 
 
 
-insert into natacion values(null,'EN000001','','','2019-02-02',1,'1','NA','NA','2019-02-01','2019-03-01',1);
+insert into natacion values(null,'EN000001','','','2019-02-02',1,'1','NA','NA','NA','2019-02-01','2019-03-01',1);
 
 insert into nivelEscuela values(null,'1er nivel','Walter Hernandez','Lunes y Miercoles','5:00 pm a 6:00 pm',6,7,1);
 insert into nivelEscuela values(null,'2do nivel','Enrique Pacheco','Lunes y Miercoles','5:00 pm a 6:00 pm',8,9,2);
@@ -479,4 +482,11 @@ begin
 end	
 $$
 
+select e.idEquipo, e.nombre from equipos e
+    inner join torneos t on t.idTorneo = e.idTorneo
+    where e.idTorneo = 3 and t.disponibles=5 and e.idGenero=2 group by e.nombre;
 
+
+select e.*, n.nivel from escuelaFut e
+inner join nivelEscuela n on n.idEscuela = e.idEscuela
+where e.idUsuario=7

@@ -67,7 +67,7 @@ class DaoTorneos extends DaoBase {
                 $btnEditar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEditarT icon blue small button\" onclick=\"editarTorneo(this)\"><i class=\"edit icon\"></i></button>';
                 $btnEliminar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEliminarT icon negative small button\" onclick=\"eliminarTorneo(this)\"><i class=\"trash icon\"></i></button>';
                 $btnVer = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon green small button\" onclick=\"verEquipos(this)\"><i class=\"hand point right icon\"></i><i class=\"futbol icon\"></i><i class=\"hand point left icon\"></i></button>';
-                $sorteo = '<button id=\"'.$fila["idTorneo"].'\" equipos=\"'.$fila["inscritos"]. '\" class=\"ui icon yellow small button\" onclick=\"sorteos(this)\"><i class=\"futbol icon\"></i></button>';
+                $sorteo = '<button id=\"'.$fila["idTorneo"].'\" equipos=\"'.$fila["inscritos"]. '\"  class=\"ui icon yellow small button\" onclick=\"sorteos(this)\"><i class=\"futbol icon\"></i></button>';
 
                 $acciones = ', "Acciones": "'.$btnVer.''.$sorteo .''.$btnEditar.' '.$btnEliminar.'"';
                 

@@ -236,6 +236,65 @@ class EscFutbolController extends ControladorBase {
         echo $dao->registrarSexto();
     }
 
+
+    public function cargarDatosPrimerN() {
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoEscuela();
+
+        $dao->objeto->setIdJugador($id);
+
+        echo $dao->cargarDatosPrimerN();
+    }
+
+    public function editarPrimerN(){  
+
+        $dao = new DaoEscuela();
+
+        $dao->objeto->setNombre($_REQUEST["nombre"]);
+        $dao->objeto->setApellido($_REQUEST["apellido"]);
+        $dao->objeto->setEdad($_REQUEST["edad"]);
+        $dao->objeto->setFechaNacimiento($_REQUEST["fechaNac"]);
+        $dao->objeto->setCarnet($_REQUEST["carnet"]);
+        $dao->objeto->setEncargado($_REQUEST["encargado"]);
+        $dao->objeto->setTelefono($_REQUEST["telefono"]);
+        $dao->objeto->setDui($_REQUEST["dui"]);
+        $dao->objeto->setIdJugador($_REQUEST['idDetalleC']);
+
+        echo $dao->editarPrimerN();
+
+    }
+
+    public function eliminarPrimerN() {
+        $datos = $_REQUEST["id"];
+
+        $dao = new DaoEscuela();
+
+        $dao->objeto->setIdJugador($datos);
+
+        echo $dao->eliminarPrimerN();
+    }
+
+
+    public function ficha() {
+        $dao = new DaoEscuela();
+        
+        require_once './app/reportes/fichaEscuela.php';
+        
+       // $idA= $_REQUEST["area"];
+        $id = $_REQUEST["id"];
+
+        $reporte = new Reporte();
+
+        //$dao->objeto->setCodigoArea($idA);
+        $dao->objeto->setIdJugador($id);
+        $resultado = $dao->ficha();
+        $resultado1 = $dao->ficha();
+
+        $reporte->fichaEscuela($id, $resultado, $resultado1);
+    }
+
+
 }
 
 
