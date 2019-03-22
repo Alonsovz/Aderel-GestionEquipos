@@ -122,6 +122,7 @@ idEliminado int
 create table inscriJugador(
 idEquipo int,
 idJugador int,
+idTorneo int,
 estado int
 );
 
@@ -186,12 +187,12 @@ idEliminado int
 
 alter table inscriJugador add constraint fk_inscriJugador_equipos foreign key (idEquipo) references equipos(idEquipo);
 alter table inscriJugador add constraint fk_inscriJugador_jugadores foreign key (idJugador) references jugadores(idJugador);
+alter table inscriJugador add constraint fk_inscriJugador_torneos foreign key (idTorneo) references torneos(idTorneo);
 
 alter table escuelaFut add constraint fk_escuelaFut_nivelEscuela foreign key (idEscuela) references nivelEscuela(idEscuela);
 
 alter table usuario add constraint fk_usuario_rol foreign key (codigoRol) references rol(codigoRol);
 
-alter table equipos add constraint fk_equipos_jugadores foreign key (idJugador) references jugadores(idJugador);
 alter table equipos add constraint fk_equipos_categorias foreign key (idCategoria) references categorias(idCategoria);
 alter table equipos add constraint fk_equipos_torneos foreign key (idTorneo) references torneos(idTorneo);
 alter table equipos add constraint fk_equipos_inscripcion foreign key (idInscripcion) references inscripcion(idInscripcion);
@@ -482,11 +483,11 @@ begin
 end	
 $$
 
-select e.idEquipo, e.nombre from equipos e
-    inner join torneos t on t.idTorneo = e.idTorneo
-    where e.idTorneo = 3 and t.disponibles=5 and e.idGenero=2 group by e.nombre;
+select * from inscriJugador
 
-
-select e.*, n.nivel from escuelaFut e
-inner join nivelEscuela n on n.idEscuela = e.idEscuela
-where e.idUsuario=
+select i.*, j.nombre,e.nombre,t.nombreTorneo, c.nombreCategoria from inscriJugador i
+inner join jugadores j on j.idJugador = i.idJugador
+inner join torneos t on t.idTorneo = i.idTorneo
+inner join categorias c on c.idCategoria = t.idTorneo
+inner join equipos e on e.idEquipo = i.idEquipo
+where i.idJugador =4 group by t.nombreTorneo
