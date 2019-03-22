@@ -47,7 +47,7 @@ Vue.component('modal-detalles', {
             </form>
         </div>
         <div class="actions">
-            <button @click="$parent.cerrarModal" class="ui deny black button">
+            <button @click="$parent.cerrar" class="ui deny black button">
                 Cerrar
             </button>
         </div>

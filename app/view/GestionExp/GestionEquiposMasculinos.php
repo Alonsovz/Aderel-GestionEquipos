@@ -13,6 +13,7 @@ sub_titulo="¿Está seguro de querer eliminar este equipo?" :campos="campos_elim
 <modal-eliminar id_form="frmFondoComun" id="modalFondo" url="?1=EquipoController&2=fondoComunM" titulo="Enviar a Fondo Común"
 sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="camposFondoComun" tamanio='tiny'></modal-eliminar>
 <modal-detalles :detalles="detalles"></modal-detalles>
+<modal-jugador :detalles="detalles"></modal-jugador>
 
 
 <div class="ui grid">
@@ -159,6 +160,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
           {{datosDetalle.encargado}}
             </div>
             <input type="hidden" id="idEqui" >
+            <input type="hidden" id="idTor" >
         </div>
     </div>
     <div class="ui divider"></div>
@@ -202,6 +204,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
+<script src="./res/js/modalVerJugador.js"></script>
 <script>
 
 var appE = new Vue({
@@ -298,8 +301,27 @@ var appE = new Vue({
             });
 
             },
+            verDetalle(id){
+                this.idJugador = parseInt(id);
+
+            $('#frmDetalles').addClass('loading');
+            $.ajax({
+            type: 'POST',
+            url: '?1=JugadoresController&2=verDetalles',
+            data: {
+            id: id
+            },
+            success: function (data) {
+            appE.detalles = JSON.parse(data);
+            $('#frmDetalles').removeClass('loading');
+            }
+            });
+
+            },
             cerrarModal() {
                 this.detalles = [];
+                $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
             },
             refrescarTabla() {
                 tablaEquiposM.ajax.reload();  
@@ -378,20 +400,22 @@ var inscribir=(ele)=>{
             function(){
   var idEquipo = $("#idEqui").val();
   var idJugador = $(ele).attr("id");
+  var idTorneo = $("#idTor").val();
 
 
              $.ajax({
                 type: 'POST',
-                url: '?1=JugadoresController&2=inscribirJugadorJ',
+                url: '?1=JugadoresController&2=inscribirJugadorM',
                 data: {
                     idEquipo : idEquipo,
                     idJugador : idJugador,
+                    idTorneo : idTorneo,
                 },
                 success: function(r) {
                     if(r == 1) {
                         swal({
                             title: 'Listo!',
-                            text: 'Jugadora inscrito con éxito',
+                            text: 'Jugador inscrito con éxito',
                             type: 'success',
                             showConfirmButton: false,
                                 timer: 1700
@@ -427,12 +451,19 @@ var verJugadoresE=(ele)=>{
     appE.cargarDetalles($(ele).attr('id'));
   }
 
+  var ver=(ele)=>{
+     $('#modalVer').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+    appE.verDetalle($(ele).attr('id'));
+  }
+
   var modalCambiar=(ele)=>{
                 
                 appE.datosDetalle.nombre= $(ele).attr("nombre");
                 appE.datosDetalle.Categoria= $(ele).attr("categoria");
                 appE.datosDetalle.encargado= $(ele).attr("encargado");
                 $("#idEqui").val($(ele).attr("id"));
+                $("#idTor").val($(ele).attr("idTorneo"));
                 $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
             }

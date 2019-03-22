@@ -105,11 +105,11 @@ class DaoJugadores extends DaoBase {
                     
                 $object = json_encode($fila);
 
-
+                $btnVer = '<button id=\"'.$fila["idJugador"].'\" class=\"ui icon red small button\" onclick=\"ver(this)\"><i class=\"list icon\"></i></button>';
                 $btnInscrbir = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnInscribir icon blue small button\" onclick=\"inscribir(this)\"><i class=\"edit icon\"></i><i class=\"futbol icon\"></i></button>';
                 $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnInscrbir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnVer.''.$btnInscrbir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
                 
 
                 $object = substr_replace($object, $acciones, strlen($object) -1,0);
@@ -123,7 +123,8 @@ class DaoJugadores extends DaoBase {
     }
 
     public function inscribirJugadorM(){
-        $_query = "insert into inscriJugador values('".$this->objeto->getIdEquipo()."','".$this->objeto->getIdJugador()."',2)";
+        $_query = "insert into inscriJugador values('".$this->objeto->getIdEquipo()."','".$this->objeto->getIdJugador()."',
+        '".$this->objeto->getIdTorneo()."',2)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -138,7 +139,7 @@ class DaoJugadores extends DaoBase {
     public function inscripcionF()
     {
         $_query = "select j.* from jugadores j
-         where j.idEliminado = 1 and j.idGenero = 1 and j.idJugador>1";
+         where j.idEliminado = 1 and j.idGenero = 1  and j.idJugador>1";
 
         
 
@@ -151,13 +152,13 @@ class DaoJugadores extends DaoBase {
                     
                 $object = json_encode($fila);
 
-
+                $btnVer = '<button id=\"'.$fila["idJugador"].'\" class=\"ui icon blue small button\" onclick=\"ver(this)\"><i class=\"list icon\"></i></button>';
                 $btnInscrbir = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnInscribir icon red small button\" onclick=\"inscribir(this)\"><i class=\"futbol icon\"></i></button>';
                 $btnEditar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEditarJ icon blue small button\" onclick=\"editarJugador(this)\"><i class=\"edit icon\"></i></button>';
                 $btnEliminar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEliminarJ icon negative small button\" onclick=\"eliminarJugador(this)\"><i class=\"trash icon\"></i></button>';
                 $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnInscrbir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnVer.''.$btnInscrbir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
                 
 
                 $object = substr_replace($object, $acciones, strlen($object) -1,0);
@@ -394,6 +395,19 @@ class DaoJugadores extends DaoBase {
         } else {
             return 0;
         }
+    }
+
+    public function detalles(){
+        $_query="select i.*, j.nombre as name, j.apellido as apellido, e.nombre as equipo,
+         t.nombreTorneo as torneo, c.nombreCategoria as categoria from inscriJugador i
+        inner join jugadores j on j.idJugador = i.idJugador
+        inner join torneos t on t.idTorneo = i.idTorneo
+        inner join equipos e on e.idEquipo = i.idEquipo
+        inner join categorias c on c.idCategoria = t.idTorneo
+        where i.idJugador =".$this->objeto->getIdJugador()." group by e.nombre";
+        $resultado = $this->con->ejecutar($_query);
+
+        return $resultado;
     }
     
 

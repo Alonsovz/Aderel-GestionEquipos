@@ -60,11 +60,13 @@ class JugadoresController extends ControladorBase {
     public function inscribirJugadorF() {
         $idJ = $_REQUEST["idJ"];
         $idEquipo = $_REQUEST["idEquipo"];
+        $idTorneo = $_REQUEST["idTorneo"];
 
         $dao = new DaoJugadores();
 
         $dao->objeto->setIdJugador($idJ);
         $dao->objeto->setIdEquipo($idEquipo);
+        $dao->objeto->setIdTorneo($idTorneo);
 
         echo $dao->inscribirF();
     }
@@ -144,11 +146,13 @@ class JugadoresController extends ControladorBase {
     public function inscribirJugadorM() {
         $idJ = $_REQUEST["idJugador"];
         $idEquipo = $_REQUEST["idEquipo"];
+        $idTorneo = $_REQUEST["idTorneo"];
 
         $dao = new DaoJugadores();
 
         $dao->objeto->setIdJugador($idJ);
         $dao->objeto->setIdEquipo($idEquipo);
+        $dao->objeto->setIdTorneo($idTorneo);
 
         echo $dao->inscribirJugadorM();
     }
@@ -210,6 +214,28 @@ class JugadoresController extends ControladorBase {
         $dao->objeto->setIdJugador($_REQUEST['idDetalleE']);
 
         echo $dao->editarM();
+    }
+
+    public function verDetalles(){
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setIdJugador($id);
+
+        $resultado =$dao->detalles();
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $json .= json_encode($fila).',';
+
+        }
+
+        $json = substr($json, 0, strlen($json) - 1);
+
+        echo'['.$json.']';
     }
 
 }

@@ -489,4 +489,4 @@ select e.idEquipo, e.nombre from equipos e
 
 select e.*, n.nivel from escuelaFut e
 inner join nivelEscuela n on n.idEscuela = e.idEscuela
-where e.idUsuario=7
+where e.idUsuario=

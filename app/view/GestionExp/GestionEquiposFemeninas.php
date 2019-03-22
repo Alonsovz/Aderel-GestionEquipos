@@ -14,7 +14,7 @@ sub_titulo="¿Está seguro de querer eliminar este equipo?" :campos="campos_elim
 sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="camposFondoComun" tamanio='tiny'></modal-eliminar>
 
 <modal-detalles :detalles="detalles"></modal-detalles>
-
+<modal-jugador :detalles="detalles"></modal-jugador>
 <div class="ui grid">
     
             <div class="row">
@@ -158,6 +158,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
             <div class="content" style="font-size:20px;">
           {{datosDetalle.encargado}}
           <input type="hidden" id="idEqui" >
+          <input type="hidden" id="idTor" >
             </div>
         </div>
     </div>
@@ -199,7 +200,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
-
+<script src="./res/js/modalVerJugador.js"></script>
 <script>
 
 
@@ -293,9 +294,28 @@ var appE = new Vue({
             });
 
             },
+            verDetalle(id){
+                this.idJugador = parseInt(id);
+
+            $('#frmDetalles').addClass('loading');
+            $.ajax({
+            type: 'POST',
+            url: '?1=JugadoresController&2=verDetalles',
+            data: {
+            id: id
+            },
+            success: function (data) {
+            appE.detalles = JSON.parse(data);
+            $('#frmDetalles').removeClass('loading');
+            }
+            });
+
+            },
             cerrarModal() {
                 this.detalles = [];
-},
+                $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+            },
             refrescarTabla() {
                 tablaEquiposF.ajax.reload();  
             },
@@ -364,8 +384,9 @@ var inscribir=(ele)=>{
 
     alertify.confirm("¿Desea  inscribir la  jugadora?",
             function(){
-                var idEquipo = $("#idEqui").val();
+var idEquipo = $("#idEqui").val();
   var idJugador = $(ele).attr("id");
+  var idTorneo = $("#idTor").val();
 
 
              $.ajax({
@@ -374,6 +395,7 @@ var inscribir=(ele)=>{
                 data: {
                     idEquipo : idEquipo,
                     idJugador : idJugador,
+                    idTorneo : idTorneo,
                 },
                 success: function(r) {
                     if(r == 1) {
@@ -389,9 +411,11 @@ var inscribir=(ele)=>{
                                 location.href = '?';
                             }
                         }); 
-                        $('#dtInscriF').DataTable().ajax.reload();        
+                        $('#dtInscriM').DataTable().ajax.reload();
+                        
                     } 
                 }
+
              });
             },
             function(){
@@ -406,6 +430,7 @@ var modalCambiar=(ele)=>{
                 appE.datosDetalle.Categoria= $(ele).attr("categoria");
                 appE.datosDetalle.encargado= $(ele).attr("encargado");
                 $("#idEqui").val($(ele).attr("id"));
+                $("#idTor").val($(ele).attr("idTorneo"));
                 $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
             }
@@ -438,7 +463,11 @@ var inscribirEquipo=(ele)=>{
            $('#idDetalleE').val($(ele).attr("id"));
            appE.cargarDatosT();
         }
-
+var ver=(ele)=>{
+     $('#modalVer').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+    appE.verDetalle($(ele).attr('id'));
+  }
 
     function cerrar(){
         $('#modalInscribirE').modal('hide');
