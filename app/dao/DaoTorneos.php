@@ -215,7 +215,9 @@ class DaoTorneos extends DaoBase {
     }
 
     public function cargarTorneosF(){
-        $_query = "select * from torneos where idEliminado=1 and idTorneo>1 and disponibles>0 and idGenero=1";
+        $_query = "select t.*, c.nombreCategoria as cat from torneos t
+        inner join categorias c on c.idCategoria= t.idCategoria
+        where t.idEliminado=1 and t.idTorneo>1 and t.disponibles>0 and t.idGenero=1";
 
         $resultado = $this->con->ejecutar($_query);
 

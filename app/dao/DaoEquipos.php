@@ -9,7 +9,7 @@ class DaoEquipos extends DaoBase {
 
     public function mostrarEquiposF()
     {
-        $_query = "select e.*,e.nombre as nombreE, c.nombreCategoria as Categoria, i.estado as estado, t.nombreTorneo as torneo,
+        $_query = "select e.*,e.nombre as nombreE,c.edadMinima as edad, c.nombreCategoria as Categoria, i.estado as estado, t.nombreTorneo as torneo,
         t.idTorneo as idT from equipos e
         inner join categorias c on c.idCategoria = e.idCategoria
         inner join inscripcion i on i.idInscripcion = e.idInscripcion
@@ -28,7 +28,7 @@ class DaoEquipos extends DaoBase {
             $btnEliminar = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnEliminarE icon negative small button\" onclick=\"eliminarEquipo(this)\"><i class=\"trash icon\"></i></button>';
             $btnVer = '<button id=\"'.$fila["idEquipo"].'\" categoria=\"'.$fila["Categoria"].'\" nombre=\"'.$fila["nombreE"].'\" encargado=\"'.$fila["encargado"].'\" class=\"ui btnVerT icon blue small button\" onclick=\"verJugadoresE(this)\"><i class=\"hand point right icon\"></i><i class=\"users icon\"></i><i class=\"hand point left icon\"></i></button>';
             $btnCancelar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnVerT icon purple small button\" onclick=\"enviarFondo(this)\"><i class=\"hand point right icon\"></i><i class=\"close icon\"></i></i></button>';
-            $inscrbirJ = '<button id=\"'.$fila["idEquipo"].'\" categoria=\"'.$fila["Categoria"].'\" idTorneo=\"'.$fila["idT"].'\" nombre=\"'.$fila["nombreE"].'\" encargado=\"'.$fila["encargado"].'\"  class=\"ui icon green small button\" onclick=\"modalCambiar(this)\"><i class=\"edit icon\"></i><i class=\"male icon\"></i></button>';
+            $inscrbirJ = '<button edadMinima=\"'.$fila["edad"].'\" id=\"'.$fila["idEquipo"].'\" categoria=\"'.$fila["Categoria"].'\" idTorneo=\"'.$fila["idT"].'\" nombre=\"'.$fila["nombreE"].'\" encargado=\"'.$fila["encargado"].'\"  class=\"ui icon green small button\" onclick=\"modalCambiar(this)\"><i class=\"edit icon\"></i><i class=\"male icon\"></i></button>';
 
             if($fila["idInscripcion"]== 1){
                 $btnInscrbir = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnInscribir icon green small button\" onclick=\"inscribirEquipo(this)\"><i class=\"futbol icon\"></i></button>';
@@ -57,7 +57,7 @@ class DaoEquipos extends DaoBase {
 
     public function mostrarEquiposM()
     {
-        $_query = "select e.*,e.nombre as nombreE, c.nombreCategoria as Categoria, i.estado as estado, t.nombreTorneo as torneo,
+        $_query = "select e.*,e.nombre as nombreE,c.edadMinima as edad, c.nombreCategoria as Categoria, i.estado as estado, t.nombreTorneo as torneo,
          t.idTorneo as idT from equipos e
         inner join categorias c on c.idCategoria = e.idCategoria
         inner join inscripcion i on i.idInscripcion = e.idInscripcion
@@ -76,7 +76,7 @@ class DaoEquipos extends DaoBase {
             $btnEliminar = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnEliminarE icon negative small button\" onclick=\"eliminarEquipo(this)\"><i class=\"trash icon\"></i></button>';
             $btnVer = '<button id=\"'.$fila["idEquipo"].'\" categoria=\"'.$fila["Categoria"].'\" nombre=\"'.$fila["nombreE"].'\" encargado=\"'.$fila["encargado"].'\" class=\"ui btnVerT icon blue small button\" onclick=\"verJugadoresE(this)\"><i class=\"hand point right icon\"></i><i class=\"users icon\"></i><i class=\"hand point left icon\"></i></button>';
             $btnCancelar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnVerT icon purple small button\" onclick=\"enviarFondo(this)\"><i class=\"hand point right icon\"></i><i class=\"close icon\"></i></i></button>';
-            $inscrbirJ = '<button id=\"'.$fila["idEquipo"].'\" categoria=\"'.$fila["Categoria"].'\" idTorneo=\"'.$fila["idT"].'\" nombre=\"'.$fila["nombreE"].'\" encargado=\"'.$fila["encargado"].'\"  class=\"ui icon green small button\" onclick=\"modalCambiar(this)\"><i class=\"edit icon\"></i><i class=\"male icon\"></i></button>';
+            $inscrbirJ = '<button edadMinima=\"'.$fila["edad"].'\" id=\"'.$fila["idEquipo"].'\" categoria=\"'.$fila["Categoria"].'\" idTorneo=\"'.$fila["idT"].'\" nombre=\"'.$fila["nombreE"].'\" encargado=\"'.$fila["encargado"].'\"  class=\"ui icon green small button\" onclick=\"modalCambiar(this)\"><i class=\"edit icon\"></i><i class=\"male icon\"></i></button>';
 
             if($fila["idInscripcion"]== 1){
                 

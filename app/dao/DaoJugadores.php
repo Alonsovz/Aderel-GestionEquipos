@@ -106,7 +106,7 @@ class DaoJugadores extends DaoBase {
                 $object = json_encode($fila);
 
                 $btnVer = '<button id=\"'.$fila["idJugador"].'\" class=\"ui icon red small button\" onclick=\"ver(this)\"><i class=\"list icon\"></i></button>';
-                $btnInscrbir = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnInscribir icon blue small button\" onclick=\"inscribir(this)\"><i class=\"edit icon\"></i><i class=\"futbol icon\"></i></button>';
+                $btnInscrbir = '<button id=\"'.$fila["idJugador"].'\" edad=\"'.$fila["edad"].'\" class=\"ui btnInscribir icon blue small button\" onclick=\"inscribir(this)\"><i class=\"edit icon\"></i><i class=\"futbol icon\"></i></button>';
                 $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnVer.''.$btnInscrbir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
@@ -153,7 +153,7 @@ class DaoJugadores extends DaoBase {
                 $object = json_encode($fila);
 
                 $btnVer = '<button id=\"'.$fila["idJugador"].'\" class=\"ui icon blue small button\" onclick=\"ver(this)\"><i class=\"list icon\"></i></button>';
-                $btnInscrbir = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnInscribir icon red small button\" onclick=\"inscribir(this)\"><i class=\"futbol icon\"></i></button>';
+                $btnInscrbir = '<button  id=\"'.$fila["idJugador"].'\" edad=\"'.$fila["edad"].'\" class=\"ui btnInscribir icon red small button\" onclick=\"inscribir(this)\"><i class=\"futbol icon\"></i></button>';
                 $btnEditar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEditarJ icon blue small button\" onclick=\"editarJugador(this)\"><i class=\"edit icon\"></i></button>';
                 $btnEliminar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEliminarJ icon negative small button\" onclick=\"eliminarJugador(this)\"><i class=\"trash icon\"></i></button>';
                 $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';

@@ -104,17 +104,21 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
             <div class="eight wide field">
             <label><i class="chart bar outline icon"></i>Categoría del equipo</label>
             <input type="text" name="categoria"  id="categoria" readonly>
+            <input type="text" name="idCat"  id="idCat" readonly>
             </div>
             </div>
         </div>
-        
+        <a id="filtrarT" class="ui green button">
+        Ver torneos
+        </a>
         <div class="field">
             <div class="fields">
-                <div class="eight wide field">
+                <div class="sixteen wide field">
                 <label><i class="trophy icon"></i>Torneos disponibles</label>
                 <select name="torneoIns" id="torneoIns" class="ui  dropdown" style="">
                         </select>
-                        <input type="hidden" name="idE"  id="idE">   
+                        <input type="hidden" name="idE"  id="idE">  
+                         
                 </div>
             </div>
         </div>
@@ -161,6 +165,13 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
           <input type="hidden" id="idTor" >
             </div>
         </div>
+        <div class="item" style="font-size:20px;">
+        <i class="chart bar outline icon"></i>
+        <div class="content" style="font-size: 20px;">
+        Edad Minima de la Categoria: 
+            <input type="text" id="edadMinima" readonly style="width: 7%;">
+        </div>
+        </div>
     </div>
     <div class="ui divider"></div>
                 <div class="row">
@@ -192,6 +203,9 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
     
 </div>
 </div>
+
+
+
 </div>
 
 <script src="./res/js/modalDetallesEqui.js"></script>
@@ -361,6 +375,8 @@ var appE = new Vue({
                         $('#frmInscribirE input[name="categoria"]').val(dat.categorias);
                         $('#frmInscribirE input[name="IdCategoria"]').val(dat.id);
                         $('#frmInscribirE input[name="idE"]').val(dat.idEquipo);
+                        $('#frmInscribirE input[name="idCat"]').val(dat.idCategoria);
+                        
                         //$('#frmInscribir select[name="selectCategoria"]').dropdown('set selected', dat.idCategoria);
                     })
                     .catch(err => {
@@ -381,6 +397,14 @@ var appE = new Vue({
 </script>
 <script>
 var inscribir=(ele)=>{
+    if($(ele).attr("edad")<$("#edadMinima").val()){
+        swal({
+            title: 'Error!',
+            text: 'La edad de la jugadora es menor a la edad minima de la categoría',
+            type: 'error',
+            showConfirmButton: true
+                        });
+        }else{
 
     alertify.confirm("¿Desea  inscribir la  jugadora?",
             function(){
@@ -423,6 +447,7 @@ var idEquipo = $("#idEqui").val();
                 alertify.error('Cancelado');
                 
             }); 
+        }
 }
 var modalCambiar=(ele)=>{
                 
@@ -431,6 +456,7 @@ var modalCambiar=(ele)=>{
                 appE.datosDetalle.encargado= $(ele).attr("encargado");
                 $("#idEqui").val($(ele).attr("id"));
                 $("#idTor").val($(ele).attr("idTorneo"));
+                $("#edadMinima").val($(ele).attr("edadMinima"));
                 $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
             }
@@ -482,20 +508,28 @@ var ver=(ele)=>{
         
 
             var option = '';
+            var idCat = '';
+            
             var torneo = '<?php echo $torneos?>';
 
             $.each(JSON.parse(torneo), function() {
-                option = `<option value="${this.idTorneo}">${this.nombreTorneo} </option>`;
+                
+                option = `<option value="${this.idTorneo}"> Nombre Torneo: ${this.nombreTorneo} - Categoria: ${this.cat} </option>`;
+
+                
 
                 $('#torneoIns').append(option);
-            });
 
+                
+            });
+           
 
             $('#btnInscribirE').click(function() {
                var idEquipo = $('#idE').val();
                var idT = $('#torneoIns').val();
+               var idCE = $('#idCat').val();
          
-        
+                
             $.ajax({
                 type: 'POST',
                 url: '?1=EquipoController&2=inscribirEquipoF',

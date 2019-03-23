@@ -173,7 +173,7 @@
                             <div class="sixteen wide field">
                             <div class="ui red pointing label"  id="validar"
                                         style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
-                                        La edad del jugador no es apta para el nivel (6-7 años)</div>
+                                        La edad del jugador no es apta para el nivel (12-13 años)</div>
                             </div>
                         </div>
                 </div>

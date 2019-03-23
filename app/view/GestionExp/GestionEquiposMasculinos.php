@@ -105,6 +105,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
             <div class="eight wide field">
             <label><i class="chart bar outline icon"></i>Categoría del equipo</label>
             <input type="text" name="categoria"  id="categoria" readonly>
+            <input type="text" name="idCat"  id="idCat" readonly>
             </div>
             </div>
         </div>
@@ -161,6 +162,14 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
             </div>
             <input type="hidden" id="idEqui" >
             <input type="hidden" id="idTor" >
+            
+        </div>
+        <div class="item" style="font-size:20px;">
+        <i class="chart bar outline icon"></i>
+        <div class="content" style="font-size: 20px;">
+        Edad Minima de la Categoria: 
+            <input type="text" id="edadMinima" readonly style="width: 7%;">
+        </div>
         </div>
     </div>
     <div class="ui divider"></div>
@@ -396,11 +405,19 @@ var appE = new Vue({
 <script>
 
 var inscribir=(ele)=>{
-    alertify.confirm("¿Desea inscribir el jugador?",
+    if($(ele).attr("edad")<$("#edadMinima").val()){
+        swal({
+            title: 'Error!',
+            text: 'La edad del jugador es menor a la edad minima de la categoría',
+            type: 'error',
+            showConfirmButton: true
+                        });
+        }else{
+        alertify.confirm("¿Desea inscribir el jugador?",
             function(){
-  var idEquipo = $("#idEqui").val();
-  var idJugador = $(ele).attr("id");
-  var idTorneo = $("#idTor").val();
+           var idEquipo = $("#idEqui").val();
+           var idJugador = $(ele).attr("id");
+           var idTorneo = $("#idTor").val();
 
 
              $.ajax({
@@ -437,6 +454,9 @@ var inscribir=(ele)=>{
                 alertify.error('Cancelado');
                 
             }); 
+
+    }
+    
 }
 
 
@@ -464,6 +484,7 @@ var verJugadoresE=(ele)=>{
                 appE.datosDetalle.encargado= $(ele).attr("encargado");
                 $("#idEqui").val($(ele).attr("id"));
                 $("#idTor").val($(ele).attr("idTorneo"));
+                $("#edadMinima").val($(ele).attr("edadMinima"));
                 $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
             }

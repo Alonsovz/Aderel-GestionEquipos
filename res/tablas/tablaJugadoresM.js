@@ -29,6 +29,7 @@ $(function() {
                 {
                     "data": "fechaNacimiento"
                 },
+                
                 {
                     "data": "edad"
                 }

@@ -174,7 +174,6 @@ correlativo varchar(10),
 nombre varchar(50),
 apellido varchar(50),
 fechaNacimiento date,
-edad int,
 carnet varchar(25),
 encargado varchar(50),
 dui varchar(15),
@@ -183,6 +182,7 @@ fechaInscripcion date,
 idEscuela int,
 idEliminado int
 );
+
 
 
 alter table inscriJugador add constraint fk_inscriJugador_equipos foreign key (idEquipo) references equipos(idEquipo);
@@ -247,7 +247,7 @@ insert into nivelEscuela values(null,'4to nivel','Carmelo de Jesus Serpas','Lune
 insert into nivelEscuela values(null,'5to nivel','Ramiro Villalta','Martes y Jueves','5:00 pm a 6:00 pm',14,15,2);
 insert into nivelEscuela values(null,'6to nivel','Jorge Cardoza','Martes y Jueves','5:00 pm a 6:00 pm',16,17,1);
 
-insert into escuelaFut values(null,'','','','1999-02-01',12,'','','','',curdate(),1,1);
+insert into escuelaFut values(null,'','','','1999-02-01','','','','',curdate(),1,1);
 
 -- ===========================================================================
 -- Procedimientos Usuarios
@@ -483,11 +483,6 @@ begin
 end	
 $$
 
-select * from inscriJugador
-
-select i.*, j.nombre,e.nombre,t.nombreTorneo, c.nombreCategoria from inscriJugador i
-inner join jugadores j on j.idJugador = i.idJugador
-inner join torneos t on t.idTorneo = i.idTorneo
-inner join categorias c on c.idCategoria = t.idTorneo
-inner join equipos e on e.idEquipo = i.idEquipo
-where i.idJugador =4 group by t.nombreTorneo
+select e.*,TIMESTAMPDIFF(YEAR,e.fechaNacimiento,CURDATE()) AS edad, date_format(e.fechaNacimiento, '%d') as dia,
+        date_format(e.fechaNacimiento, '%m') as mes from escuelaFut e
+                where  e.idEliminado=1 and e.idEscuela=2 and e.idUsuario>1

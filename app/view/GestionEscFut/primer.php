@@ -50,7 +50,6 @@
                     </div>
                 </div>
         </div>
-
         <div class="row title-bar">
             <div class="sixteen wide column">
                 <button class="ui right floated teal labeled icon button" id="btnModalRegistroJugador">
@@ -417,6 +416,7 @@ fechaActual.setFullYear(año);
 edad = Math.floor(((fechaActual - fechaNace) / (1000 * 60 * 60 * 24) / 365));
 
 return edad;
+
 }
 
 
@@ -461,6 +461,7 @@ if(edad > 7 || edad < 6){
     //$("#btnGuardarJugador").attr("disabled",true);
 }else{
     $('#frmEditar input[name="error"]').css("display","none");
+
 }
 
 }
