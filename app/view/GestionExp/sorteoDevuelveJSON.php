@@ -41,11 +41,14 @@ $id= $_POST["idTor"];
 		$contador++;
     }
    
-	echo "</table><br> <br> "; // Fin de la tabla
+	echo "</table>"; // Fin de la tabla
 	// cerrar conexión de base de datos
 	mysqli_close( $conexion );
 // }
 
+?>
+<div style='color:white'>
+<?php
 if ($N%2!=0) 
 	$N = $N+1; // sumamos 1 al numero impar de equipos. A este equipo en un futuro lo podemos llamar descanso
 
@@ -55,43 +58,83 @@ for ($i = 0; $i<(($N-1)/2); $i++) {
 	$g2[$i] = $N-$i-1;
 }
 
-
+$jornadas=[];
 for ($j = 0; $j<$N-1; $j++) {//j son los rounds
-
-   //anuncia los grupos
-	echo "<b>Jornada ".($j+1)."</b><br>";
+	$jornada=[];
 	$conta=0;
+	$contEcuentro=0;
 	foreach ($g1 as $equipo1) {
 
 		if($equipo1>=count($equipos)){
-			echo 'Descansa: '.$equipos[$g2[$conta]]['nombre']."<BR>";
-		}elseif ($g2[$conta]>=count($equipos)) {
-			echo "Descansa: ".$equipos[$equipo1]['nombre']."<BR>";
+			$descansa['nombre'] = $equipos[$g2[$conta]]['nombre'];
+			$descansa['id'] = $equipos[$g2[$conta]]['id'];
+
+		}elseif ($g2[$conta]>=count($equipos)){
+			$descansa['nombre'] = $equipos[$equipo1]['nombre'];
+			$descansa['id'] = $equipos[$equipo1]['id'];
+
 		}else{
-			echo $equipos[$equipo1]['nombre']." vs ".$equipos[$g2[$conta]]['nombre']."<BR>";
+			$juegaTitular = $equipos[$equipo1]['nombre']." vs ".$equipos[$g2[$conta]]['nombre'];
+			$juegaIDs     = [$equipos[$equipo1]['id'] , $equipos[$g2[$conta]]['id']];
+
 		}
-		// crear registro de la jornada
 		
-		//-----------
-		$conta=$conta+1;
+		if(isset($descansa))
+			$jornada['descansa']=$descansa;
+		
+		// if(!isset($descansa)){
+			$jornada['encuentro'][$contEcuentro]['titular'] = $juegaTitular;
+			$jornada['encuentro'][$contEcuentro]['ids']     = $juegaIDs;
+		// }
+
+		$conta++;
+		$contEcuentro++;
 	}
-	
+
+	array_push($jornadas,$jornada);
 	// Calculamos la siguiente jornada
-	$temp1 = $g2[0];
-	$temp2 = $g1[($N/2)-1];
+    $temp1 = $g2[0];
+    $temp2 = $g1[($N/2)-1];
 
    for ($k = 0; $k<$N/2; $k++) {
-		if ($k == ($N/2)-1) {
-			$g1[1] = $temp1;
+      if ($k == ($N/2)-1) {
+         $g1[1] = $temp1;
          $g2[($N/2)-1] = $temp2;
       } else {
-			$g1[($N/2)-1-$k] = $g1[($N/2)-1-$k-1];
+         $g1[($N/2)-1-$k] = $g1[($N/2)-1-$k-1];
          $g2[$k] = $g2[$k+1];
       }
    }//-------------------
-	echo "<br><br><br>"; 
-// echo "</table>";
 }
 
 
 ?>
+</div>
+<div id="jornadas"></div>
+
+<script>
+const jornadas = <?php echo json_encode($jornadas) ?>;
+console.log('jornadas :', jornadas);
+
+let html = jornadas.reduce((acc,valor, indice)=>{
+	let htm=`<h4>Jornada: ${indice+1}</h4>
+		<ul>`;
+		
+	
+	htm+=valor.encuentro.reduce((accc,encuentro,ind)=>{
+		let h =`<li>${encuentro.titular}</li>`;
+		if(accc!=h)
+			return accc+h
+	},'');
+	if(valor.descansa){
+		htm+=`<li>Descansa: ${valor.descansa.nombre}</li>`;
+
+	}
+	
+	htm+='</ul>';
+	return acc+htm;
+},'')
+
+document.getElementById('jornadas').innerHTML=html;
+
+</script>
