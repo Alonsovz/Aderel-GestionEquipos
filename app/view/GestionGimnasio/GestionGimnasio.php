@@ -300,6 +300,18 @@ $('#btnCerrar').click(function() {
                 $("#edad").val('');
                 $('#modalAgregarU').modal('hide');
             });
+function limpiar(){
+    $('#nombreJ').val('');
+                $('#apellidoJ').val('');
+                $('#duiJ').val('');
+                $('#fechaNac').val('');
+                $('#Imagen').val('');
+                $("#encargado").val('');
+                $("#duiE").val('');
+                $("#telefono").val('');
+                $("#edad").val('');
+
+}
 
 $("#btnGuardarU").click(function(){
     const form = $('#frmUsuariosNa');

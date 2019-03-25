@@ -232,6 +232,21 @@ var app = new Vue({
             ],
             campos_editar: [
                 {
+                    label: 'Foto:',
+                    name: 'foto',
+                    type: 'img',
+                    val:''
+                },
+                {
+                    label: 'Cambiar Foto',
+                    name: 'nuevaFoto',
+                    type: 'file',
+                },
+                {
+                    name: 'imagenNueva',
+                    type: 'hidden'
+                },
+                {
                     label: 'Nombre del Usuario',
                     name: 'nombre',
                     type: 'text'
@@ -303,11 +318,11 @@ var app = new Vue({
                     .then(dat => {
 
                         console.log(dat);
-
+                        this.campos_editar[0].val=dat.imagen;
                         $('#frmEditar input[name="nombre"]').val(dat.nombre);
                         $('#frmEditar input[name="apellido"]').val(dat.apellido);
                         $('#frmEditar input[name="fechaNac"]').val(dat.fechaNacimiento);
-                        //$('#frmEditar input[name="edad"]').val(dat.edad);
+                        $('#frmEditar input[name="edad"]').val(dat.edad);
                         $('#frmEditar input[name="dui"]').val(dat.ddi);
                         if(dat.encargado==''){
                             $('#frmEditar input[name="encargado"]').hide();
@@ -376,6 +391,18 @@ $('#btnCerrar').click(function() {
                 $('#modalAgregarU').modal('hide');
             });
 
+            function limpiar(){
+                $('#nombreJ').val('');
+                $('#apellidoJ').val('');
+                $('#duiJ').val('');
+                $('#fechaNac').val('');
+                $('#Imagen').val('');
+                $("#encargado").val('');
+                $("#duiE").val('');
+                $("#telefono").val('');
+                $("#edad").val('');
+            }
+
 $("#btnGuardarU").click(function(){
     const form = $('#frmUsuariosNa');
 
@@ -425,6 +452,19 @@ $('#Imagen').change(e=>{
     reader.onload=(e)=>{
         $('#img').val(e.target.result);
     }
+})
+});
+
+$(function(){
+
+$('#frmEditar input[name="nuevaFoto"]').change(e=>{
+let reader= new FileReader();
+
+reader.readAsDataURL(e.target.files[0]);
+
+reader.onload=(e)=>{
+    $('#frmEditar input[name="imagenNueva"]').val(e.target.result);
+}
 })
 });
 

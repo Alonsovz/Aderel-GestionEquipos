@@ -125,19 +125,33 @@ class DaoNatacion extends DaoBase {
 
     public function cargarDatosNatacion() {
 
-        $_query = "select * from natacion
+        $_query = "select *,TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from natacion
         where idUsuario = ".$this->objeto->getIdUsuario();
 
         $resultado = $this->con->ejecutar($_query);
 
-        $json = json_encode($resultado->fetch_assoc());
+        $_json = '';
 
-        return $json;
+        while($fila = $resultado->fetch_assoc()) {
+                    
+            $object = json_encode($fila);
+
+                $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
+                $acciones = ', "imagen": "'.$imagen.'"';
+
+                $object = substr_replace($object, $acciones, strlen($object) -1,0);
+    
+          $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+    
+        return $_json;
     }
 
     public function editar() {
         $_query = "update natacion set nombre='".$this->objeto->getNombre()."', apellido='".$this->objeto->getApellido()."',
-        fechaNacimiento='".$this->objeto->getFechaNacimiento()."',
+        fechaNacimiento='".$this->objeto->getFechaNacimiento()."', foto ='".$this->objeto->getImg()."',
         ddi= '".$this->objeto->getDui()."',encargado ='".$this->objeto->getEncargado()."',
         dui='".$this->objeto->getDuiEncargado()."', telefono='".$this->objeto->getTelefono()."' where idUsuario = ".$this->objeto->getIdUsuario();
 
