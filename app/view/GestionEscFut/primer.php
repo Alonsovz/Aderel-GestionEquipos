@@ -21,7 +21,11 @@
                     <div class="row tiles" style="display: flex !important; align-items: baseline; justify-content: space-between; width:65%">
                     
                     
-
+                    <button class="ui teal button">
+                    <a href="?1=EscFutbolController&2=primer" style="color:white;">
+                        1er Nivel (6-7 años)
+                    </a>
+                    </button>
                     <button class="ui blue button">
                     <a href="?1=EscFutbolController&2=segundo" style="color:white;">
                         2do Nivel (8-9 años)
