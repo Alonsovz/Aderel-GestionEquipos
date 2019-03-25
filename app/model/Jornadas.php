@@ -4,6 +4,7 @@ class Jornadas extends ModeloBase{
     private $id;
     private $idTorneo;
     private $vuelta_N;
+    private $orden;
     private $descansa_id_Equipo;
     
 
@@ -88,6 +89,26 @@ class Jornadas extends ModeloBase{
     public function setDescansa_id_Equipo($descansa_id_Equipo)
     {
         $this->descansa_id_Equipo = $descansa_id_Equipo;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of orden
+     */ 
+    public function getOrden()
+    {
+        return $this->orden;
+    }
+
+    /**
+     * Set the value of orden
+     *
+     * @return  self
+     */ 
+    public function setOrden($orden)
+    {
+        $this->orden = $orden;
 
         return $this;
     }
