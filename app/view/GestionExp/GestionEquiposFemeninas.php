@@ -10,8 +10,8 @@
 <modal-eliminar id_form="frmEliminarE" id="modalEliminarE" url="?1=EquipoController&2=eliminarF" titulo="Eliminar Equipo"
 sub_titulo="¿Está seguro de querer eliminar este equipo?" :campos="campos_eliminarE" tamanio='tiny'></modal-eliminar>
 
-<modal-eliminar id_form="frmFondoComun" id="modalFondo" url="?1=EquipoController&2=fondoComunF" titulo="Enviar a Fondo Común"
-sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="camposFondoComun" tamanio='tiny'></modal-eliminar>
+<modal-fondo id_form="frmFondoComun" id="modalFondo" url="?1=EquipoController&2=enviarFondo" titulo="Enviar a Fondo Común"
+sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="camposFondoComun" tamanio='tiny'></modal-fondo>>
 
 <modal-detalles :detalles="detalles"></modal-detalles>
 <modal-jugador :detalles="detalles"></modal-jugador>
@@ -213,6 +213,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
 <script src="./res/js/modalVerJugador.js"></script>
+<script src="./res/js/modalFondoComun.js"></script>
 <script>
 
 
@@ -325,6 +326,12 @@ var appE = new Vue({
             },
             cerrarModal() {
                 this.detalles = [];
+                $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+            },
+            cerrarModalD() {
+                this.detalles = [];
+
                 $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
             },
@@ -512,7 +519,7 @@ var ver=(ele)=>{
 
             $.each(JSON.parse(torneo), function() {
                 
-                option = `<option value="${this.idTorneo}"> Nombre Torneo: ${this.nombreTorneo} - Categoria: ${this.cat} </option>`;
+                option = `<option value="${this.idTorneo}"> Nombre Torneo: ${this.nombreTorneo} -- Categoria: ${this.cat} </option>`;
 
                 
 

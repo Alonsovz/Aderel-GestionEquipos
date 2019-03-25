@@ -10,8 +10,9 @@
 <modal-eliminar id_form="frmEliminarE" id="modalEliminarE" url="?1=EquipoController&2=eliminarM" titulo="Eliminar Equipo"
 sub_titulo="¿Está seguro de querer eliminar este equipo?" :campos="campos_eliminarE" tamanio='tiny'></modal-eliminar>
 
-<modal-eliminar id_form="frmFondoComun" id="modalFondo" url="?1=EquipoController&2=fondoComunM" titulo="Enviar a Fondo Común"
-sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="camposFondoComun" tamanio='tiny'></modal-eliminar>
+<modal-fondo id_form="frmFondoComun" id="modalFondo" url="?1=EquipoController&2=enviarFondo" titulo="Enviar a Fondo Común"
+sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="camposFondoComun" tamanio='tiny'></modal-fondo>
+
 <modal-detalles :detalles="detalles"></modal-detalles>
 <modal-jugador :detalles="detalles"></modal-jugador>
 
@@ -105,14 +106,14 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
             <div class="eight wide field">
             <label><i class="chart bar outline icon"></i>Categoría del equipo</label>
             <input type="text" name="categoria"  id="categoria" readonly>
-            <input type="text" name="idCat"  id="idCat" readonly>
+            <input type="hidden" name="idCat"  id="idCat" readonly>
             </div>
             </div>
         </div>
         
         <div class="field">
             <div class="fields">
-                <div class="eight wide field">
+                <div class="sixteen wide field">
                 <label><i class="trophy icon"></i>Torneos disponibles</label>
                 <select name="torneoIns" id="torneoIns" class="ui search dropdown" style="">
                         </select>
@@ -213,6 +214,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
+<script src="./res/js/modalFondoComun.js"></script>
 <script src="./res/js/modalVerJugador.js"></script>
 <script>
 
@@ -392,7 +394,7 @@ var appE = new Vue({
                 cerrar()
             {
                 $('#modalCambios').modal('hide');
-                dtInscriM.ajax.reload(); 
+               // dtInscriM.ajax.reload(); 
             },
             cerrarJ()
             {
@@ -531,7 +533,7 @@ var inscribirEquipo=(ele)=>{
             var torneo = '<?php echo $torneos?>';
 
             $.each(JSON.parse(torneo), function() {
-                option = `<option value="${this.idTorneo}">${this.nombreTorneo} </option>`;
+                option = `<option value="${this.idTorneo}">Torneo: ${this.nombreTorneo} -- Categoria: ${this.cat}</option>`;
 
                 $('#torneoIns').append(option);
             });

@@ -101,6 +101,7 @@ idCategoria int,
 idInscripcion int,
 idTorneo int,
 idGenero int,
+idFondo int,
 idEliminado int
 );
 
@@ -114,6 +115,7 @@ dui varchar(25),
 foto longtext,
 fechaNacimiento date,
 idGenero int,
+idFondo int,
 idEliminado int
 );
 
@@ -233,10 +235,10 @@ insert into inscripcion values(null,'Inscrito');
 insert into torneos values(null,'No se ha inscrito en torneo',0,0,0,1,1,1);
 insert into torneos values(null,'No se ha inscrito en torneo',0,0,0,1,2,1);
 
-insert into jugadores values(null,'FF000001','nada','nada','nada','nada','1999-02-12',1,1);
+insert into jugadores values(null,'FF000001','nada','nada','nada','nada','1999-02-12',1,1,1);
 
-insert into equipos values (null, 'Sin Equipo','No definido','No definido',1,1,1,1,1);
-insert into equipos values (null, 'Sin Equipo','No definido','No definido',1,1,2,2,1);
+insert into equipos values (null, 'Sin Equipo','No definido','No definido',1,1,1,1,1,1);
+insert into equipos values (null, 'Sin Equipo','No definido','No definido',1,1,2,2,1,1);
 
 insert into gimnasio values(null,'GY000002','','','','2019-02-02','1','2019-02-01','2019-03-01',1);
 
@@ -487,4 +489,4 @@ begin
 end	
 $$
 
-select * from gimnasio
+

@@ -14,7 +14,7 @@ class DaoEquipos extends DaoBase {
         inner join categorias c on c.idCategoria = e.idCategoria
         inner join inscripcion i on i.idInscripcion = e.idInscripcion
         inner join torneos t on t.idTorneo = e.idTorneo
-        where  e.idEliminado=1 and e.idEquipo>1 and e.idGenero=1;";
+        where  e.idEliminado=1 and e.idEquipo>1 and e.idGenero=1 and e.idFondo=1;";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -27,11 +27,11 @@ class DaoEquipos extends DaoBase {
             $btnEditar = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnEditarE icon yellow small button\" onclick=\"editarEquipo(this)\"><i class=\"edit icon\"></i> Editar</button>';
             $btnEliminar = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnEliminarE icon negative small button\" onclick=\"eliminarEquipo(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
             $btnVer = '<button id=\"'.$fila["idEquipo"].'\" categoria=\"'.$fila["Categoria"].'\" nombre=\"'.$fila["nombreE"].'\" encargado=\"'.$fila["encargado"].'\" class=\"ui btnVerT icon blue small button\" onclick=\"verJugadoresE(this)\"><i class=\"users icon\"></i> Jugadores</button>';
-            $btnCancelar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnVerT icon purple small button\" onclick=\"enviarFondo(this)\"><i class=\"close icon\"></i> Fondo Común</button>';
+            $btnCancelar = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui  icon purple small button\" onclick=\"enviarFondo(this)\"><i class=\"close icon\"></i> Fondo Común</button>';
             $inscrbirJ = '<button edadMinima=\"'.$fila["edad"].'\" id=\"'.$fila["idEquipo"].'\" categoria=\"'.$fila["Categoria"].'\" idTorneo=\"'.$fila["idT"].'\" nombre=\"'.$fila["nombreE"].'\" encargado=\"'.$fila["encargado"].'\"  class=\"ui icon green small button\" onclick=\"modalCambiar(this)\"><i class=\"edit icon\"></i> Inscribir J</button>';
 
             if($fila["idInscripcion"]== 1){
-                $btnInscrbir = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnInscribir icon green small button\" onclick=\"inscribirEquipo(this)\"><i class=\"futbol icon\"></i></button>';
+                $btnInscrbir = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnInscribir icon green small button\" onclick=\"inscribirEquipo(this)\"><i class=\"futbol icon\"></i>Inscribir</button>';
                 
                 $acciones = ', "Acciones": "'.$btnInscrbir.''.$btnEditar.' '.$btnEliminar.'"';
             }
@@ -62,7 +62,7 @@ class DaoEquipos extends DaoBase {
         inner join categorias c on c.idCategoria = e.idCategoria
         inner join inscripcion i on i.idInscripcion = e.idInscripcion
         inner join torneos t on t.idTorneo = e.idTorneo
-        where  e.idEliminado=1  and e.idGenero=2 and e.idEquipo>2;";
+        where  e.idEliminado=1  and e.idGenero=2 and e.idEquipo>2 and e.idFondo=1; ";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -75,12 +75,12 @@ class DaoEquipos extends DaoBase {
             $btnEditar = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnEditarE icon yellow small button\" onclick=\"editarEquipo(this)\"><i class=\"edit icon\"></i> Editar</button>';
             $btnEliminar = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnEliminarE icon negative small button\" onclick=\"eliminarEquipo(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
             $btnVer = '<button id=\"'.$fila["idEquipo"].'\" categoria=\"'.$fila["Categoria"].'\" nombre=\"'.$fila["nombreE"].'\" encargado=\"'.$fila["encargado"].'\" class=\"ui btnVerT icon blue small button\" onclick=\"verJugadoresE(this)\"><i class=\"users icon\"></i> Jugadores</button>';
-            $btnCancelar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnVerT icon purple small button\" onclick=\"enviarFondo(this)\"><i class=\"close icon\"></i> Fondo Común</button>';
+            $btnCancelar = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui  icon purple small button\" onclick=\"enviarFondo(this)\"><i class=\"close icon\"></i> Fondo Común</button>';
             $inscrbirJ = '<button edadMinima=\"'.$fila["edad"].'\" id=\"'.$fila["idEquipo"].'\" categoria=\"'.$fila["Categoria"].'\" idTorneo=\"'.$fila["idT"].'\" nombre=\"'.$fila["nombreE"].'\" encargado=\"'.$fila["encargado"].'\"  class=\"ui icon green small button\" onclick=\"modalCambiar(this)\"><i class=\"edit icon\"></i> Inscribir J</button>';
 
             if($fila["idInscripcion"]== 1){
                 
-                $btnInscrbir = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnInscribir icon green small button\" onclick=\"inscribirEquipo(this)\"><i class=\"futbol icon\"></i></button>';
+                $btnInscrbir = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnInscribir icon green small button\" onclick=\"inscribirEquipo(this)\"><i class=\"futbol icon\"></i>Inscribir</button>';
                 $acciones = ', "Acciones": "'.$btnInscrbir.''.$btnEditar.' '.$btnEliminar.'"';
             }
                else{
@@ -106,7 +106,7 @@ class DaoEquipos extends DaoBase {
     public function registrarM() {
         $_query = "insert into equipos values(null,'".$this->objeto->getNombreEquipo()."', '".$this->objeto->getEncargado()."',
         '".$this->objeto->getEncargadoAux()."',
-        '".$this->objeto->getIdCategoria()."',1,2,2,1)";
+        '".$this->objeto->getIdCategoria()."',1,2,2,1,1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -224,7 +224,7 @@ class DaoEquipos extends DaoBase {
 
     public function registrarF() {
         $_query = "insert into equipos values(null,'".$this->objeto->getNombreEquipo()."', '".$this->objeto->getEncargado()."',
-        '".$this->objeto->getEncargadoAux()."','".$this->objeto->getIdCategoria()."',1,1,1,1)";
+        '".$this->objeto->getEncargadoAux()."','".$this->objeto->getIdCategoria()."',1,1,1,1,1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -302,6 +302,35 @@ class DaoEquipos extends DaoBase {
         $json = json_encode($resultado->fetch_assoc());
 
         return $json;
+    }
+
+    public function enviarFondo(){
+        $_query = "update jugadores  as j
+        inner join inscriJugador i on i.idJugador = j.idJugador 
+        set j.idFondo =2
+        where i.idEquipo= ".$this->objeto->getIdEquipo();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+
+    }
+
+    public function enviarFondoEquipo(){
+        $_query = "update equipos set idFondo =2 where idEquipo= ".$this->objeto->getIdEquipo();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+
     }
 
     public function mostrarEquiposCmbF() {

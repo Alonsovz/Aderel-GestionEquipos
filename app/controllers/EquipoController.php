@@ -86,6 +86,17 @@ public function registrarM() {
         echo $dao->eliminarM();
     }
 
+    public function enviarFondo() {
+        // $datos = ;
+ 
+         $dao = new DaoEquipos();
+ 
+         $dao->objeto->setIdEquipo($_REQUEST["id"]);
+ 
+         echo $dao->enviarFondo();
+         echo $dao->enviarFondoEquipo();
+     }
+
     public function cargarDatosEquipoM() {
         $id = $_REQUEST["id"];
 
