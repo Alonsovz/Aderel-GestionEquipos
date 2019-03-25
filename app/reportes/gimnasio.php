@@ -57,25 +57,30 @@ class Reporte {
             <th><h2><font color='green'>Datos del Usuario</font></h2></th>
             </tr>
             </table>
-            <table class='tabla' style='font-size:17px;'>
+            <table class='tabla' style='font-size:17px;' >
             ";
 
         while($fila = $resultado->fetch_assoc()) {
-            $tabla.="<tr>
+            $tabla.="
+                    
+                    <tr>
+                    <td colspan='2' rowspan='3'><img src=".$fila["foto"]." style='width:100px;'/></td>
                         <td><br><br><br>Cod. Expediente: <b>".$fila["correlativo"]."</b></td>
-                        <td ></td>
                         <td><br><br><br>Edad: <b>".$fila['edad']." años</b></td>
                 
                     </tr>
                     
                     <tr>
                         
-                        <td><br><br>Nombre del Usuario: <b>".$fila["nombre"]." ".$fila['apellido']."</b></td>
-                        <td><br><br>Fecha de Nacimiento: <b>".$fila['fechaNacimiento']."</b></td>
-                        <td><br><br>Carnet Min: <b>".$fila['ddi']."</b></td>
+                        <td><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Nombre del Usuario: <b>".$fila["nombre"]." ".$fila['apellido']."</b></td>
+                        <td><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Fecha de Nacimiento: <b>".$fila['fechaNacimiento']."</b></td>
+                        
                      </tr>
 
                      <tr>
+                     <td><br><br>Carnet Min: <b>".$fila['ddi']."</b></td>
                      <td><br><br>Fecha de Inscripción: <b>".$fila['fechaInscripcion']."</b></td>
                      <td ><br><br>Fecha Final: <b style='color:red'>".$fila['fechaFinal']."</b></td>
                      </tr>
