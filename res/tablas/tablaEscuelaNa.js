@@ -12,6 +12,9 @@ $(function() {
                     "data": "idUsuario"
                 },
                 {
+                    "data": "Acciones"             
+                },
+                {
                     "data": "correlativo"
                 },
                 {
@@ -19,9 +22,6 @@ $(function() {
                 },
                 {
                     "data": "apellido"
-                },
-                {
-                    "data": "fechaNacimiento"
                 },
                 {
                     "data": "edad"
@@ -36,17 +36,12 @@ $(function() {
                     "data": "telefono"
                 },
                 {
-                    "data": "dui"
-                },
-                {
                     "data": "fechaInscripcion"
                 },
                 {
                     "data": "fechaFinal"
-                },
-                {
-                    "data": "Acciones"             
                 }
+                
             ],
             "order": [
                 [0, "desc"]

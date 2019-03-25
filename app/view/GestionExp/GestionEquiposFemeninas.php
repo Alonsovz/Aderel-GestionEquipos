@@ -104,13 +104,11 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
             <div class="eight wide field">
             <label><i class="chart bar outline icon"></i>Categoría del equipo</label>
             <input type="text" name="categoria"  id="categoria" readonly>
-            <input type="text" name="idCat"  id="idCat" readonly>
+            <input type="hidden" name="idCat"  id="idCat" readonly>
             </div>
             </div>
         </div>
-        <a id="filtrarT" class="ui green button">
-        Ver torneos
-        </a>
+     
         <div class="field">
             <div class="fields">
                 <div class="sixteen wide field">

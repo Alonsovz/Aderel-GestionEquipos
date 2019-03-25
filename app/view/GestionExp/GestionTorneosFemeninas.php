@@ -99,8 +99,8 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
 <div class="content">
 <form method="post" action="?1=TorneosController&2=sorteo">
 
-<input type="text" id="disponibles" name="disponibles">
-
+<input type="hidden" id="disponibles" name="disponibles">
+<input type="hidden" id="idTor" name="idTor">
 
 <input type="submit" name="button" id="button" value="Realizar Sorteo" class="ui green button">
 </form>
@@ -245,6 +245,7 @@ var verEquipos=(ele)=>{
 var sorteos=(ele)=>{
     $("#disponibles").val($(ele).attr("equipos"));
     $("#name").text($(ele).attr("name"));
+    $("#idTor").val($(ele).attr("id"));
     $('#sorteos').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                 .modal('show');
 }

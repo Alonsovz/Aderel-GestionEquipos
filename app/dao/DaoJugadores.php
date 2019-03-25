@@ -41,8 +41,7 @@ class DaoJugadores extends DaoBase {
 
 
         $query = "Insert into jugadores values (null,'".$idExp."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
-        '".$this->objeto->getDui()."','".$this->objeto->getImg()."','".$this->objeto->getFechaNacimiento()."',
-        '".$this->objeto->getEdad()."',2,1);";
+        '".$this->objeto->getDui()."','".$this->objeto->getImg()."','".$this->objeto->getFechaNacimiento()."',2,1);";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -56,7 +55,7 @@ class DaoJugadores extends DaoBase {
 
     public function mostrarJugadoresM()
     {
-        $_query = "select j.* from jugadores j
+        $_query = "select j.*,TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from jugadores j
          where j.idEliminado = 1 and j.idGenero = 2 and j.idJugador>1";
 
         
@@ -71,9 +70,9 @@ class DaoJugadores extends DaoBase {
                 $object = json_encode($fila);
 
 
-                $btnInscrbir = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnInscribir icon green small button\" onclick=\"verHistorial(this)\"><i class=\"futbol icon\"></i></button>';
-                $btnEditar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEditarJ icon blue small button\" onclick=\"editarJugador(this)\"><i class=\"edit icon\"></i></button>';
-                $btnEliminar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEliminarJ icon negative small button\" onclick=\"eliminarJugador(this)\"><i class=\"trash icon\"></i></button>';
+                $btnInscrbir = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnInscribir icon green small button\" onclick=\"verHistorial(this)\"><i class=\"futbol icon\"></i> Historial</button>';
+                $btnEditar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEditarJ icon blue small button\" onclick=\"editarJugador(this)\"><i class=\"edit icon\"></i> Editar</button>';
+                $btnEliminar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEliminarJ icon negative small button\" onclick=\"eliminarJugador(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
                 $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnInscrbir.''.$btnEditar.' '.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
@@ -91,7 +90,7 @@ class DaoJugadores extends DaoBase {
 
     public function inscripcionM()
     {
-        $_query = "select j.* from jugadores j
+        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad from jugadores j
          where j.idEliminado = 1 and j.idGenero = 2 and j.idJugador>1";
 
         
@@ -105,8 +104,8 @@ class DaoJugadores extends DaoBase {
                     
                 $object = json_encode($fila);
 
-                $btnVer = '<button id=\"'.$fila["idJugador"].'\" class=\"ui icon red small button\" onclick=\"ver(this)\"><i class=\"list icon\"></i></button>';
-                $btnInscrbir = '<button id=\"'.$fila["idJugador"].'\" edad=\"'.$fila["edad"].'\" class=\"ui btnInscribir icon blue small button\" onclick=\"inscribir(this)\"><i class=\"edit icon\"></i><i class=\"futbol icon\"></i></button>';
+                $btnVer = '<button id=\"'.$fila["idJugador"].'\" class=\"ui icon red small button\" onclick=\"ver(this)\"><i class=\"list icon\"></i> Detalles </button>';
+                $btnInscrbir = '<button id=\"'.$fila["idJugador"].'\" edad=\"'.$fila["edad"].'\" class=\"ui btnInscribir icon blue small button\" onclick=\"inscribir(this)\"><i class=\"edit icon\"></i><i class=\"futbol icon\"></i> Inscribir</button>';
                 $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnVer.''.$btnInscrbir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
@@ -138,7 +137,7 @@ class DaoJugadores extends DaoBase {
 
     public function inscripcionF()
     {
-        $_query = "select j.* from jugadores j
+        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad from jugadores j
          where j.idEliminado = 1 and j.idGenero = 1  and j.idJugador>1";
 
         
@@ -152,10 +151,10 @@ class DaoJugadores extends DaoBase {
                     
                 $object = json_encode($fila);
 
-                $btnVer = '<button id=\"'.$fila["idJugador"].'\" class=\"ui icon blue small button\" onclick=\"ver(this)\"><i class=\"list icon\"></i></button>';
-                $btnInscrbir = '<button  id=\"'.$fila["idJugador"].'\" edad=\"'.$fila["edad"].'\" class=\"ui btnInscribir icon red small button\" onclick=\"inscribir(this)\"><i class=\"futbol icon\"></i></button>';
-                $btnEditar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEditarJ icon blue small button\" onclick=\"editarJugador(this)\"><i class=\"edit icon\"></i></button>';
-                $btnEliminar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEliminarJ icon negative small button\" onclick=\"eliminarJugador(this)\"><i class=\"trash icon\"></i></button>';
+                $btnVer = '<button id=\"'.$fila["idJugador"].'\" class=\"ui icon blue small button\" onclick=\"ver(this)\"><i class=\"list icon\"></i> Historial</button>';
+                $btnInscrbir = '<button  id=\"'.$fila["idJugador"].'\" edad=\"'.$fila["edad"].'\" class=\"ui btnInscribir icon red small button\" onclick=\"inscribir(this)\"><i class=\"futbol icon\"></i> Inscribir</button>';
+                $btnEditar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEditarJ icon blue small button\" onclick=\"editarJugador(this)\"><i class=\"edit icon\"></i> Editar</button>';
+                $btnEliminar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEliminarJ icon negative small button\" onclick=\"eliminarJugador(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
                 $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnVer.''.$btnInscrbir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
@@ -229,8 +228,7 @@ class DaoJugadores extends DaoBase {
     public function editarM() {
         $_query = "update jugadores set nombre='".$this->objeto->getNombre()."', apellido = '".$this->objeto->getApellido()."',
         dui= '".$this->objeto->getDui()."', 
-        fechaNacimiento = '".$this->objeto->getFechaNacimiento()."', 
-        edad ='".$this->objeto->getEdad()."',foto='".$this->objeto->getImg()."'
+        fechaNacimiento = '".$this->objeto->getFechaNacimiento()."',foto='".$this->objeto->getImg()."'
          where idGenero = 2 and  idJugador = ".$this->objeto->getIdJugador();
 
         $resultado = $this->con->ejecutar($_query);
@@ -292,7 +290,7 @@ class DaoJugadores extends DaoBase {
 
     public function mostrarJugadoresF()
     {
-        $_query = "select j.* from jugadores j
+        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad from jugadores j
          where j.idEliminado = 1 and j.idGenero=1 and j.idJugador>2";
 
         
@@ -308,9 +306,9 @@ class DaoJugadores extends DaoBase {
 
                
                 
-                $btnInscrbir = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnInscribir icon green small button\" onclick=\"verHistorial(this)\"><i class=\"futbol icon\"></i></button>';
-                $btnEditar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEditarJ icon blue small button\" onclick=\"editarJugador(this)\"><i class=\"edit icon\"></i></button>';
-                $btnEliminar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEliminarJ icon negative small button\" onclick=\"eliminarJugador(this)\"><i class=\"trash icon\"></i></button>';
+                $btnInscrbir = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnInscribir icon green small button\" onclick=\"verHistorial(this)\"><i class=\"futbol icon\"></i> Historial</button>';
+                $btnEditar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEditarJ icon blue small button\" onclick=\"editarJugador(this)\"><i class=\"edit icon\"></i> Editar</button>';
+                $btnEliminar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEliminarJ icon negative small button\" onclick=\"eliminarJugador(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
                 $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnInscrbir.''.$btnEditar.' '.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
@@ -384,8 +382,7 @@ class DaoJugadores extends DaoBase {
     public function editarF() {
         $_query = "update jugadores set nombre='".$this->objeto->getNombre()."', apellido = '".$this->objeto->getApellido()."',
         dui= '".$this->objeto->getDui()."', 
-        fechaNacimiento = '".$this->objeto->getFechaNacimiento()."', 
-        edad ='".$this->objeto->getEdad()."', foto='".$this->objeto->getImg()."'
+        fechaNacimiento = '".$this->objeto->getFechaNacimiento()."', foto='".$this->objeto->getImg()."'
          where idGenero = 1 and  idJugador = ".$this->objeto->getIdJugador();
 
         $resultado = $this->con->ejecutar($_query);

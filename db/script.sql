@@ -113,7 +113,6 @@ apellido varchar(50),
 dui varchar(25),
 foto longtext,
 fechaNacimiento date,
-edad int,
 idGenero int,
 idEliminado int
 );
@@ -129,23 +128,25 @@ estado int
 create table gimnasio(
 idUsuario int primary key auto_increment,
 correlativo varchar(10),
+foto longtext,
 nombre varchar(50),
 apellido varchar(50),
 fechaNacimiento date,
-edad int,
 ddi varchar(50),
 fechaInscripcion date,
 fechaFinal date,
 idEliminado int
 );
 
+
+
 create table natacion(
 idUsuario int primary key auto_increment,
 correlativo varchar(10),
+foto longtext,
 nombre varchar(50),
 apellido varchar(50),
 fechaNacimiento date,
-edad int,
 ddi varchar(50),
 encargado varchar(100),
 dui varchar(100),
@@ -154,6 +155,8 @@ fechaInscripcion date,
 fechaFinal date,
 idEliminado int
 );
+
+
 
 
 
@@ -171,6 +174,7 @@ cancha int
 create table escuelaFut(
 idUsuario int primary key auto_increment,
 correlativo varchar(10),
+foto longtext,
 nombre varchar(50),
 apellido varchar(50),
 fechaNacimiento date,
@@ -229,16 +233,16 @@ insert into inscripcion values(null,'Inscrito');
 insert into torneos values(null,'No se ha inscrito en torneo',0,0,0,1,1,1);
 insert into torneos values(null,'No se ha inscrito en torneo',0,0,0,1,2,1);
 
-insert into jugadores values(null,'FF000001','nada','nada','nada','nada','1999-02-12',13,1,1);
+insert into jugadores values(null,'FF000001','nada','nada','nada','nada','1999-02-12',1,1);
 
 insert into equipos values (null, 'Sin Equipo','No definido','No definido',1,1,1,1,1);
 insert into equipos values (null, 'Sin Equipo','No definido','No definido',1,1,2,2,1);
 
-insert into gimnasio values(null,'GY000001','','','2019-02-02',1,'1','2019-02-01','2019-03-01',1);
+insert into gimnasio values(null,'GY000002','','','','2019-02-02','1','2019-02-01','2019-03-01',1);
 
 
 
-insert into natacion values(null,'EN000001','','','2019-02-02',1,'1','NA','NA','NA','2019-02-01','2019-03-01',1);
+insert into natacion values(null,'EN000001','','','','2019-02-02','1','NA','NA','NA','2019-02-01','2019-03-01',1);
 
 insert into nivelEscuela values(null,'1er nivel','Walter Hernandez','Lunes y Miercoles','5:00 pm a 6:00 pm',6,7,1);
 insert into nivelEscuela values(null,'2do nivel','Enrique Pacheco','Lunes y Miercoles','5:00 pm a 6:00 pm',8,9,2);
@@ -247,7 +251,7 @@ insert into nivelEscuela values(null,'4to nivel','Carmelo de Jesus Serpas','Lune
 insert into nivelEscuela values(null,'5to nivel','Ramiro Villalta','Martes y Jueves','5:00 pm a 6:00 pm',14,15,2);
 insert into nivelEscuela values(null,'6to nivel','Jorge Cardoza','Martes y Jueves','5:00 pm a 6:00 pm',16,17,1);
 
-insert into escuelaFut values(null,'','','','1999-02-01','','','','',curdate(),1,1);
+insert into escuelaFut values(null,'','','','','1999-02-01','','','','',curdate(),1,1);
 
 -- ===========================================================================
 -- Procedimientos Usuarios
@@ -483,6 +487,4 @@ begin
 end	
 $$
 
-select e.*,TIMESTAMPDIFF(YEAR,e.fechaNacimiento,CURDATE()) AS edad, date_format(e.fechaNacimiento, '%d') as dia,
-        date_format(e.fechaNacimiento, '%m') as mes from escuelaFut e
-                where  e.idEliminado=1 and e.idEscuela=2 and e.idUsuario>1
+select * from gimnasio

@@ -17,23 +17,22 @@ $id= $_POST["idTor"];
 	// establecer y realizar consulta. guardamos en variable.
     $consulta = "select e.idEquipo as id, e.nombre as nom from equipos e
     inner join torneos t on t.idTorneo = e.idTorneo
-    where e.idTorneo = ".$id." and t.inscritos=".$N." and e.idGenero=2 group by e.nombre";
+    where e.idTorneo = ".$id." and t.inscritos=".$N."  group by e.nombre";
 	$resultado = mysqli_query( $conexion, $consulta ) or die ( "<br>Algo ha ido mal en la consulta a la base de datos");
 	
 	// Motrar el resultado de los registro de la base de datos
 	// Encabezado de la tabla
-	echo "<table borde='2'>";
+	echo "<table class='ui  very compact celled table' style='width:10%;'>";
 	echo "<tr>";
-	echo "<th>id</th>";
-	echo "<th>equipo</th>";
+	echo "<th bgcolor='lightblue'>Equipos</th>";
 	echo "</tr>";
 	
 	$contador=0;
 	//$columna = mysqli_fetch_array( $resultado );
 	while ($columna = mysqli_fetch_array( $resultado ))
 	{
-		echo "<tr>";
-		echo "<td>" . $columna['id'] . "</td><td>" . $columna['nom'] . "</td>";
+		echo "<br><tr>";
+		echo "<td>" . $columna['nom'] . "</td>";
         echo "</tr>";
 		  
 		$equipos[$contador]['id']     = $columna['id'];

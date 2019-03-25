@@ -24,7 +24,7 @@
 
         <div class="row title-bar">
             <div class="sixteen wide column">
-                <button class="ui right floated orange labeled icon button" @click="modalRegistrar">
+                <button class="ui right floated orange labeled icon button" id="btnAgregarU">
                     <i class="plus icon"></i>
                     Agregar
                 </button>
@@ -43,6 +43,7 @@
                         <tr>
                         
                             <th style="background-color: #EF7B2E; color:white;">N°</th>
+                            <th style="background-color: #EF7B2E; color:white;"></th>
                             <th style="background-color: #EF7B2E; color:white;">Cod. Expediente</th>
                             <th style="background-color: #EF7B2E; color:white;">Nombres</th>
                             <th style="background-color: #EF7B2E; color:white;">Apellido</th>
@@ -51,7 +52,7 @@
                             <th style="background-color: #EF7B2E; color:white;">DUI / Carnet Minoridad</th>
                             <th style="background-color: #EF7B2E; color:white;">Fecha de Inscripción</th>
                             <th style="background-color: #EF7B2E; color:white;">Fecha Final</th>
-                            <th style="background-color: #EF7B2E; color:white;">Acciones</th>
+                            
                            
                         </tr>
                     </thead>
@@ -60,6 +61,90 @@
                 </table>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="ui modal" id="modalAgregarU"  style="overflow: scroll;">
+
+<div class="header">
+<i class="male icon"></i><i class="weight icon"></i> Agregar nuevo usuario del gimnasio
+</div>
+<div class="content" class="ui equal width form">
+    <form class="ui form" id="frmUsuariosNa" method="POST" enctype="multipart/form-data" action='?1=NatacionController&2=registrar'> 
+        <div class="field">
+            <div class="fields">
+                    <div class="eight wide field">
+                        <label><i class="user icon"></i>Nombre</label>
+                        <input type="text" name="nombreJ" placeholder="Nombre del Jugador" id="nombreJ">
+                            
+                            <div class="ui red pointing label"  id="labelNombre"
+                            style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                            Completa este campo</div>
+                    </div>
+                    <div class="eight wide field">
+                        <label><i class="user icon"></i>Apellido</label>
+                        <input type="text" name="apellidoJ" placeholder="Apellido del Jugador" id="apellidoJ">
+                        <div class="ui red pointing label"  id="labelApellido"
+                        style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                        Completa este campo</div>
+                    </div>     
+            </div>
+        </div>  
+        <div class="field">
+            <div class="fields">
+                        <div class="ten wide field">
+                            <label><i class="photo icon"></i>Foto</label>
+                                <input type="file" name="Imagen" id="Imagen">
+                                    <div class="ui red pointing label"  id="labelFoto"
+                                    style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                    Completa este campo
+                                    </div>
+                                <input type="hidden" name="img" id='img'>
+                        </div>    
+                        <div class="six wide field">
+                            <label><i class="calendar icon"></i>Fecha de Nacimiento</label>
+                                <input type="date" id="fechaNac" name="fechaNac">
+                                    <div class="ui red pointing label"  id="labelFecha"
+                                        style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                        Completa este campo</div>
+                                    </div>                              
+                        
+                        </div>
+                        
+            </div>   
+            
+                <div class="field">
+                        <div class="fields">
+                        
+                        <div class="eight wide field">
+                            <div id="age">
+                            <b><label><i class="male icon"></i>La edad del jugador es:</label></b>
+                            <input type="text" id="edad" name="edad" readonly>
+                            </div>
+                        </div>
+                        <div class="eight wide field">
+                        <label><i class="address card icon"></i>DUI/Carnet Minoridad:</label>
+                            <input type="text" name="duiJ" placeholder="DUI del jugador" id="duiJ">
+                                    <div class="ui red pointing label"  id="labelDui"
+                                    style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                    Completa este campo
+                                    </div>
+                        </div>
+                       
+
+                            
+                        </div>
+                </div>
+        </div>
+    </form>
+
+    <div class="actions">
+        <button id="btnCerrar" class="ui yellow button">
+            Cancelar
+        </button>
+        <button class="ui blue button" id="btnGuardarU" >
+        Guardar
+        </button>
     </div>
 </div>
 
@@ -107,6 +192,21 @@ var app = new Vue({
                 
             ],
             campos_editar: [
+                {
+                    label: 'Foto:',
+                    name: 'foto',
+                    type: 'img',
+                    val:''
+                },
+                {
+                    label: 'Cambiar Foto',
+                    name: 'nuevaFoto',
+                    type: 'file',
+                },
+                {
+                    name: 'imagenNueva',
+                    type: 'hidden'
+                },
                 {
                     label: 'Nombre del Usuario',
                     name: 'nombre',
@@ -166,7 +266,7 @@ var app = new Vue({
                     .then(dat => {
 
                         console.log(dat);
-
+                        this.campos_editar[0].val=dat.imagen;
                         $('#frmEditar input[name="nombre"]').val(dat.nombre);
                         $('#frmEditar input[name="apellido"]').val(dat.apellido);
                         $('#frmEditar input[name="fechaNac"]').val(dat.fechaNacimiento);
@@ -181,6 +281,91 @@ var app = new Vue({
     });
 </script>
 <script>
+
+$("#btnAgregarU").click(function(){
+    $('#modalAgregarU').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+
+});
+
+$('#btnCerrar').click(function() { 
+               // $("#age").hide();   
+                $('#nombreJ').val('');
+                $('#apellidoJ').val('');
+                $('#duiJ').val('');
+                $('#fechaNac').val('');
+                $('#Imagen').val('');
+                $("#encargado").val('');
+                $("#duiE").val('');
+                $("#telefono").val('');
+                $("#edad").val('');
+                $('#modalAgregarU').modal('hide');
+            });
+
+$("#btnGuardarU").click(function(){
+    const form = $('#frmUsuariosNa');
+
+                const datosFormulario = new FormData(form[0]);
+         
+        
+            $.ajax({
+                enctype: 'multipart/form-data',
+                contentType: false,
+                processData: false,
+                cache: false,
+                type: 'POST',
+                url: '?1=GimnasioController&2=registrar',
+                data: datosFormulario,
+                success: function(r) {
+                    if(r == 1) {
+                        $('#modalAgregarU').modal('hide');
+                        swal({
+                            title: 'Registrado',
+                            text: 'Guardado con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            if (result.value) {
+                                location.href = '?';
+                            }
+                        }); 
+                        $('#dtGimnasio').DataTable().ajax.reload();
+                        limpiar();
+                    } 
+                }
+            
+        });
+
+    });
+
+
+    $(function(){
+
+$('#Imagen').change(e=>{
+    let reader= new FileReader();
+
+    reader.readAsDataURL(e.target.files[0]);
+
+    reader.onload=(e)=>{
+        $('#img').val(e.target.result);
+    }
+})
+});
+
+$(function(){
+
+$('#frmEditar input[name="nuevaFoto"]').change(e=>{
+let reader= new FileReader();
+
+reader.readAsDataURL(e.target.files[0]);
+
+reader.onload=(e)=>{
+    $('#frmEditar input[name="imagenNueva"]').val(e.target.result);
+}
+})
+});
+
 var eliminarUsuario=(ele)=>{
   $('#modalEliminar').modal('setting', 'closable', false).modal('show');
   $('#idEliminar').val($(ele).attr("id"));
@@ -226,26 +411,27 @@ return edad;
 }
 
 function resultadoE(){
-    var fecha = $('#frmRegistrar input[name="fechaNac"]').val();
+    var fecha = $('#fechaNac').val();
 
 var edad = Edad(fecha);
 
-$('#frmRegistrar input[name="edad"]').val(edad);
+$('#edad').val(edad);
 
 if(edad>18){
-    $('#frmRegistrar input[name="dui"]').mask("99999999-9");
+    $('#duiJ').mask("99999999-9");
 }
 else{
-    $('#frmRegistrar input[name="dui"]').mask("9999-999999-999-9");
+    $('#duiJ').mask("999999999999999999999");
 }
 }
 
 
-$('#frmRegistrar input[name="fechaNac"]').change(function(){
-    var fecha = $('#frmRegistrar input[name="fechaNac"]').val();
+$('#fechaNac').change(function(){
+    var fecha = $('#fechaNac').val();
 
 Edad(fecha);
-$('#frmRegistrar input[name="dui"]').val('');
+$('#duiJ').val('');
+
 resultadoE();
 
 

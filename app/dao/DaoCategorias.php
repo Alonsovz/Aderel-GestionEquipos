@@ -21,9 +21,9 @@ class DaoCategorias extends DaoBase {
             $object = json_encode($fila);
 
            
-            $btnEditar = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editarCategoria(this)\"><i class=\"edit icon\"></i></button>';
-            $btnEliminar = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnEliminarC icon yellow small button\" onclick=\"eliminarCategoria(this)\"><i class=\"trash icon\"></i></button>';
-            $btnTorneos = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui icon green small button\" onclick=\"verTorneosM(this)\"><i class=\"trophy icon\"></i></button>';
+            $btnEditar = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editarCategoria(this)\"><i class=\"edit icon\"></i> Editar</button>';
+            $btnEliminar = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminarCategoria(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
+            $btnTorneos = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui icon green small button\" onclick=\"verTorneosM(this)\"><i class=\"trophy icon\"></i> Torneos</button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$btnTorneos.'"';
 
@@ -51,9 +51,9 @@ class DaoCategorias extends DaoBase {
             $object = json_encode($fila);
 
            
-            $btnEditar = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editarCategoria(this)\"><i class=\"edit icon\"></i></button>';
-            $btnEliminar = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnEliminarC icon yellow small button\" onclick=\"eliminarCategoria(this)\"><i class=\"trash icon\"></i></button>';
-            $btnTorneos = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui icon green small button\" onclick=\"verTorneosF(this)\"><i class=\"trophy icon\"></i></button>';
+            $btnEditar = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editarCategoria(this)\"><i class=\"edit icon\"></i> Editar</button>';
+            $btnEliminar = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminarCategoria(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
+            $btnTorneos = '<button id=\"'.$fila["idCategoria"].'\" class=\"ui icon green small button\" onclick=\"verTorneosF(this)\"><i class=\"trophy icon\"></i> Torneos</button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$btnTorneos.'"';
 

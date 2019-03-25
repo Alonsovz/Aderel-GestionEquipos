@@ -12,11 +12,30 @@ class Natacion extends ModeloBase{
     private $fechaInscripcion;
     private $fechaFinal;
     private $telefono;
+    private $img;
     
 
     public function __construct() {
 
     }
+
+    public function getImg()
+    {
+        return $this->img;
+    }
+
+    /**
+     * Set the value of apellido
+     *
+     * @return  self
+     */ 
+    public function setImg($img)
+    {
+        $this->img = $img;
+
+        return $this;
+    }
+
     public function getTelefono()
     {
         return $this->telefono;

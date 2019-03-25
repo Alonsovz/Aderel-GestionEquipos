@@ -327,10 +327,56 @@ var editar=(ele)=>{
 
 }
 
+
+
+
+
+
+
 var reporte=(ele)=>{
     var id = $(ele).attr("id");
 window.open('?1=EscFutbolController&2=ficha&id='+id,'_blank');
 return false;
+}
+
+
+var mover=(ele)=>{
+    var id = $(ele).attr("id");
+    alertify.confirm("¿Desea movel el jugador al siguiente nivel?",
+            function(){
+             $.ajax({
+                type: 'POST',
+                url: '?1=EscFutbolController&2=moverPrimerN',
+                data: {
+
+                    id : id,
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        swal({
+                            title: 'Listo!',
+                            text: 'Jugador ya es parte del segundo nivel',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            if (result.value) {
+                                location.href = '?';
+                            }
+                        }); 
+                        $('#dtPrimerN').DataTable().ajax.reload();
+                        
+                    } 
+                }
+
+             });
+            },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            }); 
 }
 
 $(document).ready(function(){

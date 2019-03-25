@@ -17,25 +17,33 @@ class NatacionController extends ControladorBase {
 
     public function registrar() {
 
-        $datos = $_REQUEST["datos"];
+        $nombre = $_REQUEST["nombreJ"];
+        $apellido = $_REQUEST["apellidoJ"];
+        $dui = $_REQUEST["duiJ"];
+        $fechaNac = $_REQUEST["fechaNac"];
+        $img= $_REQUEST["img"];
+        $edad= $_REQUEST["edad"];
+        $encargado =$_REQUEST["encargado"];
+        $duiE = $_REQUEST["duiE"];
+        $telefono = $_REQUEST["telefono"];
 
-        $datos = json_decode($datos);
-        
+
         $dao = new DaoNatacion();
 
-        $dao->objeto->setNombre($datos->nombre);
-        $dao->objeto->setApellido($datos->apellido);
-        $dao->objeto->setEdad($datos->edad);
-        $dao->objeto->setDui($datos->dui);
-        $dao->objeto->setFechaNacimiento($datos->fechaNac);
-        if($datos->edad < 18){
-            $dao->objeto->setEncargado($datos->encargado);
-            $dao->objeto->setDuiEncargado($datos->duiEncargado);
+        $dao->objeto->setNombre($nombre);
+        $dao->objeto->setApellido($apellido);
+        $dao->objeto->setDui($dui);
+        $dao->objeto->setFechaNacimiento($fechaNac);
+        $dao->objeto->setImg($img);
 
+        if($edad < 18){
+            $dao->objeto->setEncargado($encargado);
+            $dao->objeto->setDuiEncargado($duiE);
+            $dao->objeto->setTelefono($telefono);
         }else{
         $dao->objeto->setEncargado('');
         $dao->objeto->setDuiEncargado('');
-
+        $dao->objeto->setTelefono('');
         }
         echo $dao->registrar();
     }

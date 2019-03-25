@@ -9,7 +9,7 @@ class DaoGimnasio extends DaoBase {
 
     public function mostrarGimnasio()
     {
-        $_query = "select * from gimnasio
+        $_query = "select *,TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from gimnasio
         where  idEliminado=1 and idUsuario>1";
 
         $resultado = $this->con->ejecutar($_query);
@@ -23,19 +23,19 @@ class DaoGimnasio extends DaoBase {
 
             $object = json_encode($fila);
 
-            $btnEditar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEditarE icon blue small button\" onclick=\"editarUsuario(this)\"><i class=\"edit icon\"></i></button>';
-            $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarE icon pink small button\" onclick=\"eliminarUsuario(this)\"><i class=\"trash icon\"></i></button>';
-            $btnVencidos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnVencidos icon red small button\" onclick=\"reinscribirUsuario(this)\"><i class=\"pencil alternate icon\"></i></button>';
-            $btnReporte = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui  icon green small button\" onclick=\"reporte(this)\"><i class=\"list icon\"></i></button>';
+            $btnEditar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEditarE icon blue small button\" onclick=\"editarUsuario(this)\"><i class=\"edit icon\"></i>Editar</button>';
+            $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarE icon red small button\" onclick=\"eliminarUsuario(this)\"><i class=\"trash icon\"></i>Eliminar</button>';
+            $btnVencidos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnVencidos icon violet small button\" onclick=\"reinscribirUsuario(this)\"><i class=\"pencil alternate icon\"></i>Inscripción</button>';
+            $btnReporte = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui  icon green small button\" onclick=\"reporte(this)\"><i class=\"file outline icon\"></i>Ficha</button>';
+            $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
             
             if($fila["fechaFinal"] <= $fechaMini){
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnVencidos.' '.$btnEditar.''.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';    
                 
-                
-                $acciones = ', "Acciones": "<div style=background-color:#FFFF00>'.$btnVencidos.' '.$btnEliminar.'</div>"';
+               
             }
                else{
-                $btnInscrbir = '';
-                $acciones = ', "Acciones": "'.$btnReporte.''.$btnEditar.''.$btnEliminar.'"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnReporte.''.$btnEditar.''.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';    
                }
             
             
@@ -85,8 +85,8 @@ class DaoGimnasio extends DaoBase {
 
 
 
-        $query = "Insert into gimnasio values (null,'".$idExp."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
-        '".$this->objeto->getFechaNacimiento()."','".$this->objeto->getEdad()."',
+        $query = "Insert into gimnasio values (null,'".$idExp."','".$this->objeto->getImg()."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
+        '".$this->objeto->getFechaNacimiento()."',
         '".$this->objeto->getDui()."',curdate(),ADDDATE(curdate(),INTERVAL 31 DAY),1);";
 
         $resultado = $this->con->ejecutar($query);
@@ -101,7 +101,7 @@ class DaoGimnasio extends DaoBase {
 
     public function editar() {
         $_query = "update gimnasio set nombre='".$this->objeto->getNombre()."', apellido='".$this->objeto->getApellido()."',
-        fechaNacimiento='".$this->objeto->getFechaNacimiento()."', edad='".$this->objeto->getEdad()."',
+        fechaNacimiento='".$this->objeto->getFechaNacimiento()."', foto ='".$this->objeto->getImg()."',
         ddi= '".$this->objeto->getDui()."' where idUsuario = ".$this->objeto->getIdUsuario();
 
         $resultado = $this->con->ejecutar($_query);
@@ -145,9 +145,23 @@ class DaoGimnasio extends DaoBase {
 
         $resultado = $this->con->ejecutar($_query);
 
-        $json = json_encode($resultado->fetch_assoc());
+        $_json = '';
 
-        return $json;
+        while($fila = $resultado->fetch_assoc()) {
+                    
+            $object = json_encode($fila);
+
+                $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
+                $acciones = ', "imagen": "'.$imagen.'"';
+
+                $object = substr_replace($object, $acciones, strlen($object) -1,0);
+    
+          $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+    
+        return $_json;
     }
 
     public function getDdi()
@@ -171,7 +185,7 @@ class DaoGimnasio extends DaoBase {
     }
 
     public function fichaG(){
-        $query = "select * from gimnasio
+        $query = "select *,TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from gimnasio
         where idUsuario=".$this->objeto->getIdUsuario();
 
         $resultado = $this->con->ejecutar($query);

@@ -17,17 +17,22 @@ class GimnasioController extends ControladorBase {
 
     public function registrar() {
 
-        $datos = $_REQUEST["datos"];
+        $nombre = $_REQUEST["nombreJ"];
+        $apellido = $_REQUEST["apellidoJ"];
+        $dui = $_REQUEST["duiJ"];
+        $fechaNac = $_REQUEST["fechaNac"];
+        $img= $_REQUEST["img"];
+        $edad= $_REQUEST["edad"];
+        
 
-        $datos = json_decode($datos);
         
         $dao = new DaoGimnasio();
 
-        $dao->objeto->setNombre($datos->nombre);
-        $dao->objeto->setApellido($datos->apellido);
-        $dao->objeto->setEdad($datos->edad);
-        $dao->objeto->setDui($datos->dui);
-        $dao->objeto->setFechaNacimiento($datos->fechaNac);
+        $dao->objeto->setNombre($nombre);
+        $dao->objeto->setApellido($apellido);
+        $dao->objeto->setDui($dui);
+        $dao->objeto->setImg($img);
+        $dao->objeto->setFechaNacimiento($fechaNac);
 
 
         echo $dao->registrarGim();
@@ -45,6 +50,7 @@ class GimnasioController extends ControladorBase {
         $dao->objeto->setEdad($_REQUEST["edad"]);
         $dao->objeto->setDui($_REQUEST["dui"]);
         $dao->objeto->setFechaNacimiento($_REQUEST["fechaNac"]);
+        $dao->objeto->setImg($_REQUEST['imagenNueva']);
         $dao->objeto->setIdUsuario($_REQUEST["idDetalle"]);
 
 

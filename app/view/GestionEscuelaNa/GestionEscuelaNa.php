@@ -24,7 +24,7 @@
 
         <div class="row title-bar">
             <div class="sixteen wide column">
-                <button class="ui right floated teal labeled icon button" @click="modalRegistrar">
+                <button class="ui right floated teal labeled icon button" id="btnAgregarU">
                     <i class="plus icon"></i>
                     Agregar
                 </button>
@@ -43,18 +43,17 @@
                         <tr>
                         
                             <th style="background-color: #04B4AE; color:white;">N°</th>
+                            <th style="background-color: #04B4AE; color:white;"></th>
                             <th style="background-color: #04B4AE; color:white;">Cod. Expediente</th>
                             <th style="background-color: #04B4AE; color:white;">Nombres</th>
                             <th style="background-color: #04B4AE; color:white;">Apellido</th>
-                            <th style="background-color: #04B4AE; color:white;">Fecha de Nacimiento</th>
                             <th style="background-color: #04B4AE; color:white;">Edad</th>
                             <th style="background-color: #04B4AE; color:white;">DUI / Carnet Minoridad</th>
                             <th style="background-color: #04B4AE; color:white;">Encargado</th>
                             <th style="background-color: #04B4AE; color:white;">Tel. Encargado</th>
-                            <th style="background-color: #04B4AE; color:white;">DUI Encargado</th>
                             <th style="background-color: #04B4AE; color:white;">Fecha de Inscripción</th>
                             <th style="background-color: #04B4AE; color:white;">Fecha Final</th>
-                            <th style="background-color: #04B4AE; color:white;">Acciones</th>
+                            
                            
                         </tr>
                     </thead>
@@ -65,6 +64,117 @@
         </div>
     </div>
 </div>
+
+<div class="ui modal" id="modalAgregarU"  style="overflow: scroll;">
+
+<div class="header">
+<i class="male icon"></i><i class="life ring icon"></i> Agregar nuevo alumno de la escuela de natación
+</div>
+<div class="content" class="ui equal width form">
+    <form class="ui form" id="frmUsuariosNa" method="POST" enctype="multipart/form-data" action='?1=NatacionController&2=registrar'> 
+        <div class="field">
+            <div class="fields">
+                    <div class="eight wide field">
+                        <label><i class="user icon"></i>Nombre</label>
+                        <input type="text" name="nombreJ" placeholder="Nombre del Jugador" id="nombreJ">
+                            
+                            <div class="ui red pointing label"  id="labelNombre"
+                            style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                            Completa este campo</div>
+                    </div>
+                    <div class="eight wide field">
+                        <label><i class="user icon"></i>Apellido</label>
+                        <input type="text" name="apellidoJ" placeholder="Apellido del Jugador" id="apellidoJ">
+                        <div class="ui red pointing label"  id="labelApellido"
+                        style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                        Completa este campo</div>
+                    </div>     
+            </div>
+        </div>  
+        <div class="field">
+            <div class="fields">
+                        <div class="ten wide field">
+                            <label><i class="photo icon"></i>Foto</label>
+                                <input type="file" name="Imagen" id="Imagen">
+                                    <div class="ui red pointing label"  id="labelFoto"
+                                    style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                    Completa este campo
+                                    </div>
+                                <input type="hidden" name="img" id='img'>
+                        </div>    
+                        <div class="six wide field">
+                            <label><i class="calendar icon"></i>Fecha de Nacimiento</label>
+                                <input type="date" id="fechaNac" name="fechaNac">
+                                    <div class="ui red pointing label"  id="labelFecha"
+                                        style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                        Completa este campo</div>
+                                    </div>                              
+                        
+                        </div>
+                        
+            </div>   
+            
+                <div class="field">
+                        <div class="fields">
+                        
+                        <div class="eight wide field">
+                            <div id="age">
+                            <b><label><i class="male icon"></i>La edad del jugador es:</label></b>
+                            <input type="text" id="edad" name="edad" readonly>
+                            </div>
+                        </div>
+                        <div class="eight wide field">
+                        <label><i class="address card icon"></i>DUI/Carnet Minoridad:</label>
+                            <input type="text" name="duiJ" placeholder="DUI del jugador" id="duiJ">
+                                    <div class="ui red pointing label"  id="labelDui"
+                                    style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                    Completa este campo
+                                    </div>
+                        </div>
+                       
+
+                            
+                        </div>
+                </div>
+
+                <div class="field" id="encar">
+                <div class="fields">
+                <div class="six wide field">
+                            <div id="age">
+                            <b><label><i class="male icon"></i>Encargado:</label></b>
+                            <input type="text" id="encargado" name="encargado" >
+                            </div>
+                </div>
+                <div class="five wide field">
+                            <div id="age">
+                            <b><label><i class="address card icon"></i>DUI Encargado:</label></b>
+                            <input type="text" id="duiE" name="duiE">
+                            </div>
+                </div>
+                <div class="five wide field">
+                            <div id="age">
+                            <b><label><i class="telephone icon"></i>Teléfono Encargado:</label></b>
+                            <input type="text" id="telefono" name="telefono" >
+                            </div>
+                </div>
+                </div>
+
+                </div>
+                
+        </div>
+    </form>
+
+    <div class="actions">
+        <button id="btnCerrar" class="ui yellow button">
+            Cancelar
+        </button>
+        <button class="ui blue button" id="btnGuardarU" >
+        Guardar
+        </button>
+    </div>
+</div>
+
+
 <script src="./res/tablas/tablaEscuelaNa.js"></script>
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
@@ -197,7 +307,7 @@ var app = new Vue({
                         $('#frmEditar input[name="nombre"]').val(dat.nombre);
                         $('#frmEditar input[name="apellido"]').val(dat.apellido);
                         $('#frmEditar input[name="fechaNac"]').val(dat.fechaNacimiento);
-                        $('#frmEditar input[name="edad"]').val(dat.edad);
+                        //$('#frmEditar input[name="edad"]').val(dat.edad);
                         $('#frmEditar input[name="dui"]').val(dat.ddi);
                         if(dat.encargado==''){
                             $('#frmEditar input[name="encargado"]').hide();
@@ -208,7 +318,7 @@ var app = new Vue({
                             $('#frmEditar input[name="duiEncargado"]').show();
                             $('#frmEditar input[name="telefono"]').show();
                         $('#frmEditar input[name="encargado"]').val(dat.encargado);
-                        $('#frmEditar input[name="duiEncargado"]').val(dat.duiEncargado);
+                        $('#frmEditar input[name="duiEncargado"]').val(dat.dui);
                         $('#frmEditar input[name="telefono"]').val(dat.telefono);
                         }
                     })
@@ -247,11 +357,86 @@ var editarUsuario=(ele)=>{
 
 <script>
 
-$(document).ready(function(){
-    $('#frmRegistrar input[name="encargado"]').hide();
-    $('#frmRegistrar input[name="duiEncargado"]').hide();
-    $('#frmRegistrar input[name="telefono"]').hide();
+$("#btnAgregarU").click(function(){
+    $('#modalAgregarU').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+
 });
+
+$('#btnCerrar').click(function() { 
+               // $("#age").hide();   
+                $('#nombreJ').val('');
+                $('#apellidoJ').val('');
+                $('#duiJ').val('');
+                $('#fechaNac').val('');
+                $('#Imagen').val('');
+                $("#encargado").val('');
+                $("#duiE").val('');
+                $("#telefono").val('');
+                $("#edad").val('');
+                $('#modalAgregarU').modal('hide');
+            });
+
+$("#btnGuardarU").click(function(){
+    const form = $('#frmUsuariosNa');
+
+                const datosFormulario = new FormData(form[0]);
+         
+        
+            $.ajax({
+                enctype: 'multipart/form-data',
+                contentType: false,
+                processData: false,
+                cache: false,
+                type: 'POST',
+                url: '?1=NatacionController&2=registrar',
+                data: datosFormulario,
+                success: function(r) {
+                    if(r == 1) {
+                        $('#modalAgregarU').modal('hide');
+                        swal({
+                            title: 'Registrado',
+                            text: 'Guardado con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            if (result.value) {
+                                location.href = '?';
+                            }
+                        }); 
+                        $('#dtNatacion').DataTable().ajax.reload();
+                        limpiar();
+                    } 
+                }
+            
+        });
+
+    });
+
+
+    $(function(){
+
+$('#Imagen').change(e=>{
+    let reader= new FileReader();
+
+    reader.readAsDataURL(e.target.files[0]);
+
+    reader.onload=(e)=>{
+        $('#img').val(e.target.result);
+    }
+})
+});
+
+$(document).ready(function(){
+    $("#encar").hide();
+    $('#frmEditar input[name="duiEncargado"]').mask("99999999-9");
+    $('#frmEditar input[name="telefono"]').mask("9999-9999");
+    $("#duiE").mask("99999999-9");
+    $("#telefono").mask("9999-9999");
+});
+
+
 
 function Edad(FechaNacimiento) {
 
@@ -272,39 +457,36 @@ return edad;
 }
 
 function resultadoE(){
-    var fecha = $('#frmRegistrar input[name="fechaNac"]').val();
+    var fecha = $('#fechaNac').val();
 
 var edad = Edad(fecha);
 
-$('#frmRegistrar input[name="edad"]').val(edad);
+$('#edad').val(edad);
 
 if(edad>18){
-    $('#frmRegistrar input[name="dui"]').mask("99999999-9");
-    $('#frmRegistrar input[name="duiEncargado"]').hide();
-    $('#frmRegistrar input[name="encargado"]').hide();
-    $('#frmRegistrar input[name="encargado"]').val('nada');
-    $('#frmRegistrar input[name="duiEncargado"]').val('nada');
-    $('#frmRegistrar input[name="telefono"]').hide();
-    $('#frmRegistrar input[name="telefono"]').val('nada');
+    $('#duiJ').mask("99999999-9");
+    $('#encar').hide();
+    $('#encargado').val('nada');
+    $('#duiE').val('nada');
+    $('#telefono').val('nada');
 }
 else{
-    $('#frmRegistrar input[name="dui"]').mask("9999-999999-999-9");
-    $('#frmRegistrar input[name="duiEncargado"]').show();
-    $('#frmRegistrar input[name="duiEncargado"]').mask("99999999-9");
-    $('#frmRegistrar input[name="encargado"]').show();
-    $('#frmRegistrar input[name="encargado"]').val('');
-    $('#frmRegistrar input[name="duiEncargado"]').val('');
-    $('#frmRegistrar input[name="telefono"]').show();
-    $('#frmRegistrar input[name="telefono"]').mask("9999-9999");
+    $("#encar").show();
+    $('#duiJ').mask("999999999999999999999");
+    $('#telfono').mask("9999-9999");
+    $('#encargado').val('');
+    $('#duiE').val('');
+    $('#telefono').val('');
 }
+
 }
 
 
-$('#frmRegistrar input[name="fechaNac"]').change(function(){
-    var fecha = $('#frmRegistrar input[name="fechaNac"]').val();
+$('#fechaNac').change(function(){
+    var fecha = $('#fechaNac').val();
 
 Edad(fecha);
-$('#frmRegistrar input[name="dui"]').val('');
+$('#duiJ').val('');
 
 resultadoE();
 

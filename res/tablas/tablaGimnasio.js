@@ -12,6 +12,9 @@ $(function() {
                     "data": "idUsuario"
                 },
                 {
+                    "data": "Acciones"             
+                },
+                {
                     "data": "correlativo"
                 },
                 {
@@ -34,9 +37,6 @@ $(function() {
                 },
                 {
                     "data": "fechaFinal"
-                },
-                {
-                    "data": "Acciones"             
                 }
             ],
             "order": [
