@@ -85,6 +85,7 @@ class NatacionController extends ControladorBase {
         $dao->objeto->setNombre($_REQUEST["nombre"]);
         $dao->objeto->setApellido($_REQUEST["apellido"]);
         $dao->objeto->setEdad($_REQUEST["edad"]);
+        $dao->objeto->setImg($_REQUEST['imagenNueva']);
         if($_REQUEST["edad"] < 18){
             $dao->objeto->setEncargado($_REQUEST["encargado"]);
             $dao->objeto->setDuiEncargado($_REQUEST["duiEncargado"]);

@@ -41,7 +41,7 @@ Vue.component('modal-jugador', {
             </form>
         </div>
         <div class="actions">
-            <button @click="$parent.cerrarModal" class="ui deny black button">
+            <button @click="$parent.cerrarModalD" class="ui deny black button">
                 Cerrar
             </button>
         </div>

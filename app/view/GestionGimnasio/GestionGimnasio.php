@@ -270,6 +270,7 @@ var app = new Vue({
                         $('#frmEditar input[name="nombre"]').val(dat.nombre);
                         $('#frmEditar input[name="apellido"]').val(dat.apellido);
                         $('#frmEditar input[name="fechaNac"]').val(dat.fechaNacimiento);
+                        $('#frmEditar input[name="imagenNueva"]').val(dat.foto);
                         $('#frmEditar input[name="edad"]').val(dat.edad);
                         $('#frmEditar input[name="dui"]').val(dat.ddi);
                     })
@@ -300,6 +301,18 @@ $('#btnCerrar').click(function() {
                 $("#edad").val('');
                 $('#modalAgregarU').modal('hide');
             });
+function limpiar(){
+    $('#nombreJ').val('');
+                $('#apellidoJ').val('');
+                $('#duiJ').val('');
+                $('#fechaNac').val('');
+                $('#Imagen').val('');
+                $("#encargado").val('');
+                $("#duiE").val('');
+                $("#telefono").val('');
+                $("#edad").val('');
+
+}
 
 $("#btnGuardarU").click(function(){
     const form = $('#frmUsuariosNa');

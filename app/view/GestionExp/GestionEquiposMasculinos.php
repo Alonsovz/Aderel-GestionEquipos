@@ -332,6 +332,12 @@ var appE = new Vue({
                 $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
             },
+            cerrarModalD() {
+                this.detalles = [];
+
+                $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+            },
             refrescarTabla() {
                 tablaEquiposM.ajax.reload();  
             },

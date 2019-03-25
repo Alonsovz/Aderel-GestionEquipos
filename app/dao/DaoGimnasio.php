@@ -140,7 +140,7 @@ class DaoGimnasio extends DaoBase {
 
     public function cargarDatosGimnasio() {
 
-        $_query = "select * from gimnasio
+        $_query = "select *,TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from gimnasio
         where idUsuario = ".$this->objeto->getIdUsuario();
 
         $resultado = $this->con->ejecutar($_query);
