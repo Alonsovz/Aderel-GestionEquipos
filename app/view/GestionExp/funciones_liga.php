@@ -178,12 +178,19 @@ const enviar =()=>{
 	const datosEnviar     = [];
 	const nVueltas        = <?php echo $vueltas ?>;
 	const jornadasXvuelta = datosFormulario.length/nVueltas;
+	let contadorJornadas  = 0;
+	let vueltaActual 	  = 1;
 	for (let index = 0; index < datosFormulario.length; index++) {
-		const vuelta={
+		if(!(contadorJornadas<jornadasXvuelta)){
+			contadorJornadas=0;
+			vueltaActual++;
+		}
+		const jornada={
 			jornada : datosFormulario[index][0].value,
-			nvuelta  : ((index+1)),
+			nvuelta : vueltaActual,
 			partidos: [],
 		};
+		contadorJornadas++;
 
 		for (let j = 1; j <= ((datosFormulario[index].length-1)/6); j++) {
 			const partido = {
@@ -194,9 +201,9 @@ const enviar =()=>{
 				cancha : datosFormulario[index][3*j].value,
 				partido: datosFormulario[index][4*j].value,
 			};
-			vuelta.partidos.push(partido);
+			jornada.partidos.push(partido);
 		}
-		datosEnviar.push(vuelta);
+		datosEnviar.push(jornada);
 	}
 	console.log('datosEnviar :', datosEnviar);
 	// $.ajax({
