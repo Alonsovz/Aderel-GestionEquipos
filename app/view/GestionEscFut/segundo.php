@@ -70,6 +70,7 @@
                         <tr>
                         
                         <th style="background-color: #04B4AE; color:white;">N°</th>
+                        <th style="background-color: #217CD1; color:white;"></th>
                             <th style="background-color: #217CD1; color:white;">Cod. Expediente</th>
                             <th style="background-color: #217CD1; color:white;">Nombres</th>
                             <th style="background-color: #217CD1; color:white;">Apellido</th>
@@ -80,7 +81,7 @@
                             <th style="background-color: #217CD1; color:white;">DUI Encargado</th>
                             <th style="background-color: #217CD1; color:white;">Teléfono</th>
                             <th style="background-color: #217CD1; color:white;">Fecha de Inscripción</th>
-                            <th style="background-color: #217CD1; color:white;">Acciones</th>
+                            
                            
                         </tr>
                     </thead>
@@ -100,7 +101,7 @@
     <form class="ui form" id="frmJugador" method="POST" enctype="multipart/form-data">
         <div class="field">
             <div class="fields">
-                    <div class="eight wide field">
+                    <div class="five wide field">
                         <label><i class="user icon"></i>Nombre del Jugador</label>
                         <input type="text" name="nombreJ" placeholder="Nombre del Jugador" id="nombreJ">
                             
@@ -108,13 +109,22 @@
                             style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
                             Completa este campo</div>
                     </div>
-                    <div class="eight wide field">
+                    <div class="five wide field">
                         <label><i class="user icon"></i>Apellido del Jugador</label>
                         <input type="text" name="apellidoJ" placeholder="Apellido del Jugador" id="apellidoJ">
                         <div class="ui red pointing label"  id="labelApellido"
                         style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
                         Completa este campo</div>
-                    </div>     
+                    </div>  
+                    <div class="six wide field">
+                            <label><i class="photo icon"></i>Foto</label>
+                                <input type="file" name="Imagen" placeholder="Cargar Foto del jugador" id="Imagen">
+                                    <div class="ui red pointing label"  id="labelFoto"
+                                    style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                    Completa este campo
+                                    </div>
+                                <input type="hidden" name="img" id='img'>
+                        </div>        
             </div>
         </div>  
         <div class="field">
@@ -216,6 +226,21 @@ var app = new Vue({
             ],
             campos_editar: [
                 {
+                    label: 'Foto:',
+                    name: 'foto',
+                    type: 'img',
+                    val:''
+                },
+                {
+                    label: 'Cambiar Foto',
+                    name: 'nuevaFoto',
+                    type: 'file',
+                },
+                {
+                    name: 'imagenNueva',
+                    type: 'hidden'
+                },
+                {
                     label: 'Nombre:',
                     name: 'nombre',
                     type: 'text'
@@ -289,7 +314,7 @@ var app = new Vue({
 
                         console.log(dat);
 
-                        // $('#frmEditar input[name="idDetalle"]').val(dat.codigoUsuari);
+                        this.campos_editar[0].val=dat.imagen;
                         $('#frmEditar input[name="nombre"]').val(dat.nombre);
                        $('#frmEditar input[name="apellido"]').val(dat.apellido);
                        $('#frmEditar input[name="fechaNac"]').val(dat.fechaNacimiento);
@@ -297,6 +322,7 @@ var app = new Vue({
                        $('#frmEditar input[name="carnet"]').val(dat.carnet);
                        $('#frmEditar input[name="encargado"]').val(dat.encargado);
                        $('#frmEditar input[name="dui"]').val(dat.dui);
+                       $('#frmEditar input[name="imagenNueva"]').val(dat.foto);
                        $('#frmEditar input[name="telefono"]').val(dat.telefono);
                        $('#frmEditar input[name="error"]').css("display","none");
                     })
@@ -331,11 +357,11 @@ return false;
 }
 
 $(document).ready(function(){
-    $("#duiJ").mask("9999999-9");
+    $("#duiJ").mask("99999999-9");
     $("#telefono").mask("9999-9999");
-    $("#carnet").mask("9999-999999-999-9");
-    $('#frmEditar input[name="carnet"]').mask("9999-999999-999-9");
-    $('#frmEditar input[name="dui"]').mask("9999999-9");
+    $("#carnet").mask("99999999999999");
+    $('#frmEditar input[name="carnet"]').mask("9999999999999");
+    $('#frmEditar input[name="dui"]').mask("99999999-9");
     $('#frmEditar input[name="telefono"]').mask("9999-9999");
     $('#frmEditar input[name="error"]').css("display","none");
 });
@@ -343,6 +369,31 @@ $('#btnModalRegistroJugador').click(function() {
 $('#modalAgregarJugador').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
 });
 
+$(function(){
+
+$('#Imagen').change(e=>{
+    let reader= new FileReader();
+
+    reader.readAsDataURL(e.target.files[0]);
+
+    reader.onload=(e)=>{
+        $('#img').val(e.target.result);
+    }
+})
+});
+
+$(function(){
+
+    $('#frmEditar input[name="nuevaFoto"]').change(e=>{
+    let reader= new FileReader();
+
+    reader.readAsDataURL(e.target.files[0]);
+
+    reader.onload=(e)=>{
+        $('#frmEditar input[name="imagenNueva"]').val(e.target.result);
+    }
+})
+});
 
 function cerrar(){   
                 $('#nombreJ').val('');

@@ -12,6 +12,9 @@ $(function() {
                     "data": "idUsuario"
                 },
                 {
+                    "data": "Acciones"
+                },
+                {
                     "data": "correlativo"
                 },
                 {
@@ -40,9 +43,6 @@ $(function() {
                 },
                 {
                     "data": "fechaInscripcion"
-                },
-                {
-                    "data": "Acciones"
                 }
                 
             ],

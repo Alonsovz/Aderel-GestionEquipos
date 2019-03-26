@@ -83,6 +83,7 @@ class EscFutbolController extends ControladorBase {
         $encargado = $_REQUEST["encargado"];
         $dui = $_REQUEST["duiJ"];
         $telefono = $_REQUEST["telefono"];
+        $img= $_REQUEST["img"];
 
         
 
@@ -96,6 +97,7 @@ class EscFutbolController extends ControladorBase {
         $dao->objeto->setEncargado($encargado);
         $dao->objeto->setTelefono($telefono);
         $dao->objeto->setDui($dui);
+        $dao->objeto->setImg($img);
 
 
         echo $dao->registrarPrimer();
@@ -110,6 +112,7 @@ class EscFutbolController extends ControladorBase {
         $encargado = $_REQUEST["encargado"];
         $dui = $_REQUEST["duiJ"];
         $telefono = $_REQUEST["telefono"];
+        $img= $_REQUEST["img"];
 
         
 
@@ -123,6 +126,7 @@ class EscFutbolController extends ControladorBase {
         $dao->objeto->setEncargado($encargado);
         $dao->objeto->setTelefono($telefono);
         $dao->objeto->setDui($dui);
+        $dao->objeto->setImg($img);
 
 
         echo $dao->registrarSegundo();
@@ -137,6 +141,7 @@ class EscFutbolController extends ControladorBase {
         $encargado = $_REQUEST["encargado"];
         $dui = $_REQUEST["duiJ"];
         $telefono = $_REQUEST["telefono"];
+        $img= $_REQUEST["img"];
 
         
 
@@ -150,6 +155,7 @@ class EscFutbolController extends ControladorBase {
         $dao->objeto->setEncargado($encargado);
         $dao->objeto->setTelefono($telefono);
         $dao->objeto->setDui($dui);
+        $dao->objeto->setImg($img);
 
 
         echo $dao->registrarTercero();
@@ -164,11 +170,13 @@ class EscFutbolController extends ControladorBase {
         $encargado = $_REQUEST["encargado"];
         $dui = $_REQUEST["duiJ"];
         $telefono = $_REQUEST["telefono"];
+        $img= $_REQUEST["img"];
 
         
 
         $dao = new DaoEscuela();
 
+        
         $dao->objeto->setNombre($nombre);
         $dao->objeto->setApellido($apellido);
         $dao->objeto->setEdad($edad);
@@ -177,7 +185,7 @@ class EscFutbolController extends ControladorBase {
         $dao->objeto->setEncargado($encargado);
         $dao->objeto->setTelefono($telefono);
         $dao->objeto->setDui($dui);
-
+        $dao->objeto->setImg($img);
 
         echo $dao->registrarCuarto();
     }
@@ -191,7 +199,7 @@ class EscFutbolController extends ControladorBase {
         $encargado = $_REQUEST["encargado"];
         $dui = $_REQUEST["duiJ"];
         $telefono = $_REQUEST["telefono"];
-
+        $img= $_REQUEST["img"];
         
 
         $dao = new DaoEscuela();
@@ -204,6 +212,7 @@ class EscFutbolController extends ControladorBase {
         $dao->objeto->setEncargado($encargado);
         $dao->objeto->setTelefono($telefono);
         $dao->objeto->setDui($dui);
+        $dao->objeto->setImg($img);
 
 
         echo $dao->registrarQuinto();
@@ -218,6 +227,7 @@ class EscFutbolController extends ControladorBase {
         $encargado = $_REQUEST["encargado"];
         $dui = $_REQUEST["duiJ"];
         $telefono = $_REQUEST["telefono"];
+        $img= $_REQUEST["img"];
 
         
 
@@ -231,6 +241,7 @@ class EscFutbolController extends ControladorBase {
         $dao->objeto->setEncargado($encargado);
         $dao->objeto->setTelefono($telefono);
         $dao->objeto->setDui($dui);
+        $dao->objeto->setImg($img);
 
 
         echo $dao->registrarSexto();
@@ -259,6 +270,7 @@ class EscFutbolController extends ControladorBase {
         $dao->objeto->setEncargado($_REQUEST["encargado"]);
         $dao->objeto->setTelefono($_REQUEST["telefono"]);
         $dao->objeto->setDui($_REQUEST["dui"]);
+        $dao->objeto->setImg($_REQUEST['imagenNueva']);
         $dao->objeto->setIdJugador($_REQUEST['idDetalleC']);
 
         echo $dao->editarPrimerN();

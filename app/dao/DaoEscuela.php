@@ -34,11 +34,12 @@ class DaoEscuela extends DaoBase {
             $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminar(this)\"> <i class=\"trash icon icon\"></i>Eliminar</button>';
             $reporte = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"reporte(this)\"> <i class=\"file outline icon\"></i>Ficha</button>';
             $btnMover = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon yellow small button\" onclick=\"mover(this)\"> <i class=\"arrow up icon\"></i> Mover</button>';
-            
+            $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
+
             if($dia>=$fila["dia"] && $fila["mes"] == $mes && $fila["edad"]>7){
-                $acciones = ', "Acciones": "<div style=background-color:red>'.$btnEditar.''.$btnMover.''.$reporte.'</div>"';
+                $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }else{
-                $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$reporte.'"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
                 
             
@@ -86,7 +87,8 @@ class DaoEscuela extends DaoBase {
 
 
 
-        $query = "Insert into escuelaFut values (null,'".$idExp."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
+        $query = "Insert into escuelaFut values (null,'".$idExp."','".$this->objeto->getImg()."',
+        '".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
         '".$this->objeto->getFechaNacimiento()."','".$this->objeto->getCarnet()."',
         '".$this->objeto->getEncargado()."', '".$this->objeto->getDui()."','".$this->objeto->getTelefono()."',curdate(),1,1);";
 
@@ -127,11 +129,12 @@ class DaoEscuela extends DaoBase {
             $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminar(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
             $reporte = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"reporte(this)\"><i class=\"file outline icon\"></i> Ficha</button>';
             $btnMover = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon yellow small button\" onclick=\"mover(this)\"><i class=\"arrow up icon\"></i> Mover</button>';
-            
+            $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
+
             if($dia>=$fila["dia"] && $fila["mes"] == $mes && $fila["edad"]>9){
-                $acciones = ', "Acciones": "<div style=background-color:red>'.$btnEditar.''.$btnMover.''.$reporte.'</div>"';
+                $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }else{
-                $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$reporte.'"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
                 
             
@@ -179,7 +182,7 @@ class DaoEscuela extends DaoBase {
 
 
 
-        $query = "Insert into escuelaFut values (null,'".$idExp."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
+        $query = "Insert into escuelaFut values (null,'".$idExp."','".$this->objeto->getImg()."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
         '".$this->objeto->getFechaNacimiento()."','".$this->objeto->getCarnet()."',
         '".$this->objeto->getEncargado()."', '".$this->objeto->getDui()."','".$this->objeto->getTelefono()."',curdate(),2,1);";
 
@@ -221,10 +224,12 @@ class DaoEscuela extends DaoBase {
             $reporte = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"reporte(this)\"><i class=\"file outline icon\"></i> Ficha</button>';
             $btnMover = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon yellow small button\" onclick=\"mover(this)\"><i class=\"arrow up icon\"></i> Mover</button>';
             
+            $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
+
             if($dia>=$fila["dia"] && $fila["mes"] == $mes && $fila["edad"]>11){
-                $acciones = ', "Acciones": "<div style=background-color:red>'.$btnEditar.''.$btnMover.''.$reporte.'</div>"';
+                $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }else{
-                $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$reporte.'"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
 
@@ -270,7 +275,7 @@ class DaoEscuela extends DaoBase {
 
 
 
-        $query = "Insert into escuelaFut values (null,'".$idExp."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
+        $query = "Insert into escuelaFut values (null,'".$idExp."','".$this->objeto->getImg()."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
         '".$this->objeto->getFechaNacimiento()."','".$this->objeto->getCarnet()."',
         '".$this->objeto->getEncargado()."', '".$this->objeto->getDui()."','".$this->objeto->getTelefono()."',curdate(),3,1);";
 
@@ -312,11 +317,14 @@ class DaoEscuela extends DaoBase {
             $reporte = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"reporte(this)\"><i class=\"file outline icon\"></i> Ficha</button>';
             $btnMover = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon yellow small button\" onclick=\"mover(this)\"><i class=\"arrow up icon\"></i> Mover </button>';
             
+            $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
+
             if($dia>=$fila["dia"] && $fila["mes"] == $mes && $fila["edad"]>13){
-                $acciones = ', "Acciones": "<div style=background-color:red>'.$btnEditar.''.$btnMover.''.$reporte.'</div>"';
+                $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }else{
-                $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$reporte.'"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
+
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
 
             $_json .= $object.',';
@@ -361,7 +369,7 @@ class DaoEscuela extends DaoBase {
 
 
 
-        $query = "Insert into escuelaFut values (null,'".$idExp."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
+        $query = "Insert into escuelaFut values (null,'".$idExp."','".$this->objeto->getImg()."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
         '".$this->objeto->getFechaNacimiento()."','".$this->objeto->getCarnet()."',
         '".$this->objeto->getEncargado()."', '".$this->objeto->getDui()."','".$this->objeto->getTelefono()."',curdate(),4,1);";
 
@@ -403,10 +411,12 @@ class DaoEscuela extends DaoBase {
             $reporte = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"reporte(this)\"><i class=\"file outline icon\"></i>Ficha</button>';
             $btnMover = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon yellow small button\" onclick=\"mover(this)\"><i class=\"arrow up icon\"></i>Mover</button>';
             
+            $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
+
             if($dia>=$fila["dia"] && $fila["mes"] == $mes && $fila["edad"]>15){
-                $acciones = ', "Acciones": "<div style=background-color:red>'.$btnEditar.''.$btnMover.''.$reporte.'</div>"';
+                $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }else{
-                $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$reporte.'"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
 
@@ -452,7 +462,7 @@ class DaoEscuela extends DaoBase {
 
 
 
-        $query = "Insert into escuelaFut values (null,'".$idExp."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
+        $query = "Insert into escuelaFut values (null,'".$idExp."','".$this->objeto->getImg()."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
         '".$this->objeto->getFechaNacimiento()."','".$this->objeto->getCarnet()."',
         '".$this->objeto->getEncargado()."', '".$this->objeto->getDui()."','".$this->objeto->getTelefono()."',curdate(),5,1);";
 
@@ -494,11 +504,14 @@ class DaoEscuela extends DaoBase {
             $reporte = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"reporte(this)\"><i class=\"file outline icon\"></i>Ficha</button>';
             $btnMover = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon yellow small button\" onclick=\"mover(this)\"><i class=\"arrow up icon\"></i>Mover</button>';
             
+            $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
+
             if($dia>=$fila["dia"] && $fila["mes"] == $mes && $fila["edad"]>17){
-                $acciones = ', "Acciones": "<div style=background-color:red>Mayor de edad'.$reporte.'</div>"';
+                $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }else{
-                $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$reporte.'"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
+
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
 
             $_json .= $object.',';
@@ -543,7 +556,7 @@ class DaoEscuela extends DaoBase {
 
 
 
-        $query = "Insert into escuelaFut values (null,'".$idExp."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
+        $query = "Insert into escuelaFut values (null,'".$idExp."','".$this->objeto->getImg()."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
         '".$this->objeto->getFechaNacimiento()."','".$this->objeto->getCarnet()."',
         '".$this->objeto->getEncargado()."', '".$this->objeto->getDui()."','".$this->objeto->getTelefono()."',curdate(),6,1);";
 
@@ -559,19 +572,31 @@ class DaoEscuela extends DaoBase {
 
     public function cargarDatosPrimerN() {
 
-        $_query = "select * from escuelaFut
+        $_query = "select *,TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from escuelaFut
         where idUsuario = ".$this->objeto->getIdJugador();
 
         $resultado = $this->con->ejecutar($_query);
+        $_json = '';
+        while($fila = $resultado->fetch_assoc()) {
+                    
+            $object = json_encode($fila);
 
-        $json = json_encode($resultado->fetch_assoc());
+                $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
+                $acciones = ', "imagen": "'.$imagen.'"';
 
-        return $json;
+                $object = substr_replace($object, $acciones, strlen($object) -1,0);
+    
+          $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+    
+        return $_json;
     }
 
     public function editarPrimerN(){
         $_query = "update escuelaFut set nombre='".$this->objeto->getNombre()."', apellido='".$this->objeto->getApellido()."', 
-        fechaNacimiento='".$this->objeto->getFechaNacimiento()."',
+        fechaNacimiento='".$this->objeto->getFechaNacimiento()."', foto = '".$this->objeto->getImg()."',
         carnet='".$this->objeto->getCarnet()."',encargado='".$this->objeto->getEncargado()."',
          dui='".$this->objeto->getDui()."', telefono='".$this->objeto->getTelefono()."' where idUsuario =".$this->objeto->getIdJugador();
 

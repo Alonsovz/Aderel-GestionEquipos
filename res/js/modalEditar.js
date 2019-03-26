@@ -104,7 +104,7 @@ Vue.component('modal-editar', {
     },
 
 
-    template: `<div :class="['ui','modal',tamanio]" :id="id">
+    template: `<div :class="['ui','modal',tamanio]" :id="id" style="overflow: scroll;">
                 <div class="header">
                     {{titulo}}
                 </div>
