@@ -37,7 +37,7 @@ class DaoEquipos extends DaoBase {
             }
                else{
                 $btnInscrbir = '';
-                $acciones = ', "Acciones": "'.$btnVer.' '.$btnCancelar.' '.$inscrbirJ.''.$btnEditar.''.$btnEliminar.'"';
+                $acciones = ', "Acciones": "'.$btnVer.' '.$btnCancelar.' '.$inscrbirJ.''.$btnEditar.'"';
                }
             
             
@@ -85,7 +85,7 @@ class DaoEquipos extends DaoBase {
             }
                else{
                 $btnInscrbir = '';
-                $acciones = ', "Acciones": "'.$btnVer.''.$btnCancelar.''.$inscrbirJ.''.$btnEditar.' '.$btnEliminar.'"';
+                $acciones = ', "Acciones": "'.$btnVer.''.$btnCancelar.''.$inscrbirJ.''.$btnEditar.'"';
                }
             
             
@@ -367,7 +367,7 @@ class DaoEquipos extends DaoBase {
     }
 
     public function mostrarJugadoresInsM(){
-        $_query = "select j.*,i.estado,e.nombre as equipo from inscriJugador i
+        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,i.estado,e.nombre as equipo from inscriJugador i
         inner join equipos e on e.idEquipo = i.idEquipo
         inner join jugadores j on j.idJugador = i.idJugador
         where i.idEquipo='".$this->objeto->getIdEquipo()."'  and i.estado=2 group by i.idJugador";
