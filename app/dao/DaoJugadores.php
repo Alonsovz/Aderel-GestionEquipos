@@ -70,17 +70,17 @@ class DaoJugadores extends DaoBase {
                 $object = json_encode($fila);
 
 
-                $btnInscrbir = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnInscribir icon green small button\" onclick=\"verHistorial(this)\"><i class=\"futbol icon\"></i> Historial</button>';
+                $btnVer = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnInscribir icon green small button\" onclick=\"ver(this)\"><i class=\"futbol icon\"></i> Historial</button>';
                 $btnEditar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEditarJ icon blue small button\" onclick=\"editarJugador(this)\"><i class=\"edit icon\"></i> Editar</button>';
                 $btnEliminar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEliminarJ icon yellow small button\" onclick=\"eliminarJugador(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
                 $btnQuitar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui  icon purple small button\" onclick=\"quitarFondo(this)\"><i class=\"dollar icon\"></i> Quitar de Fondo</button>';
                 $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
                 if($fila["idFondo"]==2){
-                    $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnQuitar.' '.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                    $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnVer.' '.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
                 }
                 else{
-                    $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnInscrbir.''.$btnEditar.' '.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                    $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnVer.''.$btnEditar.' '.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
                 }
                
                 
@@ -111,11 +111,17 @@ class DaoJugadores extends DaoBase {
                     
                 $object = json_encode($fila);
 
-                $btnVer = '<button id=\"'.$fila["idJugador"].'\" class=\"ui icon red small button\" onclick=\"ver(this)\"><i class=\"list icon\"></i> Detalles </button>';
+                $btnVer = '<button id=\"'.$fila["idJugador"].'\" class=\"ui icon yellow small button\" onclick=\"ver(this)\"><i class=\"list icon\"></i> Detalles </button>';
                 $btnInscrbir = '<button id=\"'.$fila["idJugador"].'\" edad=\"'.$fila["edad"].'\" class=\"ui btnInscribir icon blue small button\" onclick=\"inscribir(this)\"><i class=\"edit icon\"></i><i class=\"futbol icon\"></i> Inscribir</button>';
                 $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnVer.''.$btnInscrbir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                if($fila["idFondo"]==2){
+                    $acciones = ', "Acciones": "<table  style=width:100%;><td style=background-color:#FE2E2E><center> '.$btnVer.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                }
+                else{
+                    $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnVer.''.$btnInscrbir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                }
+               
                 
 
                 $object = substr_replace($object, $acciones, strlen($object) -1,0);
@@ -164,7 +170,12 @@ class DaoJugadores extends DaoBase {
                 $btnEliminar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEliminarJ icon negative small button\" onclick=\"eliminarJugador(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
                 $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnVer.''.$btnInscrbir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                if($fila["idFondo"]==2){
+                    $acciones = ', "Acciones": "<table  style=width:100%;><td style=background-color:#FE2E2E><center> '.$btnVer.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                }
+                else{
+                    $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnVer.''.$btnInscrbir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                }
                 
 
                 $object = substr_replace($object, $acciones, strlen($object) -1,0);
@@ -312,17 +323,17 @@ class DaoJugadores extends DaoBase {
 
                
                 
-                $btnInscrbir = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnInscribir icon green small button\" onclick=\"verHistorial(this)\"><i class=\"futbol icon\"></i> Historial</button>';
+                $btnVer = '<button id=\"'.$fila["idJugador"].'\" class=\"ui  icon green small button\" onclick=\"ver(this)\"><i class=\"futbol icon\"></i> Historial</button>';
                 $btnEditar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEditarJ icon blue small button\" onclick=\"editarJugador(this)\"><i class=\"edit icon\"></i> Editar</button>';
                 $btnEliminar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEliminarJ icon negative small button\" onclick=\"eliminarJugador(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
                 $btnQuitar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui  icon purple small button\" onclick=\"quitarFondo(this)\"><i class=\"dollar icon\"></i> Quitar de Fondo</button>';
                 $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
                 if($fila["idFondo"]==2){
-                    $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnQuitar.' '.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                    $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnVer.' '.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
                 }
                 else{
-                    $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnInscrbir.''.$btnEditar.' '.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                    $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnVer.''.$btnEditar.' '.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
                 }
                 
 

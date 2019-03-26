@@ -86,6 +86,45 @@ idEliminado int
 );
 
 
+CREATE TABLE IF NOT EXISTS `aderel`.`jornadas` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `vuelta_N` INT NULL,
+  `orden` INT NULL,
+  `descansa_id_Equipo` INT NULL,
+  `idTorneo` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_jornadas_torneos1_idx` (`idTorneo` ASC),
+  CONSTRAINT `fk_jornadas_torneos1`
+    FOREIGN KEY (`idTorneo`)
+    REFERENCES `aderel`.`torneos` (`idTorneo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `aderel`.`partidos`
+-- -----------------------------------------------------
+CREATE TABLE partidos (
+  id int primary key auto_increment,
+  partido_N INT NULL,
+  cancha INT NULL,
+  equipo1_id INT NULL,
+  equipo2_id INT NULL,
+  fecha VARCHAR(45) NULL,
+  hora VARCHAR(45) NULL,
+  jornadas_id INT NOT NULL
+  );
+  
+CREATE TABLE jornadas (
+  id int primary key auto_increment,
+  vuelta_N INT NULL,
+  orden INT NULL,
+  descansa_id_Equipo INT NULL,
+  idTorneo INT(11) NOT NULL
+);
+
+
 
 create table inscripcion(
 idInscripcion int primary key auto_increment,
@@ -189,7 +228,9 @@ idEscuela int,
 idEliminado int
 );
 
+alter table partidos add constraint fk_partidos_jornadas foreign key (jornadas_id) references jornadas(id);
 
+alter table jornadas add constraint fk_jornadas_torneos foreign key (idTorneo) references torneos(idTorneo);
 
 alter table inscriJugador add constraint fk_inscriJugador_equipos foreign key (idEquipo) references equipos(idEquipo);
 alter table inscriJugador add constraint fk_inscriJugador_jugadores foreign key (idJugador) references jugadores(idJugador);

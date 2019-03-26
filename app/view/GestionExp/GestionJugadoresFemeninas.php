@@ -7,6 +7,10 @@
 
 <modal-editar id_form="frmEditarJ" id="modalEditarJ" url="?1=JugadoresController&2=editarF" titulo="Editar Jugador"
 :campos="campos_editarJ" tamanio='tiny' style="overflow: scroll;"></modal-editar>
+
+<modal-jugador :detalles="detalles"></modal-jugador>
+
+
         <div class="ui grid">
                         <div class="row">
                                 <div class="titulo">
@@ -208,12 +212,14 @@
 <script src="./res/tablas/tablaJugadoresF.js"></script>
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
+<script src="./res/js/modalVerJugador.js"></script>
+
 <script>
    
 var appJ = new Vue({
         el: "#appJ",
         data: {
-            
+            detalles: [],
             campos_editarJ: [
                 {
                     label: 'Foto:',
@@ -275,6 +281,29 @@ var appJ = new Vue({
                 tablaJugadoresF.ajax.reload();
 
                 
+            },
+            verDetalle(id){
+                this.idJugador = parseInt(id);
+
+            $('#frmDetalles').addClass('loading');
+            $.ajax({
+            type: 'POST',
+            url: '?1=JugadoresController&2=verDetalles',
+            data: {
+            id: id
+            },
+            success: function (data) {
+            appJ.detalles = JSON.parse(data);
+            $('#frmDetalles').removeClass('loading');
+            }
+            });
+
+            },
+            cerrarModalD() {
+                this.detalles = [];
+
+                $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
             },
             
             cargarDatosJ() {
@@ -377,11 +406,11 @@ var editarJugador=(ele)=>{
             appJ.cargarDatosJ();
         }
 
-var inscribirJugador=(ele)=>{
-            $('#modalInscribirJ').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
-            $('#idDetalleE').val($(ele).attr("id"));
-            appJ.cargarDatosJu();
-        }
+var ver=(ele)=>{
+     $('#modalVer').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+    appJ.verDetalle($(ele).attr('id'));
+  }
 
 </script>
 <script>

@@ -99,10 +99,17 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
 <div class="content">
 <form method="post" action="?1=TorneosController&2=sorteo">
 
-<input type="hidden" id="disponibles" name="disponibles">
-<input type="hidden" id="idTor" name="idTor">
-
-<input type="submit" name="button" id="button" value="Realizar Sorteo" class="ui green button">
+    <input type="hidden" id="disponibles" name="disponibles">
+    <input type="hidden" id="idTor" name="idTor">
+    <label>Vueltas</label>
+    <select class="ui dropdown" name='vueltas'>
+        <option value="" selected disabled>Seleccionar</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+     </select>
+    <input type="submit" name="button" id="button" value="Realizar Sorteo" class="ui green button">
 </form>
 
 </div>
@@ -112,6 +119,7 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
 </div>
 
 </div>
+
 <script src="./res/tablas/tablaTorneosF.js"></script>
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
