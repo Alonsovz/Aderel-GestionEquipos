@@ -36,12 +36,13 @@ $id= $_POST["idTor"];
 		echo "<br><tr>";
 		echo "<td>" . $columna['nom'] . "</td>";
         echo "</tr>";
-		  
+		
 		$equipos[$contador]['id']     = $columna['id'];
 		$equipos[$contador]['nombre'] = $columna['nom'];
 		$contador++;
     }
-   
+
+	$N=$contador;
 	echo "</table><br> <br> "; // Fin de la tabla
 	// cerrar conexión de base de datos
 	mysqli_close( $conexion );
@@ -50,56 +51,55 @@ $id= $_POST["idTor"];
 if ($N%2!=0) 
 	$N = $N+1; // sumamos 1 al numero impar de equipos. A este equipo en un futuro lo podemos llamar descanso
 
-	//crea los grupos
-for ($i = 0; $i<(($N-1)/2); $i++) {
-	$g1[$i] = $i;
-	$g2[$i] = $N-$i-1;
-}
+	
+	
 
+		//crea los grupos
+	for ($xy = 0; $xy<(($N-1)/2); $xy++) {
+		$g1[$xy] = $xy;
+		$g2[$xy] = $N-$xy-1;
+	}
 
-// VUELTAS -----------------------------------------------
-for ($i=0; $i < $vueltas; $i++) { 
-	echo "<h4>Vuelta: ".($i+1)."</h4> <hr>"	;
-
+	$html="";
 	for ($j = 0; $j<$N-1; $j++) { // JORNADAS -----------------------------------------------
 		$cancha=2;
 		//anuncia los grupos
-	?>
+	$html.="
 	<form class='jornadas'>
-		<h5>Jornada <?php echo ($j+1 )?></h5>	
+		<h5>Jornada ". ($j+1 ) ."</h5>	
 		<table class='ui table' >
-		<input type="hidden" name="vuelta" value='<?php echo ($i+1)?>'>
-		<input type="hidden" name="jornada" value='<?php echo ($j+1)?>'>
+		<input type='hidden' name='jornada' value='".($j+1)."'>";
+		//<input type='hidden' name='vuelta' value='".($i+1)."'>;
 
-		<?php
 		$conta=0;
+		$partidos=1;
 		foreach ($g1 as $equipo1) {
-	
 			
-			if($equipo1>=count($equipos)){ ?>
+			if($equipo1>=count($equipos)){ 
+			$html.="
 			<tfoot>
 				<tr>
 					<td></td>
 					<td>Descansa</td>
-					<td colspan="3">
-						<?php echo $equipos[$g2[$conta]]['nombre'] ?>
-						<input type="hidden" name="descansa" value='<?php echo $equipos[$g2[$conta]]['id'] ?>'>
+					<td colspan='3'>
+						".$equipos[$g2[$conta]]['nombre'] ."
+						<input type='hidden' name='descansa' value='".$equipos[$g2[$conta]]['id'] ."'>
 					</td>
 				</tr>
-			</tfoot>
-			<?php
-			}elseif ($g2[$conta]>=count($equipos)) { ?>
+			</tfoot>";
+
+			}elseif ($g2[$conta]>=count($equipos)) { 
+				$html.="
 				<tfoot>
 					<tr>
 						<td></td>
 						<td>Descansa</td>
-						<td colspan="3">
-							<?php echo $equipos[$equipo1]['nombre'] ?>
-							<input type="hidden" name="descansa" value='<?php echo $equipos[$equipo1]['id'] ?>'>
+						<td colspan='3'>
+							".$equipos[$equipo1]['nombre'] ."
+							<input type='hidden' name='descansa' value='". $equipos[$equipo1]['id'] ."'>
 						</td>
 					</tr>
-				</tfoot>
-			<?php
+				</tfoot>";
 			}else{
 				if($cancha==2)
 					$cancha=1;
@@ -115,23 +115,26 @@ for ($i=0; $i < $vueltas; $i++) {
 					$idEquipo1 = $equipos[$g2[$conta]]['id'];
 					$idEquipo2 = $equipos[$equipo1]['id'];
 				} 
-				?>
+				$html.="
 				<tr>
-					<td>Partido 1</td>
-					<td>Cancha <?php echo $cancha ?></td>
+					<td>Partido ".$partidos."</td>
+					<td>Cancha ".$cancha ."</td>
 					<td>
-						<?php echo $nombre ?>
-						<input type="hidden" name="idEquipo1[]" value='<?php echo $idEquipo1 ?>'>
-						<input type="hidden" name="idEquipo2[]" value='<?php echo $idEquipo2 ?>'>
-						<input type="hidden" name="cancha[]" value='<?php echo $cancha ?>'>
+						". $nombre ."
+						<input type='hidden' name='idEquipo1[".$partidos."]' value='". $idEquipo1 ."'>
+						<input type='hidden' name='idEquipo2[".$partidos."]' value='". $idEquipo2 ."'>
+						<input type='hidden' name='cancha[".$partidos."]' value='". $cancha ."'>
+						<input type='hidden' name='partido' value='". $partidos ."'>
 					</td>
-					<td><input type='time' name='hora[]'></td>
-					<td><input type='date' name='fecha[]'></td>
-				</tr>
-		<?php }
+					<td><input type='time' name='hora[".$partidos."]'></td>
+					<td><input type='date' name='fecha[".$partidos."]'></td>
+				</tr>";
+				$partidos++;
+
+			}
 			 // crear registro de la jornada
 
-			$conta=$conta+1;
+			$conta++;
 		}
 		
 		 // Calculamos la siguiente jornada
@@ -147,8 +150,15 @@ for ($i=0; $i < $vueltas; $i++) {
 			}
 		}
 	
-		echo '</table></form><br>';
+
+		$html.="</table>
+		</form><br>
+		";
 	}
+	// VUELTAS -----------------------------------------------
+for ($i=0; $i < $vueltas; $i++) { 
+	echo "<h4>Vuelta: ".($i+1)."</h4> <hr>"	;
+	echo $html;
 }
 ?>
 	<input type="submit" value="Guardar" class='ui button' onclick='enviar()'>
@@ -160,14 +170,40 @@ const enviar =()=>{
 	for (let index = 0; index < formulario.length; index++) {
 		const elemento = formulario[index];
 
-		const datos = new FormData(elemento);
+		const datos = $(elemento).serializeArray();
 		datosFormulario.push(datos);
 	}
-	$.ajax({
-		// type:'post',
-		data:{datos:datosFormulario},
-		url:'/?1=SorteoController&2=getRegistrar'
-	})
+	console.log('datosFormulario :', datosFormulario);
+	// const partir 
+	const datosEnviar     = [];
+	const nVueltas        = <?php echo $vueltas ?>;
+	const jornadasXvuelta = datosFormulario.length/nVueltas;
+	for (let index = 0; index < datosFormulario.length; index++) {
+		const vuelta={
+			jornada : datosFormulario[index][0].value,
+			nvuelta  : ((index+1)),
+			partidos: [],
+		};
+
+		for (let j = 1; j <= ((datosFormulario[index].length-1)/6); j++) {
+			const partido = {
+				equipo1: datosFormulario[index][1*j].value,
+				equipo2: datosFormulario[index][2*j].value,
+				fecha  : datosFormulario[index][6*j].value,
+				hora   : datosFormulario[index][5*j].value,
+				cancha : datosFormulario[index][3*j].value,
+				partido: datosFormulario[index][4*j].value,
+			};
+			vuelta.partidos.push(partido);
+		}
+		datosEnviar.push(vuelta);
+	}
+	console.log('datosEnviar :', datosEnviar);
+	// $.ajax({
+	// 	// type:'post',
+	// 	data:{datos:datosFormulario},
+	// 	url:'/?1=SorteoController&2=getRegistrar'
+	// })
 
 }
 </script>
