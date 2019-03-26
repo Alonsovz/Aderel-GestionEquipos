@@ -1,7 +1,9 @@
 <?php
 
 $N = $_POST["disponibles"];
+$vueltas= $_POST["vueltas"];
 $id= $_POST["idTor"];
+
 
 // if ($N%2==0) {
     $usuario = "root";
@@ -55,42 +57,117 @@ for ($i = 0; $i<(($N-1)/2); $i++) {
 }
 
 
-for ($j = 0; $j<$N-1; $j++) {//j son los rounds
+// VUELTAS -----------------------------------------------
+for ($i=0; $i < $vueltas; $i++) { 
+	echo "<h4>Vuelta: ".($i+1)."</h4> <hr>"	;
 
-   //anuncia los grupos
-	echo "<b>Jornada ".($j+1)."</b><br>";
-	$conta=0;
-	foreach ($g1 as $equipo1) {
+	for ($j = 0; $j<$N-1; $j++) { // JORNADAS -----------------------------------------------
+		$cancha=2;
+		//anuncia los grupos
+	?>
+	<form class='jornadas'>
+		<h5>Jornada <?php echo ($j+1 )?></h5>	
+		<table class='ui table' >
+		<input type="hidden" name="vuelta" value='<?php echo ($i+1)?>'>
+		<input type="hidden" name="jornada" value='<?php echo ($j+1)?>'>
 
-		if($equipo1>=count($equipos)){
-			echo 'Descansa: '.$equipos[$g2[$conta]]['nombre']."<BR>";
-		}elseif ($g2[$conta]>=count($equipos)) {
-			echo "Descansa: ".$equipos[$equipo1]['nombre']."<BR>";
-		}else{
-			echo $equipos[$equipo1]['nombre']." vs ".$equipos[$g2[$conta]]['nombre']."<BR>";
-		}
-		// crear registro de la jornada
-		
-		//-----------
-		$conta=$conta+1;
-	}
+		<?php
+		$conta=0;
+		foreach ($g1 as $equipo1) {
 	
-	// Calculamos la siguiente jornada
-	$temp1 = $g2[0];
-	$temp2 = $g1[($N/2)-1];
+			
+			if($equipo1>=count($equipos)){ ?>
+			<tfoot>
+				<tr>
+					<td></td>
+					<td>Descansa</td>
+					<td colspan="3">
+						<?php echo $equipos[$g2[$conta]]['nombre'] ?>
+						<input type="hidden" name="descansa" value='<?php echo $equipos[$g2[$conta]]['id'] ?>'>
+					</td>
+				</tr>
+			</tfoot>
+			<?php
+			}elseif ($g2[$conta]>=count($equipos)) { ?>
+				<tfoot>
+					<tr>
+						<td></td>
+						<td>Descansa</td>
+						<td colspan="3">
+							<?php echo $equipos[$equipo1]['nombre'] ?>
+							<input type="hidden" name="descansa" value='<?php echo $equipos[$equipo1]['id'] ?>'>
+						</td>
+					</tr>
+				</tfoot>
+			<?php
+			}else{
+				if($cancha==2)
+					$cancha=1;
+				else
+					$cancha=2;
 
-   for ($k = 0; $k<$N/2; $k++) {
-		if ($k == ($N/2)-1) {
-			$g1[1] = $temp1;
-         $g2[($N/2)-1] = $temp2;
-      } else {
-			$g1[($N/2)-1-$k] = $g1[($N/2)-1-$k-1];
-         $g2[$k] = $g2[$k+1];
-      }
-   }//-------------------
-	echo "<br><br><br>"; 
-// echo "</table>";
+				if(rand(0,1)==0){//izq
+					$nombre    = $equipos[$equipo1]['nombre']." vs ".$equipos[$g2[$conta]]['nombre'];
+					$idEquipo1 = $equipos[$equipo1]['id'];
+					$idEquipo2 = $equipos[$g2[$conta]]['id'];
+				}else{
+					$nombre    = $equipos[$g2[$conta]]['nombre']." vs ".$equipos[$equipo1]['nombre'];
+					$idEquipo1 = $equipos[$g2[$conta]]['id'];
+					$idEquipo2 = $equipos[$equipo1]['id'];
+				} 
+				?>
+				<tr>
+					<td>Partido 1</td>
+					<td>Cancha <?php echo $cancha ?></td>
+					<td>
+						<?php echo $nombre ?>
+						<input type="hidden" name="idEquipo1[]" value='<?php echo $idEquipo1 ?>'>
+						<input type="hidden" name="idEquipo2[]" value='<?php echo $idEquipo2 ?>'>
+						<input type="hidden" name="cancha[]" value='<?php echo $cancha ?>'>
+					</td>
+					<td><input type='time' name='hora[]'></td>
+					<td><input type='date' name='fecha[]'></td>
+				</tr>
+		<?php }
+			 // crear registro de la jornada
+
+			$conta=$conta+1;
+		}
+		
+		 // Calculamos la siguiente jornada
+		$temp1 = $g2[0];
+		$temp2 = $g1[($N/2)-1];
+		for ($k = 0; $k<$N/2; $k++) {
+			if ($k == ($N/2)-1) {
+				$g1[1] = $temp1;
+				$g2[($N/2)-1] = $temp2;
+			} else {
+				$g1[($N/2)-1-$k] = $g1[($N/2)-1-$k-1];
+				$g2[$k] = $g2[$k+1];
+			}
+		}
+	
+		echo '</table></form><br>';
+	}
 }
-
-
 ?>
+	<input type="submit" value="Guardar" class='ui button' onclick='enviar()'>
+<script>
+const enviar =()=>{
+	const formulario = $('.jornadas');
+
+	const datosFormulario=[];
+	for (let index = 0; index < formulario.length; index++) {
+		const elemento = formulario[index];
+
+		const datos = new FormData(elemento);
+		datosFormulario.push(datos);
+	}
+	$.ajax({
+		// type:'post',
+		data:{datos:datosFormulario},
+		url:'/?1=SorteoController&2=getRegistrar'
+	})
+
+}
+</script>
