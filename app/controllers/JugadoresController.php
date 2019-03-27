@@ -238,6 +238,12 @@ class JugadoresController extends ControladorBase {
         echo'['.$json.']';
     }
 
+    public function mostrarJugadoresFondoComun() {
+        $dao = new DaoJugadores();
+
+        echo $dao->mostrarJugadoresFondoComun();
+    }
+
 }
 
 

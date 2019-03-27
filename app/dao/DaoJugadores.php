@@ -95,6 +95,42 @@ class DaoJugadores extends DaoBase {
             echo '{"data": ['.$_json .']}';
     }
 
+
+    public function mostrarJugadoresFondoComun()
+    {
+        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad from jugadores j
+         where j.idEliminado = 1 and j.idGenero = 2 and j.idJugador>1 and j.idFondo=2";
+
+        
+
+            $resultado = $this->con->ejecutar($_query);
+
+            $_json = '';
+
+            
+            while($fila = $resultado->fetch_assoc()) {
+                    
+                $object = json_encode($fila);
+
+
+                $btnQuitar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui  icon blue small button\" onclick=\"quitarFondo(this)\"><i class=\"dollar icon\"></i> Quitar de Fondo</button>';
+                $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
+
+             $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td><center> '.$btnQuitar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                
+               
+                
+
+                $object = substr_replace($object, $acciones, strlen($object) -1,0);
+    
+                $_json .= $object.',';
+            }
+    
+            $_json = substr($_json,0, strlen($_json) - 1);
+    
+            echo '{"data": ['.$_json .']}';
+    }
+
     public function inscripcionM()
     {
         $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad from jugadores j

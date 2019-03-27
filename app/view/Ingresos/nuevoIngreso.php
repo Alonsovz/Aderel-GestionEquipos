@@ -34,7 +34,7 @@
 
 </div>
 
-<div class="ui longer modal" id="modalIngreso">
+<div class="ui fullscreen longer modal" id="modalIngreso">
 <div class="header">
 <i class="dollar sign icon"></i><i class="money bill icon"></i> Agregar Ingreso
 </div>
@@ -44,12 +44,11 @@
             <div class="five wide field">
                 <label><i class="users icon"></i>Tipo de Ingreso</label>
                 <select class="ui search dropdown" id="tipoIngreso">
-                <option selected>Selecciona una opción</option>
+                <option value="Gateway 2" selected="selected">Selecciona una opción</option>
                     <option value="gimnasio">Gimnasio</option>
                     <option value="escuelaFutbol">Escuela de Fútbol</option>
                     <option value="escuelaNatacion">Escuela de Natacion</option>
                     <option value="fondoComun">Fondo Común</option>
-                    <option value="taquilla">Taquilla</option>
                     <option value="otro">Otro</option>
                 </select>
             </div>
@@ -77,7 +76,7 @@
                 <div class="fields">
                             <div class="eight wide field" >
                             <label><i class="money bill icon"></i>Nombre del ingreso</label>
-                            <input type="text" id="titulo" >
+                            <input type="text" name="txtTitulo" id="txtTitulo" class="ui search dropdown"  placeholder="Nombre del Ingreso" />
                             </div>
                             <div class="eight wide field" >
                             <label><i class="dollar icon"></i>Cantidad del ingreso</label>
@@ -91,31 +90,6 @@
                 </form>
             </div>
 
-            <div class="field" id="taquilla">
-            <form class="ui form" id="taquillaForm">
-                <div class="row">
-                    <h3>
-                    <i class="dollar icon"></i><i class="futbol icon"></i>
-                    Nuevo Ingreso de Taquilla<font color="#FACC2E" size="20px">.</font>
-                   </h3>
-                </div>
-                <br>
-                <div class="fields">
-                            <div class="eight wide field" >
-                            <label><i class="money bill icon"></i>Categoria</label>
-                            <input type="text" id="titulo" >
-                            </div>
-                            <div class="eight wide field" >
-                            <label><i class="dollar icon"></i>Cantidad del ingreso</label>
-                            <input type="text" id="titulo" >
-                            </div>
-                            <div class="eight wide field" >
-                            <label><br></label>
-                            <button id="guardarOtro" class="ui blue button"> Agregar Ingreso</button>
-                            </div>
-                </div>
-                </form>
-            </div>
 
             <div class="field" id="gimnasio">
             <form class="ui form" id="gimnasioForm">
@@ -163,7 +137,6 @@
             </div>
 
             <div class="field" id="fondoComun">
-            <form class="ui form" id="fondoComunForm">
                 <div class="row">
                     <h3>
                     <i class="dollar icon"></i><i class="money bill icon"></i>
@@ -171,10 +144,27 @@
                    </h3>
                 </div>
                 <br>
-                <div class="fields">
-                            
+                <div class="row">
+                        <div class="sixteen wide column">
+                            <table id="dtFondo" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                                <thead>
+                                    <tr>
+                                    
+                                    <th style="background-color: #CD2020; color: white;">N°</th>
+                                    <th style="background-color: #CD2020; color: white;"></th>
+                                    <th style="background-color: #CD2020; color: white;">Cod. Expediente</th>
+                                    <th style="background-color: #CD2020; color: white;">Nombre</th>
+                                    <th style="background-color: #CD2020; color: white;">Apellido</th>
+                                    <th style="background-color: #CD2020; color: white;">DUI/Carnet Minoridad</th>
+                                    <th style="background-color: #CD2020; color: white;">Fecha de Nacimiento</th>
+                                    <th style="background-color: #CD2020; color: white;">Edad del Jugador</th>                
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
                 </div>
-                </form>
             </div>
             
 </div>
@@ -186,21 +176,13 @@
 
 </div>
 
+<script src="./res/tablas/tablaFondoComun.js"></script>
 <script>
 
 $("#btnModalIngreso").click(function(){
     $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
 });
 
-$("#btnCerrar").click(function(){
-    $('#modalIngreso').modal('hide');
-    $("#otro").hide();
-$("#taquilla").hide();
-$("#gimnasio").hide();
-$("#escuelaFutbol").hide();
-$("#escuelaNatacion").hide();
-$("#fondoComun").hide();
-});
 
 </script>
 
@@ -217,22 +199,12 @@ $("#fondoComun").hide();
 
      if($("#tipoIngreso").val() == "otro"){
         $("#otro").show();
-        $("#taquilla").hide();
-        $("#gimnasio").hide();
-        $("#escuelaFutbol").hide();
-        $("#escuelaNatacion").hide();
-        $("#fondoComun").hide();
-     }
-     else if($("#tipoIngreso").val() == "taquilla"){
-        $("#taquilla").show();
-        $("#otro").hide();
         $("#gimnasio").hide();
         $("#escuelaFutbol").hide();
         $("#escuelaNatacion").hide();
         $("#fondoComun").hide();
      }
      else if($("#tipoIngreso").val() == "gimnasio"){
-        $("#taquilla").hide();
         $("#otro").hide();
         $("#gimnasio").show();
         $("#escuelaFutbol").hide();
@@ -241,15 +213,13 @@ $("#fondoComun").hide();
         
      }
      else if($("#tipoIngreso").val() == "fondoComun"){
-        $("#taquilla").hide();
         $("#otro").hide();
         $("#gimnasio").hide();
         $("#escuelaFutbol").hide();
         $("#escuelaNatacion").hide();
         $("#fondoComun").show();
      }
-     else if($("#tipoIngreso").val() == "escuelaFutbol"){
-        $("#taquilla").hide();
+     else if($("#tipoIngreso").val() == "escuelaFutbol"){;
         $("#otro").hide();
         $("#gimnasio").hide();
         $("#escuelaFutbol").show();
@@ -259,7 +229,6 @@ $("#fondoComun").hide();
      }
 
      else if($("#tipoIngreso").val() == "escuelaNatacion"){
-        $("#taquilla").hide();
         $("#otro").hide();
         $("#gimnasio").hide();
         $("#escuelaFutbol").hide();
@@ -271,4 +240,39 @@ $("#fondoComun").hide();
  });
  
 });
+$(document).ready(function(){
+
+    $("#btnCerrar").click(function(){
+    $("#tipoIngreso").val('nada');
+    $('#modalIngreso').modal('hide');
+    $("#otro").hide();
+$("#gimnasio").hide();
+$("#escuelaFutbol").hide();
+$("#escuelaNatacion").hide();
+$("#fondoComun").hide();
+
+});
+
+ 
+$('#txtTitulo').typeahead({
+ source: function(query, result)
+ {
+  $.ajax({
+   url:"./app/view/Ingresos/fetch.php",
+   method:"POST",
+   data:{query:query},
+   dataType:"json",
+   success:function(data)
+   {
+    result($.map(data, function(item){
+     return item;
+    }));
+   }
+  })
+ }
+});
+
+});
+
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script> 
