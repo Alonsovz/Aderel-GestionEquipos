@@ -6,7 +6,6 @@ class SorteoController extends ControladorBase {
     public function getRegistrar()
     {
         $datos=$_REQUEST['datos'];
-        
         $datos = json_decode($datos,true);
 
         
@@ -15,7 +14,7 @@ class SorteoController extends ControladorBase {
 
         foreach ($datos as $datosJornada) {
 
-            $idDescansa = (isset($datosJornada['idDescansa']))?$datosJornada['idDescansa']:'';
+            $idDescansa = (isset($datosJornada['idDescansa']))?$datosJornada['idDescansa']:0;
 
             $jornada = new Jornadas();
             $jornada->setIdTorneo($datosJornada['idTorneo']);
