@@ -6,7 +6,6 @@ class SorteoController extends ControladorBase {
     public function getRegistrar()
     {
         $datos=$_REQUEST['datos'];
-        
         $datos = json_decode($datos,true);
 
         
