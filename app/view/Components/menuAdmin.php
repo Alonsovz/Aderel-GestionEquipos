@@ -55,9 +55,9 @@
 
     <div class="menu">
     <div class="item">
-    <a href="?1=IngresosController&2=Ingresos"" class="item menu-it" style="color:black;">
+    <a href="?1=IngresosController&2=nuevoIngreso" class="item menu-it" style="color:black;">
         <i class="money bill alternate outline icon"></i>
-        Ingresos
+       Nuevo Ingreso
     </a>
 
     </div>
