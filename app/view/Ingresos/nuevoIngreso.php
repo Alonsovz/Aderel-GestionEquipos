@@ -45,6 +45,26 @@
             </div>
         </div>
     </div> 
+
+</div>  
+<div class="content" class="ui equal width form"> 
+    <form class="ui form">
+    <div class="field" id="otro">
+
+        <div class="fields">
+                    <div class="five wide field" >
+                    <label>Nombre del ingreso</label>
+                    <input type="text" id="titulo" >
+                    </div>
+                    <div class="five wide field" >
+                    <label>Cantidad del ingreso</label>
+                    <input type="text" id="titulo" >
+                    </div>
+        </div>
+
+    </div>
+    </form>
+   
 </div>
     <div class="actions">
         <button id="btnCerrar" class="ui red button">
@@ -68,11 +88,11 @@ $("#btnCerrar").click(function(){
 
 <script>
 $(document).ready(function(){
-
+$("#otro").hide();
  $("#tipoIngreso").change(function(){
 
      if($("#tipoIngreso").val() == "otro"){
-         alert("soy otro");
+        $("#otro").show();
      }
 
  });
