@@ -291,7 +291,6 @@ var app = new Vue({
                             $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
                             app.cargarDetalles(idUsuario);
-                        
                         },
                         function(){
                             
