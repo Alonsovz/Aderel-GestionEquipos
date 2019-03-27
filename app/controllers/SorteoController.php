@@ -15,7 +15,7 @@ class SorteoController extends ControladorBase {
 
         foreach ($datos as $datosJornada) {
 
-            $idDescansa = (isset($datosJornada['idDescansa']))?$datosJornada['idDescansa']:'';
+            $idDescansa = (isset($datosJornada['idDescansa']))?$datosJornada['idDescansa']:0;
 
             $jornada = new Jornadas();
             $jornada->setIdTorneo($datosJornada['idTorneo']);

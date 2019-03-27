@@ -11,8 +11,9 @@
         sub_titulo="¿Está seguro de querer eliminar este usuario?" :campos="campos_eliminar" tamanio='tiny'></modal-eliminar>
 
         <modal-reinscribir id_form="frmEliminar" id="modalInscribir" url="?1=GimnasioController&2=reinscribir" 
-        titulo="Reeinscribir Usuario del Gimnasio"
-        sub_titulo="¿Está seguro de querer reeinscribir este usuario?" :campos="campos_eliminar" tamanio='tiny'></modal-reinscribir>
+        titulo="Inscribir usuario del Gimnasio Aderel"
+        sub_titulo="¿Está seguro de querer Inscribir este usuario al gimnasio?" :campos="campos_eliminar" tamanio='tiny'></modal-reinscribir>
+        
 
         <div class="ui grid">
         <div class="row">
@@ -51,7 +52,7 @@
                             <th style="background-color: #EF7B2E; color:white;">Edad</th>
                             <th style="background-color: #EF7B2E; color:white;">DUI / Carnet Minoridad</th>
                             <th style="background-color: #EF7B2E; color:white;">Fecha de Inscripción</th>
-                            <th style="background-color: #EF7B2E; color:white;">Fecha Final</th>
+                            <th style="background-color: #EF7B2E; color:white;">Inscrito hasta</th>
                             
                            
                         </tr>
@@ -153,11 +154,13 @@
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
 <script src="./res/js/modalReinscribir.js"></script>
+
 <script>
 
 var app = new Vue({
         el: "#app",
         data: {
+            detalles: []
            
             campos_registro: [{
                     label: 'Nombre del Usuario',
@@ -245,6 +248,25 @@ var app = new Vue({
             }]
         },
         methods: {
+             cargarDetalles(id) {
+
+                this.idUsuario = parseInt(id);
+
+                $('#frmDetalles').addClass('loading');
+                $.ajax({
+                type: 'POST',
+                url: '?1=GimnasioController&2=pagos',
+                data: {
+                id: id
+                },
+                success: function (data) {
+                appE.detalles = JSON.parse(data);
+                $('#frmDetalles').removeClass('loading');
+                }
+                });
+
+                },
+            
             refrescarTabla() {
                 tablaGimnasio.ajax.reload();
             },

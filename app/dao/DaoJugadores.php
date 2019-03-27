@@ -99,7 +99,7 @@ class DaoJugadores extends DaoBase {
     public function mostrarJugadoresFondoComun()
     {
         $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad from jugadores j
-         where j.idEliminado = 1 and j.idGenero = 2 and j.idJugador>1 and j.idFondo=2";
+         where j.idEliminado = 1 and j.idJugador>1 and j.idFondo=2";
 
         
 

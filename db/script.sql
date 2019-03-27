@@ -86,20 +86,6 @@ idEliminado int
 );
 
 
-CREATE TABLE IF NOT EXISTS `aderel`.`jornadas` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `vuelta_N` INT NULL,
-  `orden` INT NULL,
-  `descansa_id_Equipo` INT NULL,
-  `idTorneo` INT(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_jornadas_torneos1_idx` (`idTorneo` ASC),
-  CONSTRAINT `fk_jornadas_torneos1`
-    FOREIGN KEY (`idTorneo`)
-    REFERENCES `aderel`.`torneos` (`idTorneo`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -123,6 +109,7 @@ CREATE TABLE jornadas (
   descansa_id_Equipo INT NULL,
   idTorneo INT(11) NOT NULL
 );
+
 
 
 
@@ -176,11 +163,18 @@ fechaNacimiento date,
 ddi varchar(50),
 fechaInscripcion date,
 fechaFinal date,
+estado int,
 idEliminado int
 );
 
+create table pagoGimnasio(
+id int primary key auto_increment,
+idUsuario int,
+fechasPago date,
+estado int
+);
 
-
+ 
 create table natacion(
 idUsuario int primary key auto_increment,
 correlativo varchar(10),
@@ -230,7 +224,12 @@ idEliminado int
 
 alter table partidos add constraint fk_partidos_jornadas foreign key (jornadas_id) references jornadas(id);
 
+
+
 alter table jornadas add constraint fk_jornadas_torneos foreign key (idTorneo) references torneos(idTorneo);
+
+
+alter table pagoGimnasio add constraint fk_pagoGimnasio_gimnasio foreign key (idUsuario) references gimnasio(idUsuario);
 
 alter table inscriJugador add constraint fk_inscriJugador_equipos foreign key (idEquipo) references equipos(idEquipo);
 alter table inscriJugador add constraint fk_inscriJugador_jugadores foreign key (idJugador) references jugadores(idJugador);
@@ -281,7 +280,7 @@ insert into jugadores values(null,'FF000001','nada','nada','nada','nada','1999-0
 insert into equipos values (null, 'Sin Equipo','No definido','No definido',1,1,1,1,1,1);
 insert into equipos values (null, 'Sin Equipo','No definido','No definido',1,1,2,2,1,1);
 
-insert into gimnasio values(null,'GY000002','','','','2019-02-02','1','2019-02-01','2019-03-01',1);
+insert into gimnasio values(null,'GY000002','','','','2019-02-02','1','2019-02-01','2019-03-01',1,1);
 
 
 
@@ -521,7 +520,7 @@ end
 $$
 
 
-
+drop table jornadas
 delimiter $$
 create procedure mostrarCategorias()
 begin
@@ -531,3 +530,10 @@ end
 $$
 
 
+
+select p.*, g.nombre as nombre, g.apellido as apellido from pagoGimnasio p
+inner join gimnasio  g on g.idUsuario = p.idUsuario
+
+
+
+insert into pagoGimnasio values(null, 3,ADDDATE(curdate(),INTERVAL 61 DAY),1);

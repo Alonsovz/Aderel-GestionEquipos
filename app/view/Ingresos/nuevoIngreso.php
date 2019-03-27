@@ -1,6 +1,6 @@
 <br><br>
 <div id="app">
-
+<modal-pagos :detalles="detalles"></modal-pagos>
 <div class="ui grid">
 
         <div class="row">
@@ -93,7 +93,6 @@
 
 
             <div class="field" id="gimnasio">
-            <form class="ui form" id="gimnasioForm">
                 <div class="row">
                     <h3>
                     <i class="dollar icon"></i><i class="weight icon"></i>
@@ -101,10 +100,32 @@
                    </h3>
                 </div>
                 <br>
-                <div class="fields">
+                <div class="row">
+            <div class="sixteen wide column">
+                <table id="dtGimnasioPago" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                    <thead>
+                        <tr>
+                        
+                        <th style="background-color: #217CD1; color:white;">N°</th>
+                        <th style="background-color: #217CD1; color:white;">Acciones</th>
+                        <th style="background-color: #217CD1; color:white;">Cod. Expediente</th>
+                        <th style="background-color: #217CD1; color:white;">Nombres</th>
+                        <th style="background-color: #217CD1; color:white;">Apellido</th>
+                        <th style="background-color: #217CD1; color:white;">Fecha de Nacimiento</th>
+                        <th style="background-color: #217CD1; color:white;">Edad</th>
+                        <th style="background-color: #217CD1; color:white;">DUI / Carnet Minoridad</th>
+                        <th style="background-color: #217CD1; color:white;">Fecha de Inscripción</th>
+                        <th style="background-color: #217CD1; color:white;">Inscrito hasta</th>
                             
-                </div>
-                </form>
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+               
             </div>
 
             <div class="field" id="escuelaFutbol">
@@ -206,7 +227,102 @@
 </div>
 
 <script src="./res/tablas/tablaFondoComun.js"></script>
+<script src="./res/tablas/tablaPagosGim.js"></script>
+<script src="./res/js/modalPagos.js"></script>
 <script>
+
+var app = new Vue({
+        el: "#app",
+        data: {
+            detalles: []
+        },
+        methods: {
+             cargarDetalles(id) {
+
+                this.idUsuario = parseInt(id);
+
+                $('#frmDetalles').addClass('loading');
+                $.ajax({
+                type: 'POST',
+                url: '?1=GimnasioController&2=pagos',
+                data: {
+                id: id
+                },
+                success: function (data) {
+                app.detalles = JSON.parse(data);
+                $('#frmDetalles').removeClass('loading');
+                }
+                });
+
+                },
+                cerrar() {
+                this.detalles = [];
+                $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+            },
+            cobrar(id,idUsuario) {
+                var idCobro = parseInt(id);
+                var idUsuario = parseInt(idUsuario);
+
+                alertify.confirm("¿Desea cobrar la cuota?",
+            function(){
+                $.ajax({
+                type: 'POST',
+                url: '?1=GimnasioController&2=cobrar',
+                data: {
+                    idCobro:idCobro,
+                },
+                success: function(r) {
+                    if(r == 1) {
+                       // $('#modalAgregarJugador').modal('hide');
+                        swal({
+                            title: 'Listo',
+                            text: 'Cobro realizado con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            $('#modalDetalles').modal('hide');
+                            app.detalles=[];
+                            alertify.confirm("¿Volver a cobrar?",
+                        function(){
+                            
+                            $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+                            app.cargarDetalles(idUsuario);
+                        
+                        },
+                        function(){
+                            
+                            alertify.error('Cancelado');
+                            $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+                        });
+                        }); 
+                        
+                    } 
+                }
+            });
+
+
+            },
+            function(){
+                
+                alertify.error('Cancelado');
+                
+            });
+                
+            }
+        }
+    });
+</script>
+
+<script>
+var cobrar=(ele)=>{
+     $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+    app.cargarDetalles($(ele).attr('id'));
+  }
 
 $("#btnModalIngreso").click(function(){
     $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');

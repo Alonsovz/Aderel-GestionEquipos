@@ -56,7 +56,7 @@ Vue.component('modal-reinscribir', {
                     if (val == 1) {
                         swal({
                             title: 'Listo',
-                            text: 'Usuario reinscrito exitosamente',
+                            text: 'Usuario inscrito exitosamente',
                             type: 'success',
                             showConfirmButton: false,
                             timer: 1500
@@ -88,11 +88,11 @@ Vue.component('modal-reinscribir', {
                     </form>        
                 </div>
                 <div class="actions">
-                    <button class="ui black deny button">
+                    <button class="ui yellow deny button">
                         Cancelar
                     </button>
-                    <button class="ui right red button" id="btnEliminar" @click="eliminar" >
-                        Reinscribir
+                    <button class="ui right blue button" id="btnEliminar" @click="eliminar" >
+                        Inscribir
                     </button>
                 </div>
             </div>`

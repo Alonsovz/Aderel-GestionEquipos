@@ -15,6 +15,12 @@ class GimnasioController extends ControladorBase {
         echo $dao->mostrarGimnasio();
     }
 
+    public function mostrarGimnasioPagos() {
+        $dao = new DaoGimnasio();
+
+        echo $dao->mostrarGimnasioPagos();
+    }
+
     public function registrar() {
 
         $nombre = $_REQUEST["nombreJ"];
@@ -84,6 +90,18 @@ class GimnasioController extends ControladorBase {
         $dao->objeto->setIdUsuario($_REQUEST["id"]);
 
         echo $dao->reinscribir();
+        echo $dao->primerPago();
+        echo $dao->segundoPago();
+        echo $dao->tercerPago();
+        echo $dao->cuartoPago();
+        echo $dao->quintoPago();
+        echo $dao->sextoPago();
+        echo $dao->septimoPago();
+        echo $dao->octavoPago();
+        echo $dao->novenoPago();
+        echo $dao->decimoPago();
+        echo $dao->oncePago();
+        echo $dao->docePago();
     }
 
      public function cargarDatosGimnasio() {
@@ -112,6 +130,40 @@ class GimnasioController extends ControladorBase {
         $resultado1 = $dao->fichaG();
 
         $reporte->gimnasio($id, $resultado, $resultado1);
+    }
+
+
+    public function pagos(){
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoGimnasio();
+
+        $dao->objeto->setIdUsuario($id);
+
+        $resultado =$dao->pagos();
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $json .= json_encode($fila).',';
+
+        }
+
+        $json = substr($json, 0, strlen($json) - 1);
+
+        echo'['.$json.']';
+    }
+
+    public function cobrar(){
+        $id = $_REQUEST["idCobro"];
+
+        $dao = new DaoGimnasio();
+
+        $dao->objeto->setIdPago($id);
+
+        echo $dao->cobrar();
+
     }
 
 

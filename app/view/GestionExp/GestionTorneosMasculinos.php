@@ -90,9 +90,9 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
      
 </div>
 
-<div class="ui modal" id="sorteos">
+<div class="ui tiny modal" id="sorteos">
 <div class="header">
-<i class="female icon"></i><i class="futbol icon"></i> Realizar sorteo <a id="name"></a>
+<i class="trophy icon"></i><i class="futbol icon"></i> Realizar sorteo para Torneo: <a id="name"></a>
 </div>
 <div class="content">
 <form method="post" action="?1=TorneosController&2=sorteo">
@@ -101,8 +101,8 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
     <input type="hidden" id="idTor" name="idTor">
     <label>Vueltas</label>
     <select class="ui dropdown" name='vueltas'>
-        <option value="" selected disabled>Seleccionar</option>
-        <option value="1">1</option>
+        
+        <option value="1" selected>1</option>
         <option value="2">2</option>
         <option value="3">3</option>
         <option value="4">4</option>

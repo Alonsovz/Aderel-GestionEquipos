@@ -62,7 +62,7 @@ class DaoEquipos extends DaoBase {
         inner join categorias c on c.idCategoria = e.idCategoria
         inner join inscripcion i on i.idInscripcion = e.idInscripcion
         inner join torneos t on t.idTorneo = e.idTorneo
-        where  e.idEliminado=1  and e.idGenero=2 and e.idEquipo>2 and e.idFondo=1; ";
+        where  e.idEliminado=1  and e.idGenero=2 and e.idEquipo>2";
 
         $resultado = $this->con->ejecutar($_query);
 

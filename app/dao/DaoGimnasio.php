@@ -34,11 +34,48 @@ class DaoGimnasio extends DaoBase {
                 
                
             }
+            else if($fila["estado"]==1){
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.''.$btnEliminar.' '.$btnReporte.' '.$btnVencidos.'</center></td><td><center>'.$imagen.'</center></td></table>"';    
+            }
                else{
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnReporte.''.$btnEditar.''.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';    
                }
             
             
+            
+           
+
+            $object = substr_replace($object, $acciones, strlen($object) -1, 0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        return '{"data": ['.$_json .']}';
+    }
+
+
+
+    public function mostrarGimnasioPagos()
+    {
+        $_query = "select *,TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from gimnasio
+        where  idEliminado=1 and idUsuario>1 and estado=2;";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $_json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $object = json_encode($fila);
+
+            $btnCobrar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui  icon red small button\" onclick=\"cobrar(this)\"><i class=\"dollar icon\"></i>Cobrar</button>';
+         
+            
+           
+            
+            $acciones = ', "Acciones": "'.$btnCobrar.'"';  
             
            
 
@@ -87,7 +124,7 @@ class DaoGimnasio extends DaoBase {
 
         $query = "Insert into gimnasio values (null,'".$idExp."','".$this->objeto->getImg()."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
         '".$this->objeto->getFechaNacimiento()."',
-        '".$this->objeto->getDui()."',curdate(),ADDDATE(curdate(),INTERVAL 31 DAY),1);";
+        '".$this->objeto->getDui()."',curdate(),curdate(),1,1);";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -114,8 +151,8 @@ class DaoGimnasio extends DaoBase {
     }
 
     public function reinscribir() {
-        $_query = "update gimnasio set fechaInscripcion=curdate(),
-         fechaFinal=ADDDATE(curdate(),INTERVAL 31 DAY) where idUsuario = ".$this->objeto->getIdUsuario();
+        $_query = "update gimnasio set fechaInscripcion=curdate(), estado=2,
+         fechaFinal=ADDDATE(curdate(),INTERVAL 366 DAY) where idUsuario = ".$this->objeto->getIdUsuario();
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -184,6 +221,8 @@ class DaoGimnasio extends DaoBase {
 
     }
 
+    
+
     public function fichaG(){
         $query = "select *,TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from gimnasio
         where idUsuario=".$this->objeto->getIdUsuario();
@@ -191,6 +230,135 @@ class DaoGimnasio extends DaoBase {
         $resultado = $this->con->ejecutar($query);
 
         return $resultado;
+    }
+
+
+    public function primerPago(){
+        $_query = "insert into pagoGimnasio values(null, '".$this->objeto->getIdUsuario()."',
+        ADDDATE(curdate(),INTERVAL 0 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function segundoPago(){
+        $_query = "insert into pagoGimnasio values(null, '".$this->objeto->getIdUsuario()."',
+        ADDDATE(curdate(),INTERVAL 31 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function tercerPago(){
+        $_query = "insert into pagoGimnasio values(null, '".$this->objeto->getIdUsuario()."',
+        ADDDATE(curdate(),INTERVAL 61 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function cuartoPago(){
+        $_query = "insert into pagoGimnasio values(null, '".$this->objeto->getIdUsuario()."',
+        ADDDATE(curdate(),INTERVAL 92 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function quintoPago(){
+        $_query = "insert into pagoGimnasio values(null, '".$this->objeto->getIdUsuario()."',
+        ADDDATE(curdate(),INTERVAL 122 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function sextoPago(){
+        $_query = "insert into pagoGimnasio values(null, '".$this->objeto->getIdUsuario()."',
+        ADDDATE(curdate(),INTERVAL 153 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+    public function septimoPago(){
+        $_query = "insert into pagoGimnasio values(null, '".$this->objeto->getIdUsuario()."',
+        ADDDATE(curdate(),INTERVAL 183 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function octavoPago(){
+        $_query = "insert into pagoGimnasio values(null, '".$this->objeto->getIdUsuario()."',
+        ADDDATE(curdate(),INTERVAL 214 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function novenoPago(){
+        $_query = "insert into pagoGimnasio values(null, '".$this->objeto->getIdUsuario()."',
+        ADDDATE(curdate(),INTERVAL 244 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function decimoPago(){
+        $_query = "insert into pagoGimnasio values(null, '".$this->objeto->getIdUsuario()."',
+        ADDDATE(curdate(),INTERVAL 275 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function oncePago(){
+        $_query = "insert into pagoGimnasio values(null, '".$this->objeto->getIdUsuario()."',
+        ADDDATE(curdate(),INTERVAL 305 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function docePago(){
+        $_query = "insert into pagoGimnasio values(null, '".$this->objeto->getIdUsuario()."',
+        ADDDATE(curdate(),INTERVAL 336 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+
+    public function pagos(){
+        $_query="select p.*, g.nombre as nombre, g.apellido as apellido from pagoGimnasio p
+        inner join gimnasio  g on g.idUsuario = p.idUsuario
+         where p.idUsuario =".$this->objeto->getIdUsuario();
+
+
+        $resultado = $this->con->ejecutar($_query);
+
+        return $resultado;
+    }
+
+
+    public function cobrar()
+    {
+
+        $_query="update pagoGimnasio set estado=2 where id=".$this->objeto->getIdPago();
+       
+
+        $resultado = $this->con->ejecutar($_query);
+        if($resultado)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+        
+        
+
     }
 
 
