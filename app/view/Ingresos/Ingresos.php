@@ -1,12 +1,7 @@
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/alertify.min.js"></script>
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/alertify.min.css"/>
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/css/themes/bootstrap.min.css"/>
+
+
 <script src="./res/tablas/tablaIngresos.js"></script>
 
  </head>
@@ -113,115 +108,101 @@
 
 </style>
 
-<div class="modal fade" id="modalReportes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header"  style="background-color:#0B0B64; color: yellow">
-        <h5 class="modal-title" id="">Reportes de Ingresos ADEREL</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color:#0B0B64; color: yellow">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<div class="ui tiny modal" id="modalReportes">
+      <div class="header"  >
+        <h5><i class="file icon"></i>Reportes de Ingresos ADEREL</h5>
       </div>
-      <div class="modal-body">
       <hr>
-      <div class="container">
+      <div class="content">
         <div class="row">
-        <div class="col-md-6">
-      <label style="font-weight: bold; font-size: 15px;">Reporte diario de Ingresos</label>
+      <center><label style="font-weight: bold; font-size: 15px; ">Reporte diario de Ingresos</label></center><br>
       </div>
-      
-        <a href="?1=IngresosController&2=llamaReporte" target="_blank">
-                        <button class="btn btn-warning" id="btnCancelar" style="color:black; margin: auto;" 
-                        id="btnReportes" type="button" >
+      <div class="content" class="ui equal width form">
+        <form class="ui form">
+        <div class="field">
+          <div class="fields">
+
+        <a href="?1=IngresosController&2=llamaReporte" target="_blank" style="width:30%; margin:auto;">
+                        <button class="ui red button" id="btnReportes">
                          <i class="eye icon"></i>Ver reporte
                         </button></a>
-                    
-                <div class="col-md-3"></div>  
-                    
-                        
-                   
-                    
         </div>
-         
-      </div>
-      
-      
-      <br><br><div class="ui divider"></div>
-      <div class="container">
-      <label style="font-weight: bold; font-size: 15px;">Por Fechas</label>
-        <div class="row">
-            <div class="col-md-6">
-                    <i class="calendar icon"></i><b>Fecha inicial:</b><br>
-                    <input type="date" name="fecha1" id="fecha1" class="form-control" required max=<?php echo $fechaMin;?>>
-            </div>
-            <div class="col-md-6">
-                <i class="calendar icon"></i><b>Fecha final:</b>
-                <input type="date" name="fecha2" id="fecha2" class="form-control" required max=<?php echo $fechaMax;?>>
-                
-            </div>
-           
         </div>
-        <br>
-        <div class="row">
-        <div class="col-md-4"></div>
-            <div class="col-md-4">
+        </form>
+
+        </div>
+        
+      <div class="ui divider"></div>
+      <div class="row">
+          <label style="font-weight: bold; font-size: 15px;">Por Fechas</label>
+       </div>
+       <div class="content" class="ui equal width form">
+        <form class="ui form">
+        <div class="field">
+          <div class="fields">
+            <div class="eight wide field"><br>
+                      <label><i class="calendar icon"></i>Fecha inicial:</label>
+                      <input type="date" name="fecha1" id="fecha1"  required max=<?php echo $fechaMin;?>>
+            </div>
+
+            <div class="eight wide field"><br>
+                 <label> <i class="calendar icon"></i>Fecha final: </label>
+                  <input type="date" name="fecha2" id="fecha2" class="form-control" required max=<?php echo $fechaMax;?>>
+            </div>    
+
+            </div>
+            </div>
             
-                 <button class="ui blue right button" id="btnGenerarReportePorFechas" style="width:100%;">
-                 <i class="file icon"></i>Generar
-                 </button>
-           
+            <div class="field">
+                   <div class="fields">
+                      <a class="ui blue  button" id="btnGenerarReportePorFechas" style="width:30%; margin:auto;">
+                      <i class="file icon"></i>Generar
+                      </a>
+
+                  </div>
             </div>
-            <div class="col-md-4"></div>
-        </div>
-    </div>
-    </div>
+
+           </form>
+          </div>
+          </div>
     <br>
-      <div class="modal-footer">
+      <div class="actions">
       
-     
-     
-
+      <button class="ui orange button" id="cerrarReporte">
+                 <i class="close icon"></i>Cerrar
+      </button>
       </div>
-    </div>
-  </div>
-</div>
+   </div>
  
-        <div class="row">
-               
-                <div class="col-md-8">
-                <h2>
-                <i class="money bill alternate outline icon"></i>
-                    Ingresos Aderel<font color="#DFD102" size="18px">.</font>
-                    
-                </h2>
-               </div>
-               
-              
-                <div class="col-md-4">
-                
-                <br>
-                
-                <div class="btn-toolbar float-right" role="toolbar">
-                    <div class="btn-group ">
 
-                        <button class="btn btn-default" id="btnResumen" style="background: #E6C404;color: #370987;">
+
+    
+<br><div id="app">
+  <div class="ui grid">
+        <div class="row">
+                <div class="titulo">
+                <i class="dollar icon"></i> <i class="money bill icon"></i>
+                        Ingresos <font color="#1CC647" size="20px">.</font>
+
+                        <div class="sixteen wide column">
+
+                        
+                        <button class="ui right floated blue button" id="btnFechas">
+                            <i class="file icon"></i> Reporte de Ingresos
+                            </button>
+
+                            <button class="ui right floated yellow purple button" id="btnResumen">
                             <i class="file icon"></i> Resumen de Ingresos
                         </button>
                     </div>
 
-
-                    <div class="btn-group">
-                        <button class="btn btn-default" id="btnFechas" style="background: #140E93;color: #E6C404 ;">
-                            <i class="file icon"></i> Reporte de Ingresos
-                            </button>
-                    </div>
-                
                 </div>
-                </div>        
-               
-                
         </div>
-                
+        
+  </div>  
+  </div>
+  <br>
+         
     <hr>
 
 
@@ -237,22 +218,17 @@
 
 
 <!--modal resumen-->
-<div class="modal fade bd-example-modal-xl" id="modalResumen" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl" role="document">
-    <div class="modal-content">
-      <div class="modal-header"   style="background-color:#0B0B64; color: yellow">
+<div class="ui modal" id="modalResumen">
+  
+    <div class="header">
         <h5 class="modal-title" id="tituloIngreso">Ingreso ADEREL</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="background-color:#0B0B64; color: yellow">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
-      
-      <div class="modal-body" >
-        <div class="container">
+  
+        <div class="content">
                 
-                <div class="row" >
-                    <div class="col"></div>
-                        <div class="col-md-10">
+           
+                <div class="row">
+                        <div class="sixteen wide column">
                             <table id="dtIngresos" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
                                 <thead>
                                     <tr>
@@ -267,74 +243,37 @@
                                 </tbody>
                             </table>
                          </div>
-                         <div class="col"></div>  
+                         
                 </div>
-            </div>
+            
       </div>
-      <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      <div class="actions" id="cerrarResumen">
+      <button class="ui green button">Cerrar</button>
       </div>
     </div>
-  </div>
-</div>
+  
 
 
 
 
   <!--modal calendario-->
 
-<div class="modal fade" id="modalCalendar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header"  style="background-color:#E6C404; color: blue">
-        <h5 class="modal-title" id="tituloIngreso">Ingreso ADEREL</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <input type="hidden" id="txtId" name="txtId" class="form-control"/>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label><i class="calendar icon"></i>Fecha :</label>
-                    <input type="text" id="txtFecha" name="txtFecha" class="form-control" disabled/></br>
-                </div>
-                <div class="form-group col-md-4">               
-                    <label><i class="money bill alternate outline icon"></i>Nombre del Ingreso:</label>
-                  
-                   <input type="text" name="txtTitulo" id="txtTitulo" class="form-control input-lg" autocomplete="off" placeholder="Nombre del Ingreso" />
-                  
-                <div class="ui red pointing label"  id="labelTitulo"
-                style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
-                Completa este campo</div>
-                </div>  
-            
-                <div class="form-group col-md-4">       
-                    <label><i class="dollar icon"></i> Cantidad :</label>
-                    <input type="text" id="txtCantidad" name="txtCantidad" class="form-control" placeholder="$0.00"/>
-                    <div class="ui red pointing label"  id="labelCantidad"
-                style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
-                Completa este campo</div>
-                </div>
-                <input type="hidden" name="txtMes" id="txtMes"/>
-             <input type="hidden" name="txtAnio" id="txtAnio"/>  
-            </div>
-      </div>
-      <div class="modal-footer">
-      <button type="button" class="btn btn-warning" id="btnAgregar" >Agregar Ingreso</button>
-      <button type="button" class="btn btn-primary" id="btnModificar">Modificar Ingreso</button>
-      <button type="button" class="btn btn-warning" id="btnEliminar">Eliminar Ingreso</button>
-      <button type="button" class="btn btn-info" id="btnCerrar" >Cancelar</button>
-      </div>
-    </div>
-  </div>
-  </div>
+
 
 
 
  
 <script>
 
+$("#cerrarReporte").click(function(){
+  $("#modalReportes").modal('hide');
+  $("#fecha1").val('');
+  $("#fecha2").val('');
+});
+
+$("#cerrarResumen").click(function(){
+  $("#modalResumen").modal('hide');
+});
 
 
 $('#my-button').click(function() {
@@ -366,7 +305,7 @@ return false;
 });
 
    $('#btnResumen').click(function(){
-    $('#modalResumen').modal();
+    $('#modalResumen').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
    });
     $('#txtCantidad').mask("###0.00", {reverse: true});
     $(document).ready(function(){
@@ -414,80 +353,10 @@ return false;
                 }
             },
             
-            dayClick:function(date,jsEvent,view)
-            {
-                var f = new Date();
-                var mes;
-                if(f.getMonth()<10)
-                {
-                   mes= "0" + (f.getMonth()+1);
-                }else{
-                    mes = f.getMonth()+1;
-                }
-       fechaAc= f.getFullYear() + "-" + (mes) + "-" + f.getDate();
-             //   alert(fechaAc);
-
-       // alert(date.format());   
-
-                
-                var moment = $('#CalendarioWeb').fullCalendar('getDate');
-            var myarray = moment.format().split("-")
-            anio = myarray[0];
-            mes = myarray[1];
             
-            
-           
-                $('#btnAgregar').show();
-                $('#btnModificar').hide();
-                $('#btnEliminar').hide();
-                limpiarFormulario();
-                $('#txtFecha').val(date.format());
-                $('#txtMes').val(mes);
-                  $('#txtAnio').val(anio);
-                $("#modalCalendar").modal();
-               
-            },
                 events: "?1=IngresosController&2=IngresosBD",
                 
-            eventClick:function(calEvent,jsEvent,view){
-                $('#btnAgregar').hide();
-                $('#btnModificar').show();
-                $('#btnEliminar').show();
-
-                $("#tituloIngreso").html(calEvent.title);
-                //$("#txtDescripcion").val(calEvent.descripcion);
-                $("#txtTitulo").val(calEvent.title);
-                $("#txtCantidad").val(calEvent.cantidad);
-                $('#txtMes').val(calEvent.mes);
-                $('#txtAnio').val(calEvent.anio);
-                $("#txtId").val(calEvent.id);
-
-                Fecha= calEvent.start._i.split(" ");
-
-                $("#txtFecha").val(Fecha[0]);
-                $("#modalCalendar").modal();
-            },
-            editable:true,
-            eventDrop:function(calEvent)
-            {
-                
-                $("#txtId").val(calEvent.id);
-                $("#txtTitulo").val(calEvent.title);
-              //  $("#txtDescripcion").val(calEvent.descripcion);
-                $("#txtCantidad").val(calEvent.cantidad);
-                
-                var moment = $('#CalendarioWeb').fullCalendar('getDate');
-            var myarray = moment.format().split("-")
-            anio = myarray[0];
-            mes = myarray[1];
-            $('#txtMes').val(mes);
-                  $('#txtAnio').val(anio);
-
-                var fecha = calEvent.start.format().split("T");
-                $("#txtFecha").val(fecha[0]);
-                RecolectarDatosGUI();
-                EnviarInformacion('modificar',NuevoEvento,true);
-            }
+            
             
         });
     });
@@ -515,7 +384,7 @@ $(function () {
             });
         });
 $("#btnFechas").click(function(){
-    $("#modalReportes").modal();
+    $("#modalReportes").modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
     });
 var NuevoEvento;
 
@@ -649,28 +518,4 @@ function limpiarFormulario()
 }
     
 </script>
-<script>
-$(document).ready(function(){
 
-    
- 
- $('#txtTitulo').typeahead({
-  source: function(query, result)
-  {
-   $.ajax({
-    url:"./app/view/Ingresos/fetch.php",
-    method:"POST",
-    data:{query:query},
-    dataType:"json",
-    success:function(data)
-    {
-     result($.map(data, function(item){
-      return item;
-     }));
-    }
-   })
-  }
- });
- 
-});
-</script>

@@ -39,10 +39,11 @@
 <i class="dollar sign icon"></i><i class="money bill icon"></i> Agregar Ingreso
 </div>
 <div class="content" class="ui equal width form">
+<form class="ui form">
     <div class="field">
         <div class="fields">       
-            <div class="five wide field">
-                <label><i class="users icon"></i>Tipo de Ingreso</label>
+            <div class="six wide field">
+                <label><i class="dollar icon"></i>Tipo de Ingreso</label>
                 <select class="ui search dropdown" id="tipoIngreso">
                 <option value="Gateway 2" selected="selected">Selecciona una opción</option>
                     <option value="gimnasio">Gimnasio</option>
@@ -54,7 +55,7 @@
             </div>
         </div>
     </div> 
-
+</form>
 </div>  
 <div class="row title-bar">
                             <div class="sixteen wide column">
