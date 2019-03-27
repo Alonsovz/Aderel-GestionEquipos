@@ -48,6 +48,8 @@ $id= $_POST["idTor"];
 	mysqli_close( $conexion );
 // }
 
+echo "<script>const nEquipos = ".$contador."</script>";
+
 if ($N%2!=0) 
 	$N = $N+1; // sumamos 1 al numero impar de equipos. A este equipo en un futuro lo podemos llamar descanso
 
@@ -124,7 +126,7 @@ if ($N%2!=0)
 						<input type='hidden' name='idEquipo1[".$partidos."]' value='". $idEquipo1 ."'>
 						<input type='hidden' name='idEquipo2[".$partidos."]' value='". $idEquipo2 ."'>
 						<input type='hidden' name='cancha[".$partidos."]' value='". $cancha ."'>
-						<input type='hidden' name='partido' value='". $partidos ."'>
+						<input type='hidden' name='partido[".$partidos."]' value='". $partidos ."'>
 					</td>
 					<td><input type='time' name='hora[".$partidos."]'></td>
 					<td><input type='date' name='fecha[".$partidos."]'></td>
@@ -173,44 +175,126 @@ const enviar =()=>{
 		const datos = $(elemento).serializeArray();
 		datosFormulario.push(datos);
 	}
-	console.log('datosFormulario :', datosFormulario);
+	// console.log('datosFormulario :', datosFormulario);
 	// const partir 
 	const datosEnviar     = [];
 	const nVueltas        = <?php echo $vueltas ?>;
 	const jornadasXvuelta = datosFormulario.length/nVueltas;
 	let contadorJornadas  = 0;
 	let vueltaActual 	  = 1;
-	for (let index = 0; index < datosFormulario.length; index++) {
-		if(!(contadorJornadas<jornadasXvuelta)){
-			contadorJornadas=0;
-			vueltaActual++;
-		}
-		const jornada={
-			jornada : datosFormulario[index][0].value,
-			nvuelta : vueltaActual,
-			partidos: [],
-		};
-		contadorJornadas++;
-
-		for (let j = 1; j <= ((datosFormulario[index].length-1)/6); j++) {
-			const partido = {
-				equipo1: datosFormulario[index][1*j].value,
-				equipo2: datosFormulario[index][2*j].value,
-				fecha  : datosFormulario[index][6*j].value,
-				hora   : datosFormulario[index][5*j].value,
-				cancha : datosFormulario[index][3*j].value,
-				partido: datosFormulario[index][4*j].value,
+	
+	if(nEquipos%2==1){
+		//EQUIPOS IMPARES
+		for (let index = 0; index < datosFormulario.length; index++) {
+			if(!(contadorJornadas<jornadasXvuelta)){
+				//calcular vuelta
+				contadorJornadas=0;
+				vueltaActual++;
+			}
+			const jornada={
+				jornada : datosFormulario[index][0].value,
+				nvuelta : vueltaActual,
+				partidos: [],
+				idDescansa:0
 			};
-			jornada.partidos.push(partido);
+			contadorJornadas++;
+
+			//CALCULAR ID DESCANSA
+			jornada.idDescansa= datosFormulario[index].find((elemento,indice)=>{
+				return elemento.name=="descansa";
+			}).value;	
+
+			for (let j = 1; j <= ((datosFormulario[index].length-2)/6); j++) {
+				const partido = {};
+				
+				partido.equipo1= datosFormulario[index].find((elemento,indice)=>{
+					return elemento.name==`idEquipo1[${j}]`;
+				}).value;
+
+				partido.equipo2= datosFormulario[index].find((elemento,indice)=>{
+					return elemento.name==`idEquipo2[${j}]`;
+				}).value;
+
+				partido.fecha= datosFormulario[index].find((elemento,indice)=>{
+					return elemento.name==`fecha[${j}]`;
+				}).value;
+
+				partido.hora= datosFormulario[index].find((elemento,indice)=>{
+					return elemento.name==`hora[${j}]`;
+				}).value;
+
+				partido.cancha= datosFormulario[index].find((elemento,indice)=>{
+					return elemento.name==`cancha[${j}]`;
+				}).value;
+
+				partido.partido= datosFormulario[index].find((elemento,indice)=>{
+					return elemento.name==`partido[${j}]`;
+				}).value;
+
+				jornada.partidos.push(partido);
+			}
+			datosEnviar.push(jornada);
 		}
-		datosEnviar.push(jornada);
+
+	}else{
+		//EQUIPOS PARES
+		for (let index = 0; index < datosFormulario.length; index++) {
+			if(!(contadorJornadas<jornadasXvuelta)){
+				contadorJornadas=0;
+				vueltaActual++;
+			}
+			const jornada={
+				jornada : datosFormulario[index][0].value,
+				nvuelta : vueltaActual,
+				partidos: [],
+			};
+			contadorJornadas++;
+
+			for (let j = 1; j <= ((datosFormulario[index].length-1)/6); j++) {
+				const partido = {
+					// equipo1: datosFormulario[index][1*j].value,
+					// equipo2: datosFormulario[index][2*j].value,
+					// fecha  : datosFormulario[index][6*j].value,
+					// hora   : datosFormulario[index][5*j].value,
+					// cancha : datosFormulario[index][3*j].value,
+					// partido: datosFormulario[index][4*j].value,
+				};
+
+				partido.equipo1= datosFormulario[index].find((elemento,indice)=>{
+					return elemento.name==`idEquipo1[${j}]`;
+				}).value;
+
+				partido.equipo2= datosFormulario[index].find((elemento,indice)=>{
+					return elemento.name==`idEquipo2[${j}]`;
+				}).value;
+
+				partido.fecha= datosFormulario[index].find((elemento,indice)=>{
+					return elemento.name==`fecha[${j}]`;
+				}).value;
+
+				partido.hora= datosFormulario[index].find((elemento,indice)=>{
+					return elemento.name==`hora[${j}]`;
+				}).value;
+
+				partido.cancha= datosFormulario[index].find((elemento,indice)=>{
+					return elemento.name==`cancha[${j}]`;
+				}).value;
+
+				partido.partido= datosFormulario[index].find((elemento,indice)=>{
+					return elemento.name==`partido[${j}]`;
+				}).value;
+
+				jornada.partidos.push(partido);
+			}
+			datosEnviar.push(jornada);
+		}
 	}
-	console.log('datosEnviar :', datosEnviar);
-	// $.ajax({
-	// 	// type:'post',
-	// 	data:{datos:datosFormulario},
-	// 	url:'/?1=SorteoController&2=getRegistrar'
-	// })
+
+	$.ajax({
+		type:'post',
+		data:{datos:JSON.stringify(datosEnviar)},
+		url:'?1=SorteoController&2=getRegistrar'
+	})
 
 }
 </script>
