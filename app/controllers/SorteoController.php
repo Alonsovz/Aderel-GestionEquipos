@@ -18,7 +18,7 @@ class SorteoController extends ControladorBase {
             $idDescansa = (isset($datosJornada['idDescansa']))?$datosJornada['idDescansa']:'';
 
             $jornada = new Jornadas();
-            $jornada->setIdTorneo(1);
+            $jornada->setIdTorneo($datosJornada['idTorneo']);
             $jornada->setDescansa_id_Equipo($idDescansa);
             $jornada->setVuelta_N($datosJornada['nvuelta']);
             $jornada->setOrden($datosJornada['jornada']);
@@ -42,7 +42,7 @@ class SorteoController extends ControladorBase {
         }
 
         
-        
+        echo 'ok';
 
         
     }

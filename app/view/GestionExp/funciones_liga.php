@@ -48,7 +48,10 @@ $id= $_POST["idTor"];
 	mysqli_close( $conexion );
 // }
 
-echo "<script>const nEquipos = ".$contador."</script>";
+echo "<script>
+const nEquipos = ".$contador.";
+const idTorneo = ".$id.";
+</script>";
 
 if ($N%2!=0) 
 	$N = $N+1; // sumamos 1 al numero impar de equipos. A este equipo en un futuro lo podemos llamar descanso
@@ -195,7 +198,8 @@ const enviar =()=>{
 				jornada : datosFormulario[index][0].value,
 				nvuelta : vueltaActual,
 				partidos: [],
-				idDescansa:0
+				idDescansa:0,
+				idTorneo:idTorneo
 			};
 			contadorJornadas++;
 
@@ -247,6 +251,7 @@ const enviar =()=>{
 				jornada : datosFormulario[index][0].value,
 				nvuelta : vueltaActual,
 				partidos: [],
+				idTorneo: idTorneo
 			};
 			contadorJornadas++;
 
