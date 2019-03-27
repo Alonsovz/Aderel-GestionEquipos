@@ -173,6 +173,19 @@ class DaoIngresos extends DaoBase {
 
         return $resultado;
     }
+
+
+    public function guardarOtro(){
+        $_query = "insert into ingresos values (null,'".$this->objeto->getTitle()."',curdate(),'".$this->objeto->getCantidad()."','#140E93','#E6C404','03','2019',1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
     
 
 

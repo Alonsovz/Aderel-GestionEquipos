@@ -113,7 +113,7 @@ class DaoJugadores extends DaoBase {
                 $object = json_encode($fila);
 
 
-                $btnQuitar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui  icon blue small button\" onclick=\"quitarFondo(this)\"><i class=\"dollar icon\"></i> Quitar de Fondo</button>';
+                $btnQuitar = '<button id=\"'.$fila["idJugador"].'\" nombre=\"'.$fila["nombre"].'\" apellido=\"'.$fila["apellido"].'\" class=\"ui  icon blue small button\" onclick=\"quitarFondo(this)\"><i class=\"dollar icon\"></i> Quitar de Fondo</button>';
                 $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
              $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td><center> '.$btnQuitar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
@@ -464,6 +464,21 @@ class DaoJugadores extends DaoBase {
         $resultado = $this->con->ejecutar($_query);
 
         return $resultado;
+    }
+
+
+    public function quitarFondo(){
+        $_query = "update jugadores set idFondo = 1
+        where idJugador = ".$this->objeto->getIdJugador();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+
     }
     
 

@@ -66,7 +66,7 @@
         
             
             <div class="field" id="otro">
-            <form class="ui form" id="otroForm">
+            <form class="ui form" id="frmOtro">
                 <div class="row">
                     <h3>
                     <i class="dollar icon"></i>
@@ -81,11 +81,11 @@
                             </div>
                             <div class="eight wide field" >
                             <label><i class="dollar icon"></i>Cantidad del ingreso</label>
-                            <input type="text" id="titulo" >
+                            <input type="text" id="cantidad" name="cantidad" >
                             </div>
                             <div class="eight wide field" >
                             <label><br></label>
-                            <button id="guardarOtro" class="ui blue button"> Agregar Ingreso</button>
+                            <a id="guardarOtro" class="ui blue button"> Agregar Ingreso</a>
                             </div>
                 </div>
                 </form>
@@ -177,6 +177,34 @@
 
 </div>
 
+
+<div class="ui tiny modal" id="quitarFondo">
+    <div class="header">
+    Quitar a <a id="nombre"></a> <a id="apellido"></a> de Fondo Común
+    </div>
+
+    <div class="content"> 
+    <input type="hidden" id="idJ">
+    <i class="dollar icon"></i> Cantidad a pagar:
+    <input type="text" id="cantidadF" name="cantidadF">
+    </div>
+
+
+    <div class="actions">
+
+    <button class="ui blue button" id="cerrarFondo">
+    <i class="close icon"></i> Cerrar
+    <button>
+
+    <button class="ui green button" id="guardarFondo">
+    <i class="save icon"></i> Guardar
+    <button>
+
+    </div>
+
+
+</div>
+
 <script src="./res/tablas/tablaFondoComun.js"></script>
 <script>
 
@@ -184,10 +212,106 @@ $("#btnModalIngreso").click(function(){
     $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
 });
 
+$("#cerrarFondo").click(function(){
+    $('#quitarFondo').modal('hide');
+    $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                .modal('show');
+});
 
 </script>
 
 <script>
+var quitarFondo=(ele)=>{
+    $("#nombre").text($(ele).attr("nombre"));
+    $("#apellido").text($(ele).attr("apellido"));
+    $("#idJ").val($(ele).attr("id"));
+    $('#quitarFondo').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                .modal('show');
+}
+
+
+
+$("#guardarOtro").click(function(){
+    alertify.confirm("¿Desea guardar el ingreso?",
+            function(){
+    const form = $('#frmOtro');
+
+                const datosFormulario = new FormData(form[0]);
+         
+        
+            $.ajax({
+                enctype: 'multipart/form-data',
+                contentType: false,
+                processData: false,
+                cache: false,
+                type: 'POST',
+                url: '?1=IngresosController&2=registrarOtro',
+                data: datosFormulario,
+                success: function(r) {
+                    if(r == 1) {
+                       // $('#modalAgregarJugador').modal('hide');
+                        swal({
+                            title: 'Listo',
+                            text: 'Guardado con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }); 
+                        //$('#dtJugadoresM').DataTable().ajax.reload();
+                        //limpiar();
+                    } 
+                }
+            });
+        },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            }); 
+
+});
+
+
+$("#guardarFondo").click(function(){
+    alertify.confirm("¿Desea quitar al jugador de fondo común?",
+            function(){
+   var id = $("#idJ").val();
+   var cantidadF = $("#cantidadF").val();
+         
+        
+            $.ajax({
+                type: 'POST',
+                url: '?1=IngresosController&2=quitarFondo',
+                data:{
+                    id:id,
+                    cantidadF : cantidadF,
+                },
+                success: function(r) {
+                    if(r == 11) {
+                       // $('#modalAgregarJugador').modal('hide');
+                        swal({
+                            title: 'Listo',
+                            text: 'Jugador ya puede ser inscrito en cualquier equipo',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }); 
+                        $('#dtFondo').DataTable().ajax.reload();
+                        //limpiar();
+                    } 
+                }
+            });
+        },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            }); 
+
+});
+
 $(document).ready(function(){
 $("#otro").hide();
 $("#taquilla").hide();

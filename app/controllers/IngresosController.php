@@ -107,6 +107,35 @@ class IngresosController extends ControladorBase {
         $reporte->reporteIngresosPorMes($mes,$anio, $resultado, $resultado1,$total);
     }
 
+
+    public function registrarOtro(){
+        $nombre = $_REQUEST["txtTitulo"];
+        $cantidad = $_REQUEST["cantidad"];
+
+        $dao = new DaoIngresos();
+        $dao->objeto->setTitle($nombre);
+        $dao->objeto->setCantidad($cantidad);
+
+        echo $dao->guardarOtro();
+    }
+
+
+    public function quitarFondo(){
+        $id = $_REQUEST["id"];
+        $cantidad = $_REQUEST["cantidadF"];
+
+        $dao = new DaoJugadores();
+        $dao->objeto->setIdJugador($id);
+       
+        $daoI = new DaoIngresos();
+
+        $daoI->objeto->setTitle("Fondo Común");
+        $daoI->objeto->setCantidad($cantidad);
+
+        echo $dao->quitarFondo();
+        echo $daoI->guardarOtro();
+    }
+
    
 
 

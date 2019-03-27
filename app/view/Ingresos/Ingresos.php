@@ -257,6 +257,52 @@
 
 
   <!--modal calendario-->
+  <div class="ui tiny modal" id="modalCalendar">
+
+      <div class="header"  style="background-color:#E6C404; color: blue">
+        <h5 class="modal-title" id="tituloIngreso">Ingreso ADEREL</h5>
+      
+      </div>
+      <div class="content">
+      <form class="ui form">
+        <div class="field">
+          <div class="fields">
+            <input type="hidden" id="txtId" name="txtId" class="form-control"/>
+              <div class="five wide field">
+                      <label><i class="calendar icon"></i>Fecha :</label>
+                      <input type="text" id="txtFecha" name="txtFecha" class="form-control" readonly/></br>
+                </div>
+                <div class="five wide field">       
+                      <label><i class="money bill alternate outline icon"></i>Nombre del Ingreso:</label>
+                    
+                    <input type="text" name="txtTitulo" id="txtTitulo" class="form-control input-lg" autocomplete="off" placeholder="Nombre del Ingreso" />
+                    
+                  <div class="ui red pointing label"  id="labelTitulo"
+                  style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                  Completa este campo</div>
+                 </div> 
+              
+                  <div class="five wide field">    
+                      <label><i class="dollar icon"></i> Cantidad :</label>
+                      <input type="text" id="txtCantidad" name="txtCantidad" class="form-control" placeholder="$0.00"/>
+                      <div class="ui red pointing label"  id="labelCantidad"
+                  style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                  Completa este campo</div>
+                  </div>
+                  <input type="hidden" name="txtMes" id="txtMes"/>
+              <input type="hidden" name="txtAnio" id="txtAnio"/> 
+             </div>
+           </div>
+        </form> 
+        </div>
+     
+      <div class="actions">
+      <button type="button" class="ui blue button" id="btnModificar">Modificar Ingreso</button>
+      <button type="button" class="ui red button" id="btnEliminar">Eliminar Ingreso</button>
+      <button type="button" class="ui green button" id="btnCerrar" >Cancelar</button>
+      </div>
+    </div>
+
 
 
 
@@ -355,8 +401,51 @@ return false;
             
             
                 events: "?1=IngresosController&2=IngresosBD",
+                eventClick:function(calEvent,jsEvent,view){
+                $('#btnAgregar').hide();
+                $('#btnModificar').show();
+                $('#btnEliminar').show();
+                $("#tituloIngreso").html(calEvent.title);
+                //$("#txtDescripcion").val(calEvent.descripcion);
+                $("#txtTitulo").val(calEvent.title);
+                $("#txtCantidad").val(calEvent.cantidad);
+                $('#txtMes').val(calEvent.mes);
+                $('#txtAnio').val(calEvent.anio);
+                $("#txtId").val(calEvent.id);
+                Fecha= calEvent.start._i.split(" ");
+                $("#txtFecha").val(Fecha[0]);
+                $("#modalCalendar").modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+            },
                 
-            
+            editable:true,
+            eventDrop:function(calEvent)
+            {
+              alertify.confirm("¿Desea eliminar el ingreso?",
+            function(){
+                $("#txtId").val(calEvent.id);
+                $("#txtTitulo").val(calEvent.title);
+              //  $("#txtDescripcion").val(calEvent.descripcion);
+                $("#txtCantidad").val(calEvent.cantidad);
+                
+                var moment = $('#CalendarioWeb').fullCalendar('getDate');
+            var myarray = moment.format().split("-")
+            anio = myarray[0];
+            mes = myarray[1];
+            $('#txtMes').val(mes);
+                  $('#txtAnio').val(anio);
+                var fecha = calEvent.start.format().split("T");
+                $("#txtFecha").val(fecha[0]);
+          
+                RecolectarDatosGUI();
+                EnviarInformacion('modificar',NuevoEvento,true);
+              },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            });
+
+            }
             
         });
     });
@@ -365,3 +454,142 @@ return false;
     $("#modalReportes").modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
     });
 </script>
+<script>
+$(function () {
+            $('#txtTitulo').keyup(function () {
+                $('#labelTitulo').css('display', 'none');
+                $("#btnAgregar").attr("disabled", false);
+            });
+            $('#txtCantidad').keyup(function () {
+                $('#labelCantidad').css('display', 'none');
+                $("#btnAgregar").attr("disabled", false);
+            });
+        });
+$("#btnFechas").click(function(){
+    $("#modalReportes").modal();
+    });
+var NuevoEvento;
+    $("#btnAgregar").click(function(){
+        if($("#txtTitulo").val()=="")
+        {
+          $('#labelTitulo').css('display','block');
+          $("#btnAgregar").attr("disabled", true);
+        }
+        else if($("#txtCantidad").val()==""){
+          $('#labelCantidad').css('display','block');
+          $("#btnAgregar").attr("disabled", true);
+        }
+        else if($("#txtTitulo").val()=="" && $("#txtCantidad").val()>1)
+        {
+          $('#labelTitulo').css('display','block');
+          $("#btnAgregar").attr("disabled", true);
+        }
+        else if($("#txtCantidad").val()=="" && $("#txtTitulo").val()>1){
+          $('#labelCantidad').css('display','block');
+          $("#btnAgregar").attr("disabled", true);
+        }
+        else{
+        alertify.confirm("¿Desea agregar el nuevo ingreso?",
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                RecolectarDatosGUI();
+                EnviarInformacion('agregar',NuevoEvento);  
+            },
+            function(){
+                $("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            });
+          }
+    });
+    $("#btnEliminar").click(function(){
+        
+        alertify.confirm("¿Desea eliminar el ingreso?",
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                RecolectarDatosGUI();
+                EnviarInformacion('eliminar',NuevoEvento);
+               
+            },
+            function(){
+                $("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            });
+       
+    });
+    $("#btnModificar").click(function(){
+      
+        alertify.confirm("¿Desea modificar el ingreso?",
+                function(){
+               // $("#modalCalendar").modal('toggle');    
+                RecolectarDatosGUI();
+                EnviarInformacion('modificar',NuevoEvento);
+                },
+                function(){
+                    $("#modalCalendar").modal('toggle');
+                    alertify.error('Cancelado');
+                  });
+       
+    });
+function RecolectarDatosGUI()
+{
+    
+    NuevoEvento=
+        {   
+            id:$('#txtId').val(),
+            title:$('#txtTitulo').val(),
+           // descripcion:$('#txtDescripcion').val(),
+            start:$('#txtFecha').val(),
+            cantidad:$('#txtCantidad').val(),
+            mes:$('#txtMes').val(),
+            anio:$('#txtAnio').val(),
+            color:'#140E93',
+            textColor:'#E6C404 ',
+            idEliminado:1
+        };
+      
+    
+}
+function EnviarInformacion(accion,objEvento,modal)
+{
+    $.ajax(
+        {
+            type:'POST',
+            url:'./app/view/Ingresos/IngresosBD.php?accion='+accion,
+            data:objEvento,
+            success: function(msg)
+            {
+                if(msg){
+                    swal({
+                            title: 'Listo',
+                            text: 'Realizado con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                            timer: 1700
+                        })
+                    $('#CalendarioWeb').fullCalendar('refetchEvents');
+                    $('#dtIngresos').DataTable().ajax.reload();
+                            if(!modal){
+                                 $("#modalCalendar").modal('toggle');
+                            }
+                            
+                }
+            },
+            error:function()
+            {
+                alert("nel prro");
+            }
+        }
+    );
+}
+function limpiarFormulario()
+{
+    $("#txtId").val('');
+    $("#txtTitulo").val('');
+    $("#txtCantidad").val('');
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
