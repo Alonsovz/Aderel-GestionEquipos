@@ -97,7 +97,7 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
 <i class="female icon"></i><i class="futbol icon"></i> Realizar sorteo <a id="name"></a>
 </div>
 <div class="content">
-<form method="post" action="?1=TorneosController&2=sorteo">
+<form method="post" action="?1=TorneosController&2=sorteoF">
 
     <input type="hidden" id="disponibles" name="disponibles">
     <input type="hidden" id="idTor" name="idTor">

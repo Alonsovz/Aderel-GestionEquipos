@@ -44,7 +44,7 @@ $id= $_POST["idTor"];
 // }
 ?>
 <br>
-<a class='ui red floated button' href="?1=TorneosController&2=gestionM">
+<a class='ui red floated button' href="?1=TorneosController&2=gestionF">
 <i class="left point hand icon"></i>Volver
 </a>
 
