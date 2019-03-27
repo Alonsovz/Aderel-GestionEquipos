@@ -292,7 +292,7 @@ $("#guardarFondo").click(function(){
                        // $('#modalAgregarJugador').modal('hide');
                         swal({
                             title: 'Listo',
-                            text: 'Jugador ya puede ser inscrito en cualquier equipo',
+                            text: 'Jugador/a ya puede ser inscrito en cualquier equipo',
                             type: 'success',
                             showConfirmButton: false,
                                 timer: 1700
