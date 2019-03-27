@@ -122,10 +122,10 @@
         <div class="field">
           <div class="fields">
 
-        <a href="?1=IngresosController&2=llamaReporte" target="_blank" style="width:30%; margin:auto;">
-                        <button class="ui red button" id="btnReportes">
+        <a href="?1=IngresosController&2=llamaReporte" target="_blank" style="width:30%; margin:auto;" id="btnReportes" class="ui red button">
+                         
                          <i class="eye icon"></i>Ver reporte
-                        </button></a>
+                        </a>
         </div>
         </div>
         </form>
@@ -360,162 +360,8 @@ return false;
             
         });
     });
-</script>
-<script type="text/javascript">
-//override defaults
-alertify.defaults.title = "Confirmación";
-alertify.defaults.transition = "slide";
-alertify.defaults.theme.ok = "btn btn-warning";
-alertify.defaults.theme.cancel = "btn btn-primary";
-alertify.defaults.theme.input = "form-control";
 
-
-</script>
-<script>
-
-$(function () {
-            $('#txtTitulo').keyup(function () {
-                $('#labelTitulo').css('display', 'none');
-                $("#btnAgregar").attr("disabled", false);
-            });
-            $('#txtCantidad').keyup(function () {
-                $('#labelCantidad').css('display', 'none');
-                $("#btnAgregar").attr("disabled", false);
-            });
-        });
-$("#btnFechas").click(function(){
+    $("#btnFechas").click(function(){
     $("#modalReportes").modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
     });
-var NuevoEvento;
-
-    $("#btnAgregar").click(function(){
-        if($("#txtTitulo").val()=="")
-        {
-          $('#labelTitulo').css('display','block');
-          $("#btnAgregar").attr("disabled", true);
-        }
-        else if($("#txtCantidad").val()==""){
-          $('#labelCantidad').css('display','block');
-          $("#btnAgregar").attr("disabled", true);
-        }
-
-        else if($("#txtTitulo").val()=="" && $("#txtCantidad").val()>1)
-        {
-          $('#labelTitulo').css('display','block');
-          $("#btnAgregar").attr("disabled", true);
-        }
-        else if($("#txtCantidad").val()=="" && $("#txtTitulo").val()>1){
-          $('#labelCantidad').css('display','block');
-          $("#btnAgregar").attr("disabled", true);
-        }
-        else{
-        alertify.confirm("¿Desea agregar el nuevo ingreso?",
-            function(){
-                //$("#modalCalendar").modal('toggle');
-                RecolectarDatosGUI();
-                EnviarInformacion('agregar',NuevoEvento);  
-            },
-            function(){
-                $("#modalCalendar").modal('toggle');
-                alertify.error('Cancelado');
-                
-            });
-          }
-    });
-
-    $("#btnEliminar").click(function(){
-        
-        alertify.confirm("¿Desea eliminar el ingreso?",
-            function(){
-                //$("#modalCalendar").modal('toggle');
-                RecolectarDatosGUI();
-                EnviarInformacion('eliminar',NuevoEvento);
-               
-            },
-            function(){
-                $("#modalCalendar").modal('toggle');
-                alertify.error('Cancelado');
-                
-            });
-       
-    });
-
-    $("#btnModificar").click(function(){
-      
-        alertify.confirm("¿Desea modificar el ingreso?",
-                function(){
-               // $("#modalCalendar").modal('toggle');    
-                RecolectarDatosGUI();
-                EnviarInformacion('modificar',NuevoEvento);
-                },
-                function(){
-                    $("#modalCalendar").modal('toggle');
-                    alertify.error('Cancelado');
-                  });
-       
-    });
-
-function RecolectarDatosGUI()
-{
-    
-    NuevoEvento=
-        {   
-            id:$('#txtId').val(),
-            title:$('#txtTitulo').val(),
-           // descripcion:$('#txtDescripcion').val(),
-            start:$('#txtFecha').val(),
-            cantidad:$('#txtCantidad').val(),
-            mes:$('#txtMes').val(),
-            anio:$('#txtAnio').val(),
-            color:'#140E93',
-            textColor:'#E6C404 ',
-            idEliminado:1
-        };
-      
-    
-}
-
-
-
-function EnviarInformacion(accion,objEvento,modal)
-{
-    $.ajax(
-        {
-            type:'POST',
-            url:'./app/view/Ingresos/IngresosBD.php?accion='+accion,
-            data:objEvento,
-            success: function(msg)
-            {
-                if(msg){
-                    swal({
-                            title: 'Listo',
-                            text: 'Realizado con éxito',
-                            type: 'success',
-                            showConfirmButton: false,
-                            timer: 1700
-                        })
-                    $('#CalendarioWeb').fullCalendar('refetchEvents');
-                    $('#dtIngresos').DataTable().ajax.reload();
-                            if(!modal){
-                                 $("#modalCalendar").modal('toggle');
-                            }
-                            
-                }
-            },
-            error:function()
-            {
-                alert("nel prro");
-            }
-        }
-    );
-}
-
-function limpiarFormulario()
-{
-    $("#txtId").val('');
-    $("#txtTitulo").val('');
-    $("#txtCantidad").val('');
-}
-    
 </script>
-
