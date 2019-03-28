@@ -367,6 +367,26 @@ class EscFutbolController extends ControladorBase {
         echo'['.$json.']';
     }
 
+    public function cobrar(){
+        $id = $_REQUEST["idCobroEF"];
+        $cantidad = $_REQUEST["cantidadEF"];
+
+        $dao = new DaoEscuela();
+
+        $dao->objeto->setIdPago($id);
+
+        echo $dao->cobrar();
+
+        $daoI = new DaoIngresos();
+
+        $daoI->objeto->setTitle("Escuela de Fútbol");
+        $daoI->objeto->setCantidad($cantidad);
+
+        
+        echo $daoI->guardarOtro();
+
+    }
+
 
 }
 

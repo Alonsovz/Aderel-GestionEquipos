@@ -11,8 +11,8 @@
      Natación" sub_titulo="¿Está seguro de querer eliminar este usuario?" :campos="campos_eliminar" tamanio='tiny'></modal-eliminar>
 
         <modal-reinscribir id_form="frmEliminar" id="modalInscribir" url="?1=NatacionController&2=reinscribir" 
-        titulo="Reeinscribir Usuario de la escuela Natación"
-        sub_titulo="¿Está seguro de querer reeinscribir este usuario?" :campos="campos_eliminar" tamanio='tiny'></modal-reinscribir>
+        titulo="Inscribir usuario de la escuela natación"
+        sub_titulo="¿Está seguro de querer Inscribir este usuario?" :campos="campos_eliminar" tamanio='tiny'></modal-reinscribir>
 
         <div class="ui grid">
         <div class="row">
@@ -372,6 +372,10 @@ var editarUsuario=(ele)=>{
 </script>
 
 <script>
+var reinscribirUsuario=(ele)=>{
+  $('#modalInscribir').modal('setting', 'closable', false).modal('show');
+  $('#idEliminar').val($(ele).attr("id"));
+}
 
 $("#btnAgregarU").click(function(){
     $('#modalAgregarU').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');

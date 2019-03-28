@@ -15,6 +15,12 @@ class NatacionController extends ControladorBase {
         echo $dao->mostrarNatacion();
     }
 
+    public function mostrarNatacionPagos() {
+        $dao = new DaoNatacion();
+
+        echo $dao->mostrarNatacionPagos();
+    }
+
     public function registrar() {
 
         $nombre = $_REQUEST["nombreJ"];
@@ -57,14 +63,7 @@ class NatacionController extends ControladorBase {
         echo $dao->eliminar();
     }
 
-    public function reinscribir() {
- 
-        $dao = new DaoNatacion();
 
-        $dao->objeto->setIdUsuario($_REQUEST["id"]);
-
-        echo $dao->reinscribir();
-    }
 
     public function cargarDatosNatacion() {
         $id = $_REQUEST["id"];
@@ -122,6 +121,70 @@ class NatacionController extends ControladorBase {
         $resultado1 = $dao->fichaN();
 
         $reporte->escuelaNatacion($id, $resultado, $resultado1);
+    }
+
+
+    public function reinscribir() {
+ 
+        $dao = new DaoNatacion();
+
+        $dao->objeto->setIdUsuario($_REQUEST["id"]);
+
+        echo $dao->reinscribir();
+        echo $dao->primerPago();
+        echo $dao->segundoPago();
+        echo $dao->tercerPago();
+        echo $dao->cuartoPago();
+        echo $dao->quintoPago();
+        echo $dao->sextoPago();
+        echo $dao->septimoPago();
+        echo $dao->octavoPago();
+        echo $dao->novenoPago();
+        echo $dao->decimoPago();
+        echo $dao->oncePago();
+        echo $dao->docePago();
+    }
+
+    public function pagos(){
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoNatacion();
+
+        $dao->objeto->setIdUsuario($id);
+
+        $resultado =$dao->pagos();
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $json .= json_encode($fila).',';
+
+        }
+
+        $json = substr($json, 0, strlen($json) - 1);
+
+        echo'['.$json.']';
+    }
+
+    public function cobrar(){
+        $id = $_REQUEST["idCobroN"];
+        $cantidad = $_REQUEST["cantidadN"];
+
+        $dao = new DaoNatacion();
+
+        $dao->objeto->setIdPago($id);
+
+        echo $dao->cobrar();
+
+        $daoI = new DaoIngresos();
+
+        $daoI->objeto->setTitle("Escuela de Natación");
+        $daoI->objeto->setCantidad($cantidad);
+
+        
+        echo $daoI->guardarOtro();
+
     }
  
 

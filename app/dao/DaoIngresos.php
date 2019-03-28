@@ -176,7 +176,7 @@ class DaoIngresos extends DaoBase {
 
 
     public function guardarOtro(){
-        $_query = "insert into ingresos values (null,'".$this->objeto->getTitle()."',curdate(),'".$this->objeto->getCantidad()."','#140E93','#E6C404','03','2019',1);";
+        $_query = "insert into ingresos values (null,'".$this->objeto->getTitle()."',curdate(),'".$this->objeto->getCantidad()."','#140E93','#E6C404',DATE_FORMAT(CURDATE(),'%m'),year(CURRENT_DATE()),1);";
 
         $resultado = $this->con->ejecutar($_query);
 

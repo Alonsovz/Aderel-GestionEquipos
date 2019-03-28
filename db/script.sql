@@ -95,8 +95,8 @@ CREATE TABLE partidos (
   id int primary key auto_increment,
   partido_N INT NULL,
   cancha INT NULL,
-  equipo1_id INT NULL,
-  equipo2_id INT NULL,
+  equipo1_id varchar(100),
+  equipo2_id varchar(100),
   fecha VARCHAR(45) NULL,
   hora VARCHAR(45) NULL,
   jornadas_id INT NOT NULL
@@ -106,7 +106,7 @@ CREATE TABLE jornadas (
   id int primary key auto_increment,
   vuelta_N INT NULL,
   orden INT NULL,
-  descansa_id_Equipo INT NULL,
+  descansa_id_Equipo varchar(100),
   idTorneo INT(11) NOT NULL
 );
 
@@ -188,11 +188,17 @@ dui varchar(100),
 telefono varchar(20),
 fechaInscripcion date,
 fechaFinal date,
+estado int,
 idEliminado int
 );
 
 
-
+create table pagoNatacion(
+id int primary key auto_increment,
+idUsuario int,
+fechasPago date,
+estado int
+);
 
 
 create table nivelEscuela(
@@ -218,8 +224,17 @@ encargado varchar(50),
 dui varchar(15),
 telefono varchar(20),
 fechaInscripcion date,
+fechaFinal date,
 idEscuela int,
+estado int,
 idEliminado int
+);
+
+create table pagoEscuelaFut(
+id int primary key auto_increment,
+idUsuario int,
+fechasPago date,
+estado int
 );
 
 alter table partidos add constraint fk_partidos_jornadas foreign key (jornadas_id) references jornadas(id);
@@ -230,6 +245,12 @@ alter table jornadas add constraint fk_jornadas_torneos foreign key (idTorneo) r
 
 
 alter table pagoGimnasio add constraint fk_pagoGimnasio_gimnasio foreign key (idUsuario) references gimnasio(idUsuario);
+
+alter table pagoEscuelaFut add constraint fk_pagoEscuelaFut_escuelaFut foreign key (idUsuario) references escuelaFut(idUsuario);
+
+alter table pagoNatacion add constraint fk_pagoNatacion_natacion foreign key (idUsuario) references natacion(idUsuario);
+
+
 
 alter table inscriJugador add constraint fk_inscriJugador_equipos foreign key (idEquipo) references equipos(idEquipo);
 alter table inscriJugador add constraint fk_inscriJugador_jugadores foreign key (idJugador) references jugadores(idJugador);
@@ -284,7 +305,7 @@ insert into gimnasio values(null,'GY000002','','','','2019-02-02','1','2019-02-0
 
 
 
-insert into natacion values(null,'EN000001','','','','2019-02-02','1','NA','NA','NA','2019-02-01','2019-03-01',1);
+insert into natacion values(null,'EN000001','','','','2019-02-02','1','NA','NA','NA','2019-02-01','2019-03-01',1,1);
 
 insert into nivelEscuela values(null,'1er nivel','Walter Hernandez','Lunes y Miercoles','5:00 pm a 6:00 pm',6,7,1);
 insert into nivelEscuela values(null,'2do nivel','Enrique Pacheco','Lunes y Miercoles','5:00 pm a 6:00 pm',8,9,2);
@@ -293,7 +314,7 @@ insert into nivelEscuela values(null,'4to nivel','Carmelo de Jesus Serpas','Lune
 insert into nivelEscuela values(null,'5to nivel','Ramiro Villalta','Martes y Jueves','5:00 pm a 6:00 pm',14,15,2);
 insert into nivelEscuela values(null,'6to nivel','Jorge Cardoza','Martes y Jueves','5:00 pm a 6:00 pm',16,17,1);
 
-insert into escuelaFut values(null,'','','','','1999-02-01','','','','',curdate(),1,1);
+insert into escuelaFut values(null,'','','','','1999-02-01','','','','',curdate(),curdate(),1,1,1);
 
 -- ===========================================================================
 -- Procedimientos Usuarios
@@ -529,11 +550,20 @@ begin
 end	
 $$
 
+SELECT j.orden as jornada, j.vuelta_N as vuelta, j.descansa_id_Equipo as descansa,
+ p.equipo1_id as equipo1, p.equipo2_id as equipo2, p.partido_N as partido, p.cancha as cancha,
+ p.fecha as fecha, p.hora as hora FROM partidos p inner JOIN jornadas j on j.id = p.jornadas_id
+ WHERE j.idTorneo = 7
+ 
+ select *,TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from natacion
+        where  idEliminado=1 and idUsuario>1 
 
-
-select p.*, g.nombre as nombre, g.apellido as apellido from pagoGimnasio p
-inner join gimnasio  g on g.idUsuario = p.idUsuario
-
-
-
-insert into pagoGimnasio values(null, 3,ADDDATE(curdate(),INTERVAL 61 DAY),1);
+select *,DATE_FORMAT(fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        DATE_FORMAT(fechaInscripcion, '%d/%m/%Y') as fechaInscripcion,
+        DATE_FORMAT(fechaFinal, '%d/%m/%Y') as fechaFinal,
+        TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from natacion
+        where  idEliminado=1 and idUsuario>1 and estado=2;
+        
+        select * from ingresos
+        
+       

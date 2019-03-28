@@ -562,7 +562,8 @@ class DaoEscuela extends DaoBase {
             if($dia>=$fila["dia"] && $fila["mes"] == $mes && $fila["edad"]>17){
                 $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
-            else if($fila["estado"]==1){
+            else if($fila["estado"]==1)
+            {
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             else{
@@ -829,7 +830,7 @@ class DaoEscuela extends DaoBase {
 
             $object = json_encode($fila);
 
-            $btnCobrar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui  icon red small button\" onclick=\"cobrarEscuelaF(this)\"><i class=\"dollar icon\"></i>Cobrar</button>';
+            $btnCobrar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui  icon blue small button\" onclick=\"cobrarEscuelaF(this)\"><i class=\"dollar icon\"></i>Cobrar</button>';
             $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
             
            
@@ -850,15 +851,30 @@ class DaoEscuela extends DaoBase {
 
 
     public function pagos(){
-        $_query="select p.*,DATE_FORMAT(p.fechasPago, '%d/%m/%Y') as fechaP, g.nombre as nombre, g.apellido as apellido
+        $_query="select p.*,DATE_FORMAT(p.fechasPago, '%d/%m/%Y') as fechaP, g.nombre as nombre, g.apellido as apellido,
+        n.nivel as nivel
          from pagoEscuelaFut p
         inner join escuelaFut  g on g.idUsuario = p.idUsuario
+        inner join nivelEscuela n on n.idEscuela = g.idEscuela
          where p.idUsuario =".$this->objeto->getIdJugador();
 
 
         $resultado = $this->con->ejecutar($_query);
 
         return $resultado;
+    }
+
+    public function cobrar()
+    {
+
+        $_query="update pagoEscuelaFut set estado=2 where id=".$this->objeto->getIdPago();
+       
+
+        $resultado = $this->con->ejecutar($_query);
+        
+        
+        
+
     }
 
 

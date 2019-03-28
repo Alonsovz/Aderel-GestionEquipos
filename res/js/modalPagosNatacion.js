@@ -1,4 +1,4 @@
-Vue.component('modal-pagosfutbol', {
+Vue.component('modal-pagosnatacion', {
 
     props: {
     detalles: {
@@ -8,9 +8,9 @@ Vue.component('modal-pagosfutbol', {
     },
     
     
-    template: `<div class="ui  modal" id="modalDetallesEs">
+    template: `<div class="ui  modal" id="modalDetallesNa">
         <div class="header">
-            <i class="futbol icon"></i><i class="dollar icon"></i>Cobrar cuota de la escuela de Futbol 
+            <i class="life ring icon"></i><i class="dollar icon"></i>Cobrar cuota de la escuela de Natación 
         </div>
     
         <div class="scrolling content">
@@ -36,7 +36,7 @@ Vue.component('modal-pagosfutbol', {
                         </td>
 
                                 <td v-if="detalle.estado == '1'">
-                                <button @click="$parent.cobrarEscFutbol(detalle.id, detalle.idUsuario, detalle.nombre, detalle.apellido, detalle.fechaP, detalle.nivel)"" type="button" class="ui blue button">
+                                <button @click="$parent.cobrarNa(detalle.id, detalle.idUsuario, detalle.nombre, detalle.apellido, detalle.fechaP)"" type="button" class="ui olive button">
                                     <i class="dollar icon"></i>
                                     Cobrar
                                 </button>
@@ -50,7 +50,7 @@ Vue.component('modal-pagosfutbol', {
             </form>
         </div>
         <div class="actions">
-            <button @click="$parent.cerrarE" class="ui deny black button">
+            <button @click="$parent.cerrar" class="ui deny black button">
                 Cerrar
             </button>
         </div>
