@@ -40,7 +40,7 @@ class SorteoController extends ControladorBase {
         }
 
         
-        echo 'ok';
+        echo 'ok';//xd
 
         
     }
