@@ -11,6 +11,10 @@
      titulo="Eliminar Jugador de cuarto nivel" sub_titulo="¿Está seguro de querer eliminar este usuario?"
       :campos="campos_eliminar" tamanio='tiny'></modal-eliminar>
 
+      <modal-reinscribir id_form="frmEliminar" id="modalInscribir" url="?1=EscFutbolController&2=reinscribir" 
+        titulo="Inscribir alumno de escuela Aderel"
+        sub_titulo="¿Está seguro de querer Inscribir este alumno?" :campos="campos_eliminar" tamanio='tiny'></modal-reinscribir>
+
         <div class="ui grid">
         <div class="row">
                 <div class="titulo">
@@ -70,6 +74,7 @@
                         <tr>
                         
                         <th style="background-color: #04B4AE; color:white;">N°</th>
+                        <th style="background-color: #CD2020; color:white;"></th>
                             <th style="background-color: #CD2020; color:white;">Cod. Expediente</th>
                             <th style="background-color: #CD2020; color:white;">Nombres</th>
                             <th style="background-color: #CD2020; color:white;">Apellido</th>
@@ -77,10 +82,9 @@
                             <th style="background-color: #CD2020; color:white;">Edad</th>
                             <th style="background-color: #CD2020; color:white;">Carnet Min.</th>
                             <th style="background-color: #CD2020; color:white;">Encargado</th>
-                            <th style="background-color: #CD2020; color:white;">DUI Encargado</th>
                             <th style="background-color: #CD2020; color:white;">Teléfono</th>
                             <th style="background-color: #CD2020; color:white;">Fecha de Inscripción</th>
-                            <th style="background-color: #CD2020; color:white;">Acciones</th>
+                            <th style="background-color: #CD2020; color:white;">Inscrito hasta</th>
                            
                         </tr>
                     </thead>
@@ -203,6 +207,7 @@
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
+<script src="./res/js/modalReinscribir.js"></script>
 <script>
 var app = new Vue({
         el: "#app",
@@ -350,6 +355,11 @@ var reporte=(ele)=>{
     var id = $(ele).attr("id");
 window.open('?1=EscFutbolController&2=ficha&id='+id,'_blank');
 return false;
+}
+
+var reinscribirUsuario=(ele)=>{
+  $('#modalInscribir').modal('setting', 'closable', false).modal('show');
+  $('#idEliminar').val($(ele).attr("id"));
 }
 
 $(document).ready(function(){

@@ -38,6 +38,12 @@ class EscFutbolController extends ControladorBase {
         require_once './app/view/GestionEscFut/sexto.php';
     }
 
+    public function mostrarEscFutPagos() {
+        $dao = new DaoEscuela();
+
+        echo $dao->mostrarEscFutPagos();
+    }
+
     public function mostrarPrimer() {
         $dao = new DaoEscuela();
 
@@ -315,6 +321,50 @@ class EscFutbolController extends ControladorBase {
         $resultado1 = $dao->ficha();
 
         $reporte->fichaEscuela($id, $resultado, $resultado1);
+    }
+
+    public function reinscribir() {
+ 
+        $dao = new DaoEscuela();
+
+        $dao->objeto->setIdJugador($_REQUEST["id"]);
+
+        echo $dao->reinscribir();
+        echo $dao->primerPago();
+        echo $dao->segundoPago();
+        echo $dao->tercerPago();
+        echo $dao->cuartoPago();
+        echo $dao->quintoPago();
+        echo $dao->sextoPago();
+        echo $dao->septimoPago();
+        echo $dao->octavoPago();
+        echo $dao->novenoPago();
+        echo $dao->decimoPago();
+        echo $dao->oncePago();
+        echo $dao->docePago();
+    }
+
+
+    public function pagos(){
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoEscuela();
+
+        $dao->objeto->setIdJugador($id);
+
+        $resultado =$dao->pagos();
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $json .= json_encode($fila).',';
+
+        }
+
+        $json = substr($json, 0, strlen($json) - 1);
+
+        echo'['.$json.']';
     }
 
 

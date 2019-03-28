@@ -10,7 +10,11 @@ class DaoEscuela extends DaoBase {
     public function mostrarPrimer()
     {
         $_query = "select e.*,TIMESTAMPDIFF(YEAR,e.fechaNacimiento,CURDATE()) AS edad, date_format(e.fechaNacimiento, '%d') as dia,
-        date_format(e.fechaNacimiento, '%m') as mes from escuelaFut e
+        date_format(e.fechaNacimiento, '%m') as mes,
+        DATE_FORMAT(e.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        DATE_FORMAT(e.fechaInscripcion, '%d/%m/%Y') as fechaInscripcion,
+        DATE_FORMAT(e.fechaFinal, '%d/%m/%Y') as fechaFinal
+        from escuelaFut e
                 where  e.idEliminado=1 and e.idEscuela=1 and e.idUsuario>1";
 
         $_json = '';
@@ -35,10 +39,15 @@ class DaoEscuela extends DaoBase {
             $reporte = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"reporte(this)\"> <i class=\"file outline icon\"></i>Ficha</button>';
             $btnMover = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon yellow small button\" onclick=\"mover(this)\"> <i class=\"arrow up icon\"></i> Mover</button>';
             $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
+            $btnInscribir = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnVencidos icon violet small button\" onclick=\"reinscribirUsuario(this)\"><i class=\"pencil alternate icon\"></i>Inscripción</button>';
 
             if($dia>=$fila["dia"] && $fila["mes"] == $mes && $fila["edad"]>7){
                 $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
-            }else{
+            }
+            else if($fila["estado"]==1){
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+            }
+            else{
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
                 
@@ -90,7 +99,8 @@ class DaoEscuela extends DaoBase {
         $query = "Insert into escuelaFut values (null,'".$idExp."','".$this->objeto->getImg()."',
         '".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
         '".$this->objeto->getFechaNacimiento()."','".$this->objeto->getCarnet()."',
-        '".$this->objeto->getEncargado()."', '".$this->objeto->getDui()."','".$this->objeto->getTelefono()."',curdate(),1,1);";
+        '".$this->objeto->getEncargado()."', '".$this->objeto->getDui()."','".$this->objeto->getTelefono()."',
+        curdate(),curdate(),1,1,1);";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -105,7 +115,11 @@ class DaoEscuela extends DaoBase {
     public function mostrarSegundo()
     {
         $_query = "select e.*,TIMESTAMPDIFF(YEAR,e.fechaNacimiento,CURDATE()) AS edad, date_format(e.fechaNacimiento, '%d') as dia,
-        date_format(e.fechaNacimiento, '%m') as mes from escuelaFut e
+        date_format(e.fechaNacimiento, '%m') as mes,
+        DATE_FORMAT(e.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        DATE_FORMAT(e.fechaInscripcion, '%d/%m/%Y') as fechaInscripcion,
+        DATE_FORMAT(e.fechaFinal, '%d/%m/%Y') as fechaFinal
+        from escuelaFut e
                 where  e.idEliminado=1 and e.idEscuela=2 and e.idUsuario>1";
 
         $_json = '';
@@ -130,10 +144,15 @@ class DaoEscuela extends DaoBase {
             $reporte = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"reporte(this)\"><i class=\"file outline icon\"></i> Ficha</button>';
             $btnMover = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon yellow small button\" onclick=\"mover(this)\"><i class=\"arrow up icon\"></i> Mover</button>';
             $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
+            $btnInscribir = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnVencidos icon violet small button\" onclick=\"reinscribirUsuario(this)\"><i class=\"pencil alternate icon\"></i>Inscripción</button>';
 
             if($dia>=$fila["dia"] && $fila["mes"] == $mes && $fila["edad"]>9){
                 $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
-            }else{
+            }
+            else if($fila["estado"]==1){
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+            }
+            else{
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
                 
@@ -184,7 +203,8 @@ class DaoEscuela extends DaoBase {
 
         $query = "Insert into escuelaFut values (null,'".$idExp."','".$this->objeto->getImg()."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
         '".$this->objeto->getFechaNacimiento()."','".$this->objeto->getCarnet()."',
-        '".$this->objeto->getEncargado()."', '".$this->objeto->getDui()."','".$this->objeto->getTelefono()."',curdate(),2,1);";
+        '".$this->objeto->getEncargado()."', '".$this->objeto->getDui()."','".$this->objeto->getTelefono()."',
+        curdate(),curdate(),2,1,1);";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -199,7 +219,11 @@ class DaoEscuela extends DaoBase {
     public function mostrarTercero()
     {
         $_query = "select e.*,TIMESTAMPDIFF(YEAR,e.fechaNacimiento,CURDATE()) AS edad, date_format(e.fechaNacimiento, '%d') as dia,
-        date_format(e.fechaNacimiento, '%m') as mes from escuelaFut e
+        date_format(e.fechaNacimiento, '%m') as mes,
+        DATE_FORMAT(e.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        DATE_FORMAT(e.fechaInscripcion, '%d/%m/%Y') as fechaInscripcion,
+        DATE_FORMAT(e.fechaFinal, '%d/%m/%Y') as fechaFinal
+        from escuelaFut e
                 where  e.idEliminado=1 and e.idEscuela=3 and e.idUsuario>1";
 
         $_json = '';
@@ -223,12 +247,17 @@ class DaoEscuela extends DaoBase {
             $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminar(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
             $reporte = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"reporte(this)\"><i class=\"file outline icon\"></i> Ficha</button>';
             $btnMover = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon yellow small button\" onclick=\"mover(this)\"><i class=\"arrow up icon\"></i> Mover</button>';
-            
+            $btnInscribir = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnVencidos icon violet small button\" onclick=\"reinscribirUsuario(this)\"><i class=\"pencil alternate icon\"></i>Inscripción</button>';
+
             $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
             if($dia>=$fila["dia"] && $fila["mes"] == $mes && $fila["edad"]>11){
                 $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
-            }else{
+            }
+            else if($fila["estado"]==1){
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+            }
+            else{
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
@@ -277,7 +306,8 @@ class DaoEscuela extends DaoBase {
 
         $query = "Insert into escuelaFut values (null,'".$idExp."','".$this->objeto->getImg()."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
         '".$this->objeto->getFechaNacimiento()."','".$this->objeto->getCarnet()."',
-        '".$this->objeto->getEncargado()."', '".$this->objeto->getDui()."','".$this->objeto->getTelefono()."',curdate(),3,1);";
+        '".$this->objeto->getEncargado()."', '".$this->objeto->getDui()."','".$this->objeto->getTelefono()."',
+        curdate(),curdate(),3,1,1);";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -292,7 +322,11 @@ class DaoEscuela extends DaoBase {
     public function mostrarCuarto()
     {
         $_query = "select e.*,TIMESTAMPDIFF(YEAR,e.fechaNacimiento,CURDATE()) AS edad, date_format(e.fechaNacimiento, '%d') as dia,
-        date_format(e.fechaNacimiento, '%m') as mes from escuelaFut e
+        date_format(e.fechaNacimiento, '%m') as mes,
+        DATE_FORMAT(e.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        DATE_FORMAT(e.fechaInscripcion, '%d/%m/%Y') as fechaInscripcion,
+        DATE_FORMAT(e.fechaFinal, '%d/%m/%Y') as fechaFinal
+        from escuelaFut e
                 where  e.idEliminado=1 and e.idEscuela=4 and e.idUsuario>1";
 
         $_json = '';
@@ -316,12 +350,17 @@ class DaoEscuela extends DaoBase {
             $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminar(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
             $reporte = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"reporte(this)\"><i class=\"file outline icon\"></i> Ficha</button>';
             $btnMover = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon yellow small button\" onclick=\"mover(this)\"><i class=\"arrow up icon\"></i> Mover </button>';
-            
+            $btnInscribir = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnVencidos icon violet small button\" onclick=\"reinscribirUsuario(this)\"><i class=\"pencil alternate icon\"></i>Inscripción</button>';
+
             $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
             if($dia>=$fila["dia"] && $fila["mes"] == $mes && $fila["edad"]>13){
                 $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
-            }else{
+            }
+            else if($fila["estado"]==1){
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+            }
+            else{
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
 
@@ -371,7 +410,8 @@ class DaoEscuela extends DaoBase {
 
         $query = "Insert into escuelaFut values (null,'".$idExp."','".$this->objeto->getImg()."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
         '".$this->objeto->getFechaNacimiento()."','".$this->objeto->getCarnet()."',
-        '".$this->objeto->getEncargado()."', '".$this->objeto->getDui()."','".$this->objeto->getTelefono()."',curdate(),4,1);";
+        '".$this->objeto->getEncargado()."', '".$this->objeto->getDui()."','".$this->objeto->getTelefono()."',
+        curdate(),curdate(),4,1,1);";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -386,7 +426,11 @@ class DaoEscuela extends DaoBase {
     public function mostrarQuinto()
     {
         $_query = "select e.*,TIMESTAMPDIFF(YEAR,e.fechaNacimiento,CURDATE()) AS edad, date_format(e.fechaNacimiento, '%d') as dia,
-        date_format(e.fechaNacimiento, '%m') as mes from escuelaFut e
+        date_format(e.fechaNacimiento, '%m') as mes,
+        DATE_FORMAT(e.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        DATE_FORMAT(e.fechaInscripcion, '%d/%m/%Y') as fechaInscripcion,
+        DATE_FORMAT(e.fechaFinal, '%d/%m/%Y') as fechaFinal
+        from escuelaFut e
                 where  e.idEliminado=1 and e.idEscuela=5 and e.idUsuario>1";
 
         $_json = '';
@@ -405,7 +449,7 @@ class DaoEscuela extends DaoBase {
 
             $object = json_encode($fila);
 
-           
+           $btnInscribir = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnVencidos icon violet small button\" onclick=\"reinscribirUsuario(this)\"><i class=\"pencil alternate icon\"></i>Inscripción</button>';
             $btnEditar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editar(this)\"><i class=\"edit icon\"></i>Editar</button>';
             $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminar(this)\"><i class=\"trash icon\"></i>Eliminar</button>';
             $reporte = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"reporte(this)\"><i class=\"file outline icon\"></i>Ficha</button>';
@@ -415,7 +459,11 @@ class DaoEscuela extends DaoBase {
 
             if($dia>=$fila["dia"] && $fila["mes"] == $mes && $fila["edad"]>15){
                 $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
-            }else{
+            }
+            else if($fila["estado"]==1){
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+            }
+            else{
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
@@ -464,7 +512,8 @@ class DaoEscuela extends DaoBase {
 
         $query = "Insert into escuelaFut values (null,'".$idExp."','".$this->objeto->getImg()."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
         '".$this->objeto->getFechaNacimiento()."','".$this->objeto->getCarnet()."',
-        '".$this->objeto->getEncargado()."', '".$this->objeto->getDui()."','".$this->objeto->getTelefono()."',curdate(),5,1);";
+        '".$this->objeto->getEncargado()."', '".$this->objeto->getDui()."','".$this->objeto->getTelefono()."',
+        curdate(),curdate(),5,1,1);";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -479,7 +528,11 @@ class DaoEscuela extends DaoBase {
     public function mostrarSexto()
     {
         $_query = "select e.*,TIMESTAMPDIFF(YEAR,e.fechaNacimiento,CURDATE()) AS edad, date_format(e.fechaNacimiento, '%d') as dia,
-        date_format(e.fechaNacimiento, '%m') as mes from escuelaFut e
+        date_format(e.fechaNacimiento, '%m') as mes,
+        DATE_FORMAT(e.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        DATE_FORMAT(e.fechaInscripcion, '%d/%m/%Y') as fechaInscripcion,
+        DATE_FORMAT(e.fechaFinal, '%d/%m/%Y') as fechaFinal
+        from escuelaFut e
                 where  e.idEliminado=1 and e.idEscuela=6 and e.idUsuario>1";
 
         $_json = '';
@@ -498,7 +551,7 @@ class DaoEscuela extends DaoBase {
 
             $object = json_encode($fila);
 
-           
+            $btnInscribir = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnVencidos icon violet small button\" onclick=\"reinscribirUsuario(this)\"><i class=\"pencil alternate icon\"></i>Inscripción</button>';
             $btnEditar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editar(this)\"><i class=\"edit icon\"></i>Editar</button>';
             $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminar(this)\"><i class=\"trash icon\"></i>Eliminar</button>';
             $reporte = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui icon grey small button\" onclick=\"reporte(this)\"><i class=\"file outline icon\"></i>Ficha</button>';
@@ -508,7 +561,11 @@ class DaoEscuela extends DaoBase {
 
             if($dia>=$fila["dia"] && $fila["mes"] == $mes && $fila["edad"]>17){
                 $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
-            }else{
+            }
+            else if($fila["estado"]==1){
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+            }
+            else{
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
 
@@ -557,8 +614,8 @@ class DaoEscuela extends DaoBase {
 
 
         $query = "Insert into escuelaFut values (null,'".$idExp."','".$this->objeto->getImg()."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
-        '".$this->objeto->getFechaNacimiento()."','".$this->objeto->getCarnet()."',
-        '".$this->objeto->getEncargado()."', '".$this->objeto->getDui()."','".$this->objeto->getTelefono()."',curdate(),6,1);";
+        '".$this->objeto->getFechaNacimiento()."','".$this->objeto->getCarnet()."','".$this->objeto->getEncargado()."', 
+        '".$this->objeto->getDui()."','".$this->objeto->getTelefono()."',curdate(),curdate(),6,1,1);";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -646,6 +703,163 @@ class DaoEscuela extends DaoBase {
         return $resultado;
     }
 
+    public function reinscribir() {
+        $_query = "update escuelaFut set fechaInscripcion=curdate(), estado=2,
+         fechaFinal=ADDDATE(curdate(),INTERVAL 366 DAY) where idUsuario = ".$this->objeto->getIdJugador();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function primerPago(){
+        $_query = "insert into pagoEscuelaFut values(null, '".$this->objeto->getIdJugador()."',
+        ADDDATE(curdate(),INTERVAL 0 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function segundoPago(){
+        $_query = "insert into pagoEscuelaFut values(null, '".$this->objeto->getIdJugador()."',
+        ADDDATE(curdate(),INTERVAL 31 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function tercerPago(){
+        $_query = "insert into pagoEscuelaFut values(null, '".$this->objeto->getIdJugador()."',
+        ADDDATE(curdate(),INTERVAL 61 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function cuartoPago(){
+        $_query = "insert into pagoEscuelaFut values(null, '".$this->objeto->getIdJugador()."',
+        ADDDATE(curdate(),INTERVAL 92 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function quintoPago(){
+        $_query = "insert into pagoEscuelaFut values(null, '".$this->objeto->getIdJugador()."',
+        ADDDATE(curdate(),INTERVAL 122 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function sextoPago(){
+        $_query = "insert into pagoEscuelaFut values(null, '".$this->objeto->getIdJugador()."',
+        ADDDATE(curdate(),INTERVAL 153 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+    public function septimoPago(){
+        $_query = "insert into pagoEscuelaFut values(null, '".$this->objeto->getIdJugador()."',
+        ADDDATE(curdate(),INTERVAL 183 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function octavoPago(){
+        $_query = "insert into pagoEscuelaFut values(null, '".$this->objeto->getIdJugador()."',
+        ADDDATE(curdate(),INTERVAL 214 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function novenoPago(){
+        $_query = "insert into pagoEscuelaFut values(null, '".$this->objeto->getIdJugador()."',
+        ADDDATE(curdate(),INTERVAL 244 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function decimoPago(){
+        $_query = "insert into pagoEscuelaFut values(null, '".$this->objeto->getIdJugador()."',
+        ADDDATE(curdate(),INTERVAL 275 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function oncePago(){
+        $_query = "insert into pagoEscuelaFut values(null, '".$this->objeto->getIdJugador()."',
+        ADDDATE(curdate(),INTERVAL 305 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function docePago(){
+        $_query = "insert into pagoEscuelaFut values(null, '".$this->objeto->getIdJugador()."',
+        ADDDATE(curdate(),INTERVAL 336 DAY),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+    }
+
+    public function mostrarEscFutPagos()
+    {
+        $_query = "select e.*,DATE_FORMAT(e.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        DATE_FORMAT(e.fechaInscripcion, '%d/%m/%Y') as fechaInscripcion,
+        DATE_FORMAT(e.fechaFinal, '%d/%m/%Y') as fechaFinal,
+        TIMESTAMPDIFF(YEAR,e.fechaNacimiento,CURDATE()) AS edad,
+        n.nivel as nivel from escuelaFut e
+        inner join nivelEscuela n on n.idEscuela = e.idEscuela
+        where  e.idEliminado=1 and e.idUsuario>1 and e.estado=2;";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $_json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $object = json_encode($fila);
+
+            $btnCobrar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui  icon red small button\" onclick=\"cobrarEscuelaF(this)\"><i class=\"dollar icon\"></i>Cobrar</button>';
+            $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
+            
+           
+            $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnCobrar.'</center></td><td><center>'.$imagen.'</center></td></table>"'; 
+           
+            
+           
+
+            $object = substr_replace($object, $acciones, strlen($object) -1, 0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        return '{"data": ['.$_json .']}';
+    }
+
+
+    public function pagos(){
+        $_query="select p.*,DATE_FORMAT(p.fechasPago, '%d/%m/%Y') as fechaP, g.nombre as nombre, g.apellido as apellido
+         from pagoEscuelaFut p
+        inner join escuelaFut  g on g.idUsuario = p.idUsuario
+         where p.idUsuario =".$this->objeto->getIdJugador();
+
+
+        $resultado = $this->con->ejecutar($_query);
+
+        return $resultado;
+    }
 
 
 

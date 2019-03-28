@@ -1,6 +1,7 @@
 <br><br>
 <div id="app">
 <modal-pagos :detalles="detalles"></modal-pagos>
+<modal-pagosfutbol :detalles="detalles"></modal-pagosfutbol>
 <div class="ui grid">
 
         <div class="row">
@@ -129,7 +130,6 @@
             </div>
 
             <div class="field" id="escuelaFutbol">
-            <form class="ui form" id="escuelaFutbolForm">
                 <div class="row">
                     <h3>
                     <i class="dollar icon"></i><i class="futbol icon"></i>
@@ -137,10 +137,34 @@
                    </h3>
                 </div>
                 <br>
-                <div class="fields">
+                <div class="row">
+            <div class="sixteen wide column">
+                <table id="dtEscFutbolPago" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                    <thead>
+                        <tr>
+                        
+                        <th style="background-color: #04B4AE; color:white;">N°</th>
+                        <th style="background-color: #A901DB; color:white;"></th>
+                            <th style="background-color: #A901DB; color:white;">Cod. Expediente</th>
+                            <th style="background-color: #A901DB; color:white;">Nombres</th>
+                            <th style="background-color: #A901DB; color:white;">Apellido</th>
+                            <th style="background-color: #A901DB; color:white;">Edad</th>
+                            <th style="background-color: #A901DB; color:white;">Carnet Min.</th>
+                            <th style="background-color: #A901DB; color:white;">Encargado</th>
+                            <th style="background-color: #A901DB; color:white;">Teléfono</th>
+                            <th style="background-color: #A901DB; color:white;">Nivel</th>
+                            <th style="background-color: #A901DB; color:white;">Fecha de Inscripción</th>
+                            <th style="background-color: #A901DB; color:white;">Inscrito hasta</th>
                             
-                </div>
-                </form>
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
             </div>
 
             <div class="field" id="escuelaNatacion">
@@ -205,11 +229,15 @@
     </div>
 
     <div class="content"> 
-    <input type="hidden" id="idJ">
-    <i class="dollar icon"></i> Cantidad a pagar:
-    <input type="text" id="cantidadF" name="cantidadF">
-    </div>
+        <form class="ui form">
+            <div class="field">
+            <input type="hidden" id="idJ">
+            <i class="dollar icon"></i> Cantidad a pagar:
+            <input type="text" id="cantidadF" name="cantidadF">
+            </div>
+        </form>
 
+    </div>
 
     <div class="actions">
 
@@ -226,9 +254,80 @@
 
 </div>
 
+<div class="ui tiny modal" id="modalCobroGim">
+    <div class="header">
+    <h3>Cobrar mensualidad de Gimnasio a <a id="nombreG"></a> <a id="apellidoG"></a> que tiene como fecha límite <a id="fechaPagoG"></a></h3>
+    </div>
+
+    <div class="content"> 
+    
+
+        <form class="ui form" id="frmCobroGim">
+        <input type="hidden" id="idUsuario">
+            <input type="hidden" id="idCobro" name="idCobro">
+            <div class="field">
+            <i class="dollar icon"></i> Cantidad a pagar:
+            <input type="text" id="cantidadG" name="cantidadG" >
+            </div>
+        </form>
+    </div>
+
+
+    <div class="actions">
+
+    <button class="ui blue button" id="cerrarGim">
+    <i class="close icon"></i> Cerrar
+    <button>
+
+    <button class="ui green button" id="guardarGim">
+    <i class="save icon"></i> Guardar
+    <button>
+
+    </div>
+
+
+</div>
+
+<div class="ui tiny modal" id="modalCobroEscFubol">
+    <div class="header">
+    <h3>Cobrar mensualidad de Escuela de Fútbol a <a id="nombreEF"></a> <a id="apellidoEF"></a>
+    del nivel <a id="nivelEF"></a> que tiene como fecha límite <a id="fechaPagoEF"></a></h3>
+    </div>
+
+    <div class="content"> 
+    
+
+        <form class="ui form" id="frmCobroEscuelaFutbol">
+        <input type="hidden" id="idUsuarioEF">
+            <input type="hiddenEF" id="idCobro" name="idCobro">
+            <div class="field">
+            <i class="dollar icon"></i> Cantidad a pagar:
+            <input type="text" id="cantidadEF" name="cantidadEF" >
+            </div>
+        </form>
+    </div>
+
+
+    <div class="actions">
+
+    <button class="ui blue button" id="cerrarEF">
+    <i class="close icon"></i> Cerrar
+    <button>
+
+    <button class="ui green button" id="guardarEF">
+    <i class="save icon"></i> Guardar
+    <button>
+
+    </div>
+
+
+</div>
+
 <script src="./res/tablas/tablaFondoComun.js"></script>
 <script src="./res/tablas/tablaPagosGim.js"></script>
 <script src="./res/js/modalPagos.js"></script>
+<script src="./res/js/modalPagosEscFutbol.js"></script>
+<script src="./res/tablas/tablaEscFutbolPago.js"></script>
 <script>
 
 var app = new Vue({
@@ -255,65 +354,61 @@ var app = new Vue({
                 });
 
                 },
+
+                cargarDetallesEscF(id) {
+
+                this.idUsuario = parseInt(id);
+
+                $('#frmDetalles').addClass('loading');
+                $.ajax({
+                type: 'POST',
+                url: '?1=EscFutbolController&2=pagos',
+                data: {
+                id: id
+                },
+                success: function (data) {
+                app.detalles = JSON.parse(data);
+                $('#frmDetalles').removeClass('loading');
+                }
+                });
+
+                },
                 cerrar() {
                 this.detalles = [];
                 $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
             },
-            cobrar(id,idUsuario) {
+            cobrar(id,idUsuario,nombre,apellido,fecha) {
                 var idCobro = parseInt(id);
                 var idUsuario = parseInt(idUsuario);
 
-                alertify.confirm("¿Desea cobrar la cuota?",
-            function(){
-                $.ajax({
-                type: 'POST',
-                url: '?1=GimnasioController&2=cobrar',
-                data: {
-                    idCobro:idCobro,
-                },
-                success: function(r) {
-                    if(r == 1) {
-                       // $('#modalAgregarJugador').modal('hide');
-                        swal({
-                            title: 'Listo',
-                            text: 'Cobro realizado con éxito',
-                            type: 'success',
-                            showConfirmButton: false,
-                                timer: 1700
-
-                        }).then((result) => {
-                            $('#modalDetalles').modal('hide');
-                            app.detalles=[];
-                            alertify.confirm("¿Volver a cobrar?",
-                        function(){
-                            
-                            $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                $("#idUsuario").val(idUsuario);
+                $("#idCobro").val(idCobro);
+                $("#nombreG").text(nombre);
+                $("#apellidoG").text(apellido);
+                $("#fechaPagoG").text(fecha);
+                
+                $('#modalCobroGim').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
-                            app.cargarDetalles(idUsuario);
-                        },
-                        function(){
-                            
-                            alertify.error('Cancelado');
-                            $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
-                        });
-                        }); 
-                        
-                    } 
-                }
-            });
-
-
             },
-            function(){
+            cobrarEscFutbol(id,idUsuario,nombre,apellido,fecha,nivel) {
+                var idCobroEF = parseInt(id);
+                var idUsuarioEF = parseInt(idUsuario);
+
+                $("#idUsuarioEF").val(idUsuarioEF);
+                $("#idCobroEF").val(idCobroEF);
+                $("#nombreEF").text(nombre);
+                $("#apellidoEF").text(apellido);
+                $("#fechaPagoEF").text(fecha);
+                $("#nivelEF").text(nivel);
                 
-                alertify.error('Cancelado');
-                
-            });
-                
+                $('#modalCobroEscFubol').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
             }
         }
     });
+
+ 
 </script>
 
 <script>
@@ -323,13 +418,28 @@ var cobrar=(ele)=>{
     app.cargarDetalles($(ele).attr('id'));
   }
 
+  var cobrarEscuelaF=(ele)=>{
+     $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+    app.cargarDetallesEscF($(ele).attr('id'));
+  }
+
 $("#btnModalIngreso").click(function(){
     $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
 });
 
 $("#cerrarFondo").click(function(){
-    $('#quitarFondo').modal('hide');
+    
+    $("#cantidadF").val('');
     $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                .modal('show');
+                $('#quitarFondo').modal('hide');
+});
+
+$("#cerrarGim").click(function(){
+    $('#quitarFondo').modal('hide');
+    $("#cantidadG").val('');
+    $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                 .modal('show');
 });
 
@@ -344,9 +454,72 @@ var quitarFondo=(ele)=>{
                 .modal('show');
 }
 
+$("#guardarGim").click(function(){
+    var idU= $("#idUsuario").val();
+    alertify.confirm("¿Desea cobrar la cuota?",
+            function(){
+    const form = $('#frmCobroGim');
 
+                const datosFormulario = new FormData(form[0]);
+         
+        
+            $.ajax({
+                enctype: 'multipart/form-data',
+                contentType: false,
+                processData: false,
+                cache: false,
+                type: 'POST',
+                url: '?1=GimnasioController&2=cobrar',
+                data: datosFormulario,
+                success: function(r) {
+                    if(r == 1) {
+                        swal({
+                            title: 'Listo',
+                            text: 'Cuota cobrada con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            $("#modalCobroGim").modal("hide");
+                            $("#cantidadG").val('');
+                            app.detalles=[];
+                            $('#modalDetalles').modal('hide');
+
+                            alertify.confirm("¿Volver a cobrar?",
+                        function(){
+                            
+                            $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+                            app.cargarDetalles(idU);
+                        
+                            
+                        },
+                        function(){
+                            $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+                            alertify.error('Cancelado');
+                            
+                        });
+                        }); 
+                    } 
+                }
+            });
+        },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            }); 
+
+});
+
+function limpiarOtro(){
+    $("#cantidad").val('');
+     $("#txtTitulo").val('');
+}
 
 $("#guardarOtro").click(function(){
+    
     alertify.confirm("¿Desea guardar el ingreso?",
             function(){
     const form = $('#frmOtro');
@@ -373,14 +546,13 @@ $("#guardarOtro").click(function(){
                                 timer: 1700
 
                         }); 
-                        //$('#dtJugadoresM').DataTable().ajax.reload();
-                        //limpiar();
+                       limpiarOtro();
                     } 
                 }
             });
         },
             function(){
-                //$("#modalCalendar").modal('toggle');
+                limpiarOtro();
                 alertify.error('Cancelado');
                 
             }); 
@@ -412,9 +584,17 @@ $("#guardarFondo").click(function(){
                             showConfirmButton: false,
                                 timer: 1700
 
-                        }); 
+                        }).then((result) => {
+                            $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+                            $("#quitarFondo").modal('hide');
+                        $("#cantidadF").val();
                         $('#dtFondo').DataTable().ajax.reload();
-                        //limpiar();
+                        
+                            
+                        });
+                        
+                       
+                        
                     } 
                 }
             });

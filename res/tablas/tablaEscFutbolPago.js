@@ -1,10 +1,10 @@
-var tablaTercerN;
+var tablaEscFutbolPago;
 
 $(function() {
-    if($('#dtTercerN').length) {
-        tablaTercerN = $('#dtTercerN').DataTable({
+    if($('#dtEscFutbolPago').length) {
+        tablaEscFutbolPago = $('#dtEscFutbolPago').DataTable({
             "ajax": {
-                "url": "?1=EscFutbolController&2=mostrarTercero",
+                "url": "?1=EscFutbolController&2=mostrarEscFutPagos",
                 "type": "POST"
             },
             "columns": [
@@ -24,9 +24,6 @@ $(function() {
                     "data": "apellido"
                 },
                 {
-                    "data": "fechaNacimiento"
-                },
-                {
                     "data": "edad"
                 },
                 {
@@ -39,12 +36,14 @@ $(function() {
                     "data": "telefono"
                 },
                 {
+                    "data": "nivel"
+                },
+                {
                     "data": "fechaInscripcion"
                 },
                 {
                     "data": "fechaFinal"
-                }   
-                
+                }
             ],
             "order": [
                 [0, "desc"]
@@ -76,6 +75,6 @@ $(function() {
         });
 
          // Ocultar columna de id de Usuario
-         tablaTercerN.column(0).visible(false);
+         tablaEscFutbolPago.column(0).visible(false);
     }
 });

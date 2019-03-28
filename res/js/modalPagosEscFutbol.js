@@ -1,4 +1,4 @@
-Vue.component('modal-pagos', {
+Vue.component('modal-pagosfutbol', {
 
     props: {
     detalles: {
@@ -36,7 +36,7 @@ Vue.component('modal-pagos', {
                         </td>
 
                                 <td v-if="detalle.estado == '1'">
-                                <button @click="$parent.cobrar(detalle.id, detalle.idUsuario, detalle.nombre, detalle.apellido, detalle.fechaP)"" type="button" class="ui green button">
+                                <button @click="$parent.cobrarEscFutbol(detalle.id, detalle.idUsuario, detalle.nombre, detalle.apellido, detalle.fechaP,detalle.nivel)"" type="button" class="ui green button">
                                     <i class="dollar icon"></i>
                                     Cobrar
                                 </button>

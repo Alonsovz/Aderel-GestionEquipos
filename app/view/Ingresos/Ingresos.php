@@ -185,8 +185,10 @@
                         Ingresos <font color="#1CC647" size="20px">.</font>
 
                         <div class="sixteen wide column">
+                        <a href="?1=IngresosController&2=nuevoIngreso" class="ui left floated red button">
+                            <i class="hand left point icon"></i> Volver
+                        </a>
 
-                        
                         <button class="ui right floated blue button" id="btnFechas">
                             <i class="file icon"></i> Reporte de Ingresos
                             </button>

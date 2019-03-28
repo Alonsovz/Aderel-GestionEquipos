@@ -39,10 +39,10 @@ $(function() {
                     "data": "dui"
                 },
                 {
-                    "data": "telefono"
+                    "data": "fechaInscripcion"
                 },
                 {
-                    "data": "fechaInscripcion"
+                    "data": "fechaFinal"
                 }
                 
             ],

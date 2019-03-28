@@ -11,6 +11,9 @@
      titulo="Eliminar Jugador de primer nivel" sub_titulo="¿Está seguro de querer eliminar este usuario?"
       :campos="campos_eliminar" tamanio='tiny'></modal-eliminar>
 
+      <modal-reinscribir id_form="frmEliminar" id="modalInscribir" url="?1=EscFutbolController&2=reinscribir" 
+        titulo="Inscribir alumno de escuela Aderel"
+        sub_titulo="¿Está seguro de querer Inscribir este alumno?" :campos="campos_eliminar" tamanio='tiny'></modal-reinscribir>
 
         <div class="ui grid">
         <div class="row">
@@ -83,9 +86,9 @@
                             <th style="background-color: #04B4AE; color:white;">Edad</th>
                             <th style="background-color: #04B4AE; color:white;">Carnet Min.</th>
                             <th style="background-color: #04B4AE; color:white;">Encargado</th>
-                            <th style="background-color: #04B4AE; color:white;">DUI Encargado</th>
                             <th style="background-color: #04B4AE; color:white;">Teléfono</th>
                             <th style="background-color: #04B4AE; color:white;">Fecha de Inscripción</th>
+                            <th style="background-color: #04B4AE; color:white;">Inscrito hasta</th>
                             
                            
                         </tr>
@@ -213,6 +216,7 @@
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
+<script src="./res/js/modalReinscribir.js"></script>
 
 <script>
 var app = new Vue({
@@ -355,6 +359,11 @@ var editar=(ele)=>{
      $('#idDetalleC').val($(ele).attr("id"));
     app.cargarDatos();
 
+}
+
+var reinscribirUsuario=(ele)=>{
+  $('#modalInscribir').modal('setting', 'closable', false).modal('show');
+  $('#idEliminar').val($(ele).attr("id"));
 }
 
 

@@ -9,7 +9,10 @@ class DaoGimnasio extends DaoBase {
 
     public function mostrarGimnasio()
     {
-        $_query = "select *,TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from gimnasio
+        $_query = "select *,DATE_FORMAT(fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        DATE_FORMAT(fechaInscripcion, '%d/%m/%Y') as fechaInscripcion,
+        DATE_FORMAT(fechaFinal, '%d/%m/%Y') as fechaFinal,
+        TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from gimnasio
         where  idEliminado=1 and idUsuario>1";
 
         $resultado = $this->con->ejecutar($_query);
@@ -59,7 +62,10 @@ class DaoGimnasio extends DaoBase {
 
     public function mostrarGimnasioPagos()
     {
-        $_query = "select *,TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from gimnasio
+        $_query = "select *,DATE_FORMAT(fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        DATE_FORMAT(fechaInscripcion, '%d/%m/%Y') as fechaInscripcion,
+        DATE_FORMAT(fechaFinal, '%d/%m/%Y') as fechaFinal,
+        TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from gimnasio
         where  idEliminado=1 and idUsuario>1 and estado=2;";
 
         $resultado = $this->con->ejecutar($_query);
@@ -71,11 +77,11 @@ class DaoGimnasio extends DaoBase {
             $object = json_encode($fila);
 
             $btnCobrar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui  icon red small button\" onclick=\"cobrar(this)\"><i class=\"dollar icon\"></i>Cobrar</button>';
-         
+            $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
             
            
-            
-            $acciones = ', "Acciones": "'.$btnCobrar.'"';  
+            $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnCobrar.'</center></td><td><center>'.$imagen.'</center></td></table>"'; 
+           
             
            
 
@@ -330,7 +336,7 @@ class DaoGimnasio extends DaoBase {
 
 
     public function pagos(){
-        $_query="select p.*, g.nombre as nombre, g.apellido as apellido from pagoGimnasio p
+        $_query="select p.*,DATE_FORMAT(p.fechasPago, '%d/%m/%Y') as fechaP, g.nombre as nombre, g.apellido as apellido from pagoGimnasio p
         inner join gimnasio  g on g.idUsuario = p.idUsuario
          where p.idUsuario =".$this->objeto->getIdUsuario();
 
@@ -348,14 +354,7 @@ class DaoGimnasio extends DaoBase {
        
 
         $resultado = $this->con->ejecutar($_query);
-        if($resultado)
-        {
-            return 1;
-        }
-        else
-        {
-            return 0;
-        }
+        
         
         
 

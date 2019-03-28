@@ -160,7 +160,7 @@
 var app = new Vue({
         el: "#app",
         data: {
-            detalles: []
+            detalles: [],
            
             campos_registro: [{
                     label: 'Nombre del Usuario',

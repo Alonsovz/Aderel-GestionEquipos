@@ -11,6 +11,10 @@
      titulo="Eliminar Jugador de tercer nivel" sub_titulo="¿Está seguro de querer eliminar este usuario?"
       :campos="campos_eliminar" tamanio='tiny'></modal-eliminar>
 
+      <modal-reinscribir id_form="frmEliminar" id="modalInscribir" url="?1=EscFutbolController&2=reinscribir" 
+        titulo="Inscribir alumno de escuela Aderel"
+        sub_titulo="¿Está seguro de querer Inscribir este alumno?" :campos="campos_eliminar" tamanio='tiny'></modal-reinscribir>
+
         <div class="ui grid">
         <div class="row">
                 <div class="titulo">
@@ -70,17 +74,17 @@
                         <tr>
                         
                         <th style="background-color: #04B4AE; color:white;">N°</th>
-                        <th style="background-color: #FACC2E; color:black;"></th>
-                            <th style="background-color: #FACC2E; color:black;">Cod. Expediente</th>
-                            <th style="background-color: #FACC2E; color:black;">Nombres</th>
-                            <th style="background-color: #FACC2E; color:black;">Apellido</th>
-                            <th style="background-color: #FACC2E; color:black;">Fecha Nac</th>
-                            <th style="background-color: #FACC2E; color:black;">Edad</th>
-                            <th style="background-color: #FACC2E; color:black;">Carnet Min.</th>
-                            <th style="background-color: #FACC2E; color:black;">Encargado</th>
-                            <th style="background-color: #FACC2E; color:black;">DUI Encargado</th>
-                            <th style="background-color: #FACC2E; color:black;">Teléfono</th>
-                            <th style="background-color: #FACC2E; color:black;">Fecha de Inscripción</th>
+                        <th style="background-color: #FACC2E; color:white;"></th>
+                            <th style="background-color: #FACC2E; color:white;">Cod. Expediente</th>
+                            <th style="background-color: #FACC2E; color:white;">Nombres</th>
+                            <th style="background-color: #FACC2E; color:white;">Apellido</th>
+                            <th style="background-color: #FACC2E; color:white;">Fecha Nac</th>
+                            <th style="background-color: #FACC2E; color:white;">Edad</th>
+                            <th style="background-color: #FACC2E; color:white;">Carnet Min.</th>
+                            <th style="background-color: #FACC2E; color:white;">Encargado</th>
+                            <th style="background-color: #FACC2E; color:white;">Teléfono</th>
+                            <th style="background-color: #FACC2E; color:white;">Fecha de Inscripción</th>
+                            <th style="background-color: #FACC2E; color:white;">Inscrito hasta</th>
                             
                            
                         </tr>
@@ -208,6 +212,7 @@
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
+<script src="./res/js/modalReinscribir.js"></script>
 
 <script>
 var app = new Vue({
@@ -351,6 +356,11 @@ var editar=(ele)=>{
      $('#idDetalleC').val($(ele).attr("id"));
     app.cargarDatos();
 
+}
+
+var reinscribirUsuario=(ele)=>{
+  $('#modalInscribir').modal('setting', 'closable', false).modal('show');
+  $('#idEliminar').val($(ele).attr("id"));
 }
 
 var reporte=(ele)=>{
