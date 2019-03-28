@@ -299,7 +299,7 @@
 
         <form class="ui form" id="frmCobroEscuelaFutbol">
         <input type="hidden" id="idUsuarioEF">
-            <input type="hiddenEF" id="idCobro" name="idCobro">
+            <input type="hidden" id="idCobroEF" name="idCobroEF">
             <div class="field">
             <i class="dollar icon"></i> Cantidad a pagar:
             <input type="text" id="cantidadEF" name="cantidadEF" >
