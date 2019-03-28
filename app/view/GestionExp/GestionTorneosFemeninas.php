@@ -12,6 +12,7 @@
 <modal-eliminar id_form="frmEliminarT" id="modalEliminarT" url="?1=TorneosController&2=eliminarF" titulo="Eliminar Torneo"
 sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_eliminarT" tamanio='tiny'></modal-eliminar>
 <modal-detalles :detalles="detalles"></modal-detalles>
+<modal-jornadas :detalles="detalles"></modal-jornadas>
 
     <div class="ui grid">
             <div class="row">
@@ -124,6 +125,7 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
 <script src="./res/js/modalDetallesE.js"></script>
+<script src="./res/js/modalJornadasTorneo.js"></script>
 <script>
 var appE = new Vue({
         el: "#appT",
@@ -197,6 +199,24 @@ var appE = new Vue({
             });
 
             },
+            cargarDetallesJornadas(id) {
+
+            this.idTorneo = parseInt(id);
+
+            $('#frmDetalles').addClass('loading');
+            $.ajax({
+            type: 'POST',
+            url: '?1=TorneosController&2=calendarioGestionT',
+            data: {
+            id: id
+            },
+            success: function (data) {
+            appE.detalles = JSON.parse(data);
+            $('#frmDetalles').removeClass('loading');
+            }
+            });
+
+            },
             cerrarModal() {
                 this.detalles = [];
             },
@@ -237,6 +257,11 @@ var eliminarTorneo=(ele)=>{
   $('#idEliminar').val($(ele).attr("id"));
 }
 
+var calendarizacion=(ele)=>{
+     $('#modalDetallesJornadasM').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+    appE.cargarDetallesJornadas($(ele).attr('id'));
+  }
 
 var editarTorneo=(ele)=>{
             $('#modalEditarT').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');

@@ -222,6 +222,29 @@ class TorneosController extends ControladorBase {
         $validar2,$validar3,$validar4,$validarDescanso1,$validarDescanso2,$validarDescanso3,$validarDescanso4);
     }
 
+
+    public function calendarioGestionT(){
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoTorneos();
+
+        $dao->objeto->setIdTorneo($id);
+
+        $resultado =$dao->calendarioGestionT();
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $json .= json_encode($fila).',';
+
+        }
+
+        $json = substr($json, 0, strlen($json) - 1);
+
+        echo'['.$json.']';
+    }
+
 }
 
 

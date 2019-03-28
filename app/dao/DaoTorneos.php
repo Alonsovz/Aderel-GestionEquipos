@@ -31,9 +31,10 @@ class DaoTorneos extends DaoBase {
                 $btnEliminar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEliminarT icon negative small button\" onclick=\"eliminarTorneo(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
                 $btnVer = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon green small button\" onclick=\"verEquipos(this)\"><i class=\"users icon\"></i> Equipos</button>';
                 $sorteo = '<button id=\"'.$fila["idTorneo"].'\"  equipos=\"'.$fila["inscritos"]. '\" name=\"'.$fila["nombreTorneo"]. '\"  class=\"ui icon yellow small button\" onclick=\"sorteos(this)\"><i class=\"futbol icon\"></i> Sorteo</button>';
-                $btnReporte = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon green small button\" onclick=\"reporte(this)\"><i class=\"file outline icon\"></i>Ficha</button>';
+                $btnReporte = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon purple small button\" onclick=\"reporte(this)\"><i class=\"calendar icon\"></i>Calendarización</button>';
+                $btnGestion = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon gray small button\" onclick=\"calendarizacion(this)\"><i class=\"calendar icon\"></i>Gestionar</button>';
 
-                $acciones = ', "Acciones": "'.$btnVer.''.$sorteo.''.$btnEditar.' '.$btnEliminar.''.$btnReporte.'"';
+                $acciones = ', "Acciones": "'.$btnVer.''.$sorteo.''.$btnEditar.' '.$btnEliminar.''.$btnReporte.''.$btnGestion.'"';
                 
 
                 $object = substr_replace($object, $acciones, strlen($object) -1,0);
@@ -64,14 +65,14 @@ class DaoTorneos extends DaoBase {
                 $object = json_encode($fila);
                
                
-
+                $btnGestion = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon gray small button\" onclick=\"calendarizacion(this)\"><i class=\"calendar icon\"></i>Gestionar</button>';
                 $btnEditar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEditarT icon blue small button\" onclick=\"editarTorneo(this)\"><i class=\"edit icon\"></i> Editar </button>';
                 $btnEliminar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEliminarT icon negative small button\" onclick=\"eliminarTorneo(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
                 $btnVer = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon green small button\" onclick=\"verEquipos(this)\"><i class=\"users icon\"></i> Equipos</button>';
                 $sorteo = '<button id=\"'.$fila["idTorneo"].'\"  equipos=\"'.$fila["inscritos"]. '\" name=\"'.$fila["nombreTorneo"]. '\"  class=\"ui icon yellow small button\" onclick=\"sorteos(this)\"><i class=\"futbol icon\"></i>Sorteo</button>';
-                $btnReporte = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon green small button\" onclick=\"reporte(this)\"><i class=\"file outline icon\"></i>Ficha</button>';
+                $btnReporte = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon olive small button\" onclick=\"reporte(this)\"><i class=\"calendar icon\"></i>Calendarización</button>';
 
-                $acciones = ', "Acciones": "'.$btnVer.''.$sorteo .''.$btnEditar.' '.$btnEliminar.''.$btnReporte .'"';
+                $acciones = ', "Acciones": "'.$btnVer.''.$sorteo .''.$btnEditar.' '.$btnEliminar.''.$btnReporte .''.$btnGestion.'"';
                 
 
                 $object = substr_replace($object, $acciones, strlen($object) -1,0);
@@ -361,6 +362,20 @@ class DaoTorneos extends DaoBase {
         inner JOIN jornadas j on j.id = p.jornadas_id
         inner join torneos t on t.idTorneo = j.idTorneo
         WHERE  j.vuelta_N=4 and j.idTorneo =".$this->objeto->getIdTorneo();
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+
+    public function calendarioGestionT(){
+        $query = "select j.orden as jornada, j.vuelta_N as vuelta, j.descansa_id_Equipo as descansa,
+        p.equipo1_id as equipo1, p.equipo2_id as equipo2, p.partido_N as partido, p.cancha as cancha,
+        p.fecha as fecha, p.hora as hora,t.nombreTorneo as nombreT FROM partidos p 
+        inner JOIN jornadas j on j.id = p.jornadas_id
+        inner join torneos t on t.idTorneo = j.idTorneo
+        WHERE  j.idTorneo =".$this->objeto->getIdTorneo();
 
         $resultado = $this->con->ejecutar($query);
 
