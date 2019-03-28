@@ -245,7 +245,11 @@ var eliminarTorneo=(ele)=>{
 }
 
 
-
+var reporte=(ele)=>{
+    var id = $(ele).attr("id");
+window.open('?1=TorneosController&2=calendario&id='+id,'_blank');
+return false;
+}
 
 
 var editarTorneo=(ele)=>{

@@ -10,7 +10,7 @@ class Reporte {
     }
 
   
-      public function reporteIngresosPorFechas($fecha,$fecha2, $resultado,$resultado1,$total) {
+      public function calendario($resultado,$resultado1) {
 
         $validar = $resultado1->fetch_assoc();
         $validar = $validar['start'];

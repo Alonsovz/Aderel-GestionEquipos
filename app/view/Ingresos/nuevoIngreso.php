@@ -604,6 +604,7 @@ $("#guardarGim").click(function(){
                 data: datosFormulario,
                 success: function(r) {
                     if(r == 1) {
+                        $("#modalCobroGim").modal("hide");
                         swal({
                             title: 'Listo',
                             text: 'Cuota cobrada con éxito',
@@ -664,6 +665,7 @@ $("#guardarEF").click(function(){
                 data: datosFormulario,
                 success: function(r) {
                     if(r == 1) {
+                        $("#modalCobroEscFubol").modal("hide");
                         swal({
                             title: 'Listo',
                             text: 'Cuota cobrada con éxito',
@@ -723,6 +725,7 @@ $("#guardarNa").click(function(){
                 data: datosFormulario,
                 success: function(r) {
                     if(r == 1) {
+                        $("#modalCobroNa").modal("hide");
                         swal({
                             title: 'Listo',
                             text: 'Cuota cobrada con éxito',
@@ -787,7 +790,7 @@ $("#guardarOtro").click(function(){
                 data: datosFormulario,
                 success: function(r) {
                     if(r == 1) {
-                       // $('#modalAgregarJugador').modal('hide');
+                     //$('#modalAgregarJugador').modal('hide');
                         swal({
                             title: 'Listo',
                             text: 'Guardado con éxito',
@@ -826,7 +829,7 @@ $("#guardarFondo").click(function(){
                 },
                 success: function(r) {
                     if(r == 11) {
-                       // $('#modalAgregarJugador').modal('hide');
+                       $('#quitarFondo').modal('hide');
                         swal({
                             title: 'Listo',
                             text: 'Jugador/a ya puede ser inscrito en cualquier equipo',

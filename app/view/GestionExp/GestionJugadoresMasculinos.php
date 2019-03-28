@@ -369,6 +369,7 @@ $(document).ready(function(){
     $("#age").hide();
 });
 
+
 function limpiar(){
     $("#age").hide(); 
                 $('#nombreJ').val('');

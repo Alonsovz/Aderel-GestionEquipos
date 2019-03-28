@@ -188,6 +188,40 @@ class TorneosController extends ControladorBase {
         echo'['.$json.']';
     }
 
+    public function calendario() {
+        $dao = new DaoTorneos();
+        
+        require_once './app/reportes/calendario.php';
+        
+       // $idA= $_REQUEST["area"];
+        $id = $_REQUEST["id"];
+
+        $reporte = new Reporte();
+
+        //$dao->objeto->setCodigoArea($idA);
+        $dao->objeto->setIdTorneo($id);
+        $resultado = $dao->calendarioVuelta1();
+        
+        $resultado1 = $dao->calendarioVuelta1();
+        $validar1 = $dao->calendarioVuelta1();
+        $validarDescanso1 = $dao->calendarioVuelta1();
+
+        $resultado2 = $dao->calendarioVuelta2();
+        $validar2 = $dao->calendarioVuelta2();
+        $validarDescanso2 = $dao->calendarioVuelta2();
+
+        $resultado3 = $dao->calendarioVuelta3();
+        $validar3 = $dao->calendarioVuelta3();
+        $validarDescanso3 = $dao->calendarioVuelta3();
+
+        $resultado4 = $dao->calendarioVuelta4();
+        $validar4 = $dao->calendarioVuelta4();
+        $validarDescanso4 = $dao->calendarioVuelta4();
+
+        $reporte->calendario($id, $resultado,$resultado1, $resultado2,$resultado3,$resultado4,$validar1,
+        $validar2,$validar3,$validar4,$validarDescanso1,$validarDescanso2,$validarDescanso3,$validarDescanso4);
+    }
+
 }
 
 

@@ -257,6 +257,12 @@ var sorteos=(ele)=>{
                 .modal('show');
 }
 
+var reporte=(ele)=>{
+    var id = $(ele).attr("id");
+window.open('?1=TorneosController&2=calendario&id='+id,'_blank');
+return false;
+}
+
 
 function cerrar(){
     $('#sorteos').modal('hide');
