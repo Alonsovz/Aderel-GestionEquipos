@@ -104,7 +104,7 @@ if ($N%2!=0)
 					<td bgcolor='#F78181'><center>Descansa</td>
 					<td colspan='1' bgcolor='#A9BCF5'><center>
 						".$equipos[$g2[$conta]]['nombre'] ."
-						<input type='hidden' name='descansa' value='".$equipos[$g2[$conta]]['id'] ."'>
+						<input type='hidden' name='descansa' value='".$equipos[$g2[$conta]]['nombre'] ."'>
 					</td>
 				</tr>
 			</tfoot>";
@@ -117,7 +117,7 @@ if ($N%2!=0)
 						<td bgcolor='#F78181'><center>Descansa</td>
 					<td colspan='1' bgcolor='#A9BCF5'><center>
 							".$equipos[$equipo1]['nombre'] ."
-							<input type='hidden' name='descansa' value='". $equipos[$equipo1]['id'] ."'>
+							<input type='hidden' name='descansa' value='". $equipos[$equipo1]['nombre'] ."'>
 						</td>
 					</tr>
 				</tfoot>";
@@ -129,12 +129,12 @@ if ($N%2!=0)
 
 				if(rand(0,1)==0){//izq
 					$nombre    = $equipos[$equipo1]['nombre']." vs ".$equipos[$g2[$conta]]['nombre'];
-					$idEquipo1 = $equipos[$equipo1]['id'];
-					$idEquipo2 = $equipos[$g2[$conta]]['id'];
+					$idEquipo1 = $equipos[$equipo1]['nombre'];
+					$idEquipo2 = $equipos[$g2[$conta]]['nombre'];
 				}else{
 					$nombre    = $equipos[$g2[$conta]]['nombre']." vs ".$equipos[$equipo1]['nombre'];
-					$idEquipo1 = $equipos[$g2[$conta]]['id'];
-					$idEquipo2 = $equipos[$equipo1]['id'];
+					$idEquipo1 = $equipos[$g2[$conta]]['nombre'];
+					$idEquipo2 = $equipos[$equipo1]['nombre'];
 				} 
 				$html.="
 				

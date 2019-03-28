@@ -11,8 +11,8 @@ class DaoJornada extends DaoBase {
         try {
             $_query = "INSERT INTO `jornadas` (`idTorneo`, `vuelta_N`, `descansa_id_Equipo`,`orden`) VALUES (".
                 $jornada->getIdTorneo().", ".
-                $jornada->getVuelta_N().", ".
-                $jornada->getDescansa_id_Equipo().", ".
+                $jornada->getVuelta_N().", '".
+                $jornada->getDescansa_id_Equipo()."', ".
                 $jornada->getOrden().");";
 
                 $this->con->ejecutar($_query);

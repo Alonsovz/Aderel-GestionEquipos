@@ -8,7 +8,6 @@ class SorteoController extends ControladorBase {
         $datos=$_REQUEST['datos'];
         $datos = json_decode($datos,true);
 
-        
         $daoJornada  = new DaoJornada();
         $daoPartidos = new DaoPartidos();
 
