@@ -13,9 +13,9 @@ class DaoPartidos extends DaoBase {
             VALUES (".
             $partido->getJornada_id().", ".
             $partido->getPartido_N().",".
-            $partido->getCancha().", ".
-            $partido->getEquipo1_id().",".
-            $partido->getEquipo2_id().",'".
+            $partido->getCancha().", '".
+            $partido->getEquipo1_id()."','".
+            $partido->getEquipo2_id()."','".
             $partido->getFecha()."','".
             $partido->getHora()."')";
             return $this->con->ejecutar($_query);
