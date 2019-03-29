@@ -67,7 +67,7 @@ class Reporte {
                 
             </th>
             <th style='font-size:22px; border: 1px solid white;'>
-                <img src='./res/img/logoAderel.png'>
+            <img src='./res/img/logoOficial.png' width=100>
                 </th>
             </tr>
             </table>

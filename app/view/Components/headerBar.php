@@ -8,10 +8,9 @@
     
     
     <a style=" display: flex; justify-content: center; align-items: center;">
-        <img src="./res/img/logoaderel.png" alt="" width="" class="logo" id=""> 
+        <img src="./res/img/he.png" alt="" width="50%" class="" id=""> 
     
-    <br>
-    <img src="./res/img/letras.png" width="50%" height="60%" >
+    
     </a>
 
     <div style="margin-right:20px;" id="usuario-header" class="ui floated right dropdown  floating item">

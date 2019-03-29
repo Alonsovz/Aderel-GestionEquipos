@@ -1,31 +1,22 @@
 <?php 
-
 class Reporte {
-
     public static $con;
-
-
     public function __construct() {
         require_once './vendor/autoload.php';
     }
-
   
-      public function calendario($resultado,$resultado1) {
-
+      public function reporteIngresosPorFechas($fecha,$fecha2, $resultado,$resultado1,$total) {
         $validar = $resultado1->fetch_assoc();
         $validar = $validar['start'];
         if($validar=="")
         {
             $tabla = '<h1>El rango de fechas seleccionado no contiene ningún registro</h1>';
             $html = $tabla;
-
-
         $pdf = new \Mpdf\Mpdf(['orientation' => 'L']);
         $pdf->WriteHTML($html);
         $pdf->Output();
         }else{
         $tabla = '';
-
         $tabla .= ' <style>
                         td { 
                             text-align: center;
@@ -45,7 +36,6 @@ class Reporte {
                             font-family: sans-serif;
                         }
                     </style>';
-
                      
         $tabla.= "
             <div class='header'>
@@ -61,16 +51,13 @@ class Reporte {
             </tr>
             </table>
             </div>    
-
             <table class='tabla'>
             <tr>
                 <th bgcolor='#A9E2F3'>Ingreso</th>
                 <th bgcolor='#A9E2F3'>Cantidad</th>
                 <th bgcolor='#A9E2F3'>Fecha</th>
             </tr>
-
             ";
-
         while($fila = $resultado->fetch_assoc()) {
             $tabla.="<tr>
                         <td>".$fila['title']."</td>
@@ -79,14 +66,11 @@ class Reporte {
                        
                      </tr>";
         }
-
         $tabla .= "</table>";
-
         while($fila = $total->fetch_assoc()) {
             $tabla .= "<p align='right'><b><font color='#172961'>Total :</font> $".$fila['cantidad']."</b></p><hr>";
     
             }
-
             $tabla .= "<br><br><br><br><table>
             <tr>
             <th style='border: 1px solid black;border-left:0; border-bottom:0;border-top:0;'>F._______________________________<br>
@@ -102,13 +86,9 @@ class Reporte {
             
         </table>";
         $html = $tabla;
-
-
         $pdf = new \Mpdf\Mpdf(['orientation' => 'L']);
         $pdf->WriteHTML($html);
         $pdf->Output();
     }
-
     }
-
 }

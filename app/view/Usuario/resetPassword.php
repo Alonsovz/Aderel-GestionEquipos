@@ -28,7 +28,7 @@ if(isset($_REQUEST["3"])) {
         justify-content: center;">
             <div class="cuadro" style="min-width: 350px;border: 3px solid #08088A;">
                 <div class="cuadro-ins" style="border: 3px solid #08088A;">
-                <img src="./res/img/logoaderel.png">
+                <img src="./res/img/logoOficial.png" width=100>
                 </div>
                 <form id="frmNewPass" action="" method="POST" class="ui form">
                     <div class="field">

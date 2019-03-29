@@ -281,6 +281,27 @@ public function registrarF() {
         echo'['.$json.']';
     }
 
+    public function nomina() {
+        $dao = new DaoEquipos();
+        
+        require_once './app/reportes/nomina.php';
+        
+       // $idA= $_REQUEST["area"];
+        $id = $_REQUEST["id"];
+
+        $reporte = new Reporte();
+
+        //$dao->objeto->setCodigoArea($idA);
+        $dao->objeto->setIdEquipo($id);
+
+        $encargados = $dao->encargadosEquipo();
+        
+        $nomina = $dao->jugadoresEquipo();
+        
+
+        $reporte->nomina($encargados,$nomina);
+    }
+
 
 }
 

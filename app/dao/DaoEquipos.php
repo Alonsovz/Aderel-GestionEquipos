@@ -77,7 +77,7 @@ class DaoEquipos extends DaoBase {
             $btnVer = '<button id=\"'.$fila["idEquipo"].'\" categoria=\"'.$fila["Categoria"].'\" nombre=\"'.$fila["nombreE"].'\" encargado=\"'.$fila["encargado"].'\" class=\"ui btnVerT icon blue small button\" onclick=\"verJugadoresE(this)\"><i class=\"users icon\"></i> Jugadores</button>';
             $btnCancelar = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui  icon purple small button\" onclick=\"enviarFondo(this)\"><i class=\"close icon\"></i> Fondo Común</button>';
             $inscrbirJ = '<button edadMinima=\"'.$fila["edad"].'\" id=\"'.$fila["idEquipo"].'\" categoria=\"'.$fila["Categoria"].'\" idTorneo=\"'.$fila["idT"].'\" nombre=\"'.$fila["nombreE"].'\" encargado=\"'.$fila["encargado"].'\"  class=\"ui icon green small button\" onclick=\"modalCambiar(this)\"><i class=\"edit icon\"></i> Inscribir J</button>';
-
+            $btnNomina = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui  icon red small button\" onclick=\"nomina(this)\"><i class=\"list icon\"></i> Nómina</button>';
             if($fila["idInscripcion"]== 1){
                 
                 $btnInscrbir = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnInscribir icon green small button\" onclick=\"inscribirEquipo(this)\"><i class=\"futbol icon\"></i>Inscribir</button>';
@@ -85,7 +85,7 @@ class DaoEquipos extends DaoBase {
             }
                else{
                 $btnInscrbir = '';
-                $acciones = ', "Acciones": "'.$btnVer.''.$btnCancelar.''.$inscrbirJ.''.$btnEditar.'"';
+                $acciones = ', "Acciones": "'.$btnVer.''.$btnCancelar.''.$inscrbirJ.''.$btnEditar.''.$btnNomina.'"';
                }
             
             
@@ -376,6 +376,27 @@ class DaoEquipos extends DaoBase {
 
         return $resultado;
     }
+
+
+    public function encargadosEquipo(){
+        $query = "select * from equipos where idEquipo=".$this->objeto->getIdEquipo();
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+
+    public function jugadoresEquipo(){
+        $query = "select i.*,j.* from inscriJugador i 
+        inner join jugadores j on j.idJugador= i.idJugador 
+        where i.idEquipo=".$this->objeto->getIdEquipo();
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
 
 }
 

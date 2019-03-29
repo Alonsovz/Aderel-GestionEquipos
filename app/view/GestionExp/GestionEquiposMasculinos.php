@@ -502,6 +502,12 @@ var enviarFondo=(ele)=>{
   $('#idEliminar').val($(ele).attr("id"));
 }
 
+var nomina=(ele)=>{
+    var id = $(ele).attr("id");
+window.open('?1=EquipoController&2=nomina&id='+id,'_blank');
+return false;
+}
+
 
 var editarEquipo=(ele)=>{
             $('#modalEditarE').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
