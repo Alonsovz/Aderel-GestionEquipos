@@ -130,6 +130,7 @@ idInscripcion int,
 idTorneo int,
 idGenero int,
 idFondo int,
+pago int,
 idEliminado int
 );
 
@@ -154,8 +155,11 @@ create table inscriJugador(
 idEquipo int,
 idJugador int,
 idTorneo int,
-estado int
+estado int,
+pago int
 );
+
+
 
 create table gimnasio(
 idUsuario int primary key auto_increment,
@@ -295,6 +299,7 @@ insert into categorias values (null, 'Sin Categoria',0,2,1);
 
 
 insert into inscripcion values(null,'Aun no inscrito');
+insert into inscripcion values(null,'Esperando Cobro');
 insert into inscripcion values(null,'Inscrito');
 
 insert into torneos values(null,'No se ha inscrito en torneo',0,0,0,1,1,1);
@@ -302,8 +307,8 @@ insert into torneos values(null,'No se ha inscrito en torneo',0,0,0,1,2,1);
 
 insert into jugadores values(null,'FF000001','nada','nada','nada','nada','1999-02-12','',1,1,1);
 
-insert into equipos values (null, 'Sin Equipo','No definido','No definido','','',1,1,1,1,1,1);
-insert into equipos values (null, 'Sin Equipo','No definido','No definido','','',1,1,2,2,1,1);
+insert into equipos values (null, 'Sin Equipo','No definido','No definido','','',1,1,1,1,1,1,1);
+insert into equipos values (null, 'Sin Equipo','No definido','No definido','','',1,1,2,2,1,1,1);
 
 insert into gimnasio values(null,'GY000002','','','','2019-02-02','1','2019-02-01','2019-03-01',1,1);
 
@@ -554,31 +559,5 @@ begin
 end	
 $$
 
-	select *  from jornadas j
-			WHERE vuelta_N=4 and j.idTorneo = 4 group by j.orden
- 
- select *,TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from natacion
-        where  idEliminado=1 and idUsuario>1 
-
-select *,DATE_FORMAT(fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
-        DATE_FORMAT(fechaInscripcion, '%d/%m/%Y') as fechaInscripcion,
-        DATE_FORMAT(fechaFinal, '%d/%m/%Y') as fechaFinal,
-        TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from natacion
-        where  idEliminado=1 and idUsuario>1 and estado=2;
-        
-        select * from equipos
-        
-        select i.*,e.idCategoria from inscriJugador i  
-        inner join equipos e on e.idEquipo = i.idEquipo
-        where i.idJugador=6 and e.idCategoria = 
-       
-        select j.*,e.idCategoria from jugadores j
-            inner  join inscriJugador i on i.idJugador = j.idJugador
-            inner join equipos e on e.idEquipo = i.idEquipo
-             where i.idJugador = 8 and i.idEquipo = 8
-             
-        select j.*,e.idCategoria from jugadores j
-        inner  join inscriJugador i on i.idJugador = j.idJugador
-        inner join equipos e on e.idEquipo = i.idEquipo
-         where i.idJugador = 9 
+select * from  equipos where idEliminado=1 and pago=2
        

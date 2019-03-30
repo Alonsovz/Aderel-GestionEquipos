@@ -176,7 +176,7 @@ class DaoJugadores extends DaoBase {
 
     public function inscribirJugadorM(){
         $_query = "insert into inscriJugador values('".$this->objeto->getIdEquipo()."','".$this->objeto->getIdJugador()."',
-        '".$this->objeto->getIdTorneo()."',2)";
+        '".$this->objeto->getIdTorneo()."',2,1)";
 
         $resultado = $this->con->ejecutar($_query);
 

@@ -71,10 +71,12 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
                                 <thead>
                                     <tr>
                                     
-                                        <th style="background-color: #0174DF;">N°</th>
+                                    <th style="background-color: #0174DF;">N°</th>
                                         <th style="background-color: #217CD1; color:white;">Nombre del  Equipo</th>
                                         <th style="background-color: #217CD1; color:white;">Encargado del Equipo</th>
-                                        <th style="background-color: #217CD1; color:white;">Encargado Aux del Equipo</th>
+                                        <th style="background-color: #217CD1; color:white;">Tel. Encargado</th>
+                                        <th style="background-color: #217CD1; color:white;">Encargado Aux</th>
+                                        <th style="background-color: #217CD1; color:white;">Tel. Aux</th>
                                         <th style="background-color: #217CD1; color:white;">Categoría del Equipo</th>
                                         <th style="background-color: #217CD1; color:white;">Estado en torneo</th>
                                         <th style="background-color: #217CD1; color:white;">Torneo </th>
@@ -181,7 +183,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
                                 <thead>
                                     <tr>
                                     
-                                        <th style="background-color: #CD2020; color: white;">N°</th>
+                                        <th style="background-color: ##81BEF7; color: white;">N°</th>
                                         <th style="background-color: #CD2020; color: white;" ></th>
                                         <th style="background-color: #CD2020; color: white;">Cod. Expediente</th>
                                         <th style="background-color: #CD2020; color: white;">Nombre</th>

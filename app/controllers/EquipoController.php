@@ -326,6 +326,12 @@ public function registrarF() {
         echo $dao->validarInscripcion();
     }
 
+    public function cobrarEquipo(){
+        $dao = new DaoEquipos();
+
+        echo $dao->cobrarEquipo();
+    }
+
    
 
 }

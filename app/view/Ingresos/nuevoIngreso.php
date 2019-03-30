@@ -52,6 +52,7 @@
                     <option value="escuelaFutbol">Escuela de Fútbol</option>
                     <option value="escuelaNatacion">Escuela de Natacion</option>
                     <option value="fondoComun">Fondo Común</option>
+                    <option value="inscripcionE">Inscripción de Equipos</option>
                     <option value="otro">Otro</option>
                 </select>
             </div>
@@ -235,6 +236,40 @@
                         </div>
                 </div>
             </div>
+
+            <div class="field" id="inscripcionEq">
+                <div class="row">
+                    <h3>
+                    <i class="dollar icon"></i><i class="money bill icon"></i>
+                    Nuevo Ingreso de Inscripción de Equipo<font color="#FACC2E" size="20px">.</font>
+                   </h3>
+                </div>
+                <br>
+                
+                <div class="row">
+                        <div class="sixteen wide column">
+                            <table id="dtCobroEquipos" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                                <thead>
+                                    <tr>
+                                    
+                                        <th style="background-color: #0174DF;">N°</th>
+                                        <th style="background-color: #217CD1; color:white;">Nombre del  Equipo</th>
+                                        <th style="background-color: #217CD1; color:white;">Encargado del Equipo</th>
+                                        <th style="background-color: #217CD1; color:white;">Teléfono Encargado</th>
+                                        <th style="background-color: #217CD1; color:white;">Encargado Aux</th>
+                                        <th style="background-color: #217CD1; color:white;">Teléfono Aux</th>
+                                        <th style="background-color: #217CD1; color:white;">Categoría del Equipo</th>
+                                        <th style="background-color: #217CD1; color:white;">Estado en torneo</th>
+                                        <th style="background-color: #217CD1; color:white;">Torneo </th>
+                                        <th style="background-color: #217CD1; color:white;">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+            </div>
             
 </div>
     <div class="actions">
@@ -381,6 +416,42 @@
 
 </div>
 
+
+
+<div class="ui tiny modal" id="modalCobroInscripcionE">
+    <div class="header">
+    <h3>Cobrar Inscripcion del equipo <a id="nombreE"></a> de la Categoria: <a id="categoriaE"></a> en el torneo: 
+    <a id="torneoE"></a></h3>
+    </div>
+
+    <div class="content"> 
+    
+
+        <form class="ui form" id="frmCobroEquipo">
+        <input type="hidden" id="idEquipoCobro">
+            <div class="field">
+            <i class="dollar icon"></i> Cantidad a pagar:
+            <input type="text" id="cantidadCobroE" name="cantidadCobroE" >
+            </div>
+        </form>
+    </div>
+
+
+    <div class="actions">
+
+    <button class="ui blue button" id="cerrarEquiposCobro">
+    <i class="close icon"></i> Cerrar
+    <button>
+
+    <button class="ui green button" id="guardarEquiposCobro">
+    <i class="save icon"></i> Guardar
+    <button>
+
+    </div>
+
+
+</div>
+
 <script src="./res/tablas/tablaFondoComun.js"></script>
 <script src="./res/tablas/tablaPagosGim.js"></script>
 <script src="./res/js/modalPagos.js"></script>
@@ -388,6 +459,7 @@
 <script src="./res/js/modalPagosEscFutbol.js"></script>
 <script src="./res/tablas/tablaEscFutbolPago.js"></script>
 <script src="./res/tablas/tablaPagosNatacion.js"></script>
+<script src="./res/tablas/tablaCobroEquipos.js"></script>
 <script>
 
 var app = new Vue({
@@ -582,6 +654,16 @@ var quitarFondo=(ele)=>{
     $("#apellido").text($(ele).attr("apellido"));
     $("#idJ").val($(ele).attr("id"));
     $('#quitarFondo').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                .modal('show');
+}
+
+
+var cobrarEquipo=(ele)=>{
+    $("#nombreE").text($(ele).attr("nombreE"));
+    $("#torneoE").text($(ele).attr("torneoE"));
+    $("#categoriaE").text($(ele).attr("categoriaE"));
+    $("#idEquipoCobro").val($(ele).attr("id"));
+    $('#modalCobroInscripcionE').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                 .modal('show');
 }
 
@@ -867,6 +949,7 @@ $("#gimnasio").hide();
 $("#escuelaFutbol").hide();
 $("#escuelaNatacion").hide();
 $("#fondoComun").hide();
+$("#inscripcionEq").hide();
 
  $("#tipoIngreso").change(function(){
 
@@ -876,6 +959,7 @@ $("#fondoComun").hide();
         $("#escuelaFutbol").hide();
         $("#escuelaNatacion").hide();
         $("#fondoComun").hide();
+        $("#inscripcionEq").hide();
      }
      else if($("#tipoIngreso").val() == "gimnasio"){
         $("#otro").hide();
@@ -883,6 +967,7 @@ $("#fondoComun").hide();
         $("#escuelaFutbol").hide();
         $("#escuelaNatacion").hide();
         $("#fondoComun").hide();
+        $("#inscripcionEq").hide();
         
      }
      else if($("#tipoIngreso").val() == "fondoComun"){
@@ -891,6 +976,7 @@ $("#fondoComun").hide();
         $("#escuelaFutbol").hide();
         $("#escuelaNatacion").hide();
         $("#fondoComun").show();
+        $("#inscripcionEq").hide();
      }
      else if($("#tipoIngreso").val() == "escuelaFutbol"){;
         $("#otro").hide();
@@ -898,6 +984,7 @@ $("#fondoComun").hide();
         $("#escuelaFutbol").show();
         $("#escuelaNatacion").hide();
         $("#fondoComun").hide();
+        $("#inscripcionEq").hide();
         
      }
 
@@ -907,6 +994,17 @@ $("#fondoComun").hide();
         $("#escuelaFutbol").hide();
         $("#escuelaNatacion").show();
         $("#fondoComun").hide();
+        $("#inscripcionEq").hide();
+        
+     }
+
+     else if($("#tipoIngreso").val() == "inscripcionE"){
+        $("#otro").hide();
+        $("#gimnasio").hide();
+        $("#escuelaFutbol").hide();
+        $("#escuelaNatacion").hide();
+        $("#fondoComun").hide();
+        $("#inscripcionEq").show();
         
      }
 

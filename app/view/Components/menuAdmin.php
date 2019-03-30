@@ -50,7 +50,7 @@
 <i class="dropdown icon"></i>
     <div class="default text" style="color:black; background-color:#9F81F7;">
             <i class="dollar icon"></i>
-            <b>Caja Chica</b>       
+            <b>Caja General</b>       
     </div>
 
     <div class="menu">
@@ -65,7 +65,7 @@
     <div class="item">
     <a href="?1=EgresosController&2=Egresos" class="item menu-it" style="color:black;">
         <i class="money bill alternate icon"></i>
-        Egresos
+        Egresos por Cheque
     </a>
 
     </div>
@@ -74,7 +74,7 @@
 
     <a href="?1=EgresosController&2=Egresos" class="item menu-it" style="color:black;">
     <i class="money bill alternate icon"></i>
-        Taquilla
+        Egresos por Vale
     </a>
 
     </div>

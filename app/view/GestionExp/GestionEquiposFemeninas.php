@@ -71,8 +71,10 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
                                     
                                         <th style="background-color: #0174DF;">N°</th>
                                         <th style="background-color: #86B404; color:white;">Nombre del  Equipo</th>
-                                        <th style="background-color: #86B404; color:white;">Encargado del Equipo</th>
-                                        <th style="background-color: #86B404; color:white;">Encargado Aux del Equipo</th>
+                                        <th style="background-color: #86B404; color:white;">Encar. del Equipo</th>
+                                        <th style="background-color: #86B404; color:white;">Tel. Encargado</th>
+                                        <th style="background-color: #86B404; color:white;">Encargado Aux</th>
+                                        <th style="background-color: #86B404; color:white;">Tel. Aux</th>
                                         <th style="background-color: #86B404; color:white;">Categoría del Equipo</th>
                                         <th style="background-color: #86B404; color:white;">Estado en torneo</th>
                                         <th style="background-color: #86B404; color:white;">Torneo </th>
@@ -423,6 +425,13 @@ var appE = new Vue({
     });
 </script>
 <script>
+$(document).ready(function(){
+    $('#frmEditarE input[name="telefonoE"]').mask("9999-9999");
+    $('#frmEditarE input[name="telefonoAux"]').mask("9999-9999");
+    $('#frmRegistrarE input[name="telefonoE"]').mask("9999-9999");
+    $('#frmRegistrarE input[name="telefonoAux"]').mask("9999-9999");
+});
+
 var inscribir=(ele)=>{
     if($(ele).attr("edad")<$("#edadMinima").text()){
         swal({
