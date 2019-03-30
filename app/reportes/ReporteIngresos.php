@@ -6,6 +6,9 @@ class Reporte {
     }
   
       public function reporteIngresosPorFechas($fecha,$fecha2, $resultado,$resultado1,$total) {
+        $Nueva = date('d/m/Y', strtotime($fecha));
+        $Nueva1 = date('d/m/Y', strtotime($fecha2));
+
         $validar = $resultado1->fetch_assoc();
         $validar = $validar['start'];
         if($validar=="")
@@ -42,7 +45,7 @@ class Reporte {
             <table style='border: 1px solid white;'>
             <tr>
             <th style='border: 1px solid white; font-size:22px;'>
-                <font color='#172961'>Reporte  de Ingresos entre las fechas: <font color='blue'>".$fecha."</font> y <font color='blue'>".$fecha2."</font>
+                <font color='#172961'>Reporte  de Ingresos entre las fechas: <font color='blue'>".$Nueva."</font> y <font color='blue'>".$Nueva1."</font>
                 
             </th>
             <th style='border: 1px solid white;'>

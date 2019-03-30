@@ -68,7 +68,9 @@ public function registrarM() {
 
         $dao->objeto->setNombreEquipo($datos->nombreEquipo);
         $dao->objeto->setEncargado($datos->encargado);
-        $dao->objeto->setEncargadoAux($datos->encargadoAux);
+        $dao->objeto->setTelefonoE($datos->telefonoE);
+        $dao->objeto->setTelefonoAux($datos->telefonoAux);
+        $dao->objeto->setEncargadoAux($datos->encargado);
         $dao->objeto->setIdCategoria($datos->selectCategoria);
 
 
@@ -137,6 +139,8 @@ public function registrarM() {
         $dao->objeto->setNombreEquipo($_REQUEST["nombre"]);
         $dao->objeto->setEncargado($_REQUEST["encargado"]);
         $dao->objeto->setEncargadoAux($_REQUEST["encargadoAux"]);
+        $dao->objeto->setTelefonoE($_REQUEST["telefonoE"]);
+        $dao->objeto->setTelefonoAux($_REQUEST["telefonoAux"]);
         $dao->objeto->setIdCategoria($_REQUEST["selectCategoria"]);
         $dao->objeto->setIdEquipo($_REQUEST["idDetalleE"]);
 
@@ -173,7 +177,9 @@ public function registrarF() {
 
         $dao->objeto->setNombreEquipo($datos->nombreEquipo);
         $dao->objeto->setEncargado($datos->encargado);
-        $dao->objeto->setEncargadoAux($datos->encargadoAux);
+        $dao->objeto->setTelefonoE($datos->telefonoE);
+        $dao->objeto->setTelefonoAux($datos->telefonoAux);
+        $dao->objeto->setEncargadoAux($datos->encargado);
         $dao->objeto->setIdCategoria($datos->selectCategoria);
 
 
@@ -231,6 +237,8 @@ public function registrarF() {
         $dao->objeto->setNombreEquipo($_REQUEST["nombre"]);
         $dao->objeto->setEncargado($_REQUEST["encargado"]);
         $dao->objeto->setEncargadoAux($_REQUEST["encargadoAux"]);
+        $dao->objeto->setTelefonoE($_REQUEST["telefonoE"]);
+        $dao->objeto->setTelefonoAux($_REQUEST["telefonoAux"]);;
         $dao->objeto->setIdCategoria($_REQUEST["selectCategoria"]);
         $dao->objeto->setIdEquipo($_REQUEST["idDetalleE"]);
 
@@ -295,13 +303,30 @@ public function registrarF() {
         $dao->objeto->setIdEquipo($id);
 
         $encargados = $dao->encargadosEquipo();
+        $nombreEquipo = $dao->encargadosEquipo();
+        $torneo = $dao->encargadosEquipo();
         
         $nomina = $dao->jugadoresEquipo();
         
 
-        $reporte->nomina($encargados,$nomina);
+        $reporte->nomina($encargados,$nomina,$nombreEquipo,$torneo );
     }
 
+    public function validarInscripcion(){
+    //$id = ;
+       // $idE = $_REQUEST["idE"];
+        
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setIdJugador($_REQUEST["idJu"]);
+       // $dao->objeto->setIdEquipo($idE);
+       
+
+        echo $dao->validarInscripcion();
+    }
+
+   
 
 }
 

@@ -174,7 +174,10 @@ class DaoNatacion extends DaoBase {
 
     
     public function fichaN() {
-        $query = "select *,TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from natacion
+        $query = "select *,TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad,
+        DATE_FORMAT(fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        DATE_FORMAT(fechaInscripcion, '%d/%m/%Y') as fechaInscripcion,
+        DATE_FORMAT(fechaFinal, '%d/%m/%Y') as fechaFinal from natacion
         where idUsuario=".$this->objeto->getIdUsuario();
 
         $resultado = $this->con->ejecutar($query);

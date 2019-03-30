@@ -695,7 +695,10 @@ class DaoEscuela extends DaoBase {
     }
 
     public function ficha() {
-        $query = "select e.*,TIMESTAMPDIFF(YEAR,e.fechaNacimiento,CURDATE()) AS edad, n.nivel from escuelaFut e
+        $query = "select e.*,TIMESTAMPDIFF(YEAR,e.fechaNacimiento,CURDATE()) AS edad, n.nivel,
+        DATE_FORMAT(e.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        DATE_FORMAT(e.fechaInscripcion, '%d/%m/%Y') as fechaInscripcion,
+        DATE_FORMAT(e.fechaFinal, '%d/%m/%Y') as fechaFinal from escuelaFut e
         inner join nivelEscuela n on n.idEscuela = e.idEscuela
         where e.idUsuario=".$this->objeto->getIdJugador();
 

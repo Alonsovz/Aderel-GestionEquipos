@@ -154,6 +154,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
         <i class="chart bar outline icon"></i>
             <div class="content" style="font-size:20px;">
             {{datosDetalle.Categoria}}
+            {{datosDetalle.idCategoria}}
             </div>
         </div>
         <div class="item" style="font-size:20px;">
@@ -169,7 +170,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
         <i class="chart bar outline icon"></i>
         <div class="content" style="font-size: 20px;">
         Edad Minima de la Categoria: 
-            <input type="text" id="edadMinima" readonly style="width: 7%;">
+            <a id="edadMinima"></a>
         </div>
         </div>
     </div>
@@ -243,8 +244,18 @@ var appE = new Vue({
                     type: 'text'
                 },
                 {
+                    label: 'Teléfono Encargado:',
+                    name: 'telefonoE',
+                    type: 'text'
+                },
+                {
                     label: 'Encargado Aux del Equipo:',
                     name: 'encargadoAux',
+                    type: 'text'
+                },
+                {
+                    label: 'Teléfono Aux del Equipo:',
+                    name: 'telefonoAux',
                     type: 'text'
                 },
                 {
@@ -263,13 +274,23 @@ var appE = new Vue({
                     type: 'text'
                 },
                 {
-                    label: 'Encargado del Equipo',
+                    label: 'Encargado del Equipo:',
                     name: 'encargado',
+                    type: 'text'
+                },
+                {
+                    label: 'Teléfono Encargado:',
+                    name: 'telefonoE',
                     type: 'text'
                 },
                 {
                     label: 'Encargado Aux del Equipo:',
                     name: 'encargadoAux',
+                    type: 'text'
+                },
+                {
+                    label: 'Teléfono Aux del Equipo:',
+                    name: 'telefonoAux',
                     type: 'text'
                 },
                 {
@@ -362,6 +383,8 @@ var appE = new Vue({
                         $('#frmEditarE input[name="nombre"]').val(dat.nombre);
                         $('#frmEditarE input[name="encargado"]').val(dat.encargado);
                         $('#frmEditarE input[name="encargadoAux"]').val(dat.encargadoAux);
+                        $('#frmEditarE input[name="telefonoE"]').val(dat.telefonoE);
+                        $('#frmEditarE input[name="telefonoAux"]').val(dat.telefonoAux);
                         $('#frmEditarE select[name="selectCategoria"]').dropdown('set selected', dat.idCategoria);
                     })
                     .catch(err => {
@@ -411,9 +434,14 @@ var appE = new Vue({
     });
 </script>
 <script>
-
+$(document).ready(function(){
+    $('#frmEditarE input[name="telefonoE"]').mask("9999-9999");
+    $('#frmEditarE input[name="telefonoAux"]').mask("9999-9999");
+    $('#frmRegistrarE input[name="telefonoE"]').mask("9999-9999");
+    $('#frmRegistrarE input[name="telefonoAux"]').mask("9999-9999");
+});
 var inscribir=(ele)=>{
-    if($(ele).attr("edad")<$("#edadMinima").val()){
+    if($(ele).attr("edad")<$("#edadMinima").text()){
         swal({
             title: 'Error!',
             text: 'La edad del jugador es menor a la edad minima de la categoría',
@@ -490,9 +518,10 @@ var verJugadoresE=(ele)=>{
                 appE.datosDetalle.nombre= $(ele).attr("nombre");
                 appE.datosDetalle.Categoria= $(ele).attr("categoria");
                 appE.datosDetalle.encargado= $(ele).attr("encargado");
+                //appE.datosDetalle.idCategoria= $(ele).attr("idCategoria");
                 $("#idEqui").val($(ele).attr("id"));
                 $("#idTor").val($(ele).attr("idTorneo"));
-                $("#edadMinima").val($(ele).attr("edadMinima"));
+                $("#edadMinima").text($(ele).attr("edadMinima"));
                 $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
             }

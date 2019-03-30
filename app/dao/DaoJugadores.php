@@ -41,7 +41,8 @@ class DaoJugadores extends DaoBase {
 
 
         $query = "Insert into jugadores values (null,'".$idExp."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
-        '".$this->objeto->getDui()."','".$this->objeto->getImg()."','".$this->objeto->getFechaNacimiento()."',2,1,1);";
+        '".$this->objeto->getDui()."','".$this->objeto->getImg()."','".$this->objeto->getFechaNacimiento()."',
+        '".$this->objeto->getTelefono()."',2,1,1);";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -55,7 +56,8 @@ class DaoJugadores extends DaoBase {
 
     public function mostrarJugadoresM()
     {
-        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad from jugadores j
+        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,
+        DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento from jugadores j
          where j.idEliminado = 1 and j.idGenero = 2 and j.idJugador>1";
 
         
@@ -98,7 +100,8 @@ class DaoJugadores extends DaoBase {
 
     public function mostrarJugadoresFondoComun()
     {
-        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad from jugadores j
+        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,
+        DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento from jugadores j
          where j.idEliminado = 1 and j.idJugador>1 and j.idFondo=2";
 
         
@@ -133,7 +136,8 @@ class DaoJugadores extends DaoBase {
 
     public function inscripcionM()
     {
-        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad from jugadores j
+        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,
+        DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento from jugadores j
          where j.idEliminado = 1 and j.idGenero = 2 and j.idJugador>1";
 
         
@@ -186,7 +190,8 @@ class DaoJugadores extends DaoBase {
 
     public function inscripcionF()
     {
-        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad from jugadores j
+        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,
+        DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento from jugadores j
          where j.idEliminado = 1 and j.idGenero = 1  and j.idJugador>1";
 
         
@@ -255,7 +260,7 @@ class DaoJugadores extends DaoBase {
 
     public function cargarDatosJugadorM() {
 
-        $_query = "select * from jugadores
+        $_query = "select *,TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from jugadores
         where idGenero = 2 and  idJugador = ".$this->objeto->getIdJugador();
 
         $resultado = $this->con->ejecutar($_query);
@@ -281,7 +286,7 @@ class DaoJugadores extends DaoBase {
 
     public function editarM() {
         $_query = "update jugadores set nombre='".$this->objeto->getNombre()."', apellido = '".$this->objeto->getApellido()."',
-        dui= '".$this->objeto->getDui()."', 
+        dui= '".$this->objeto->getDui()."',  telefono = '".$this->objeto->getTelefono()."',
         fechaNacimiento = '".$this->objeto->getFechaNacimiento()."',foto='".$this->objeto->getImg()."'
          where idGenero = 2 and  idJugador = ".$this->objeto->getIdJugador();
 
@@ -329,7 +334,8 @@ class DaoJugadores extends DaoBase {
 
 
         $query = "Insert into jugadores values (null,'".$idExp."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
-        '".$this->objeto->getDui()."','".$this->objeto->getImg()."','".$this->objeto->getFechaNacimiento()."',1,1,1);";
+        '".$this->objeto->getDui()."','".$this->objeto->getImg()."','".$this->objeto->getFechaNacimiento()."',
+        '".$this->objeto->getTelefono()."',1,1,1);";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -343,7 +349,8 @@ class DaoJugadores extends DaoBase {
 
     public function mostrarJugadoresF()
     {
-        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad from jugadores j
+        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,
+        DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento from jugadores j
          where j.idEliminado = 1 and j.idGenero=1 and j.idJugador>2";
 
         
@@ -414,7 +421,7 @@ class DaoJugadores extends DaoBase {
 
     public function cargarDatosJugadorF() {
 
-        $_query = "select * from jugadores
+        $_query = "select *,TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from jugadores
         where idGenero = 1 and  idJugador = ".$this->objeto->getIdJugador();
 
         $resultado = $this->con->ejecutar($_query);
@@ -440,7 +447,7 @@ class DaoJugadores extends DaoBase {
 
     public function editarF() {
         $_query = "update jugadores set nombre='".$this->objeto->getNombre()."', apellido = '".$this->objeto->getApellido()."',
-        dui= '".$this->objeto->getDui()."', 
+        dui= '".$this->objeto->getDui()."', telefono = '".$this->objeto->getTelefono()."',
         fechaNacimiento = '".$this->objeto->getFechaNacimiento()."', foto='".$this->objeto->getImg()."'
          where idGenero = 1 and  idJugador = ".$this->objeto->getIdJugador();
 
@@ -480,6 +487,24 @@ class DaoJugadores extends DaoBase {
         }
 
     }
-    
+
+        public function validarInscripcion(){
+            $_query = "select i.*,e.idCategoria from inscriJugador i  
+            inner join equipos e on e.idEquipo = i.idEquipo
+            where i.idJugador = ".$this->objeto->getIdJugador();
+
+                $resultado = $this->con->ejecutar($_query);
+
+              //  $fila = $resultado->fetch_assoc();
+
+                if($resultado){
+                    return 1;
+                }else{
+                    return 0;
+                }
+        }   
+        
+        
+        
 
 }

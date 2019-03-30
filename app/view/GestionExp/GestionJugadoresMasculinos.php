@@ -77,7 +77,7 @@
                     
         </div>
 
-<div class="ui tiny modal" id="modalAgregarJugador"  style="overflow: scroll;">
+<div class="ui  modal" id="modalAgregarJugador"  style="overflow: scroll;">
 
 <div class="header">
 <i class="male icon"></i><i class="futbol icon"></i> Agregar nuevo Jugador
@@ -129,13 +129,19 @@
                 <div class="field">
                         <div class="fields">
                         
-                        <div class="eight wide field">
-                            <div id="age">
-                            <b><label><i class="male icon"></i>La edad del jugador es:</label></b>
+                        <div class="three wide field">
+                            
+                            <b><label><i class="male icon"></i>Edad: </label></b>
                             <input type="text" id="edad" name="edad" readonly>
-                            </div>
+                           
                         </div>
-                        <div class="eight wide field">
+                        <div class="six wide field">
+                            
+                            <b><label><i class="phone icon"></i>Teléfono del jugador:</label></b>
+                            <input type="text" id="telefono" name="telefono" placeholder="Tel. del jugador">
+                           
+                        </div>
+                        <div class="seven wide field">
                         <label><i class="address card icon"></i>DUI/Carnet Minoridad:</label>
                             <input type="text" name="duiJ" placeholder="DUI del jugador" id="duiJ">
                                     <div class="ui red pointing label"  id="labelDui"
@@ -218,6 +224,8 @@
 <script>
  $(document).ready(function(){
     $('#dui').mask("99999999-9");
+    $('#telefono').mask("9999-9999");
+    $('#frmEditarJ input[name="telefono"]').mask("9999-9999");
 });   
 var appJ = new Vue({
         el: "#appJ",
@@ -257,6 +265,11 @@ var appJ = new Vue({
                 {
                     label: 'Edad:',
                     name: 'edad',
+                    type: 'text', 
+                },
+                {
+                    label: 'Teléfono:',
+                    name: 'telefono',
                     type: 'text', 
                 },
                 {
@@ -329,6 +342,7 @@ var appJ = new Vue({
                         $('#frmEditarJ input[name="imagenNueva"]').val(dat.foto);
                         $('#frmEditarJ input[name="fechaNacimiento"]').val(dat.fechaNacimiento);
                         $('#frmEditarJ input[name="edad"]').val(dat.edad);
+                        $('#frmEditarJ input[name="telefono"]').val(dat.telefono);
                         //$('#frmEditarJ select[name="equipo"]').dropdown('set selected', dat.idEquipo);
                     })
                     .catch(err => {
@@ -365,28 +379,27 @@ var appJ = new Vue({
     });
 </script>
 <script type="text/javascript">
-$(document).ready(function(){
-    $("#age").hide();
-});
+
 
 
 function limpiar(){
-    $("#age").hide(); 
+    //$("#age").hide(); 
                 $('#nombreJ').val('');
                 $('#apellidoJ').val('');
                 $('#dui').val('');
                 $('#fechaNac').val('');
                 $('#Imagen').val('');
+                $('#telefono').val('');
                 
 }
 $(function(){
 $('#btnCerrar').click(function() { 
-                $("#age").hide();   
+//$("#age").hide();   
                 $('#nombreJ').val('');
                 $('#apellidoJ').val('');
                 $('#dui').val('');
                 $('#fechaNac').val('');
-               // $('#equipo').prop('selected', false).find('option:first').prop('selected', true);
+                $("#telefono").val('');
                 $('#Imagen').val('');
                 $('#modalAgregarJugador').modal('hide');
             });
@@ -645,7 +658,7 @@ $('#frmEditarJ input[name="fechaNacimiento"]').change(function(){
     var fecha = $('#frmEditarJ input[name="fechaNacimiento"]').val();
 
 Edad(fecha);
-$('#frmEditarJ input[name="dui"]').val('');
+
 resultadoE();
 
 

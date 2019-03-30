@@ -57,37 +57,33 @@ class Reporte {
             <th><h2><font color='green'>Datos del Usuario</font></h2></th>
             </tr>
             </table>
-            <table class='tabla' style='font-size:17px;' >
+            
             ";
 
         while($fila = $resultado->fetch_assoc()) {
             $tabla.="
-                    
-                    <tr>
-                    <td colspan='2' rowspan='3'><img src=".$fila["foto"]." style='width:100px;'/></td>
-                        <td><br><br><br>Cod. Expediente: <b>".$fila["correlativo"]."</b></td>
-                        <td><br><br><br>Edad: <b>".$fila['edad']." años</b></td>
-                
-                    </tr>
-                    
-                    <tr>
-                        
-                        <td><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        Nombre del Usuario: <b>".$fila["nombre"]." ".$fila['apellido']."</b></td>
-                        <td><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        Fecha de Nacimiento: <b>".$fila['fechaNacimiento']."</b></td>
-                        
-                     </tr>
-
-                     <tr>
-                     <td><br><br>Carnet Min: <b>".$fila['ddi']."</b></td>
-                     <td><br><br>Fecha de Inscripción: <b>".$fila['fechaInscripcion']."</b></td>
-                     <td ><br><br>Fecha Final: <b style='color:red'>".$fila['fechaFinal']."</b></td>
-                     </tr>
+                <br>   
+            <table style='font-size: 20px;'>
+			
+			<tr>
+                <td rowspan=3> <img src=".$fila["foto"]." style='width:120px;'/></td>
+                <td> <b>Expediente:</b> ".$fila["correlativo"]."</td>
+				<td > <b>Nombre:</b> ".$fila["nombre"]." ".$fila["apellido"]."</td>
+				
+			</tr>
+			<tr>
+            <td> <b>DUI : </b>".$fila["ddi"]."</td>
+            <td> <b>Fecha de Nacimiento:</b> ".$fila["fechaNacimiento"]."</td>
+            </tr>
+            <tr>
+                <td> <b>Fecha de Inicio :</b> ".$fila["fechaInscripcion"]."</td>
+                <td > <b>Fecha Fin de Inscripcion:</b> <font color='red'>".$fila["fechaFinal"]."</font></td>
+			</tr>
+		</table>
                      ";
         }
                 
-        $tabla .= "</table><hr>";
+        
         $tabla .="
         <br><br><br><br>F:____________________________________________________
         <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Nombre y firma</b>";

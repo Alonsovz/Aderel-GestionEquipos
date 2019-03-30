@@ -84,6 +84,7 @@ class JugadoresController extends ControladorBase {
        // $categoria = $_REQUEST["categoria"];
         $img= $_REQUEST["img"];
         $edad= $_REQUEST["edad"];
+        $telefono= $_REQUEST["telefono"];
 
         // $foto = addslashes(file_get_contents($_FILES['Imagen']['tmp_name']));
         
@@ -95,8 +96,7 @@ class JugadoresController extends ControladorBase {
         $dao->objeto->setEdad($edad);
         $dao->objeto->setDui($dui);
         $dao->objeto->setFechaNacimiento($fechaNac);
-        //$dao->objeto->setIdEquipo($equipo);
-       // $dao->objeto->setIdCategoria($categoria);
+        $dao->objeto->setTelefono($telefono);
         $dao->objeto->setImg($img);
 
 
@@ -128,6 +128,7 @@ class JugadoresController extends ControladorBase {
         //$dao->objeto->setIdEquipo($_REQUEST['equipo']);
         $dao->objeto->setImg($_REQUEST['imagenNueva']);
         $dao->objeto->setIdJugador($_REQUEST['idDetalleE']);
+        $dao->objeto->setTelefono($_REQUEST['telefono']);
 
         echo $dao->editarF();
     }
@@ -168,6 +169,7 @@ class JugadoresController extends ControladorBase {
        // $categoria = $_REQUEST["categoria"];
         $img= $_REQUEST["img"];
         $edad= $_REQUEST["edad"];
+        $telefono= $_REQUEST["telefono"];
 
         // $foto = addslashes(file_get_contents($_FILES['Imagen']['tmp_name']));
         
@@ -179,6 +181,7 @@ class JugadoresController extends ControladorBase {
         $dao->objeto->setEdad($edad);
         $dao->objeto->setDui($dui);
         $dao->objeto->setFechaNacimiento($fechaNac);
+        $dao->objeto->setTelefono($telefono);
         //$dao->objeto->setIdEquipo($equipo);
        // $dao->objeto->setIdCategoria($categoria);
         $dao->objeto->setImg($img);
@@ -212,6 +215,7 @@ class JugadoresController extends ControladorBase {
         //$dao->objeto->setIdEquipo($_REQUEST['equipo']);
         $dao->objeto->setImg($_REQUEST['imagenNueva']);
         $dao->objeto->setIdJugador($_REQUEST['idDetalleE']);
+         $dao->objeto->setTelefono($_REQUEST['telefono']);
 
         echo $dao->editarM();
     }

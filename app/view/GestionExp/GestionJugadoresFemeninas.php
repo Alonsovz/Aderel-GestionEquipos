@@ -76,7 +76,7 @@
                     
         </div>
 
-<div class="ui tiny modal" id="modalAgregarJugador"  style="overflow: scroll;">
+<div class="ui  modal" id="modalAgregarJugador"  style="overflow: scroll;">
 
 <div class="header">
 <i class="female icon"></i><i class="futbol icon"></i> Agregar nueva jugadora
@@ -128,11 +128,17 @@
                 <div class="field">
                         <div class="fields">
                         
-                        <div class="eight wide field">
-                            <div id="age">
-                            <b><label><i class="male icon"></i>La edad de la jugadora es:</label></b>
+                        <div class="three wide field">
+                            
+                            <b><label><i class="male icon"></i>Edad: </label></b>
                             <input type="text" id="edad" name="edad" readonly>
-                            </div>
+                           
+                        </div>
+                        <div class="six wide field">
+                            
+                            <b><label><i class="phone icon"></i>Teléfono de jugadora:</label></b>
+                            <input type="text" id="telefono" name="telefono" placeholder="Tel. del jugador">
+                           
                         </div>
                         <div class="eight wide field">
                         <label><i class="address card icon"></i>N° Dui de Jugadora</label>
@@ -257,6 +263,11 @@ var appJ = new Vue({
                     type: 'text', 
                 },
                 {
+                    label: 'Teléfono:',
+                    name: 'telefono',
+                    type: 'text', 
+                },
+                {
                     label: 'DUI/Carnet Minoridad:',
                     name: 'dui',
                     type: 'text', 
@@ -326,6 +337,7 @@ var appJ = new Vue({
                         $('#frmEditarJ input[name="imagenNueva"]').val(dat.foto);
                         $('#frmEditarJ input[name="fechaNacimiento"]').val(dat.fechaNacimiento);
                         $('#frmEditarJ input[name="edad"]').val(dat.edad);
+                        $('#frmEditarJ input[name="telefono"]').val(dat.telefono);
                        // $('#frmEditarJ select[name="equipo"]').dropdown('set selected', dat.idEquipo);
                     })
                     .catch(err => {
@@ -362,9 +374,7 @@ var appJ = new Vue({
     });
 </script>
 <script type="text/javascript">
-$(document).ready(function(){
-    $("#age").hide();
-});
+
 
 function limpiar(){
     $("#age").hide(); 
@@ -373,6 +383,7 @@ function limpiar(){
                 $('#dui').val('');
                 $('#fechaNac').val('');
                 $('#Imagen').val('');
+                $("#telefono").val('');
                 
 }
 $(function(){
@@ -382,8 +393,8 @@ $('#btnCerrar').click(function() {
                 $('#apellidoJ').val('');
                 $('#dui').val('');
                 $('#fechaNac').val('');
-               // $('#equipo').prop('selected', false).find('option:first').prop('selected', true);
                 $('#Imagen').val('');
+                $("#telefono").val('');
                 $('#modalAgregarJugador').modal('hide');
             });
             $('#btnCerrarJ').click(function() { 
@@ -414,6 +425,10 @@ var ver=(ele)=>{
 
 </script>
 <script>
+$(document).ready(function(){
+    $('#telefono').mask("9999-9999");
+    $('#frmEditarJ input[name="telefono"]').mask("9999-9999");
+});
 $(function(){
 
 $('#Imagen').change(e=>{
@@ -608,7 +623,7 @@ if(edad>18){
     $('#duiJ').mask("99999999-9");
 }
 else{
-    $('#duiJ').mask("9999-999999-999-9");
+    $('#duiJ').mask("99999999999999");
 }
 }
 
@@ -624,7 +639,7 @@ if(edad>18){
     $('#frmEditarJ input[name="dui"]').mask("99999999-9");
 }
 else{
-    $('#frmEditarJ input[name="dui"]').mask("9999-999999-999-9");
+    $('#frmEditarJ input[name="dui"]').mask("99999999999999");
 }
 
 }
@@ -633,7 +648,7 @@ $('#fechaNac').change(function(){
     var fecha =  document.getElementById('fechaNac').value;
 
 Edad(fecha);
-$('#duiJ').val('');
+
 $('#edad').val('');
 resultado();
 
@@ -644,7 +659,7 @@ $('#frmEditarJ input[name="fechaNacimiento"]').change(function(){
     var fecha = $('#frmEditarJ input[name="fechaNacimiento"]').val();
 
 Edad(fecha);
-$('#frmEditarJ input[name="dui"]').val('');
+
 $('#frmEditarJ input[name="edad"]').val('');
 resultadoE();
 

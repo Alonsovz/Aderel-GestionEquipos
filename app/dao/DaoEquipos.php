@@ -14,7 +14,7 @@ class DaoEquipos extends DaoBase {
         inner join categorias c on c.idCategoria = e.idCategoria
         inner join inscripcion i on i.idInscripcion = e.idInscripcion
         inner join torneos t on t.idTorneo = e.idTorneo
-        where  e.idEliminado=1 and e.idEquipo>1 and e.idGenero=1 and e.idFondo=1;";
+        where  e.idEliminado=1 and e.idEquipo>1 and e.idGenero=1;";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -62,7 +62,7 @@ class DaoEquipos extends DaoBase {
         inner join categorias c on c.idCategoria = e.idCategoria
         inner join inscripcion i on i.idInscripcion = e.idInscripcion
         inner join torneos t on t.idTorneo = e.idTorneo
-        where  e.idEliminado=1  and e.idGenero=2 and e.idEquipo>2 and e.idFondo=1";
+        where  e.idEliminado=1  and e.idGenero=2 and e.idEquipo>2";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -76,12 +76,15 @@ class DaoEquipos extends DaoBase {
             $btnEliminar = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnEliminarE icon negative small button\" onclick=\"eliminarEquipo(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
             $btnVer = '<button id=\"'.$fila["idEquipo"].'\" categoria=\"'.$fila["Categoria"].'\" nombre=\"'.$fila["nombreE"].'\" encargado=\"'.$fila["encargado"].'\" class=\"ui btnVerT icon blue small button\" onclick=\"verJugadoresE(this)\"><i class=\"users icon\"></i> Jugadores</button>';
             $btnCancelar = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui  icon purple small button\" onclick=\"enviarFondo(this)\"><i class=\"close icon\"></i> Fondo Común</button>';
-            $inscrbirJ = '<button edadMinima=\"'.$fila["edad"].'\" id=\"'.$fila["idEquipo"].'\" categoria=\"'.$fila["Categoria"].'\" idTorneo=\"'.$fila["idT"].'\" nombre=\"'.$fila["nombreE"].'\" encargado=\"'.$fila["encargado"].'\"  class=\"ui icon green small button\" onclick=\"modalCambiar(this)\"><i class=\"edit icon\"></i> Inscribir J</button>';
+            $inscrbirJ = '<button edadMinima=\"'.$fila["edad"].'\" id=\"'.$fila["idEquipo"].'\" categoria=\"'.$fila["Categoria"].'\" idTorneo=\"'.$fila["idT"].'\" nombre=\"'.$fila["nombreE"].'\" encargado=\"'.$fila["encargado"].'\" idCategoria=\"'.$fila["idCategoria"].'\"  class=\"ui icon green small button\" onclick=\"modalCambiar(this)\"><i class=\"edit icon\"></i> Inscribir J</button>';
             $btnNomina = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui  icon red small button\" onclick=\"nomina(this)\"><i class=\"list icon\"></i> Nómina</button>';
             if($fila["idInscripcion"]== 1){
                 
                 $btnInscrbir = '<button id=\"'.$fila["idEquipo"].'\" class=\"ui btnInscribir icon green small button\" onclick=\"inscribirEquipo(this)\"><i class=\"futbol icon\"></i>Inscribir</button>';
                 $acciones = ', "Acciones": "'.$btnInscrbir.''.$btnEditar.' '.$btnEliminar.'"';
+            }
+            else if($fila["idFondo"]==2){
+                $acciones = ', "Acciones": "'.$btnVer.''.$btnNomina.'"';
             }
                else{
                 $btnInscrbir = '';
@@ -105,7 +108,7 @@ class DaoEquipos extends DaoBase {
 
     public function registrarM() {
         $_query = "insert into equipos values(null,'".$this->objeto->getNombreEquipo()."', '".$this->objeto->getEncargado()."',
-        '".$this->objeto->getEncargadoAux()."',
+        '".$this->objeto->getTelefonoE()."','".$this->objeto->getEncargadoAux()."','".$this->objeto->getTelefonoAux()."',
         '".$this->objeto->getIdCategoria()."',1,2,2,1,1)";
 
         $resultado = $this->con->ejecutar($_query);
@@ -132,7 +135,8 @@ class DaoEquipos extends DaoBase {
 
     public function editarM() {
         $_query = "update equipos set nombre ='".$this->objeto->getNombreEquipo()."',encargado = '".$this->objeto->getEncargado()."',
-        encargadoAux = '".$this->objeto->getEncargadoAux()."',
+        encargadoAux = '".$this->objeto->getEncargadoAux()."', telefonoE='".$this->objeto->getTelefonoE()."',
+        telefonoAux = '".$this->objeto->getTelefonoAux()."',
         idCategoria = '".$this->objeto->getIdCategoria()."'
          where idGenero=2 and idEquipo = ".$this->objeto->getIdEquipo();
 
@@ -224,7 +228,8 @@ class DaoEquipos extends DaoBase {
 
     public function registrarF() {
         $_query = "insert into equipos values(null,'".$this->objeto->getNombreEquipo()."', '".$this->objeto->getEncargado()."',
-        '".$this->objeto->getEncargadoAux()."','".$this->objeto->getIdCategoria()."',1,1,1,1,1)";
+        '".$this->objeto->getTelefonoE()."','".$this->objeto->getEncargadoAux()."','".$this->objeto->getTelefonoAux()."',
+        '".$this->objeto->getIdCategoria()."',1,1,1,1,1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -250,7 +255,8 @@ class DaoEquipos extends DaoBase {
 
     public function editarF() {
         $_query = "update equipos set nombre ='".$this->objeto->getNombreEquipo()."',encargado = '".$this->objeto->getEncargado()."',
-        encargadoAux = '".$this->objeto->getEncargadoAux()."',
+        encargadoAux = '".$this->objeto->getEncargadoAux()."', telefonoE='".$this->objeto->getTelefonoE()."',
+        telefonoAux = '".$this->objeto->getTelefonoAux()."',
         idCategoria = '".$this->objeto->getIdCategoria()."'
          where idGenero=1 and idEquipo = ".$this->objeto->getIdEquipo();
 
@@ -379,7 +385,9 @@ class DaoEquipos extends DaoBase {
 
 
     public function encargadosEquipo(){
-        $query = "select * from equipos where idEquipo=".$this->objeto->getIdEquipo();
+        $query = "select e.*, t.nombreTorneo as torneo from equipos e
+        inner join torneos t on t.idTorneo = e.idTorneo
+        where e.idEquipo=".$this->objeto->getIdEquipo();
 
         $resultado = $this->con->ejecutar($query);
 
@@ -388,7 +396,7 @@ class DaoEquipos extends DaoBase {
 
 
     public function jugadoresEquipo(){
-        $query = "select i.*,j.* from inscriJugador i 
+        $query = "select i.*,j.*,DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento from inscriJugador i 
         inner join jugadores j on j.idJugador= i.idJugador 
         where i.idEquipo=".$this->objeto->getIdEquipo();
 

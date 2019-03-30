@@ -167,7 +167,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
         <i class="chart bar outline icon"></i>
         <div class="content" style="font-size: 20px;">
         Edad Minima de la Categoria: 
-            <input type="text" id="edadMinima" readonly style="width: 7%;">
+            <a id="edadMinima"></a>
         </div>
         </div>
     </div>
@@ -232,13 +232,23 @@ var appE = new Vue({
                     type: 'text'
                 },
                 {
-                    label: 'Encargada del Equipo:',
+                label: 'Encargada del Equipo:',
                     name: 'encargado',
+                    type: 'text'
+                },
+                {
+                    label: 'Teléfono Encargada:',
+                    name: 'telefonoE',
                     type: 'text'
                 },
                 {
                     label: 'Encargada Aux del Equipo:',
                     name: 'encargadoAux',
+                    type: 'text'
+                },
+                {
+                    label: 'Teléfono Aux del Equipo:',
+                    name: 'telefonoAux',
                     type: 'text'
                 },
                 {
@@ -257,13 +267,23 @@ var appE = new Vue({
                     type: 'text'
                 },
                 {
-                    label: 'Encargada del Equipo',
+                label: 'Encargada del Equipo:',
                     name: 'encargado',
+                    type: 'text'
+                },
+                {
+                    label: 'Teléfono Encargada:',
+                    name: 'telefonoE',
                     type: 'text'
                 },
                 {
                     label: 'Encargada Aux del Equipo:',
                     name: 'encargadoAux',
+                    type: 'text'
+                },
+                {
+                    label: 'Teléfono Aux del Equipo:',
+                    name: 'telefonoAux',
                     type: 'text'
                 },
                 {
@@ -357,6 +377,8 @@ var appE = new Vue({
                         $('#frmEditarE input[name="nombre"]').val(dat.nombre);
                         $('#frmEditarE input[name="encargado"]').val(dat.encargado);
                         $('#frmEditarE input[name="encargadoAux"]').val(dat.encargadoAux);
+                        $('#frmEditarE input[name="telefonoE"]').val(dat.telefonoE);
+                        $('#frmEditarE input[name="telefonoAux"]').val(dat.telefonoAux);
                         $('#frmEditarE select[name="selectCategoria"]').dropdown('set selected', dat.idCategoria);
                     })
                     .catch(err => {
@@ -402,7 +424,7 @@ var appE = new Vue({
 </script>
 <script>
 var inscribir=(ele)=>{
-    if($(ele).attr("edad")<$("#edadMinima").val()){
+    if($(ele).attr("edad")<$("#edadMinima").text()){
         swal({
             title: 'Error!',
             text: 'La edad de la jugadora es menor a la edad minima de la categoría',
@@ -461,7 +483,7 @@ var modalCambiar=(ele)=>{
                 appE.datosDetalle.encargado= $(ele).attr("encargado");
                 $("#idEqui").val($(ele).attr("id"));
                 $("#idTor").val($(ele).attr("idTorneo"));
-                $("#edadMinima").val($(ele).attr("edadMinima"));
+                $("#edadMinima").text($(ele).attr("edadMinima"));
                 $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
             }

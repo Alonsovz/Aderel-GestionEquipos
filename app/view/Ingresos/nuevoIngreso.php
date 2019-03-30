@@ -668,7 +668,7 @@ $("#guardarEF").click(function(){
                         $("#modalCobroEscFubol").modal("hide");
                         swal({
                             title: 'Listo',
-                            text: 'Cuota cobrada con éxito',
+                            text: 'Mensualidad cobrada con éxito',
                             type: 'success',
                             showConfirmButton: false,
                                 timer: 1700
@@ -679,7 +679,7 @@ $("#guardarEF").click(function(){
                             app.detalles=[];
                             $('#modalDetallesEs').modal('hide');
 
-                            alertify.confirm("¿Volver a cobrar?",
+                            alertify.confirm("¿Realizar cobro de otra mensualidad?",
                         function(){
                             
                             $('#modalDetallesEs').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
@@ -728,7 +728,7 @@ $("#guardarNa").click(function(){
                         $("#modalCobroNa").modal("hide");
                         swal({
                             title: 'Listo',
-                            text: 'Cuota cobrada con éxito',
+                            text: 'Mensualidad cobrada con éxito',
                             type: 'success',
                             showConfirmButton: false,
                                 timer: 1700
@@ -739,7 +739,7 @@ $("#guardarNa").click(function(){
                             app.detalles=[];
                             $('#modalDetallesNa').modal('hide');
 
-                            alertify.confirm("¿Volver a cobrar?",
+                            alertify.confirm("¿Realizar otro cobro de mensualidad?",
                         function(){
                             
                             $('#modalDetallesNa').modal('setting', 'autofocus', false).modal('setting', 'closable', false)

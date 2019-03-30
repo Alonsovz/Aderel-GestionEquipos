@@ -7,11 +7,47 @@ class Equipos extends ModeloBase{
     private $encargadoAux;
     private $idCategoria;
     private $idTorneo;
+    private $telefonoAux;
+    private $telefonoE;
 
 
     public function __construct() {
 
     }
+    public function getTelefonoAux()
+    {
+        return $this->telefonoAux;
+    }
+
+    /**
+     * Set the value of apellido
+     *
+     * @return  self
+     */ 
+    public function setTelefonoAux($telefonoAux)
+    {
+        $this->telefonoAux = $telefonoAux;
+
+        return $this;
+    } 
+
+    public function getTelefonoE()
+    {
+        return $this->telefonoE;
+    }
+
+    /**
+     * Set the value of apellido
+     *
+     * @return  self
+     */ 
+    public function setTelefonoE($telefonoE)
+    {
+        $this->telefonoE = $telefonoE;
+
+        return $this;
+    } 
+
     public function getIdTorneo()
     {
         return $this->idTorneo;

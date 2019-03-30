@@ -57,36 +57,39 @@ class Reporte {
             <th><h2><font color='green'>Datos del Jugador</font></h2></th>
             </tr>
             </table>
-            <table class='tabla' style='font-size:17px;'>
+           
             ";
 
         while($fila = $resultado->fetch_assoc()) {
-            $tabla.="<tr>
-                        <td><br><br><br>Expediente del Jugador: <b>".$fila["correlativo"]."</b></td>
-                        <td ><br><br><br>Nivel: <b>".$fila["nivel"]."</b></td>
-                        <td><br><br><br>Edad del jugador: <b>".$fila['edad']." años</b></td>
-                
-                    </tr>
-                    
-                    <tr>
-                        
-                        <td><br><br>Nombre del Jugador: <b>".$fila["nombre"]." ".$fila['apellido']."</b></td>
-                        <td><br><br>Fecha de Nacimiento: <b>".$fila['fechaNacimiento']."</b></td>
-                        <td><br><br>Carnet Min: <b>".$fila['carnet']."</b></td>
-                     </tr>
-                     
-                     <tr>
-                     <td><br><br>Encargado del Jugador: <b>".$fila["encargado"]."</b></td>
-                     <td><br><br>Dui: <b>".$fila['dui']."</b></td>
-                     <td><br><br>Teléfono: <b>".$fila['telefono']."</b></td>
-                     </tr>
-                     <tr>
-                     <td><br><br>Fecha de Inscripción: <b>".$fila['fechaInscripcion']."</b></td>
-                     </tr>
+            $tabla.="<table style='font-size: 20px;'>
+			
+			<tr>
+                <td rowspan=4 colspan=2> <img src=".$fila["foto"]." style='width:130px;'/></td>
+                <td> <b>Expediente:</b> ".$fila["correlativo"]."</td>
+                <td > <b>Nombre:</b> ".$fila["nombre"]." ".$fila["apellido"]."</td>
+                <td ><b> Nivel: </b> ".$fila["nivel"]."</td>
+				
+			</tr>
+			<tr>
+            <td><br> <b>Carnet Min. : </b>".$fila["carnet"]."</td>
+            <td><br> <b>Fecha de Nac. :</b> ".$fila["fechaNacimiento"]."</td>
+            <td><br> <b>Edad:</b> ".$fila["edad"]." años</td>
+            </tr>
+            <tr>
+                <td><br> <b>Encargado :</b> ".$fila["encargado"]."</td>
+                <td><br> <b>DUI :</b> ".$fila["dui"]."</td>
+                <td><br> <b>Teléfono </b> ".$fila["telefono"]."</td>
+            </tr>
+            
+            <tr>
+                <td><br> <b>Inicio de inscripción :</b> ".$fila["fechaInscripcion"]."</td>
+                <td colspan=2><br> <b>Fecha Fin de Inscripcion:</b> <font color='red'>".$fila["fechaFinal"]."</font></td>
+			</tr>
+        </table>
                      ";
         }
                 
-        $tabla .= "</table><hr>";
+        $tabla .= "<hr>";
         $tabla .="
         <br><br><br><br>F:____________________________________________________
         <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Nombre y firma del reponsable</b>";
