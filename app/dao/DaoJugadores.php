@@ -351,7 +351,7 @@ class DaoJugadores extends DaoBase {
     {
         $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,
         DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento from jugadores j
-         where j.idEliminado = 1 and j.idGenero=1 and j.idJugador>2";
+         where j.idEliminado = 1 and j.idGenero=1 and j.idJugador>1";
 
         
 
@@ -503,6 +503,42 @@ class DaoJugadores extends DaoBase {
                     return 0;
                 }
         }   
+
+
+        public function mostrarJugPendPago(){
+            $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,i.estado, i.pago as pago,e.nombre as equipo from inscriJugador i
+        inner join equipos e on e.idEquipo = i.idEquipo
+        inner join jugadores j on j.idJugador = i.idJugador
+        where i.pago=1 and i.estado=2 group by i.idJugador";
+
+
+        $resultado = $this->con->ejecutar($_query);
+
+            $_json = '';
+
+            
+            while($fila = $resultado->fetch_assoc()) {
+                    
+                $object = json_encode($fila);
+
+               
+                
+                $btnCobrar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui  icon green small button\" onclick=\"cobrarJugador(this)\"><i class=\"dollar icon\"></i> Cobrar</button>';
+                $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
+                    $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnCobrar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                
+                
+
+                $object = substr_replace($object, $acciones, strlen($object) -1,0);
+    
+                $_json .= $object.',';
+            }
+    
+            $_json = substr($_json,0, strlen($_json) - 1);
+    
+            echo '{"data": ['.$_json .']}';
+
+        }
         
         
         

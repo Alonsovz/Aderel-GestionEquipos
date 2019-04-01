@@ -11,7 +11,7 @@
 sub_titulo="¿Está seguro de querer eliminar este equipo?" :campos="campos_eliminarE" tamanio='tiny'></modal-eliminar>
 
 <modal-fondo id_form="frmFondoComun" id="modalFondo" url="?1=EquipoController&2=enviarFondo" titulo="Enviar a Fondo Común"
-sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="camposFondoComun" tamanio='tiny'></modal-fondo>>
+sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="camposFondoComun" tamanio='tiny'></modal-fondo>
 
 <modal-detalles :detalles="detalles"></modal-detalles>
 <modal-jugador :detalles="detalles"></modal-jugador>
@@ -432,6 +432,11 @@ $(document).ready(function(){
     $('#frmRegistrarE input[name="telefonoAux"]').mask("9999-9999");
 });
 
+var nomina=(ele)=>{
+    var id = $(ele).attr("id");
+window.open('?1=EquipoController&2=nomina&id='+id,'_blank');
+return false;
+}
 var inscribir=(ele)=>{
     if($(ele).attr("edad")<$("#edadMinima").text()){
         swal({

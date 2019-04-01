@@ -45,7 +45,7 @@ class DaoEscuela extends DaoBase {
                 $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             else if($fila["estado"]==1){
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             else{
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
@@ -150,7 +150,7 @@ class DaoEscuela extends DaoBase {
                 $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             else if($fila["estado"]==1){
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             else{
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
@@ -255,7 +255,7 @@ class DaoEscuela extends DaoBase {
                 $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             else if($fila["estado"]==1){
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             else{
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
@@ -358,7 +358,7 @@ class DaoEscuela extends DaoBase {
                 $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             else if($fila["estado"]==1){
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             else{
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
@@ -461,7 +461,7 @@ class DaoEscuela extends DaoBase {
                 $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             else if($fila["estado"]==1){
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             else{
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
@@ -564,7 +564,7 @@ class DaoEscuela extends DaoBase {
             }
             else if($fila["estado"]==1)
             {
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             else{
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';

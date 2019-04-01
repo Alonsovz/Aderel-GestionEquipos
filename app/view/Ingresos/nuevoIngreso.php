@@ -53,6 +53,7 @@
                     <option value="escuelaNatacion">Escuela de Natacion</option>
                     <option value="fondoComun">Fondo Común</option>
                     <option value="inscripcionE">Inscripción de Equipos</option>
+                    <option value="inscripcionJ">Inscripción de Jugadores</option>
                     <option value="otro">Otro</option>
                 </select>
             </div>
@@ -270,6 +271,39 @@
                         </div>
                 </div>
             </div>
+
+
+            <div class="field" id="inscripcionJu">
+                <div class="row">
+                    <h3>
+                    <i class="dollar icon"></i><i class="money bill icon"></i>
+                    Nuevo Ingreso de Inscripción de Jugadores<font color="#FACC2E" size="20px">.</font>
+                   </h3>
+                </div>
+                <br>
+                
+                <div class="row">
+                        <div class="sixteen wide column">
+                        <table id="dtJugPenPago" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                                <thead>
+                                    <tr>
+                                    
+                                        <th style="background-color: #FACC2E; color:white;">N°</th>
+                                        <th style="background-color: #7401DF; color:white;" ></th>
+                                        <th style="background-color: #7401DF; color:white;">Cod. Expediente</th>
+                                        <th style="background-color: #7401DF; color:white;">Nombre</th>
+                                        <th style="background-color: #7401DF; color:white;">Apellido</th>
+                                        <th style="background-color: #7401DF; color:white;">Dui / Carnet Min.</th>
+                                        <th style="background-color: #7401DF; color:white;">Edad del Jugador</th>   
+                                        <th style="background-color: #7401DF; color:white;">Equipo</th>     
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+            </div>
             
 </div>
     <div class="actions">
@@ -428,7 +462,7 @@
     
 
         <form class="ui form" id="frmCobroEquipo">
-        <input type="hidden" id="idEquipoCobro">
+        <input type="hidden" id="idEquipoCobro" name="idEquipoCobro">
             <div class="field">
             <i class="dollar icon"></i> Cantidad a pagar:
             <input type="text" id="cantidadCobroE" name="cantidadCobroE" >
@@ -460,6 +494,7 @@
 <script src="./res/tablas/tablaEscFutbolPago.js"></script>
 <script src="./res/tablas/tablaPagosNatacion.js"></script>
 <script src="./res/tablas/tablaCobroEquipos.js"></script>
+<script src="./res/tablas/tablaJugPenPago.js"></script>
 <script>
 
 var app = new Vue({
@@ -669,7 +704,10 @@ var cobrarEquipo=(ele)=>{
 
 $("#guardarGim").click(function(){
     var idU= $("#idUsuario").val();
-    alertify.confirm("¿Desea cobrar la cuota del gimnasio?",
+    var nombre = $("#nombreG").text();
+    var apellido = $("#apellidoG").text();
+
+    alertify.confirm("¿Desea cobrar la cuota del gimnasio a "+ nombre +" "+ apellido + "?",
             function(){
     const form = $('#frmCobroGim');
 
@@ -730,7 +768,10 @@ $("#guardarGim").click(function(){
 
 $("#guardarEF").click(function(){
     var idUs= $("#idUsuarioEF").val();
-    alertify.confirm("¿Desea cobrar la cuota de la escuela de fútbol?",
+    var nombre = $("#nombreEF").text();
+    var apellido = $("#apellidoEF").text();
+
+    alertify.confirm("¿Desea cobrar la cuota de la mensualidad de la escuela de fútbol a "+ nombre +" "+ apellido + "?",
             function(){
     const form = $('#frmCobroEscuelaFutbol');
 
@@ -790,7 +831,10 @@ $("#guardarEF").click(function(){
 
 $("#guardarNa").click(function(){
     var idUsu= $("#idUsuarioN").val();
-    alertify.confirm("¿Desea cobrar la cuota de la escuela de Natación?",
+    var nombre = $("#nombreN").text();
+    var apellido = $("#apellidoN").text();
+
+    alertify.confirm("¿Desea cobrar la cuota de la mensualidad de la escuela de natación a "+ nombre +" "+ apellido + "?",
             function(){
     const form = $('#frmCobroNa');
 
@@ -942,6 +986,61 @@ $("#guardarFondo").click(function(){
 
 });
 
+
+$("#guardarEquiposCobro").click(function(){
+    var idCobro= $("#idEquipoCobro").val();
+    var nombre =  $("#nombreE").text();
+    
+
+    alertify.confirm("¿Desea cobrar la inscipción del equipo " + nombre + "?",
+            function(){
+    const form = $('#frmCobroEquipo');
+
+                const datosFormulario = new FormData(form[0]);
+         
+        
+            $.ajax({
+                enctype: 'multipart/form-data',
+                contentType: false,
+                processData: false,
+                cache: false,
+                type: 'POST',
+                url: '?1=EquipoController&2=cobrar',
+                data: datosFormulario,
+                success: function(r) {
+                    if(r == 1) {
+                        $("#modalCobroInscripcionE").modal("hide");
+                        swal({
+                            title: 'Listo',
+                            text: 'Inscrito con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                            }).then((result) => {
+                            $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+                            
+                        $("#cantidadCobroE").val();
+                        $('#dtCobroEquipos').DataTable().ajax.reload();
+                        
+                            
+                        });
+                        
+                       
+                        
+                    } 
+                }
+            });
+        },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            }); 
+        });
+
+
+
 $(document).ready(function(){
 $("#otro").hide();
 $("#taquilla").hide();
@@ -950,6 +1049,7 @@ $("#escuelaFutbol").hide();
 $("#escuelaNatacion").hide();
 $("#fondoComun").hide();
 $("#inscripcionEq").hide();
+$("#inscripcionJu").hide();
 
  $("#tipoIngreso").change(function(){
 
@@ -960,6 +1060,7 @@ $("#inscripcionEq").hide();
         $("#escuelaNatacion").hide();
         $("#fondoComun").hide();
         $("#inscripcionEq").hide();
+        $("#inscripcionJu").hide();
      }
      else if($("#tipoIngreso").val() == "gimnasio"){
         $("#otro").hide();
@@ -968,7 +1069,7 @@ $("#inscripcionEq").hide();
         $("#escuelaNatacion").hide();
         $("#fondoComun").hide();
         $("#inscripcionEq").hide();
-        
+        $("#inscripcionJu").hide();
      }
      else if($("#tipoIngreso").val() == "fondoComun"){
         $("#otro").hide();
@@ -977,6 +1078,7 @@ $("#inscripcionEq").hide();
         $("#escuelaNatacion").hide();
         $("#fondoComun").show();
         $("#inscripcionEq").hide();
+        $("#inscripcionJu").hide();
      }
      else if($("#tipoIngreso").val() == "escuelaFutbol"){;
         $("#otro").hide();
@@ -985,7 +1087,7 @@ $("#inscripcionEq").hide();
         $("#escuelaNatacion").hide();
         $("#fondoComun").hide();
         $("#inscripcionEq").hide();
-        
+        $("#inscripcionJu").hide();
      }
 
      else if($("#tipoIngreso").val() == "escuelaNatacion"){
@@ -995,7 +1097,7 @@ $("#inscripcionEq").hide();
         $("#escuelaNatacion").show();
         $("#fondoComun").hide();
         $("#inscripcionEq").hide();
-        
+        $("#inscripcionJu").hide();
      }
 
      else if($("#tipoIngreso").val() == "inscripcionE"){
@@ -1005,7 +1107,16 @@ $("#inscripcionEq").hide();
         $("#escuelaNatacion").hide();
         $("#fondoComun").hide();
         $("#inscripcionEq").show();
-        
+        $("#inscripcionJu").hide();
+     }
+     else if($("#tipoIngreso").val() == "inscripcionJ"){
+        $("#otro").hide();
+        $("#gimnasio").hide();
+        $("#escuelaFutbol").hide();
+        $("#escuelaNatacion").hide();
+        $("#fondoComun").hide();
+        $("#inscripcionEq").hide();
+        $("#inscripcionJu").show();
      }
 
  });

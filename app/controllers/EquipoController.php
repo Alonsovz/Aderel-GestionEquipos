@@ -332,6 +332,28 @@ public function registrarF() {
         echo $dao->cobrarEquipo();
     }
 
+
+    public function cobrar(){
+
+        $id = $_REQUEST["idEquipoCobro"];
+        $cantidad = $_REQUEST["cantidadCobroE"];
+
+        $dao = new DaoEquipos();
+
+        $dao->objeto->setIdEquipo($id);
+
+        echo $dao->cobrarInscripcion();
+
+
+        $daoI = new DaoIngresos();
+
+        $daoI->objeto->setTitle("Inscripción de Equipos");
+        $daoI->objeto->setCantidad($cantidad);
+
+        
+        echo $daoI->guardarOtro();
+    }
+
    
 
 }

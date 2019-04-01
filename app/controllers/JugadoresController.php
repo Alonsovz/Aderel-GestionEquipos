@@ -41,6 +41,12 @@ class JugadoresController extends ControladorBase {
         echo $dao->inscripcionM();
     }
 
+    public function mostrarJugPenPago() {
+        $dao = new DaoJugadores();
+
+        echo $dao->mostrarJugPendPago();
+    }
+
     public function inscripcionF() {
         $dao = new DaoJugadores();
 

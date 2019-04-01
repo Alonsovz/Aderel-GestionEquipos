@@ -33,15 +33,16 @@ class DaoNatacion extends DaoBase {
             $btnVencidos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui  icon red small button\" onclick=\"reinscribirUsuario(this)\"><i class=\"pencil alternate icon\"></i>Inscripción</button>';
             $btnInscribir = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui  icon violet small button\" onclick=\"reinscribirUsuario(this)\"><i class=\"pencil alternate icon\"></i>Inscripción</button>';
 
-            if($fila["fechaFinal"] <= $fechaMini){
+            if($fila["fechaFinal"] >= $fechaMini){
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnInscribir.' '.$btnEditar.''.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';    
                 
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnEditar.''.$btnReporte.' '.$btnEliminar.' '.$btnInscribir.'</center></td><td><center>'.$imagen.' </center></td></table>"';
+               
             }
             else if($fila["estado"]==1){
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$btnReporte.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.''.$btnEliminar.' '.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';    
             }
                else{
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnReporte.''.$btnEditar.''.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnReporte.''.$btnEditar.''.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';    
                }
             
             

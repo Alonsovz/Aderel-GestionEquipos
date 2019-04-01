@@ -25,7 +25,7 @@ Vue.component('modal-detalles', {
                             <th>Apellido</th>
                             <th>Edad</th>
                             <th>Equipo</th>
-                            <th>Acciones</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,11 +36,9 @@ Vue.component('modal-detalles', {
                                 <td>{{detalle.apellido}}</td>
                                 <td>{{detalle.edad}}</td>
                                 <td style="background-color: lightblue;">{{detalle.equipo}}</td>
-                                <td>
-                                <button @click="$parent.modalCambiar(detalle.idJugador)" type="button" class="ui mini circular primary icon button btnCambios">
-                                    <i class="edit icon"></i>
-                                </button>
-                                </td>
+                                <td v-if="detalle.pago == '1'" style="background-color: #FA5858;">
+                                <b>Pendiente de Pago</b>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

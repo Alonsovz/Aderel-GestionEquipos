@@ -28,17 +28,17 @@ class DaoGimnasio extends DaoBase {
 
             $btnEditar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEditarE icon blue small button\" onclick=\"editarUsuario(this)\"><i class=\"edit icon\"></i>Editar</button>';
             $btnEliminar = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnEliminarE icon red small button\" onclick=\"eliminarUsuario(this)\"><i class=\"trash icon\"></i>Eliminar</button>';
-            $btnVencidos = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnVencidos icon violet small button\" onclick=\"reinscribirUsuario(this)\"><i class=\"pencil alternate icon\"></i>Inscripción</button>';
+            $btnInscribir = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnVencidos icon violet small button\" onclick=\"reinscribirUsuario(this)\"><i class=\"pencil alternate icon\"></i>Inscripción</button>';
             $btnReporte = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui  icon green small button\" onclick=\"reporte(this)\"><i class=\"file outline icon\"></i>Ficha</button>';
             $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
             
-            if($fila["fechaFinal"] <= $fechaMini){
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnVencidos.' '.$btnEditar.''.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';    
+            if($fila["fechaFinal"] >= $fechaMini){
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnInscribir.' '.$btnEditar.''.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';    
                 
                
             }
             else if($fila["estado"]==1){
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.''.$btnEliminar.' '.$btnReporte.' '.$btnVencidos.'</center></td><td><center>'.$imagen.'</center></td></table>"';    
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.''.$btnEliminar.' '.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';    
             }
                else{
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnReporte.''.$btnEditar.''.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';    
@@ -349,6 +349,7 @@ class DaoGimnasio extends DaoBase {
 
     public function cobrar()
     {
+        
 
         $_query="update pagoGimnasio set estado=2 where id=".$this->objeto->getIdPago();
        
