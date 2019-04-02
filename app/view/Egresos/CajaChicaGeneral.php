@@ -180,7 +180,7 @@ $(function() {
         <div class="row">
                 <div class="titulo">
                 <i class="money bill alternate icon"></i>
-                    Egresos por cheque Aderel<font color="#DFD102" size="20px">.</font>
+                    Egresos por vale Caja General<font color="#DFD102" size="20px">.</font>
                     <a href="?1=IngresosController&2=nuevoIngreso" class="ui left floated red button">
                             <i class="hand left point icon"></i> Volver
                         </a>

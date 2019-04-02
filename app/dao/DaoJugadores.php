@@ -176,7 +176,7 @@ class DaoJugadores extends DaoBase {
 
     public function inscribirJugadorM(){
         $_query = "insert into inscriJugador values('".$this->objeto->getIdEquipo()."','".$this->objeto->getIdJugador()."',
-        '".$this->objeto->getIdTorneo()."',2,1)";
+        '".$this->objeto->getIdTorneo()."',2,1,curdate())";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -506,10 +506,12 @@ class DaoJugadores extends DaoBase {
 
 
         public function mostrarJugPendPago(){
-            $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,i.estado, i.pago as pago,e.nombre as equipo from inscriJugador i
-        inner join equipos e on e.idEquipo = i.idEquipo
-        inner join jugadores j on j.idJugador = i.idJugador
-        where i.pago=1 and i.estado=2 group by i.idJugador";
+            $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,i.estado, 
+            i.pago as pago,e.nombre as equipo, t.nombreTorneo as torneo from inscriJugador i
+            inner join equipos e on e.idEquipo = i.idEquipo
+            inner join jugadores j on j.idJugador = i.idJugador
+            inner join torneos t on t.idTorneo = i.idTorneo
+            where i.pago=1 and i.estado=2 group by i.idJugador";
 
 
         $resultado = $this->con->ejecutar($_query);
@@ -523,7 +525,7 @@ class DaoJugadores extends DaoBase {
 
                
                 
-                $btnCobrar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui  icon green small button\" onclick=\"cobrarJugador(this)\"><i class=\"dollar icon\"></i> Cobrar</button>';
+                $btnCobrar = '<button id=\"'.$fila["idJugador"].'\" torneo=\"'.$fila["torneo"].'\" nombre=\"'.$fila["nombre"].'\" apellido=\"'.$fila["apellido"].'\" equipo=\"'.$fila["equipo"].'\" class=\"ui  icon green small button\" onclick=\"cobrarJugador(this)\"><i class=\"dollar icon\"></i> Cobrar</button>';
                 $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
                     $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnCobrar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
                 
@@ -539,6 +541,21 @@ class DaoJugadores extends DaoBase {
             echo '{"data": ['.$_json .']}';
 
         }
+
+
+        public function cobrarInscripcion()
+    {
+        
+
+        $_query="update inscriJugador set pago=2 where idJugador=".$this->objeto->getIdJugador();
+       
+
+        $resultado = $this->con->ejecutar($_query);
+        
+        
+        
+
+    }
         
         
         

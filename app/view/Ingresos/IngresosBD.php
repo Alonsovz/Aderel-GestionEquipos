@@ -57,8 +57,8 @@ switch($accion)
     echo json_encode($respuesta);
     break;
     default:
-    $setenciaSQL= $pdo->prepare("select id,title,start,format(cantidad,2) as cantidad,
-    color,textColor,mes,anio,idEliminado from ingresos where  idEliminado=1;");
+    $setenciaSQL= $pdo->prepare("select id,title,start,format(SUM(cantidad),2) as cantidad,
+    color,textColor,mes,anio,idEliminado from ingresos where  idEliminado=1 group by title;");
     $setenciaSQL->execute();
    
     $resultado = $setenciaSQL->fetchAll(PDO::FETCH_ASSOC);

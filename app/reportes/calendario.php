@@ -84,6 +84,7 @@ class Reporte {
             <tr>
                 <th bgcolor='#A9E2F3'>Jornada</th>
                 <th bgcolor='#A9E2F3'>Enfrentamiento</th>
+                <th bgcolor='#A9E2F3'>Resultado</th>
                 <th bgcolor='#A9E2F3'>Partido</th>
                 <th bgcolor='#A9E2F3'>Cancha</th>
                 <th bgcolor='#A9E2F3'>Fecha</th>
@@ -95,6 +96,7 @@ class Reporte {
             $tabla.="<tr>
                         <td>".$fila['jornada']."</td>
                         <td>".$fila['equipo1']." vs ".$fila['equipo2']."</td>
+                        <td></td>
                         <td>".$fila['partido']."</td>
                         <td>".$fila['cancha']."</td>
                         <td>".$fila['fecha']."</td>
@@ -111,6 +113,7 @@ class Reporte {
                 
                 <th bgcolor='#A9E2F3'>Descansa</th>
                 <th bgcolor='#A9E2F3'>Enfrentamiento</th>
+                <th bgcolor='#A9E2F3'>Resultado</th>
                 <th bgcolor='#A9E2F3'>Partido</th>
                 <th bgcolor='#A9E2F3'>Cancha</th>
                 <th bgcolor='#A9E2F3'>Fecha</th>
@@ -123,6 +126,7 @@ class Reporte {
                         <td>".$fila['jornada']."</td>
                         <td bgcolor='#F78181'>".$fila['descansa']."</td>
                         <td>".$fila['equipo1']." vs ".$fila['equipo2']."</td>
+                        <td></td>
                         <td>".$fila['partido']."</td>
                         <td>".$fila['cancha']."</td>
                         <td>".$fila['fecha']."</td>
@@ -148,6 +152,7 @@ class Reporte {
                 <tr>
                     <th bgcolor='#A9E2F3'>Jornada</th>
                     <th bgcolor='#A9E2F3'>Enfrentamiento</th>
+                    <th bgcolor='#A9E2F3'>Resultado</th>
                     <th bgcolor='#A9E2F3'>Partido</th>
                     <th bgcolor='#A9E2F3'>Cancha</th>
                     <th bgcolor='#A9E2F3'>Fecha</th>
@@ -159,6 +164,7 @@ class Reporte {
                 $tabla.="<tr>
                             <td>".$fila['jornada']."</td>
                             <td>".$fila['equipo1']." vs ".$fila['equipo2']."</td>
+                            <td></td>
                             <td>".$fila['partido']."</td>
                             <td>".$fila['cancha']."</td>
                             <td>".$fila['fecha']."</td>
@@ -177,6 +183,7 @@ class Reporte {
             <th bgcolor='#A9E2F3'>Jornada</th>
             <th bgcolor='#A9E2F3'>Descansa</th>
             <th bgcolor='#A9E2F3'>Enfrentamiento</th>
+            <th bgcolor='#A9E2F3'>Resultado</th>
             <th bgcolor='#A9E2F3'>Partido</th>
             <th bgcolor='#A9E2F3'>Cancha</th>
             <th bgcolor='#A9E2F3'>Fecha</th>
@@ -189,6 +196,7 @@ class Reporte {
                     <td>".$fila['jornada']."</td>
                     <td bgcolor='#F78181'>".$fila['descansa']."</td>
                     <td>".$fila['equipo1']." vs ".$fila['equipo2']."</td>
+                    <td></td>
                     <td>".$fila['partido']."</td>
                     <td>".$fila['cancha']."</td>
                     <td>".$fila['fecha']."</td>
@@ -212,6 +220,7 @@ class Reporte {
 
             <th bgcolor='#A9E2F3'>Jornada</th>          
             <th bgcolor='#A9E2F3'>Enfrentamiento</th>
+            <th bgcolor='#A9E2F3'>Resultado</th>
             <th bgcolor='#A9E2F3'>Partido</th>
             <th bgcolor='#A9E2F3'>Cancha</th>
             <th bgcolor='#A9E2F3'>Fecha</th>
@@ -223,6 +232,7 @@ class Reporte {
         $tabla.="<tr>
                     <td>".$fila['jornada']."</td>
                     <td>".$fila['equipo1']." vs ".$fila['equipo2']."</td>
+                    <td></td>
                     <td>".$fila['partido']."</td>
                     <td>".$fila['cancha']."</td>
                     <td>".$fila['fecha']."</td>
@@ -240,6 +250,7 @@ class Reporte {
             <th bgcolor='#A9E2F3'>Jornada</th>          
             <th bgcolor='#A9E2F3'>Descansa</th>
             <th bgcolor='#A9E2F3'>Enfrentamiento</th>
+            <th bgcolor='#A9E2F3'>Resultado</th>
             <th bgcolor='#A9E2F3'>Partido</th>
             <th bgcolor='#A9E2F3'>Cancha</th>
             <th bgcolor='#A9E2F3'>Fecha</th>
@@ -252,6 +263,7 @@ class Reporte {
                     <td>".$fila['jornada']."</td>
                     <td bgcolor='#F78181'>".$fila['descansa']."</td>
                     <td>".$fila['equipo1']." vs ".$fila['equipo2']."</td>
+                    <td></td>
                     <td>".$fila['partido']."</td>
                     <td>".$fila['cancha']."</td>
                     <td>".$fila['fecha']."</td>
@@ -277,6 +289,7 @@ if($fila = $validar4->fetch_assoc() ==""){
         <tr>
             <th bgcolor='#A9E2F3'>Jornada</th>           
             <th bgcolor='#A9E2F3'>Enfrentamiento</th>
+            <th bgcolor='#A9E2F3'>Resultado</th>
             <th bgcolor='#A9E2F3'>Partido</th>
             <th bgcolor='#A9E2F3'>Cancha</th>
             <th bgcolor='#A9E2F3'>Fecha</th>
@@ -288,6 +301,7 @@ if($fila = $validar4->fetch_assoc() ==""){
         $tabla.="<tr>
                     <td>".$fila['jornada']."</td>
                     <td>".$fila['equipo1']." vs ".$fila['equipo2']."</td>
+                    <td></td>
                     <td>".$fila['partido']."</td>
                     <td>".$fila['cancha']."</td>
                     <td>".$fila['fecha']."</td>
@@ -302,6 +316,7 @@ if($fila = $validar4->fetch_assoc() ==""){
             <th bgcolor='#A9E2F3'>Jornada</th>           
             <th bgcolor='#A9E2F3'>Descansa</th>
             <th bgcolor='#A9E2F3'>Enfrentamiento</th>
+            <th bgcolor='#A9E2F3'>Resultado</th>
             <th bgcolor='#A9E2F3'>Partido</th>
             <th bgcolor='#A9E2F3'>Cancha</th>
             <th bgcolor='#A9E2F3'>Fecha</th>
@@ -314,6 +329,7 @@ if($fila = $validar4->fetch_assoc() ==""){
                     <td >".$fila['jornada']."</td>
                     <td bgcolor='#F78181'>".$fila['descansa']."</td>
                     <td>".$fila['equipo1']." vs ".$fila['equipo2']."</td>
+                    <td></td>
                     <td>".$fila['partido']."</td>
                     <td>".$fila['cancha']."</td>
                     <td>".$fila['fecha']."</td>

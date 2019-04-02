@@ -1,38 +1,83 @@
-<br><br>
+<br>
 <div id="app">
 <modal-pagos :detalles="detalles"></modal-pagos>
 <modal-pagosfutbol :detalles="detalles"></modal-pagosfutbol>
 <modal-pagosnatacion :detalles="detalles"></modal-pagosnatacion>
-<div class="ui grid">
 
-        <div class="row">
+
+<div class="row"  id="dashboard-card-Ingreso">
+       
                 <div class="titulo">
                 <i class="dollar icon"></i> <i class="money bill icon"></i>
                         Ingresos <font color="#1CC647" size="20px">.</font>
 
-                        <div class="sixteen wide column">
-
-                        <a class="ui right floated blue labeled icon button"  href="?1=IngresosController&2=Ingresos">
-                            <i class="dollar icon"></i>
-                            Vista de Ingresos
-                        </a>
-                    </div>
-
-                </div>
-        </div>
-
-                <div class="row title-bar">
-                    <div class="sixteen wide column">
-
-                        <button class="ui right floated green labeled icon button"  id="btnModalIngreso">
-                            <i class="plus icon"></i>
-                            Agregar Ingreso
-                        </button>
-                    </div>
-                 </div>
         
 
+                </div>
+ 
+<div class="row tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
+
+<a class="ui blue inverted segment"  style="width: 49%; text-align:center; font-size: 25px;" id="btnModalIngreso">
+      <i class="plus icon"></i>
+         Agregar Ingreso
+</a>
+
+<a class="ui yellow inverted segment" style="width: 49%; text-align:center; font-size: 25px;" href="?1=IngresosController&2=Ingresos">
+        <i class="dollar icon"></i>
+         Vista de Ingresos
+        </a>
+       
+
+                  
 </div>
+
+</div>
+<br>
+<div class="row"  id="dashboard-card-egreso">
+    <br>
+    <div class="titulo">
+                    <i class="dollar icon"></i> <i class="money bill outline icon"></i>
+                            Egresos <font color="#1CC647" size="20px">.</font>
+
+            
+
+                    </div>
+    <br>
+    <div class="row tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
+
+    <a class="ui blue inverted segment" style="width: 49%; text-align:center; font-size: 25px; margin:auto;"
+    href="?1=EgresosController&2=Egresos">
+    <i class="money bill icon"></i>
+    Agregar Egreso por cheque
+    </a>    
+    </div>
+
+</div>
+<br>
+
+<div class="row"  id="dashboard-card-Ingreso">
+<div class="titulo">
+                <i class="dollar icon"></i> <i class="money bill icon"></i>
+                        Caja Chica <font color="#1CC647" size="20px">.</font>
+ </div>
+ <div class="row tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
+
+<a class="ui yellow inverted segment" style="width: 49%; text-align:center; font-size: 25px;"
+ href="?1=EgresosController&2=cajaChicaGeneral">
+<i class="box icon"></i><i class="dollar icon"></i>
+  Caja Chica General
+</a> 
+
+<a class="ui blue inverted segment" style="width: 49%; text-align:center; font-size: 25px;"
+ href="?1=EgresosController&2=cajaChicaAderel">
+<i class="box icon"></i><i class="dollar icon"></i>
+  Caja Chica ADEREL
+</a> 
+</div>
+</div>
+
+
+
 
 </div>
 
@@ -486,6 +531,40 @@
 
 </div>
 
+<div class="ui tiny modal" id="modalCobroInscripcionJ">
+    <div class="header">
+    <h3>Cobrar Inscripcion de <a id="nombreJ"></a> <a id="apellidoJ"></a> al equipo: <a id="equipoJ"></a> 
+    para el torneo <a id="torneoJ"></a>.
+    </div>
+
+    <div class="content"> 
+    
+
+        <form class="ui form" id="frmCobroJugador">
+        <input type="hidden" id="idJugador" name="idJugador">
+            <div class="field">
+            <i class="dollar icon"></i> Cantidad a pagar:
+            <input type="text" id="cantidadCobroJ" name="cantidadCobroJ" >
+            </div>
+        </form>
+    </div>
+
+
+    <div class="actions">
+
+    <button class="ui blue button" id="cerrarJugadoresCobro">
+    <i class="close icon"></i> Cerrar
+    <button>
+
+    <button class="ui green button" id="guardarJugadoresCobro">
+    <i class="save icon"></i> Guardar
+    <button>
+
+    </div>
+
+
+</div>
+
 <script src="./res/tablas/tablaFondoComun.js"></script>
 <script src="./res/tablas/tablaPagosGim.js"></script>
 <script src="./res/js/modalPagos.js"></script>
@@ -674,6 +753,22 @@ $("#cerrarNa").click(function(){
      $('#modalCobroNa').modal('hide');
 });
 
+$("#cerrarEquiposCobro").click(function(){
+    
+    $("#cantidadCobroE").val('');
+    $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                .modal('show');
+     $('#modalCobroInscripcionE').modal('hide');
+});
+
+$("#cerrarJugadoresCobro").click(function(){
+    
+    $("#cantidadCobroJ").val('');
+    $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                .modal('show');
+     $('#modalCobroInscripcionJ').modal('hide');
+});
+
 </script>
 
 <script>
@@ -683,6 +778,9 @@ $(document).ready(function(){
     $('#cantidadF').mask("###0.00", {reverse: true});
     $('#cantidadEF').mask("###0.00", {reverse: true});
     $('#cantidadG').mask("###0.00", {reverse: true});
+    $('#cantidadG').mask("###0.00", {reverse: true});
+    $('#cantidadCobroJ').mask("###0.00", {reverse: true});
+    $('#cantidadCobroE').mask("###0.00", {reverse: true});
 });
 var quitarFondo=(ele)=>{
     $("#nombre").text($(ele).attr("nombre"));
@@ -699,6 +797,17 @@ var cobrarEquipo=(ele)=>{
     $("#categoriaE").text($(ele).attr("categoriaE"));
     $("#idEquipoCobro").val($(ele).attr("id"));
     $('#modalCobroInscripcionE').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                .modal('show');
+}
+
+
+var cobrarJugador=(ele)=>{
+    $("#nombreJ").text($(ele).attr("nombre"));
+    $("#apellidoJ").text($(ele).attr("apellido"));
+    $("#equipoJ").text($(ele).attr("equipo"));
+    $("#torneoJ").text($(ele).attr("torneo"));
+    $("#idJugador").val($(ele).attr("id"));
+    $('#modalCobroInscripcionJ').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                 .modal('show');
 }
 
@@ -990,15 +1099,10 @@ $("#guardarFondo").click(function(){
 $("#guardarEquiposCobro").click(function(){
     var idCobro= $("#idEquipoCobro").val();
     var nombre =  $("#nombreE").text();
-    
-
     alertify.confirm("¿Desea cobrar la inscipción del equipo " + nombre + "?",
             function(){
     const form = $('#frmCobroEquipo');
-
                 const datosFormulario = new FormData(form[0]);
-         
-        
             $.ajax({
                 enctype: 'multipart/form-data',
                 contentType: false,
@@ -1016,18 +1120,12 @@ $("#guardarEquiposCobro").click(function(){
                             type: 'success',
                             showConfirmButton: false,
                                 timer: 1700
-
                             }).then((result) => {
                             $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
                             
                         $("#cantidadCobroE").val();
-                        $('#dtCobroEquipos').DataTable().ajax.reload();
-                        
-                            
-                        });
-                        
-                       
-                        
+                        $('#dtCobroEquipos').DataTable().ajax.reload();      
+                        }); 
                     } 
                 }
             });
@@ -1039,6 +1137,50 @@ $("#guardarEquiposCobro").click(function(){
             }); 
         });
 
+
+        $("#guardarJugadoresCobro").click(function(){
+    //var idJugador= $("#idJugador").val();
+    var nombre =  $("#nombreJ").text();
+    var apellido =  $("#apellidoJ").text();
+    var equipo =  $("#equipoJ").text();
+
+    alertify.confirm("¿Desea cobrar la inscipción del equipo " + nombre + " "+apellido+ " " +equipo+"?",
+            function(){
+    const form = $('#frmCobroJugador');
+                const datosFormulario = new FormData(form[0]);
+            $.ajax({
+                enctype: 'multipart/form-data',
+                contentType: false,
+                processData: false,
+                cache: false,
+                type: 'POST',
+                url: '?1=JugadoresController&2=cobrar',
+                data: datosFormulario,
+                success: function(r) {
+                    if(r == 1) {
+                        $("#modalCobroInscripcionJ").modal("hide");
+                        swal({
+                            title: 'Listo',
+                            text: 'Inscrito con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+                            }).then((result) => {
+                            $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+                            
+                        $("#cantidadCobroJ").val();
+                        $('#dtJugPenPago').DataTable().ajax.reload();      
+                        }); 
+                    } 
+                }
+            });
+        },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            }); 
+        });
 
 
 $(document).ready(function(){

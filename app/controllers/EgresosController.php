@@ -8,6 +8,18 @@ class EgresosController extends ControladorBase {
         require_once './app/view/Egresos/Egresos.php';
     }
 
+    public static function cajaChicaGeneral()
+    {
+        self::loadMain();
+        require_once './app/view/Egresos/CajaChicaGeneral.php';
+    }
+
+    public static function cajaChicaAderel()
+    {
+        self::loadMain();
+        require_once './app/view/Egresos/CajaChicaAderel.php';
+    }
+
     public function mostrarEgresos() {
         $dao = new DaoEgresos();
 

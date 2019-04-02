@@ -397,7 +397,8 @@ class DaoEquipos extends DaoBase {
 
 
     public function jugadoresEquipo(){
-        $query = "select i.*,j.*,DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento from inscriJugador i 
+        $query = "select i.*,j.*,DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        DATE_FORMAT(i.fechaInscripcion, '%d/%m/%Y') as fechaIns from inscriJugador i 
         inner join jugadores j on j.idJugador= i.idJugador 
         where i.idEquipo=".$this->objeto->getIdEquipo();
 

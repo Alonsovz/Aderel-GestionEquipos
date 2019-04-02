@@ -179,7 +179,7 @@ public function registrarF() {
         $dao->objeto->setEncargado($datos->encargado);
         $dao->objeto->setTelefonoE($datos->telefonoE);
         $dao->objeto->setTelefonoAux($datos->telefonoAux);
-        $dao->objeto->setEncargadoAux($datos->encargado);
+        $dao->objeto->setEncargadoAux($datos->encargadoAux);
         $dao->objeto->setIdCategoria($datos->selectCategoria);
 
 

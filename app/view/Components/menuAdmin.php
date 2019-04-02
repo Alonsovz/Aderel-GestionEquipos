@@ -57,27 +57,11 @@
     <div class="item">
     <a href="?1=IngresosController&2=nuevoIngreso" class="item menu-it" style="color:black;">
         <i class="money bill alternate outline icon"></i>
-       Nuevo Ingreso
+       Gestión de Caja
     </a>
 
     </div>
 
-    <div class="item">
-    <a href="?1=EgresosController&2=Egresos" class="item menu-it" style="color:black;">
-        <i class="money bill alternate icon"></i>
-        Egresos por Cheque
-    </a>
-
-    </div>
-
-    <div class="item">
-
-    <a href="?1=EgresosController&2=Egresos" class="item menu-it" style="color:black;">
-    <i class="money bill alternate icon"></i>
-        Egresos por Vale
-    </a>
-
-    </div>
 
     </div>
 </div>

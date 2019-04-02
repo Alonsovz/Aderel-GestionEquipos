@@ -254,6 +254,28 @@ class JugadoresController extends ControladorBase {
         echo $dao->mostrarJugadoresFondoComun();
     }
 
+
+    public function cobrar(){
+
+        $id = $_REQUEST["idJugador"];
+        $cantidad = $_REQUEST["cantidadCobroJ"];
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setIdJugador($id);
+
+        echo $dao->cobrarInscripcion();
+
+
+        $daoI = new DaoIngresos();
+
+        $daoI->objeto->setTitle("Inscripción de Jugadores");
+        $daoI->objeto->setCantidad($cantidad);
+
+        
+        echo $daoI->guardarOtro();
+    }
+
 }
 
 

@@ -102,7 +102,7 @@ class Reporte {
             <table style='border: 1px solid white; font-size:18px;'>
 			
 			<tr>
-				<td rowspan=3> <img src=".$fila["foto"]." style='width:120px;'/></td>
+				<td rowspan=4> <img src=".$fila["foto"]." style='width:120px;'/></td>
 				<td colspan=2><b>Nombre:</b> ".$fila["nombre"]." ".$fila["apellido"]."</td>
 				
 			</tr>
@@ -113,6 +113,11 @@ class Reporte {
             <tr>
                 <td><b>DUI :</b> ".$fila["dui"]."</td>
                 <td><b>Fecha de Nacimiento:</b> ".$fila["fechaNacimiento"]."</td>
+            </tr>
+            <tr>
+            <br>
+                <td colspan=2><b>Fecha inscripción :</b> ".$fila["fechaIns"]."</td>
+                
 			</tr>
 		</table>
             
