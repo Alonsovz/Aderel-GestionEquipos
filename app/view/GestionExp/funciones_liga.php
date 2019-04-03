@@ -231,10 +231,10 @@ if(nVueltas>1){
 
 	// Cambia los valores que se enviaran a la BD
 		$($('#vuelta-2 [name^="idEquipo1"]')[i])
-			.text($(equipo2[i]).text());
+			.val($(equipo2[i]).text());
 
 		$($('#vuelta-2 [name^="idEquipo2"]')[i])
-			.text($(equipo1[i]).text());
+			.val($(equipo1[i]).text());
 	}
 
 	if(nVueltas==4){
@@ -250,10 +250,10 @@ if(nVueltas>1){
 
 		// Cambia los valores que se enviaran a la BD
 			$($('#vuelta-4 [name^="idEquipo1"]')[i])
-				.text($(equipo2[i]).text());
+				.val($(equipo2[i]).text());
 
 			$($('#vuelta-4 [name^="idEquipo2"]')[i])
-				.text($(equipo1[i]).text());
+				.val($(equipo1[i]).text());
 		}
 
 	}
