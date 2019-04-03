@@ -1,232 +1,154 @@
-<script>
-$(function() {
-    overflowRestore();
-});
-</script>
-<br><br>
-<?php
-            $fechaMaxima = date('Y-m-d');
-            $fechaMax = strtotime ( '-0 day' , strtotime ( $fechaMaxima ) ) ;
-            $fechaMax = date ( 'Y-m-d' , $fechaMax );
-             
-            $fechaMinima = date('Y-m-d');
-            $fechaMin = strtotime ( '-1 day' , strtotime ( $fechaMinima ) ) ;
-            $fechaMin = date ( 'Y-m-d' , $fechaMin );
 
-            $anio= date('Y');
-            $mes = date('M');
-            $mesN = date('m')
-?>
-<div id="app">
 
-    <modal-registrar id_form="frmRegistrar" id="modalRegistrar" url="?1=EgresosController&2=registrar" titulo="Registrar Egreso"
-        :campos="campos_registro" tamanio='tiny'></modal-registrar>
-    
-    <modal-editar id_form="frmEditar" id="modalEditar" url="?1=EgresosController&2=editar" titulo="Editar Egreso"
-        :campos="campos_editar" tamanio='tiny'></modal-editar>
-
-    <modal-eliminar id_form="frmEliminar" id="modalEliminar" url="?1=EgresosController&2=eliminar" titulo="Eliminar Egreso"
-        sub_titulo="¿Está seguro de querer eliminar este egreso?" :campos="campos_eliminar" tamanio='tiny'></modal-eliminar>
-
-<div class="ui tiny modal" id="modalReportes" style="width:40%;">
+<div class="ui fullscreen longer modal" id="modalCajaAderel">
 <div class="header">
-   <i class="clipboard outline icon"></i> Reportes Egresos<font color="#DFD102" size="20px">.</font>
+    <br>
+   
+<i class="dollar sign icon"></i><i class="box icon"></i><i class="money bill icon"></i>Egreso de Caja General
+
 </div><br>
-<div class="content" class="ui equal width form">
-    <form class="ui form" id="frmFechas">
-        <div class="field">
+            
+            <button class="ui right floated green labeled icon button" id="btnGestion">
+            <i class="money bill icon"></i>Gestión de Caja Chica
+            </button>
 
-              <div class="fields">
-              <div class="three wide field"></div>
-                    <div class="five wide field">
-                            <label for="" style="font-weight: bold; font-size: 17px;">Reporte Diario General: </label>
-                    </div>
-                    <div class="six wide field">
-                         <a href="?1=EgresosController&2=llamaReporte" target="_blank">
-                        <button class="ui olive deny button" id="btnCancelar" style="color:black; margin: auto;" 
-                        id="btnReportes" type="button" >
-                         <i class="eye icon"></i>Ver reporte
-                        </button></a>
-                   </div> 
-                   <div class="two wide field"></div>
-            </div>
-        </div>
-    </form>
-
-</div>
-<br>
-<div class="ui divider"></div>
-    <div class="content" class="ui equal width form">
-    <form class="ui form" id="frmFechas">
-                        <div class="field">
-
-                            <div class="fields">
-                            <div class="one wide field"></div>
-                                <div class="seven wide field">
-
-                                    <label>
-                                    <i class="calendar icon"></i>Fecha inicial:</label>
-                                    <input type="date" name="fecha1" id="fecha1" required max=<?php echo $fechaMin;?>>
-                                </div>
-
-                                <div class="seven wide field">
-                                    <label>
-                                    <i class="calendar icon"></i>Fecha final:</label>
-                                    <input type="date" name="fecha2" id="fecha2" required max=<?php echo $fechaMax;?>>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="fields">
-                            <div class="six wide field"></div>
-                                <div class="seven wide field">
-                                <button class="ui green right button" id="btnGenerarReportePorFechas">
-                                Generar reporte
-                                </button>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        
-    </form>                    
-    </div>
-    <div class="actions">
-    <button class="ui black deny button" id="btnCancelar">
-        Cancelar
+    <button class="ui right floated blue labeled icon button" id="btnEmitidos">
+    <i class="list icon"></i>Vales emitidos
     </button>
-</div>
-</div>
+    
+    <button class="ui right floated yellow labeled icon button" id="btnNuevo">
+    <i class="plus icon"></i>Emitir nuevo 
+    </button>
 
 
-<!--modal agregar-->
-<div class="ui tiny modal" id="modalAgregar">
 
-        <div class="header">
-        <i class="money bill alternate  icon"></i> Agregar nuevo Egreso
-        </div>
-        <div class="content" class="ui equal width form">
-            <form class="ui form" id="frmEgresos">
-                <div class="field">
-                    <div class="fields">
-                            <div class="four wide field">
-                                <label><i class="money bill alternate icon"></i>Ch NO</label>
-                                <input type="text" name="cheque" placeholder="N° Cheque" id="cheque">
-                                <div class="ui red pointing label"  id="labelCheque"
-                style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
-                Completa este campo</div>
-                            </div>
-                            <div class="twelve wide field">
-                                <label><i class="edit icon"></i>Concepto de Egreso</label>
-                                <textarea rows="4" placeholder="Concepto de Egreso" id="conceptoEgreso" name="conceptoEgreso" class="requerido">
-                                </textarea>
-                                <div class="ui red pointing label"  id="labelConcepto"
-                style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
-                Completa este campo</div>
-                            </div>     
-                    </div>
-                </div>  
-                <div class="field">
-                <a id="label-error" style="display: none; margin: 0; text-align:center; width:23%; font-size: 12px;" class="ui blue fluid large label">
-                    ChNo ya fue utilizado</a>
-                <div class="ui blue pointing label" style="display: none;">
-                </div>
-                </div>
-                <div class="field">
-                    <div class="fields">
-                                <div class="six wide field">
-                                <label><i class="dollar sign icon"></i>Cantidad</label>
-                                    <input type="text" name="cantidad" placeholder="$$ 00.00" id="cantidad">
-                                    <div class="ui red pointing label"  id="labelCantidad"
-                style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
-                Completa este campo</div>
-                                </div>                               
-                                <div class="six wide field">
-                                <br>                               
-                                    <div class="ui toggle checkbox">
-                                    <input type="checkbox" tabindex="0" class="hidden" id="retencion" name="retencion">
-                                    <label for="">Retención 10%</label>
-                                    </div>
-                                </div>
-                                <div class="six wide field divRetencion" id="divRetencion">
-                                <label><i class="percent icon"></i>Retención</label>
-                                    <input type="text" id="retencionMonto" name="retencionMonto" disabled
-                                    style="background-color:#F0ECEC;
-                                    color: black; font-weight:bold;">
-                                </div>   
-                    </div>     
-                                <div class="fields">
-                                <div class="six wide field" id="divPagado">
-                                <label><i class="money bill outline icon"></i> Pagado</label>
-                                <input type="text" name="pagado" placeholder="$$ 00.00" id="pagado" disabled
-                                style="background-color:#F0ECEC;
-                                    color: black; font-weight:bold;">
-                                </div>
-                                </div>
-                </div>
-            </form>
-        </div>
-            <div class="actions">
-                <button id="btncerrar" onclick="cerrarCambios()" class="ui yellow button">
-                    Cancelar
-                </button>
-                <button class="ui blue button" id="btnGuardar" >
-                Guardar
-                </button>
+
+
+<div class="content" class="ui equal width form">
+
+<a style="font-size: 20px;">
+    <i class="dollar icon"></i> Monto actual de Caja: $200.00 
+    </a>
+    <br>
+    
+ <br>
+<div id="emitirNuevo">
+<form class="ui form" id="frmCaja">
+    <div class="field">
+        <div class="fields">
+            <div class="two wide field">
+                <label><i class="calendar icon"></i> Fecha:</label>
+                <input type="text"  id="fechaVista" readonly>
             </div>
+
+            <div class="four wide field">
+                <label><i class="dollar icon"></i> Por:</label>
+                <input type="text" id="cantidad" name="cantidad" placeholder="Cantidad a Recibir">
+            </div>
+            <div class="two wide field" style="margin:auto;">
+            <label><br></label>
+            <a class="ui olive labeled icon button" id="btnConvertir">
+            <i class="arrow circle right icon"></i> Convertir
+            </a>
+            </div>
+            <br>
+            <div class="eight wide field">
+                <label><i class="dollar icon"></i> Recibí de Asociación deportiva y recreativa Lourdense la cantidad:</label>
+                <div id="cantidadLe" name="cantidadLe" style="font-size:22px;"></div>
+            </div>
+            <input type="hidden" id="cantidadLetras" name="cantidadLetras">
+        </div>
+    </div>
+
+    <br>
+    <div class="field">
+    <div class="fields">
+            <div class="sixteen wide field">
+            <label><i class="money  bill icon"></i> En concepto de :</label>
+             <textarea rows="2" id="concepto" name="concepto" placeholder="Concepto de Egreso"></textarea>
+            </div>
+
+    </div>
+
+    </div>
+
+    <br>
+    <div class="field">
+    <div class="fields">
+            <div class="ten wide field">
+            <label><i class="male icon"></i> Recibido por :</label>
+             <input type="text" id="recibido" name="recibido" placeholder="Nombre del Receptor">
+            </div>
+
+            <div class="six wide field">
+            <label><br></label>
+            <a class="ui red labeled icon button" id="btnGuardar">
+                <i class="save icon"></i>Guardar
+            </a>
+            </div>
+
+    </div>
+
+    </div>
+
+</form>
 </div>
 
-        <div class="ui grid">
-        <div class="row">
-                <div class="titulo">
-                <i class="money bill alternate icon"></i>
-                    Egresos por vale Caja General<font color="#DFD102" size="20px">.</font>
-                    <a href="?1=IngresosController&2=nuevoIngreso" class="ui left floated red button">
-                            <i class="hand left point icon"></i> Volver
-                        </a>
-                    <input type="hidden"  id="mes" name="mes">
-   <input type="hidden"  id="anio" name="anio" value="<?php echo $anio ?>">
+<div class="ui tiny modal" id="modalGestion">
 
-                    <button class="ui right floated blue labeled icon button"  id="btnReporte">
-                    <i class="file icon"></i>
-                 Reporte de Egresos
-                </button>
-                </div>
-                
-        
-        </div>
+<div class="header">
+<i class="box icon"></i><i class="dollar icon"></i>Cantidad disponible para caja chica ADEREL actual: <a>30.00</a>
+</div>
 
-        <div class="row title-bar">
-
-        <div class="sixteen wide column">
-        <br>
-                <button class="ui right floated yellow labeled icon button"  id="btnAgregar">
-                    <i class="plus icon"></i>
-                    Agregar
-                </button>
-
-                
+<div class="content">
+<form class="ui form" id="actualizarCaja">
+    <div class="field">
+        <div class="fields">
+            <div class="sixteen wide field">
+            <label><i class="dollar icon"></i><i class="box icon"></i> Cantidad a actualizar:</label>
+                <input type="text" id="cantidadActualizar" name="cantidadActualizar" placeholder="Cantidad a establecer para caja chica ADEREL">
             </div>
         </div>
+    </div>
+</form>
+</div>
 
-        <div class="row title-bar">
+<div class="actions">
+<button class="ui yellow button" id="btnCancelarA">
+    Cancelar
+</button>
+
+<button class="ui blue button">
+    Actualizar  
+</button>
+</div>
+
+</div>
+
+
+<div id="valesEmitidos">
+                <div class="row">
+                    <h3>
+                    <i class="dollar icon"></i><i class="list icon"></i>
+                    Vales Emitidos<font color="#FACC2E" size="20px">.</font>
+                   </h3>
+                </div>
+
+                <br>
+                <div class="row">
             <div class="sixteen wide column">
-                <div class="ui divider"></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="sixteen wide column">
-                <table id="dtEgresos" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                <table id="dtCajaG" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
                     <thead>
                         <tr>
-                        <th style="background-color: #E6C404;">ID</th>
-                            <th style="background-color: #E6C404;">Ch No.</th>
-                            <th style="background-color: #E6C404;">Concepto Egreso</th>
-                            <th style="background-color: #E6C404;">Cantidad</th>
-                            <th style="background-color: #E6C404;">Retención</th>
-                            <th style="background-color: #E6C404;">Pagado</th>
-                            <th style="background-color: #E6C404;">Fecha</th>
-                            <th style="background-color: #E6C404;">Acciones</th>
+                        
+                        <th style="background-color: #04B4AE; color:white;">N°</th>
+                        <th style="background-color: #A901DB; color:white;">Fecha</th>
+                            <th style="background-color: #A901DB; color:white;">Cantidad</th>
+                            <th style="background-color: #A901DB; color:white;">Concepto</th>
+                            <th style="background-color: #A901DB; color:white;">Recibido por</th>
+                            <th style="background-color: #A901DB; color:white;">Acciones</th>
+                            
+                            
                            
                         </tr>
                     </thead>
@@ -235,446 +157,124 @@ $(function() {
                 </table>
             </div>
         </div>
-    </div>
+</div>
+
+</div>
+
+<div class="actions">
+<a href="?1=IngresosController&2=nuevoIngreso" class="ui orange button">
+                            <i class="close icon"></i> Salir
+                        </a>
+</div>
+
 </div>
 
 
-
-<script src="./res/tablas/tablaEgresos.js"></script>
-<script src="./res/js/modalRegistrar.js"></script>
-<script src="./res/js/modalEditar.js"></script>
-<script src="./res/js/modalEliminar.js"></script>
-
+<script src="./res/tablas/tablaCajaGeneral.js"></script>
 <script>
-var app = new Vue({
-        el: "#app",
-        data: {
-            campos_registro: [{
-                    label: 'Ch No:',
-                    name: 'chNo',
-                    type: 'number'
-                },
-                {
-                    label: 'Concepto de Egreso:',
-                    name: 'conceptoEgreso',
-                    type: 'text'
-                },
-                {
-                    label: 'Cantidad',
-                    name: 'cantidad',
-                    type: 'text',
-                    
-                },
-                {
-                 label: "Agregar Mensajero",
-                 name: 'retencion',
-                 type: 'checkbox',
-                },
-                
-            ],
-            campos_editar: [
-                {
-                    label: 'Ch No:',
-                    name: 'chNo',
-                    type: 'number'
-                },
-                {
-                    label: 'Concepto de Ingreso:',
-                    name: 'conceptoEgreso',
-                    type: 'text'
-                },
-                {
-                    label: 'Cantidad',
-                    name: 'cantidad',
-                    type: 'text',
-                },
-                {
-                    name: 'quitar',
-                    type: 'button',
-                    id: 'btnQuitar',
-                },
-                {
-                    label: 'Retencion',
-                    name: 'retencion',
-                    type: 'text',
-                    
-                },
-                {
-                    label: 'Pagado',
-                    name: 'pagado',
-                    type: 'text',
-                },
-                
-                {
-                    name: 'idDetalle',
-                    type: 'hidden'
-                }
-
-            ],
-            campos_eliminar: [{
-                name: 'idEliminar',
-                type: 'hidden'
-            }]
-        },
-        methods: {
-            refrescarTabla() {
-                tablaEgresos.ajax.reload();
-            },
-            modalRegistrar() {
-                $('#modalRegistrar').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal(
-                    'show');
-            },
-            cargarDatos() {
-                var id = $("#idDetalle").val();
-
-                fetch("?1=EgresosController&2=cargarDatosEgresos&id=" + id)
-                    .then(response => {
-                        return response.json();
-                    })
-                    .then(dat => {
-
-                        console.log(dat);
-
-                        // $('#frmEditar input[name="idDetalle"]').val(dat.codigoUsuari);
-                        $('#frmEditar input[name="chNo"]').val(dat.chNo);
-                        $('#frmEditar input[name="conceptoEgreso"]').val(dat.conceptoEgreso);
-                        $('#frmEditar input[name="cantidad"]').val(dat.cantidad);
-                        $('#frmEditar input[name="retencion"]').val(dat.retencion);
-                        if(dat.retencion == 0){
-                            $('#frmEditar input[name="quitar"]').val("Agregar Retención");
-                        }
-                        else{
-                            $('#frmEditar input[name="quitar"]').val("Quitar Retención");
-                        }
-                        
-                       // $('#frmEditar input[name="agregar"]').val("Agregar");
-                        $('#frmEditar input[name="pagado"]').val(dat.pagado);
-                        //$('#frmEditar input[name="fechaEgreso"]').val(dat.fechaEgreso);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-            }
-        }
-    });
-</script>
-<script type="text/javascript">
-
-
 $(document).ready(function(){
-    var d = new Date();
-var month = new Array();
-month[0] = "01";
-month[1] = "02";
-month[2] = "03";
-month[3] = "04";
-month[4] = "05";
-month[5] = "06";
-month[6] = "07";
-month[7] = "08";
-month[8] = "09";
-month[9] = "10";
-month[10] = "11";
-month[11] = "12";
-var n = month[d.getMonth()];
+    $("#modalCajaAderel").modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+    $("#valesEmitidos").hide();
+    $("#btnNuevo").hide();
+    $("#cantidad").mask("###0.00", {reverse: true});
 
 
- $("#mes").val(n);
-});
-$(document).ready(function(){
-    
-        $('#frmEditar input[name="quitar"]').addClass("mini ui red button");
-    
-    
-    $("#frmEditar input[name='cantidad']").mask("###0.00", {reverse: true});
-    $('#frmEditar input[name="retencion"]').prop('disabled', true);
-    $('#frmEditar input[name="pagado"]').prop('disabled', true);
-    $('#frmEditar input[name="pagado"]').css("background-color", "#F0ECEC");
-    $('#frmEditar input[name="pagado"]').css("color", "black");
-    $('#frmEditar input[name="pagado"]').css("font-weight", "bold");
-    $('#frmEditar input[name="retencion"]').css("background-color", "#F0ECEC");
-    $('#frmEditar input[name="retencion"]').css("color", "black");
-    $('#frmEditar input[name="retencion"]').css("font-weight", "bold");
-});
-</script>
-<script>
+var f = new Date();
+var fecha=(f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear());
 
-
-$(document).on("click", "input[name=quitar]", function () {
-    if($("#frmEditar input[name=quitar]").val()=="Agregar Retención"){
-        
-    var cantidad = $("#frmEditar input[name='cantidad']").val();
-    var retencion = cantidad * 0.10;
-    var totalPagado = cantidad - retencion;
-    
-    $("input[name=retencion]").val(retencion);
-    $("input[name=pagado]").val(totalPagado);
-
-    if($("input[name=retencion]").val()>0){
-        $('#frmEditar input[name="quitar"]').val("Quitar Retención");
-        
-    }
-    }else{
-        var cantidad = $("#frmEditar input[name='cantidad']").val();
-    
-    $("input[name=retencion]").val('0');
-    $("input[name=pagado]").val(cantidad);
-    if($("input[name=retencion]").val()==0){
-        $('#frmEditar input[name="quitar"]').val("Agregar Retención");
-    }
-    }
-});
-$("#frmEditar input[name='cantidad']").keyup(function(){
-    $("input[name=retencion]").val('0');
-    var cantidad = $("#frmEditar input[name='cantidad']").val();
-    $("input[name=pagado]").val(cantidad);
-
-    if($("input[name=retencion]").val()==0){
-        $('#frmEditar input[name="quitar"]').val("Agregar Retención");
-    }
-});
-$("#cantidad").keypress(function(){
-    $("#divRetencion").hide();
-    $("#divPagado").hide();
-    
+$("#fechaVista").val(fecha);
 });
 
-//$(document).on("click", "input[name=quitar]", function () {
+$("#btnConvertir").click(function(){
+   var cantidad = $("#cantidad").val();
+   var canti = $("#cantidadLe").load("app/view/Egresos/ajax.php",{ cantidad : cantidad });
     
-  //      });
+    
+   });
 
-$(document).on("click", "input[name=agregar]", function () {
+   $("#concepto").keyup(function(){
+    var cantidad = $("#cantidadLe").html();
+    $("#cantidadLetras").val(cantidad);
+   });
    
-        });
-$(document).on("click", "#btnReporte", function () {
-            $('#modalReportes').modal('setting', 'autofocus', true).modal('setting', 'closable', true).modal('show');
-        });
-$(document).ready(function(){
-    $('#cantidad').mask("###0.00", {reverse: true});
-    $("#divRetencion").hide();
-    $("#divPagado").hide();
+
+
+
+
+
+$("#btnNuevo").click(function(){
+    $("#emitirNuevo").show();
+    $("#valesEmitidos").hide();
+    $("#btnNuevo").hide();
+    $("#btnEmitidos").show();
 });
 
-        $(document).on("click", ".btnEliminar", function () {
-            $('#modalEliminar').modal('setting', 'closable', false).modal('show');
-            $('#idEliminar').val($(this).attr("id"));
-        });
-        $(document).on("click", ".btnEditar", function () {
-            $('#modalEditar').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
-            $('#idDetalle').val($(this).attr("id")); 
-            app.cargarDatos();
 
-        
+
+$("#btnEmitidos").click(function(){
+    $("#emitirNuevo").hide();
+    $("#valesEmitidos").show();
+    $("#btnNuevo").show();
+    $("#btnEmitidos").hide();
+});
+
+$("#btnGestion").click(function(){
+    $("#modalGestion").modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
     
-    //$("#frmEditar input[name='quitar']").show();
-
-        });
-
-
-        $(document).on("click", "#btnAgregar", function () {
-            $('#modalAgregar').modal('setting', 'autofocus', true).modal('setting', 'closable', true).modal('show');
-        });
-
-        $(document).on("click", "#btnCerrar", function () {
-            $('#modalAgregar').modal('hide');
-        });
-        $(document).on("click", "#btnGenerarReportePorFechas", function () {
-        var fecha = $('#fecha1').val();
-        var fecha2 = $('#fecha2').val();
-window.open('?1=EgresosController&2=reportePorFechas&fecha='+fecha+'&fecha2='+fecha2,'_blank');
-return false;
 });
 
+$("#btnCancelarA").click(function(){
+    $("#modalCajaAderel").modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+    $("#modalGestion").modal("hide");
+    
+});
 
+function limpiar(){
+    $("#cantidad").val('');
+    $("#concepto").val('');
+    $("#cantidadLetras").val('');
+    $("#recibido").val('');
+    $("#cantidadLe").html('');
+}
 
+$("#btnGuardar").click(function(){
+    const form = $('#frmCaja');
 
-
-        $('.ui.toggle').checkbox();
-        $('.ui.toggle').click(function() {
-            var cantidadNeta=$("#cantidad").val();
-            var retencion= cantidadNeta*0.10;
-            var total = cantidadNeta-retencion;
-
-            if ($('.ui.toggle').checkbox('is checked')) {
-                $("#pagado").val(total.toFixed(2));
-                $("#divRetencion").show();
-                $("#divPagado").show();
-                $("#retencionMonto").val(retencion.toFixed(2));
-
-            }
-            else {
-                $("#pagado").val($("#cantidad").val());
-                $("#divRetencion").show();
-                $("#retencionMonto").val('0.00');
-               // var cantidad=$("#cantidad").val();
-                $("#pagado").val(cantidadNeta.toFixed(2));
-            }
-        });
-
-    $("#cantidad").keyup(function(){
-        var cantidadNeta=$("#cantidad").val();
-        $("#pagado").val(cantidadNeta.toFixed(2));
-    });
-
-
-        function cerrarCambios() {      
-                limpiar();
-                $('#modalAgregar').modal('hide');
-                $('#labelCantidad').css('display', 'none');
-                $('#labelCheque').css('display', 'none');
-                $('#labelConcepto').css('display', 'none');
-                $("#cheque").val('');
-            $("#conceptoEgreso").val('');
-            $("#cantidad").val('');
-            $("#retencionMonto").val('');
-            $("#pagado").val('');
-            $("#divRetencion").hide();
-            $('#label-error').css('display', 'none');
-            $("#btnGuardar").attr("disabled", false);
-            }
-        
-        function limpiar()
-        {
-            $("#cheque").val('');
-            $("#conceptoEgreso").val('');
-            $("#cantidad").val('');
-            $("#retencionMonto").val('');
-            $("#pagado").val('');
-            $("#divRetencion").hide();
-            $('#label-error').css('display', 'none');
-            $("#btnGuardar").attr("disabled", false);
-        }    
-        $(function () {
-            $('#cheque').keyup(function () {
-                $('#labelCheque').css('display', 'none');
-                $("#btnGuardar").attr("disabled", false);
-            });
-            $('#conceptoEgreso').keyup(function () {
-                $('#labelConcepto').css('display', 'none');
-                $("#btnGuardar").attr("disabled", false);
-            });
-            $('#cantidad').keyup(function () {
-                $('#labelCantidad').css('display', 'none');
-                $("#btnGuardar").attr("disabled", false);
-            });
-        });
-        $(function(){
-        $('#btnGuardar').click(function() {
-            if($("#cheque").val()=="" && $("#conceptoEgreso").val()=="" && $("#cantidad").val()==""){
-                $('#labelCheque').css('display', 'block');
-                $('#labelConcepto').css('display', 'block');
-                $('#labelCantidad').css('display', 'block');
-            $("#btnGuardar").attr("disabled", true);
-            }
-            else if($("#cheque").val()=="" && $("#conceptoEgreso").val()>1 && $("#cantidad").val()>1){
-                $('#labelCheque').css('display', 'block');
-            $("#btnGuardar").attr("disabled", true);
-            }
-           else if($("#conceptoEgreso").val()=="" && $("#cantidad").val()>1 && $("#cheque").val()>1 ){
-                $('#labelConcepto').css('display', 'block');
-            $("#btnGuardar").attr("disabled", true);
-            }
-           else if($("#cantidad").val()=="" && $("#conceptoEgreso").val()>1 && $("#cheque").val()>1){
-                $('#labelCantidad').css('display', 'block');
-            $("#btnGuardar").attr("disabled", true);
-            }
-
-           else if($("#cheque").val()==""){
-                $('#labelCheque').css('display', 'block');
-            $("#btnGuardar").attr("disabled", true);
-            }
-           else if($("#conceptoEgreso").val()==""){
-                $('#labelConcepto').css('display', 'block');
-            $("#btnGuardar").attr("disabled", true);
-            }
-           else if($("#cantidad").val()==""){
-                $('#labelCantidad').css('display', 'block');
-            $("#btnGuardar").attr("disabled", true);
-            }
-            else{
-            
-              var  chequeP = $('#cheque').val();
-              var  conceptoEgresoP = $('#conceptoEgreso').val();
-              var  cantidadP = $('#cantidad').val();
-              var  retencionP = $('#retencionMonto').val();
-              var pagadoP = $('#pagado').val();
-              var  meses = $('#mes').val();
-              var  anios = $('#anio').val();
+                const datosFormulario = new FormData(form[0]);
          
-            
-            
+        
             $.ajax({
-                    type: 'POST',
-                    url: '?1=EgresosController&2=registrarEgreso',
-					data: {
-                        cheque: chequeP,
-                        conceptoEgreso: conceptoEgresoP,
-                        cantidad: cantidadP,
-                        retencionMonto: retencionP,
-                        pagado: pagadoP,
-                        mes: meses,
-                        anio: anios,
-                    },
-                    success: function(r) {
-                                    if(r == 1) {
-                                        $('#modalAgregar').modal('hide');
-                                        swal({
-                                            title: 'Registrado',
-                                            text: 'Guardado con éxito',
-                                            type: 'success',
-                                            showConfirmButton: false,
-                                             timer: 1700
+                enctype: 'multipart/form-data',
+                contentType: false,
+                processData: false,
+                cache: false,
+                type: 'POST',
+                url: '?1=CajaChicaController&2=registrarGeneral',
+                data: datosFormulario,
+                success: function(r) {
+                    if(r == 1) {
+                     //   $('#modalAgregarU').modal('hide');
+                        swal({
+                            title: 'Registrado',
+                            text: 'Guardado con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
 
-                                        }).then((result) => {
-                                            if (result.value) {
-                                                location.href = '?';
-                                            }
-                                        }); 
-                                        $('#dtEgresos').DataTable().ajax.reload();
-                                        limpiar();
-                                    } 
-                                }
-            });
-        }
-        
+                        }).then((result) => {
+                            if (result.value) {
+                                location.href = '?';
+                            }
+                        }); 
+                        $('#dtCajaG').DataTable().ajax.reload();
+                      limpiar();
+                    } 
+                }
+            
         });
+
     });
-
-    $("#cheque").change(function(){
-
-var cheque=$("#cheque").val();
-
-     $.ajax({
-     type: 'POST',
-     url: '?1=EgresosController&2=getChNo',
-     data:{cheque},
-     success: function(r) {
-
-             if(r==1)
-             {
-                 
-                $("#btnGuardar").attr("disabled", true);
-                $('#label-error').css('display','block');
-             }    
-             else{
-
-                $("#btnGuardar").attr("disabled", false);
-             }  
-     }
-         });
-
-});
-
-$(function () {
-            $('#cheque').keyup(function () {
-                $('#label-error').css('display', 'none');
-                $("#btnGuardar").attr("disabled", false);
-            });
-        });
-
-
-
-        
-
-
-</script>
+    </script>

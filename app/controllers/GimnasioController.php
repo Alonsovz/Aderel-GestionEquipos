@@ -176,6 +176,19 @@ class GimnasioController extends ControladorBase {
     }
 
 
+    public function exonerar(){
+        $id = $_REQUEST["idCobroGim"];
+        //$cantidad = $_REQUEST["cantidadG"];
+
+        $dao = new DaoGimnasio();
+
+        $dao->objeto->setIdPago($id);
+
+        echo $dao->exonerar();
+
+    }
+
+
     
 
 

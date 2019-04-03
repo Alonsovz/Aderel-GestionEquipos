@@ -3,60 +3,61 @@
 <div class="ui fullscreen longer modal" id="modalCajaAderel">
 <div class="header">
     <br>
-    <div class="sixteen wide column">
+   
 <i class="dollar sign icon"></i><i class="box icon"></i><i class="money bill icon"></i>Egreso de Caja Aderel
 
-
+</div><br>
             
             <button class="ui right floated green labeled icon button" id="btnGestion">
             <i class="money bill icon"></i>Gestión de Caja Chica
             </button>
-            </div>
 
-
-</div>
-<br>
-
-<div class="sixteen wide column">
-<div class="row">
-    <a style="font-size: 20px;">
-    <i class="dollar icon"></i> Monto actual de Caja: 
-    </a>
-    
     <button class="ui right floated blue labeled icon button" id="btnEmitidos">
     <i class="list icon"></i>Vales emitidos
     </button>
-
+    
     <button class="ui right floated yellow labeled icon button" id="btnNuevo">
     <i class="plus icon"></i>Emitir nuevo 
     </button>
 
-    
-</div>
-</div>
-<br>
-<div class="ui divider"></div>
+
+
+
 
 <div class="content" class="ui equal width form">
 
+<a style="font-size: 20px;">
+    <i class="dollar icon"></i> Monto actual de Caja: $200.00 
+    </a>
+    <br>
+    
+ <br>
 <div id="emitirNuevo">
-<form class="ui form" id="frmCajaAderel">
+<form class="ui form" id="frmCaja">
     <div class="field">
         <div class="fields">
             <div class="four wide field">
                 <label><i class="calendar icon"></i> Fecha:</label>
-                <input type="date" id="fechaReciboA" name="fechaReciboA">
+                <input type="text"  id="fechaVista" readonly>
             </div>
 
             <div class="four wide field">
                 <label><i class="dollar icon"></i> Por:</label>
-                <input type="text" id="cantidadReciboA" name="cantidadReciboA" placeholder="Cantidad a Recibir">
+                <input type="text" id="cantidad" name="cantidad" placeholder="Cantidad a Recibir">
             </div>
 
+            <div class="two wide field" style="margin:auto;">
+            <label><br></label>
+            <a class="ui olive labeled icon button" id="btnConvertir">
+            <i class="arrow circle right icon"></i> Convertir
+            </a>
+            </div>
+            <br>
             <div class="eight wide field">
                 <label><i class="dollar icon"></i> Recibí de Asociación deportiva y recreativa Lourdense la cantidad:</label>
-                <input type="text" id="recibiReciboA" name="recibiReciboA" placeholder="Nombre del Receptor">
+                <div id="cantidadLe" name="cantidadLe" style="font-size:22px;"></div>
             </div>
+            <input type="hidden" id="cantidadLetras" name="cantidadLetras">
         </div>
     </div>
 
@@ -65,7 +66,7 @@
     <div class="fields">
             <div class="sixteen wide field">
             <label><i class="money  bill icon"></i> En concepto de :</label>
-             <input type="text" id="conceptoReciboA" name="conceptoReciboA" placeholder="Concepto de Egreso">
+             <textarea rows="2" id="concepto" name="concepto" placeholder="Concepto de Egreso"></textarea>
             </div>
 
     </div>
@@ -75,14 +76,14 @@
     <br>
     <div class="field">
     <div class="fields">
-            <div class="eight wide field">
+            <div class="ten wide field">
             <label><i class="male icon"></i> Recibido por :</label>
-             <input type="text" id="recibidoReciboA" name="conceptoReciboA" placeholder="Nombre del Receptor">
+             <input type="text" id="recibido" name="recibido" placeholder="Nombre del Receptor">
             </div>
 
-            <div class="eight wide field">
+            <div class="six wide field">
             <label><br></label>
-            <a class="ui red labeled icon button">
+            <a class="ui red labeled icon button" id="btnGuardar">
                 <i class="save icon"></i>Guardar
             </a>
             </div>
@@ -137,7 +138,7 @@
                 <br>
                 <div class="row">
             <div class="sixteen wide column">
-                <table id="" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                <table id="dtCajaA" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
                     <thead>
                         <tr>
                         
@@ -170,13 +171,20 @@
 </div>
 
 
-
+<script src="./res/tablas/tablaCajaAderel.js"></script>
 <script>
 $(document).ready(function(){
     $("#modalCajaAderel").modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
     $("#valesEmitidos").hide();
     $("#btnNuevo").hide();
+    $("#cantidad").mask("###0.00", {reverse: true});
+
+
+var f = new Date();
+var fecha=(f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear());
+
+$("#fechaVista").val(fecha);
 });
 
 $("#btnNuevo").click(function(){
@@ -207,4 +215,62 @@ $("#btnCancelarA").click(function(){
     $("#modalGestion").modal("hide");
     
 });
+
+$("#btnConvertir").click(function(){
+   var cantidad = $("#cantidad").val();
+   var canti = $("#cantidadLe").load("app/view/Egresos/ajax.php",{ cantidad : cantidad });
+    
+    
+   });
+
+   $("#concepto").keyup(function(){
+    var cantidad = $("#cantidadLe").html();
+    $("#cantidadLetras").val(cantidad);
+   });
+
+function limpiar(){
+    $("#cantidad").val('');
+    $("#concepto").val('');
+    $("#cantidadLetras").val('');
+    $("#recibido").val('');
+    $("#cantidadLe").html('');
+}
+
+$("#btnGuardar").click(function(){
+    const form = $('#frmCaja');
+
+                const datosFormulario = new FormData(form[0]);
+         
+        
+            $.ajax({
+                enctype: 'multipart/form-data',
+                contentType: false,
+                processData: false,
+                cache: false,
+                type: 'POST',
+                url: '?1=CajaChicaController&2=registrarAderel',
+                data: datosFormulario,
+                success: function(r) {
+                    if(r == 1) {
+                     //   $('#modalAgregarU').modal('hide');
+                        swal({
+                            title: 'Registrado',
+                            text: 'Guardado con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            if (result.value) {
+                                location.href = '?';
+                            }
+                        }); 
+                        $('#dtCajaA').DataTable().ajax.reload();
+                       limpiar();
+                    } 
+                }
+            
+        });
+
+    });
     </script>

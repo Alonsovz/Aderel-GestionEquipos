@@ -387,6 +387,20 @@ class EscFutbolController extends ControladorBase {
 
     }
 
+    public function exonerar(){
+        $id = $_REQUEST["idCobroEFutbol"];
+       // $cantidad = $_REQUEST["cantidadEF"];
+
+        $dao = new DaoEscuela();
+
+        $dao->objeto->setIdPago($id);
+
+        echo $dao->exonerar();
+
+    
+
+    }
+
 
 }
 

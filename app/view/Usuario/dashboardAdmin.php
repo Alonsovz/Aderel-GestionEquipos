@@ -16,25 +16,21 @@
 <div id="app">
 <div class="row tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
 
-    <a href="?1=IngresosController&2=Ingresos"  style="width: 22%; text-align:center;" class="ui blue inverted segment">
-    Ingresos
+    <a href="?1=IngresosController&2=nuevoIngreso"  style="width: 33%; text-align:center;" class="ui yellow inverted segment">
+    Gestión de Caja
         <div class="ui divider"></div>
         <i class="money bill alternate  icon"></i>
     </a>
 
-    <a href="?1=EgresosController&2=Egresos" style="width: 22%; text-align:center;"  class="ui yellow inverted segment">
-    Egresos
-        <div class="ui divider"></div>
-        <i class="money bill alternate outline icon"></i>
-    </a>
+    
 
-    <button id="btnReportes" style="width:24%; text-align:center;"  class="ui blue inverted segment">
+    <button id="btnReportes" style="width:33%; text-align:center;"  class="ui blue inverted segment">
         Reportes
         <div class="ui divider"></div>
         <i class="file outline icon"></i>
     </button>
 
-    <button style="width: 30%; text-align:center;"  class="ui yellow inverted segment" id="btnCierre">
+    <button style="width: 33%; text-align:center;"  class="ui yellow inverted segment" id="btnCierre">
         Cierre de <?php echo $mes?>_<?php echo $anio ?>
         <div class="ui divider"></div>
         <i class="dollar icon"></i>
