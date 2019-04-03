@@ -205,21 +205,26 @@ class TorneosController extends ControladorBase {
         $resultado1 = $dao->calendarioVuelta1();
         $validar1 = $dao->calendarioVuelta1();
         $validarDescanso1 = $dao->calendarioVuelta1();
+        $cancha1 = $dao->calendarioVuelta1();
 
         $resultado2 = $dao->calendarioVuelta2();
         $validar2 = $dao->calendarioVuelta2();
         $validarDescanso2 = $dao->calendarioVuelta2();
+        $cancha2 = $dao->calendarioVuelta1();
 
         $resultado3 = $dao->calendarioVuelta3();
         $validar3 = $dao->calendarioVuelta3();
         $validarDescanso3 = $dao->calendarioVuelta3();
+        $cancha3 = $dao->calendarioVuelta1();
 
         $resultado4 = $dao->calendarioVuelta4();
         $validar4 = $dao->calendarioVuelta4();
         $validarDescanso4 = $dao->calendarioVuelta4();
+        $cancha4 = $dao->calendarioVuelta1();
 
         $reporte->calendario($id, $resultado,$resultado1, $resultado2,$resultado3,$resultado4,$validar1,
-        $validar2,$validar3,$validar4,$validarDescanso1,$validarDescanso2,$validarDescanso3,$validarDescanso4);
+        $validar2,$validar3,$validar4,$validarDescanso1,$validarDescanso2,$validarDescanso3,$validarDescanso4,
+    $cancha1,$cancha2,$cancha3,$cancha4);
     }
 
 

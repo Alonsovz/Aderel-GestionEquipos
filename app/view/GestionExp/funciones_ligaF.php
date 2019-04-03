@@ -84,8 +84,8 @@ if ($N%2!=0)
 		<tr>
 		
 			<th style='background-color: #201EAC; color:white;'><center>N° de Partido</th>
-			<th style='background-color: #201EAC;color:white;' ><center>Cancha</th>
-			<th style='background-color: #201EAC;color:white;'><center>Enfrentamiento</th>
+			<th style='background-color: #201EAC;color:white;' ><center>Enfrentamiento</th>
+			<th style='background-color: #201EAC;color:white;'><center>Cancha</th>
 			<th style='background-color: #201EAC;color:white;'><center>Hora</th>
 			<th style='background-color: #201EAC;color:white;'><center>Fecha</th>               
 		</tr>
@@ -128,26 +128,45 @@ if ($N%2!=0)
 					$cancha=2;
 
 				if(rand(0,1)==0){//izq
-					$nombre    = $equipos[$equipo1]['nombre']." vs ".$equipos[$g2[$conta]]['nombre'];
+					$nombre    = 
+						'<span class="equipo1">'.
+							$equipos[$equipo1]['nombre'].
+						"</span> vs 
+						<span class='equipo2'>".
+							$equipos[$g2[$conta]]['nombre'].
+						"</span>";
+						
 					$idEquipo1 = $equipos[$equipo1]['nombre'];
 					$idEquipo2 = $equipos[$g2[$conta]]['nombre'];
 				}else{
-					$nombre    = $equipos[$g2[$conta]]['nombre']." vs ".$equipos[$equipo1]['nombre'];
+					$nombre    = 
+						'<span class="equipo1">'.
+							$equipos[$g2[$conta]]['nombre'].
+						"</span> vs 
+						<span class='equipo2'>".
+							$equipos[$equipo1]['nombre'].
+						"</span>";
+
 					$idEquipo1 = $equipos[$g2[$conta]]['nombre'];
 					$idEquipo2 = $equipos[$equipo1]['nombre'];
 				} 
 				$html.="
-				
+
 				<tr>
 					<td bgcolor='#F2F5A9' style='width: 10%;'><center>Partido ".$partidos."</td>
-					<td style='width: 10%;'><center> Cancha ".$cancha ."</td>
 					<td bgcolor='#F2F5A9' style='width: 30%;'><center>
 						". $nombre ."
 						<input type='hidden' name='idEquipo1[".$partidos."]' value='". $idEquipo1 ."'>
 						<input type='hidden' name='idEquipo2[".$partidos."]' value='". $idEquipo2 ."'>
-						<input type='hidden' name='cancha[".$partidos."]' value='". $cancha ."'>
 						<input type='hidden' name='partido[".$partidos."]' value='". $partidos ."'>
 					</td>
+					<td style='width: 10%;'><center>
+					<select name='cancha[".$partidos."]'>
+					<option value='0'>Elegir cancha</option>
+						<option value='1'>Cancha 1</option>
+						<option value='2'>Cancha 2</option>
+					</select>
+							
 					<td bgcolor='' style='width: 15%;'><center>Hora: <input type='time' name='hora[".$partidos."]'></td>
 					<td bgcolor='#F2F5A9' style='width: 15%;'><center>Fecha: <input type='date' name='fecha[".$partidos."]'></td>
 				</tr>";
@@ -179,12 +198,73 @@ if ($N%2!=0)
 	}
 	// VUELTAS -----------------------------------------------
 for ($i=0; $i < $vueltas; $i++) { 
-	echo "<h4>Vuelta: ".($i+1)."</h4> <hr>"	;
-	echo $html;
+	?>
+	<div id="vuelta-<?php echo ($i+1); ?>">
+		<h4>Vuelta: <?php echo ($i+1); ?> </h4> <hr>
+
+		<?php echo $html; ?>
+
+	</div>
+
+<?php
 }
 ?>
-	
+
+
 <script>
+const nVueltas        = <?php echo $vueltas ?>;
+
+(()=>{
+	const equipo1 = $('#vuelta-1 .equipo1');
+	const equipo2 = $('#vuelta-1 .equipo2');
+
+if(nVueltas>1){
+
+	for (let i = 0; i < equipo1.length; i++) {
+	//Cambia el text
+		$($('#vuelta-2 .equipo1')[i])
+			.text($(equipo2[i]).text());
+
+		$($('#vuelta-2 .equipo2')[i])
+			.text($(equipo1[i]).text());
+
+
+	// Cambia los valores que se enviaran a la BD
+		$($('#vuelta-2 [name^="idEquipo1"]')[i])
+			.text($(equipo2[i]).text());
+
+		$($('#vuelta-2 [name^="idEquipo2"]')[i])
+			.text($(equipo1[i]).text());
+	}
+
+	if(nVueltas==4){
+	
+		for (let i = 0; i < equipo1.length; i++) {
+		//Cambia el text
+			$($('#vuelta-4 .equipo1')[i])
+				.text($(equipo2[i]).text());
+
+			$($('#vuelta-4 .equipo2')[i])
+				.text($(equipo1[i]).text());
+
+
+		// Cambia los valores que se enviaran a la BD
+			$($('#vuelta-4 [name^="idEquipo1"]')[i])
+				.text($(equipo2[i]).text());
+
+			$($('#vuelta-4 [name^="idEquipo2"]')[i])
+				.text($(equipo1[i]).text());
+		}
+
+	}
+}
+
+
+
+
+			
+})();
+
 const enviar =()=>{
     alertify.confirm("¿Deseas guardar las jornadas?",
             function(){
@@ -200,7 +280,6 @@ const enviar =()=>{
 	// console.log('datosFormulario :', datosFormulario);
 	// const partir 
 	const datosEnviar     = [];
-	const nVueltas        = <?php echo $vueltas ?>;
 	const jornadasXvuelta = datosFormulario.length/nVueltas;
 	let contadorJornadas  = 0;
 	let vueltaActual 	  = 1;

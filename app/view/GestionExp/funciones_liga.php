@@ -162,6 +162,7 @@ if ($N%2!=0)
 					</td>
 					<td style='width: 10%;'><center>
 						<select name='cancha[".$partidos."]'>
+						<option value='0'>Elegir cancha</option>
 							<option value='1'>Cancha 1</option>
 							<option value='2'>Cancha 2</option>
 						</select>

@@ -10,7 +10,8 @@ class Reporte {
     }
 
     public function calendario($id, $resultado,$resultado1,$resultado2,$resultado3,$resultado4,
-    $validar1,$validar2,$validar3,$validar4,$validarDescanso1,$validarDescanso2,$validarDescanso3,$validarDescanso4) {
+    $validar1,$validar2,$validar3,$validar4,$validarDescanso1,$validarDescanso2,$validarDescanso3,$validarDescanso4,
+    $cancha1,$cancha2,$cancha3,$cancha4) {
 
         $nombreT = $resultado->fetch_assoc();
         $nombreT = $nombreT['nombreT'];
@@ -27,6 +28,17 @@ class Reporte {
         $validarDes4 = $validarDescanso4->fetch_assoc();
         $validarDes4 = $validarDes4["descansa"];
 
+        $can1 = $cancha1->fetch_assoc();
+        $can1 = $can1["cancha"];
+
+        $can2 = $cancha2->fetch_assoc();
+        $can2 = $can2["cancha"];
+
+        $can3 = $cancha3->fetch_assoc();
+        $can3 = $can3["cancha"];
+
+        $can4 = $cancha4->fetch_assoc();
+        $can4 = $can4["cancha"];
 
         $año= date('Y');
         
@@ -97,9 +109,14 @@ class Reporte {
                         <td>".$fila['jornada']."</td>
                         <td>".$fila['equipo1']." vs ".$fila['equipo2']."</td>
                         <td></td>
-                        <td>".$fila['partido']."</td>
-                        <td>".$fila['cancha']."</td>
-                        <td>".$fila['fecha']."</td>
+                        <td>".$fila['partido']."</td>";
+                     if($can1==0){
+                        $tabla.="<td></td>";
+                     }  else{
+                        $tabla.="<td>".$fila['cancha']."</td>";
+                     } 
+                        
+                     $tabla.="<td>".$fila['fecha']."</td>
                         <td>".$fila['hora']."</td>
                      </tr>";
         }
@@ -127,11 +144,17 @@ class Reporte {
                         <td bgcolor='#F78181'>".$fila['descansa']."</td>
                         <td>".$fila['equipo1']." vs ".$fila['equipo2']."</td>
                         <td></td>
-                        <td>".$fila['partido']."</td>
-                        <td>".$fila['cancha']."</td>
-                        <td>".$fila['fecha']."</td>
+                        <td>".$fila['partido']."</td>";
+                     if($can1==0){
+                        $tabla.="<td></td>";
+                     }  else{
+                        $tabla.="<td>".$fila['cancha']."</td>";
+                     } 
+                        
+                     $tabla.="<td>".$fila['fecha']."</td>
                         <td>".$fila['hora']."</td>
                      </tr>";
+                        
         }
                 
         $tabla .= "</table><hr>";
@@ -165,11 +188,16 @@ class Reporte {
                             <td>".$fila['jornada']."</td>
                             <td>".$fila['equipo1']." vs ".$fila['equipo2']."</td>
                             <td></td>
-                            <td>".$fila['partido']."</td>
-                            <td>".$fila['cancha']."</td>
-                            <td>".$fila['fecha']."</td>
-                            <td>".$fila['hora']."</td>
-                        </tr>";
+                            <td>".$fila['partido']."</td>";
+                            if($can2==0){
+                                $tabla.="<td></td>";
+                             }  else{
+                                $tabla.="<td>".$fila['cancha']."</td>";
+                             } 
+                                
+                             $tabla.="<td>".$fila['fecha']."</td>
+                                <td>".$fila['hora']."</td>
+                             </tr>";
                 }
             
             $tabla .= "</table><hr>";
@@ -198,10 +226,16 @@ class Reporte {
                     <td>".$fila['equipo1']." vs ".$fila['equipo2']."</td>
                     <td></td>
                     <td>".$fila['partido']."</td>
-                    <td>".$fila['cancha']."</td>
-                    <td>".$fila['fecha']."</td>
-                    <td>".$fila['hora']."</td>
-                 </tr>";
+                    ";
+                    if($can2==0){
+                        $tabla.="<td></td>";
+                     }  else{
+                        $tabla.="<td>".$fila['cancha']."</td>";
+                     } 
+                        
+                     $tabla.="<td>".$fila['fecha']."</td>
+                        <td>".$fila['hora']."</td>
+                     </tr>";
         }
        
     $tabla .= "</table><hr>";
@@ -234,10 +268,16 @@ class Reporte {
                     <td>".$fila['equipo1']." vs ".$fila['equipo2']."</td>
                     <td></td>
                     <td>".$fila['partido']."</td>
-                    <td>".$fila['cancha']."</td>
-                    <td>".$fila['fecha']."</td>
-                    <td>".$fila['hora']."</td>
-                 </tr>";
+                    ";
+                            if($can3==0){
+                                $tabla.="<td></td>";
+                             }  else{
+                                $tabla.="<td>".$fila['cancha']."</td>";
+                             } 
+                                
+                             $tabla.="<td>".$fila['fecha']."</td>
+                                <td>".$fila['hora']."</td>
+                             </tr>";
     }
 
 
@@ -265,10 +305,16 @@ class Reporte {
                     <td>".$fila['equipo1']." vs ".$fila['equipo2']."</td>
                     <td></td>
                     <td>".$fila['partido']."</td>
-                    <td>".$fila['cancha']."</td>
-                    <td>".$fila['fecha']."</td>
-                    <td>".$fila['hora']."</td>
-                 </tr>";
+                    ";
+                            if($can3==0){
+                                $tabla.="<td></td>";
+                             }  else{
+                                $tabla.="<td>".$fila['cancha']."</td>";
+                             } 
+                                
+                             $tabla.="<td>".$fila['fecha']."</td>
+                                <td>".$fila['hora']."</td>
+                             </tr>";
     }
 
 
@@ -303,10 +349,16 @@ if($fila = $validar4->fetch_assoc() ==""){
                     <td>".$fila['equipo1']." vs ".$fila['equipo2']."</td>
                     <td></td>
                     <td>".$fila['partido']."</td>
-                    <td>".$fila['cancha']."</td>
-                    <td>".$fila['fecha']."</td>
-                    <td>".$fila['hora']."</td>
-                 </tr>";
+                    ";
+                            if($can4==0){
+                                $tabla.="<td></td>";
+                             }  else{
+                                $tabla.="<td>".$fila['cancha']."</td>";
+                             } 
+                                
+                             $tabla.="<td>".$fila['fecha']."</td>
+                                <td>".$fila['hora']."</td>
+                             </tr>";
     }
             
     $tabla .= "</table><hr>";
@@ -331,10 +383,16 @@ if($fila = $validar4->fetch_assoc() ==""){
                     <td>".$fila['equipo1']." vs ".$fila['equipo2']."</td>
                     <td></td>
                     <td>".$fila['partido']."</td>
-                    <td>".$fila['cancha']."</td>
-                    <td>".$fila['fecha']."</td>
-                    <td>".$fila['hora']."</td>
-                 </tr>";
+                    ";
+                            if($can4==0){
+                                $tabla.="<td></td>";
+                             }  else{
+                                $tabla.="<td>".$fila['cancha']."</td>";
+                             } 
+                                
+                             $tabla.="<td>".$fila['fecha']."</td>
+                                <td>".$fila['hora']."</td>
+                             </tr>";
     }
             
     $tabla .= "</table><hr>";
