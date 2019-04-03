@@ -89,6 +89,8 @@ create table categorias(
 idCategoria int primary key auto_increment,
 nombreCategoria varchar(100),
 edadMinima int,
+edadMaxima int,
+carnetGratis int,
 idGenero int,
 idEliminado int
 );
@@ -104,6 +106,7 @@ disponibles int,
 inscritos int,
 idCategoria int,
 idGenero int,
+sorteo int,
 idEliminado int
 );
 
@@ -267,6 +270,8 @@ fechasPago date,
 estado int
 );
 
+
+
 alter table partidos add constraint fk_partidos_jornadas foreign key (jornadas_id) references jornadas(id);
 
 
@@ -318,16 +323,16 @@ insert into remanentes values(null,5000,10000,4000,500,300,7000,'03','2019');
 insert into genero values(null,'Femenino');
 insert into genero values(null,'Masculino');
 
-insert into categorias values (null, 'Sin Categoria',0,1,1);
-insert into categorias values (null, 'Sin Categoria',0,2,1);
+insert into categorias values (null, 'Sin Categoria',0,1,1,1,1);
+insert into categorias values (null, 'Sin Categoria',0,2,1,2,1);
 
 
 insert into inscripcion values(null,'Aun no inscrito');
 insert into inscripcion values(null,'Esperando Cobro');
 insert into inscripcion values(null,'Inscrito');
 
-insert into torneos values(null,'No se ha inscrito en torneo',0,0,0,1,1,1);
-insert into torneos values(null,'No se ha inscrito en torneo',0,0,0,1,2,1);
+insert into torneos values(null,'No se ha inscrito en torneo',0,0,0,1,1,1,1);
+insert into torneos values(null,'No se ha inscrito en torneo',0,0,0,1,2,1,1);
 
 insert into jugadores values(null,'FF000001','nada','nada','nada','nada','1999-02-12','',1,1,1);
 
@@ -586,10 +591,9 @@ begin
 end	
 $$
 
-select * from equipos
 
-select *,format(cantidad,2) as cantidad, DATE_FORMAT(fecha, '%d/%m/%Y') as fecha  from cajaChica
-        where  idEliminado=1 and idTipo=1
+
+select * from torneos
 
        
        

@@ -589,19 +589,14 @@ var inscribirEquipo=(ele)=>{
                     idT : idT,
                 },
                 success: function(r) {
-                    if(r == 11) {
+                    if(r == 1) {
                         $('#modalInscribirE').modal('hide');
                         swal({
                             title: 'Listo!',
-                            text: 'Equipo inscrito con éxito',
+                            text: 'Solicitud aceptada, para inscribirlo en el torneo debe realizar el cobro en caja!',
                             type: 'success',
-                            showConfirmButton: false,
-                                timer: 1700
+                            showConfirmButton: true
 
-                        }).then((result) => {
-                            if (result.value) {
-                                location.href = '?';
-                            }
                         }); 
                         $('#dtEquiposM').DataTable().ajax.reload();
                         

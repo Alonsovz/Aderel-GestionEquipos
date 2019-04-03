@@ -425,7 +425,7 @@ class DaoEquipos extends DaoBase {
 
             $object = json_encode($fila);
 
-            $btnCobrar = '<button id=\"'.$fila["idEquipo"].'\" nombreE=\"'.$fila["nombreE"].'\" categoriaE=\"'.$fila["Categoria"].'\" torneoE=\"'.$fila["torneo"].'\" class=\"ui btnEditarE icon green small button\" onclick=\"cobrarEquipo(this)\"><i class=\"dollar icon\"></i> Cobrar</button>';
+            $btnCobrar = '<button id=\"'.$fila["idEquipo"].'\" idTorneoEq=\"'.$fila["idT"].'\" nombreE=\"'.$fila["nombreE"].'\" categoriaE=\"'.$fila["Categoria"].'\" torneoE=\"'.$fila["torneo"].'\" class=\"ui btnEditarE icon green small button\" onclick=\"cobrarEquipo(this)\"><i class=\"dollar icon\"></i> Cobrar</button>';
               
              
                 $acciones = ', "Acciones": "'.$btnCobrar.'"';

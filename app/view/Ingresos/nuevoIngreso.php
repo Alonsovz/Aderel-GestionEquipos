@@ -506,6 +506,7 @@
 
         <form class="ui form" id="frmCobroEquipo">
         <input type="hidden" id="idEquipoCobro" name="idEquipoCobro">
+        <input type="hidden" id="idTorneoEq" name="idTorneoEq">
             <div class="field">
             <i class="dollar icon"></i> Cantidad a pagar:
             <input type="text" id="cantidadCobroE" name="cantidadCobroE" >
@@ -950,6 +951,7 @@ var quitarFondo=(ele)=>{
 var cobrarEquipo=(ele)=>{
     $("#nombreE").text($(ele).attr("nombreE"));
     $("#torneoE").text($(ele).attr("torneoE"));
+    $("#idTorneoEq").val($(ele).attr("idTorneoEq"));
     $("#categoriaE").text($(ele).attr("categoriaE"));
     $("#idEquipoCobro").val($(ele).attr("id"));
     $('#modalCobroInscripcionE').modal('setting', 'autofocus', false).modal('setting', 'closable', false)

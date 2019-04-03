@@ -31,8 +31,9 @@ public function registrarCM() {
         $dao = new DaoCategorias();
 
         $dao->objeto->setNombreCategoria($datos->nombreCategoria);
-        //$dao->objeto->setEdadMaxima($datos->edadMaxima);
         $dao->objeto->setEdadMinima($datos->edadMinima);
+        $dao->objeto->setEdadMaxima($datos->edadMaxima);
+        $dao->objeto->setCarnets($datos->carnets);
 
 
         echo $dao->registrarM();
@@ -47,8 +48,9 @@ public function registrarCM() {
         $dao = new DaoCategorias();
 
         $dao->objeto->setNombreCategoria($datos->nombreCategoria);
-        //$dao->objeto->setEdadMaxima($datos->edadMaxima);
         $dao->objeto->setEdadMinima($datos->edadMinima);
+        $dao->objeto->setEdadMaxima($datos->edadMaxima);
+        $dao->objeto->setCarnets($datos->carnets);
 
 
         echo $dao->registrarF();
@@ -84,9 +86,10 @@ public function registrarCM() {
         $dao = new DaoCategorias();
 
         $dao->objeto->setNombreCategoria($_REQUEST["nombreCategoria"]);
-       // $dao->objeto->setEdadMaxima($_REQUEST["edadMaxima"]);
+       $dao->objeto->setEdadMaxima($_REQUEST["edadMaxima"]);
         $dao->objeto->setEdadMinima($_REQUEST["edadMinima"]);
         $dao->objeto->setIdCategoria($_REQUEST["idDetalleC"]);
+        $dao->objeto->setCarnets($_REQUEST["carnets"]);
 
         echo $dao->editarM();
     }
@@ -164,8 +167,9 @@ public function registrarCM() {
         $dao = new DaoCategorias();
 
         $dao->objeto->setNombreCategoria($_REQUEST["nombreCategoria"]);
-       // $dao->objeto->setEdadMaxima($_REQUEST["edadMaxima"]);
+      $dao->objeto->setEdadMaxima($_REQUEST["edadMaxima"]);
         $dao->objeto->setEdadMinima($_REQUEST["edadMinima"]);
+        $dao->objeto->setCarnets($_REQUEST["carnets"]);
         $dao->objeto->setIdCategoria($_REQUEST["idDetalleC"]);
 
         echo $dao->editarF();

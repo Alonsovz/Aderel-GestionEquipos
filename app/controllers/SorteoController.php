@@ -10,6 +10,7 @@ class SorteoController extends ControladorBase {
 
         $daoJornada  = new DaoJornada();
         $daoPartidos = new DaoPartidos();
+        $daoTorneo = new DaoTorneos();
 
         foreach ($datos as $datosJornada) {
 
@@ -21,6 +22,9 @@ class SorteoController extends ControladorBase {
             $jornada->setVuelta_N($datosJornada['nvuelta']);
             $jornada->setOrden($datosJornada['jornada']);
 
+            $daoTorneo->objeto->setIdTorneo($datosJornada['idTorneo']);
+
+            $daoTorneo->paraSorteo();
 
             $idJornada = $daoJornada->registrar($jornada);
             foreach ($datosJornada['partidos'] as $partido) {
@@ -33,11 +37,18 @@ class SorteoController extends ControladorBase {
                 $partidoGuardar->setEquipo2_id($partido['equipo2']);
                 $partidoGuardar->setFecha($partido['fecha']);
                 $partidoGuardar->setHora($partido['hora']);
+
+                
                 
                 $daoPartidos->registrar($partidoGuardar);
+                
             }
 
         }
+
+        
+
+         
 
         
         echo 'ok';//xd

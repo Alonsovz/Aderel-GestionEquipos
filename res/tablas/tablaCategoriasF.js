@@ -18,6 +18,13 @@ $(function() {
                     "data": "edadMinima"
                 },
                 {
+                    "data": "edadMaxima"
+                },
+                {
+                    "data": "carnetGratis"
+                },
+                {
+
                     "data": "Acciones"
                 }
                 

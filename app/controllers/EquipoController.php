@@ -52,11 +52,11 @@ class EquipoController extends ControladorBase {
 
         
 
-        $daoT = new DaoTorneos();
-        $daoT->objeto->setIdTorneo($idT);
+    
 
         echo $dao->inscribirM();
-        echo $daoT->disponiblesM();
+
+       
     }
 
 public function registrarM() {
@@ -161,11 +161,12 @@ public function registrarM() {
 
         
 
-        $daoT = new DaoTorneos();
-        $daoT->objeto->setIdTorneo($idT);
+        //$daoT = new DaoTorneos();
+        //$daoT->objeto->setIdTorneo($idT);
+        //echo $daoT->disponiblesF();
 
         echo $dao->inscribirF();
-        echo $daoT->disponiblesF();
+        
     }
 
 public function registrarF() {
@@ -338,6 +339,7 @@ public function registrarF() {
 
         $id = $_REQUEST["idEquipoCobro"];
         $cantidad = $_REQUEST["cantidadCobroE"];
+        $idT = $_REQUEST["idTorneoEq"];
 
         $dao = new DaoEquipos();
 
@@ -353,6 +355,10 @@ public function registrarF() {
 
         
         echo $daoI->guardarOtro();
+
+        $daoT = new DaoTorneos();
+       $daoT->objeto->setIdTorneo($idT);
+       echo $daoT->disponiblesM();
     }
 
    

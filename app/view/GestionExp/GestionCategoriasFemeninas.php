@@ -1,6 +1,6 @@
 <br><div id="appC">
     <modal-registrar id_form="frmRegistrarC" id="modalRegistrarC" url="?1=CategoriaController&2=registrarCF" titulo="Registrar Categoría"
-        :campos="campos_registroCF" tamanio='mini' style="overflow: scroll;"></modal-registrar>
+        :campos="campos_registroC" tamanio='mini' style="overflow: scroll;"></modal-registrar>
 
 <modal-editar id_form="frmEditarC" id="modalEditarC" url="?1=CategoriaController&2=editarF" titulo="Editar Categoria"
 :campos="campos_editarC" tamanio='tiny'></modal-editar>
@@ -63,6 +63,8 @@ sub_titulo="¿Está seguro de querer eliminar esta categoria?" :campos="campos_e
                                         <th style="background-color: #purple; color: white;">N°</th>
                                         <th style="background-color: #DF01A5; color: white;">Nombre de la Categoria</th>
                                         <th style="background-color: #DF01A5; color: white;">Edad Mínima</th>
+                                        <th style="background-color: #DF01A5; color: white;">Edad Máxima</th>
+                                        <th style="background-color: #DF01A5; color: white;">Carnets Gratis</th>
                                         <th style="background-color: #DF01A5; color: white;">Acciones</th>
                                     </tr>
                                 </thead>
@@ -86,7 +88,7 @@ var appC = new Vue({
         el: "#appC",
         data: {
             detalles: [],
-            campos_registroCF: [
+            campos_registroC: [
                 {
                     label: 'Nombre de la Categoria',
                     name: 'nombreCategoria',
@@ -97,6 +99,16 @@ var appC = new Vue({
                     name: 'edadMinima',
                     type: 'number'
                 },
+                {
+                    label: 'Edad Máxima:',
+                    name: 'edadMaxima',
+                    type: 'number'
+                },
+                {
+                    label: 'Carnet gratis:',
+                    name: 'carnets',
+                    type: 'number'
+                }
                 
             ],
             campos_editarC: [
@@ -108,6 +120,16 @@ var appC = new Vue({
                 {
                     label: 'Edad Mínima:',
                     name: 'edadMinima',
+                    type: 'number'
+                },
+                {
+                    label: 'Edad Máxima:',
+                    name: 'edadMaxima',
+                    type: 'number'
+                },
+                {
+                    label: 'Carnet gratis:',
+                    name: 'carnets',
                     type: 'number'
                 },
                 {
@@ -168,7 +190,8 @@ var appC = new Vue({
                         // $('#frmEditar input[name="idDetalle"]').val(dat.codigoUsuari);
                         $('#frmEditarC input[name="nombreCategoria"]').val(dat.nombreCategoria);
                        $('#frmEditarC input[name="edadMinima"]').val(dat.edadMinima);
-                      //  $('#frmEditarC input[name="edadMaxima"]').val(dat.edadMaxima);
+                       $('#frmEditarC input[name="edadMaxima"]').val(dat.edadMaxima);
+                        $('#frmEditarC input[name="carnets"]').val(dat.carnetGratis);
                     })
                     .catch(err => {
                         console.log(err);

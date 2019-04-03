@@ -34,7 +34,11 @@ class DaoTorneos extends DaoBase {
                 $btnReporte = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon purple small button\" onclick=\"reporte(this)\"><i class=\"calendar icon\"></i>Calendarización</button>';
                 $btnGestion = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon gray small button\" onclick=\"calendarizacion(this)\"><i class=\"calendar icon\"></i>Gestionar</button>';
 
-                $acciones = ', "Acciones": "'.$btnVer.''.$sorteo.''.$btnEditar.' '.$btnEliminar.''.$btnReporte.''.$btnGestion.'"';
+                if($fila["sorteo"]==1){
+                    $acciones = ', "Acciones": "'.$btnVer.''.$sorteo .''.$btnEditar.' '.$btnEliminar.'"';
+                }else{
+                    $acciones = ', "Acciones": "'.$btnVer.''.$btnEditar.' '.$btnEliminar.''.$btnReporte .''.$btnGestion.'"';
+                }
                 
 
                 $object = substr_replace($object, $acciones, strlen($object) -1,0);
@@ -72,7 +76,12 @@ class DaoTorneos extends DaoBase {
                 $sorteo = '<button id=\"'.$fila["idTorneo"].'\"  equipos=\"'.$fila["inscritos"]. '\" name=\"'.$fila["nombreTorneo"]. '\"  class=\"ui icon yellow small button\" onclick=\"sorteos(this)\"><i class=\"futbol icon\"></i>Sorteo</button>';
                 $btnReporte = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon olive small button\" onclick=\"reporte(this)\"><i class=\"calendar icon\"></i>Calendarización</button>';
 
-                $acciones = ', "Acciones": "'.$btnVer.''.$sorteo .''.$btnEditar.' '.$btnEliminar.''.$btnReporte .''.$btnGestion.'"';
+                if($fila["sorteo"]==1){
+                    $acciones = ', "Acciones": "'.$btnVer.''.$sorteo .''.$btnEditar.' '.$btnEliminar.'"';
+                }else{
+                    $acciones = ', "Acciones": "'.$btnVer.''.$btnEditar.' '.$btnEliminar.''.$btnReporte .''.$btnGestion.'"';
+                }
+                
                 
 
                 $object = substr_replace($object, $acciones, strlen($object) -1,0);
@@ -88,7 +97,7 @@ class DaoTorneos extends DaoBase {
     public function registrarM(){
         $query = "Insert into torneos values (null,'".$this->objeto->getNombreTorneo()."','".$this->objeto->getNumeroEquipos()."',
         '".$this->objeto->getDisponibles()."',0,
-        '".$this->objeto->getIdCategoria()."',2,1);";
+        '".$this->objeto->getIdCategoria()."',2,1,1);";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -180,22 +189,18 @@ class DaoTorneos extends DaoBase {
         $resta = 1;
         $suma =1;
         $_query = "update torneos set disponibles= disponibles - ".$resta.", inscritos= inscritos + ".$suma."
-         where idGenero=2 and idTorneo = ".$this->objeto->getIdTorneo();
+         where idTorneo = ".$this->objeto->getIdTorneo();
 
         $resultado = $this->con->ejecutar($_query);
 
-        if($resultado) {
-            return 1;
-        } else {
-            return 0;
-        }
+        
     }
 
 
     public function registrarF(){
         $query = "Insert into torneos values (null,'".$this->objeto->getNombreTorneo()."','".$this->objeto->getNumeroEquipos()."',
         '".$this->objeto->getNumeroEquipos()."',0,
-        '".$this->objeto->getIdCategoria()."',1,1);";
+        '".$this->objeto->getIdCategoria()."',1,1,1);";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -380,6 +385,15 @@ class DaoTorneos extends DaoBase {
         $resultado = $this->con->ejecutar($query);
 
         return $resultado;
+    }
+
+    public function paraSorteo() {
+        
+        $_query = "update torneos set sorteo= 2 where idTorneo = ".$this->objeto->getIdTorneo();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        
     }
 
 

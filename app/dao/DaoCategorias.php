@@ -70,7 +70,7 @@ class DaoCategorias extends DaoBase {
 
     public function registrarM() {
         $_query = "insert into categorias values(null,'".$this->objeto->getNombreCategoria()."',
-         '".$this->objeto->getEdadMinima()."',2,1)";
+         '".$this->objeto->getEdadMinima()."','".$this->objeto->getEdadMaxima()."','".$this->objeto->getCarnets()."',2,1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -83,7 +83,7 @@ class DaoCategorias extends DaoBase {
 
     public function registrarF() {
         $_query = "insert into categorias values(null,'".$this->objeto->getNombreCategoria()."',
-         '".$this->objeto->getEdadMinima()."',1,1)";
+        '".$this->objeto->getEdadMinima()."','".$this->objeto->getEdadMaxima()."','".$this->objeto->getCarnets()."',1,1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -109,7 +109,8 @@ class DaoCategorias extends DaoBase {
 
     public function editarM() {
         $_query = "update categorias set nombreCategoria ='".$this->objeto->getNombreCategoria()."',
-        edadMinima = '".$this->objeto->getEdadMinima()."'
+        edadMinima = '".$this->objeto->getEdadMinima()."',  edadMaxima = '".$this->objeto->getEdadMaxima()."',
+        carnetGratis = '".$this->objeto->getCarnets()."'
          where idGenero=2 and idCategoria = ".$this->objeto->getIdCategoria();
 
         $resultado = $this->con->ejecutar($_query);
@@ -148,7 +149,8 @@ class DaoCategorias extends DaoBase {
 
     public function editarF() {
         $_query = "update categorias set nombreCategoria ='".$this->objeto->getNombreCategoria()."',
-        edadMinima = '".$this->objeto->getEdadMinima()."'
+        edadMinima = '".$this->objeto->getEdadMinima()."', edadMaxima = '".$this->objeto->getEdadMaxima()."',
+        carnetGratis = '".$this->objeto->getCarnets()."'
          where idGenero=1 and idCategoria = ".$this->objeto->getIdCategoria();
 
         $resultado = $this->con->ejecutar($_query);

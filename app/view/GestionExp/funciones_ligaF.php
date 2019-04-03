@@ -161,12 +161,12 @@ if ($N%2!=0)
 						<input type='hidden' name='partido[".$partidos."]' value='". $partidos ."'>
 					</td>
 					<td style='width: 10%;'><center>
-					<select name='cancha[".$partidos."]'>
-					<option value='0'>Elegir cancha</option>
-						<option value='1'>Cancha 1</option>
-						<option value='2'>Cancha 2</option>
-					</select>
-							
+						<select name='cancha[".$partidos."]'>
+						<option value='0'>Elegir cancha</option>
+							<option value='1'>Cancha 1</option>
+							<option value='2'>Cancha 2</option>
+						</select>
+					</td>
 					<td bgcolor='' style='width: 15%;'><center>Hora: <input type='time' name='hora[".$partidos."]'></td>
 					<td bgcolor='#F2F5A9' style='width: 15%;'><center>Fecha: <input type='date' name='fecha[".$partidos."]'></td>
 				</tr>";
@@ -231,10 +231,10 @@ if(nVueltas>1){
 
 	// Cambia los valores que se enviaran a la BD
 		$($('#vuelta-2 [name^="idEquipo1"]')[i])
-			.text($(equipo2[i]).text());
+			.val($(equipo2[i]).text());
 
 		$($('#vuelta-2 [name^="idEquipo2"]')[i])
-			.text($(equipo1[i]).text());
+			.val($(equipo1[i]).text());
 	}
 
 	if(nVueltas==4){
@@ -250,10 +250,10 @@ if(nVueltas>1){
 
 		// Cambia los valores que se enviaran a la BD
 			$($('#vuelta-4 [name^="idEquipo1"]')[i])
-				.text($(equipo2[i]).text());
+				.val($(equipo2[i]).text());
 
 			$($('#vuelta-4 [name^="idEquipo2"]')[i])
-				.text($(equipo1[i]).text());
+				.val($(equipo1[i]).text());
 		}
 
 	}

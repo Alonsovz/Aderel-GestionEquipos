@@ -5,7 +5,7 @@ class Categorias extends ModeloBase{
     private $nombreCategoria;
     private $edadMinima;
     private $edadMaxima;
-
+    private $carnets;
 
     public function __construct() {
 
@@ -76,6 +76,24 @@ class Categorias extends ModeloBase{
     public function setEdadMaxima($edadMaxima)
     {
         $this->edadMaxima = $edadMaxima;
+
+        return $this;
+    }
+
+    
+    public function getCarnets()
+    {
+        return $this->carnets;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setCarnets($carnets)
+    {
+        $this->carnets = $carnets;
 
         return $this;
     }
