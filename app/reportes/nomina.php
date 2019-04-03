@@ -5,13 +5,16 @@ class Reporte {
         require_once './vendor/autoload.php';
     }
   
-      public function nomina($encargados,$nomina,$nombreEquipo,$torneo ) {
+      public function nomina($encargados,$nomina,$nombreEquipo,$torneo,$idFondo ) {
         
         $nombreE = $nombreEquipo ->fetch_assoc();
         $nombreE = $nombreE["nombre"];
 
         $nTorneo = $torneo ->fetch_assoc();
         $nTorneo = $nTorneo["torneo"];
+
+        $fondo = $idFondo ->fetch_assoc();
+        $fondo = $fondo["idFondo"];
 
         $tabla = '';
         $tabla .= ' <style>
@@ -59,6 +62,14 @@ class Reporte {
             
            Equipo: <font color=''>".$nombreE."</font><br></h2>
             ";
+            if($fondo==2){
+                $tabla.="<h2>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            
+                
+                <font color=red>Equipo en fondo común</font></h2>";
+            }
         while($fila = $encargados->fetch_assoc()) {
             $tabla.="<h3>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -102,13 +113,19 @@ class Reporte {
             <table style='border: 1px solid white; font-size:18px;'>
 			
 			<tr>
-				<td rowspan=4> <img src=".$fila["foto"]." style='width:120px;'/></td>
-				<td colspan=2><b>Nombre:</b> ".$fila["nombre"]." ".$fila["apellido"]."</td>
+                <td rowspan=4> <img src=".$fila["foto"]." style='width:120px;'/></td>
+                <td><b>Cod. Exp:</b> ".$fila["correlativo"]."</td>
+				<td><b>Nombre:</b> ".$fila["nombre"]." ".$fila["apellido"]."</td>
 				
 			</tr>
 			<tr>
-                <td><b>Teléfono :</b> ".$fila["telefono"]."</td>
-                <td><b>Firma:</b> ______________________</td>
+                <td><br><b>Teléfono :</b> ".$fila["telefono"]."</td>";
+                if($fondo==1){
+                $tabla .= "   
+                <td><br><b>Firma:</b> ______________________</td>";
+
+                }
+                $tabla .= "
             </tr>
             <tr>
                 <td><b>DUI :</b> ".$fila["dui"]."</td>

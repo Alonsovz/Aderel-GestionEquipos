@@ -48,7 +48,7 @@
     <a class="ui blue inverted segment" style="width: 49%; text-align:center; font-size: 25px; margin:auto;"
     href="?1=EgresosController&2=Egresos">
     <i class="money bill icon"></i>
-    Agregar Egreso por cheque
+    Egreso por cheque
     </a>    
     </div>
 
@@ -65,13 +65,13 @@
 <a class="ui yellow inverted segment" style="width: 49%; text-align:center; font-size: 25px;"
  href="?1=EgresosController&2=cajaChicaGeneral">
 <i class="box icon"></i><i class="dollar icon"></i>
-  Caja Chica General
+   General
 </a> 
 
 <a class="ui blue inverted segment" style="width: 49%; text-align:center; font-size: 25px;"
  href="?1=EgresosController&2=cajaChicaAderel">
 <i class="box icon"></i><i class="dollar icon"></i>
-  Caja Chica ADEREL
+  ADEREL
 </a> 
 </div>
 </div>
@@ -456,8 +456,6 @@
     <button>
 
     </div>
-
-
 </div>
 
 
@@ -565,6 +563,99 @@
 
 </div>
 
+
+<div class="ui tiny modal" id="modalExonerarGim">
+    <div class="header">
+    <h3>Exonerar mensualidad de Gimnasio a <a id="nombreGim"></a> <a id="apellidoGim"></a> que tiene como fecha límite <a id="fechaPagoGim"></a></h3>
+    </div>
+
+    <div class="content"> 
+    
+
+        <form class="ui form" id="frmExonerarGim">
+        <input type="hidden" id="idUsuarioGim">
+            <input type="hidden" id="idCobroGim" name="idCobroGim">
+        </form>
+    </div>
+
+
+    <div class="actions">
+
+    <button class="ui blue button" id="cerrarGimE">
+    <i class="close icon"></i> Cancelar
+    <button>
+
+    <button class="ui green button" id="guardarGimE">
+    <i class="save icon"></i> Exonerar
+    <button>
+
+    </div>
+
+
+</div>
+
+
+<div class="ui tiny modal" id="modalExonerarEscFubol">
+    <div class="header">
+    <h3>Exonerar mensualidad de Escuela de Fútbol a <a id="nombreEFutbol"></a> <a id="apellidoEFutbol"></a>
+    del: <a id="nivelEFutbol"></a> que tiene como fecha límite <a id="fechaPagoEFutbol"></a></h3>
+    </div>
+
+    <div class="content"> 
+    
+
+        <form class="ui form" id="frmExonerarEscuelaFutbol">
+        <input type="hidden" id="idUsuarioEFutbol" name="idUsuarioEFutbol">
+            <input type="hidden" id="idCobroEFutbol" name="idCobroEFutbol">
+        </form>
+    </div>
+
+
+    <div class="actions">
+
+    <button class="ui blue button" id="cerrarEFutbol">
+    <i class="close icon"></i> Cerrar
+    <button>
+
+    <button class="ui green button" id="guardarEFutbol">
+    <i class="save icon"></i> Exonerar
+    <button>
+
+    </div>
+</div>
+
+
+<div class="ui tiny modal" id="modalExonerarNa">
+    <div class="header">
+    <h3>Exonerar mensualidad de Escuela de Natación a <a id="nombreNa"></a> <a id="apellidoNa"></a> que tiene como fecha límite <a id="fechaPagoNa"></a></h3>
+    </div>
+
+    <div class="content"> 
+    
+
+        <form class="ui form" id="frmExonerarNa">
+        <input type="hidden" id="idUsuarioNa">
+            <input type="hidden" id="idCobroNa" name="idCobroNa">
+           
+        </form>
+    </div>
+
+
+    <div class="actions">
+
+    <button class="ui blue button" id="cerrarNat">
+    <i class="close icon"></i> Cerrar
+    <button>
+
+    <button class="ui green button" id="guardarNat">
+    <i class="save icon"></i> Exonerar
+    <button>
+
+    </div>
+
+
+</div>
+
 <script src="./res/tablas/tablaFondoComun.js"></script>
 <script src="./res/tablas/tablaPagosGim.js"></script>
 <script src="./res/js/modalPagos.js"></script>
@@ -651,6 +742,20 @@ var app = new Vue({
                 $("#modalDetalles").modal('hide');
                 this.detalles = [];
             },
+            exonerarGim(id,idUsuario,nombre,apellido,fecha) {
+                var idCobro = parseInt(id);
+                var idUsuario = parseInt(idUsuario);
+
+                $("#idUsuarioGim").val(idUsuario);
+                $("#idCobroGim").val(idCobro);
+                $("#nombreGim").text(nombre);
+                $("#apellidoGim").text(apellido);
+                $("#fechaPagoGim").text(fecha);
+                
+                $('#modalExonerarGim').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+            },
+
             cobrar(id,idUsuario,nombre,apellido,fecha) {
                 var idCobro = parseInt(id);
                 var idUsuario = parseInt(idUsuario);
@@ -677,6 +782,20 @@ var app = new Vue({
                 $('#modalCobroNa').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
             },
+
+            exonerarNa(id,idUsuario,nombre,apellido,fecha) {
+                var idCobroNa = parseInt(id);
+                var idUsuarioNa = parseInt(idUsuario);
+
+                $("#idUsuarioNa").val(idUsuarioNa);
+                $("#idCobroNa").val(idCobroNa);
+                $("#nombreNa").text(nombre);
+                $("#apellidoNa").text(apellido);
+                $("#fechaPagoNa").text(fecha);
+                
+                $('#modalExonerarNa').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+            },
             cobrarEscFutbol(id,idUsuario,nombre,apellido,fecha,nivel) {
                 var idCobroEF = parseInt(id);
                 var idUsuarioEF = parseInt(idUsuario);
@@ -689,6 +808,20 @@ var app = new Vue({
                 $("#nivelEF").text(nivel);
                 
                 $('#modalCobroEscFubol').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+            },
+            exonerarEscF(id,idUsuario,nombre,apellido,fecha,nivel) {
+                var idCobroEFu = parseInt(id);
+                var idUsuarioEFu = parseInt(idUsuario);
+
+                $("#idUsuarioEFutbol").val(idUsuarioEFu);
+                $("#idCobroEFutbol").val(idCobroEFu);
+                $("#nombreEFutbol").text(nombre);
+                $("#apellidoEFutbol").text(apellido);
+                $("#fechaPagoEFutbol").text(fecha);
+                $("#nivelEFutbol").text(nivel);
+                
+                $('#modalExonerarEscFubol').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
             }
         }
@@ -737,6 +870,13 @@ $("#cerrarGim").click(function(){
                 $('#modalCobroGim').modal('hide');
 });
 
+$("#cerrarGimE").click(function(){
+    
+    $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                .modal('show');
+                $('#modalExonerarGim').modal('hide');
+});
+
 $("#cerrarEF").click(function(){
     
     $("#cantidadEF").val('');
@@ -745,12 +885,28 @@ $("#cerrarEF").click(function(){
      $('#modalCobroEscFubol').modal('hide');
 });
 
+$("#cerrarEFutboñ").click(function(){
+    
+   // $("#cantidadEF").val('');
+    $('#modalDetallesEs').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                .modal('show');
+     $('#modalExonerarEscFubol').modal('hide');
+});
+
 $("#cerrarNa").click(function(){
     
     $("#cantidadN").val('');
     $('#modalDetallesNa').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                 .modal('show');
      $('#modalCobroNa').modal('hide');
+});
+
+$("#cerrarNat").click(function(){
+    
+    //$("#cantidadN").val('');
+    $('#modalDetallesNa').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                .modal('show');
+     $('#modalExonerarNa').modal('hide');
 });
 
 $("#cerrarEquiposCobro").click(function(){
@@ -874,6 +1030,68 @@ $("#guardarGim").click(function(){
 
 });
 
+$("#guardarGimE").click(function(){
+    var idU= $("#idUsuarioGim").val();
+    var nombre = $("#nombreGim").text();
+    var apellido = $("#apellidoGim").text();
+
+    alertify.confirm("¿Desea exonerar la cuota del gimnasio a "+ nombre +" "+ apellido + "?",
+            function(){
+    const form = $('#frmExonerarGim');
+
+                const datosFormulario = new FormData(form[0]);
+         
+        
+            $.ajax({
+                enctype: 'multipart/form-data',
+                contentType: false,
+                processData: false,
+                cache: false,
+                type: 'POST',
+                url: '?1=GimnasioController&2=exonerar',
+                data: datosFormulario,
+                success: function(r) {
+                    if(r == 1) {
+                        $("#modalCobroGim").modal("hide");
+                        swal({
+                            title: 'Listo',
+                            text: 'Cuota exonerada con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            $("#modalExonerarGim").modal("hide");
+                            //$("#cantidadG").val('');
+                            app.detalles=[];
+                            $('#modalDetalles').modal('hide');
+
+                            alertify.confirm("¿Volver a talonario de pago?",
+                        function(){
+                            
+                            $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+                            app.cargarDetalles(idU);
+                        
+                            
+                        },
+                        function(){
+                            $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+                            alertify.error('Cancelado');
+                            
+                        });
+                        }); 
+                    } 
+                }
+            });
+        },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            }); 
+
+});
 
 $("#guardarEF").click(function(){
     var idUs= $("#idUsuarioEF").val();
@@ -938,6 +1156,69 @@ $("#guardarEF").click(function(){
 
 });
 
+$("#guardarEFutbol").click(function(){
+    var idUs= $("#idUsuarioEFutbol").val();
+    var nombre = $("#nombreEFutbol").text();
+    var apellido = $("#apellidoEFutbol").text();
+
+    alertify.confirm("¿Desea exonerar la cuota de la mensualidad de la escuela de fútbol a "+ nombre +" "+ apellido + "?",
+            function(){
+    const form = $('#frmExonerarEscuelaFutbol');
+
+                const datosFormulario = new FormData(form[0]);
+         
+        
+            $.ajax({
+                enctype: 'multipart/form-data',
+                contentType: false,
+                processData: false,
+                cache: false,
+                type: 'POST',
+                url: '?1=EscFutbolController&2=exonerar',
+                data: datosFormulario,
+                success: function(r) {
+                    if(r == 1) {
+                        $("#modalExonerarEscFubol").modal("hide");
+                        swal({
+                            title: 'Listo',
+                            text: 'Mensualidad exonerada con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            $("#modalExonerarEscFubol").modal("hide");
+                           // $("#cantidadEF").val('');
+                            app.detalles=[];
+                            $('#modalDetallesEs').modal('hide');
+
+                            alertify.confirm("¿Volver al talonario de pagos?",
+                        function(){
+                            
+                            $('#modalDetallesEs').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+                            app.cargarDetallesEscF(idUs);
+                        
+                            
+                        },
+                        function(){
+                            $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+                            alertify.error('Cancelado');
+                            
+                        });
+                        }); 
+                    } 
+                }
+            });
+        },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            }); 
+
+});
+
 $("#guardarNa").click(function(){
     var idUsu= $("#idUsuarioN").val();
     var nombre = $("#nombreN").text();
@@ -975,6 +1256,70 @@ $("#guardarNa").click(function(){
                             $('#modalDetallesNa').modal('hide');
 
                             alertify.confirm("¿Realizar otro cobro de mensualidad?",
+                        function(){
+                            
+                            $('#modalDetallesNa').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+                            app.cargarDetallesNa(idUsu);
+                        
+                            
+                        },
+                        function(){
+                            $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+                            alertify.error('Cancelado');
+                            
+                        });
+                        }); 
+                    } 
+                }
+            });
+        },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            }); 
+
+});
+
+
+$("#guardarNat").click(function(){
+    var idUsu= $("#idUsuarioNa").val();
+    var nombre = $("#nombreNa").text();
+    var apellido = $("#apellidoNa").text();
+
+    alertify.confirm("¿Desea exonerar la cuota de la mensualidad de la escuela de natación a "+ nombre +" "+ apellido + "?",
+            function(){
+    const form = $('#frmExonerarNa');
+
+                const datosFormulario = new FormData(form[0]);
+         
+        
+            $.ajax({
+                enctype: 'multipart/form-data',
+                contentType: false,
+                processData: false,
+                cache: false,
+                type: 'POST',
+                url: '?1=NatacionController&2=exonerar',
+                data: datosFormulario,
+                success: function(r) {
+                    if(r == 1) {
+                        $("#modalExonerarNa").modal("hide");
+                        swal({
+                            title: 'Listo',
+                            text: 'Mensualidad exonerada con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            $("#modalExonerarNa").modal("hide");
+                            //$("#cantidadN").val('');
+                            app.detalles=[];
+                            $('#modalDetallesNa').modal('hide');
+
+                            alertify.confirm("¿Volver al talonario de pagos?",
                         function(){
                             
                             $('#modalDetallesNa').modal('setting', 'autofocus', false).modal('setting', 'closable', false)

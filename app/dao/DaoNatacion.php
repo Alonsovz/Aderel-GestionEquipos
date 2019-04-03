@@ -341,4 +341,24 @@ class DaoNatacion extends DaoBase {
 
     }
 
+
+    public function exonerar()
+    {
+
+        $_query="update pagoNatacion set estado=3 where id=".$this->objeto->getIdPago();
+       
+
+        $resultado = $this->con->ejecutar($_query);
+        
+        if($resultado){
+            return 1;
+
+        }else{
+            return 0;
+        }
+        
+        
+
+    }
+
 }   

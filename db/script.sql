@@ -46,6 +46,28 @@ anio varchar(10),
 idEliminado int
 );
 
+create table tipoCaja(
+idTipo int primary key unique auto_increment,
+nombre varchar(40),
+monto double
+);
+
+create table cajaChica(
+id int primary key unique auto_increment,
+fecha date,
+cantidad double,
+recibo varchar(500),
+concepto varchar(500),
+recibido varchar(40),
+idTipo int,
+mes varchar(10),
+anio varchar(10),
+idEliminado int
+);
+
+
+
+
 create table remanentes(
 idRemanente int primary key unique auto_increment,
 saldoAnterior double,
@@ -130,7 +152,6 @@ idInscripcion int,
 idTorneo int,
 idGenero int,
 idFondo int,
-pago int,
 idEliminado int
 );
 
@@ -156,7 +177,8 @@ idEquipo int,
 idJugador int,
 idTorneo int,
 estado int,
-pago int
+pago int,
+fechaInscripcion date
 );
 
 
@@ -251,6 +273,8 @@ alter table partidos add constraint fk_partidos_jornadas foreign key (jornadas_i
 
 alter table jornadas add constraint fk_jornadas_torneos foreign key (idTorneo) references torneos(idTorneo);
 
+alter table cajaChica add constraint fk_cajaChica_tipoCaja foreign key (idTipo) references tipoCaja(idTipo);
+
 
 alter table pagoGimnasio add constraint fk_pagoGimnasio_gimnasio foreign key (idUsuario) references gimnasio(idUsuario);
 
@@ -307,8 +331,8 @@ insert into torneos values(null,'No se ha inscrito en torneo',0,0,0,1,2,1);
 
 insert into jugadores values(null,'FF000001','nada','nada','nada','nada','1999-02-12','',1,1,1);
 
-insert into equipos values (null, 'Sin Equipo','No definido','No definido','','',1,1,1,1,1,1,1);
-insert into equipos values (null, 'Sin Equipo','No definido','No definido','','',1,1,2,2,1,1,1);
+insert into equipos values (null, 'Sin Equipo','No definido','No definido','','',1,1,1,1,1,1);
+insert into equipos values (null, 'Sin Equipo','No definido','No definido','','',1,1,2,2,1,1);
 
 insert into gimnasio values(null,'GY000002','','','','2019-02-02','1','2019-02-01','2019-03-01',1,1);
 
@@ -324,6 +348,9 @@ insert into nivelEscuela values(null,'5to nivel','Ramiro Villalta','Martes y Jue
 insert into nivelEscuela values(null,'6to nivel','Jorge Cardoza','Martes y Jueves','5:00 pm a 6:00 pm',16,17,1);
 
 insert into escuelaFut values(null,'','','','','1999-02-01','','','','',curdate(),curdate(),1,1,1);
+
+insert into tipoCaja values(null,'Caja General',200);
+insert into tipoCaja values(null,'Caja Aderel',200);
 
 -- ===========================================================================
 -- Procedimientos Usuarios
@@ -559,5 +586,10 @@ begin
 end	
 $$
 
-select * from  equipos where idEliminado=1 and pago=2
+select * from equipos
+
+select *,format(cantidad,2) as cantidad, DATE_FORMAT(fecha, '%d/%m/%Y') as fecha  from cajaChica
+        where  idEliminado=1 and idTipo=1
+
+       
        

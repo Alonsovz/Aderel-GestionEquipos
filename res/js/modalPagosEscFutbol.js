@@ -28,17 +28,25 @@ Vue.component('modal-pagosfutbol', {
                         <tr v-for="detalle in detalles" :codigo-equipo="detalle.idUsuario">     
                         <td>{{detalle.nombre}} {{detalle.apellido}}</td>         
                         <td>{{detalle.fechaP}}</td>
-                        <td v-if="detalle.estado == '1'" style="background-color: #FA5858;">
+                        <td v-if="detalle.estado == '1'" style="background-color: #F7BE81;">
                                 Pendiente de Pago
                             </td>
                         <td v-else-if="detalle.estado == '2'" style="background-color: #58FAAC;">
                             Pagado
                         </td>
 
+                        <td v-else-if="detalle.estado == '3'" style="background-color: #819FF7;">
+                            Cuota exonerada
+                        </td>
+
                                 <td v-if="detalle.estado == '1'">
                                 <button @click="$parent.cobrarEscFutbol(detalle.id, detalle.idUsuario, detalle.nombre, detalle.apellido, detalle.fechaP, detalle.nivel)"" type="button" class="ui blue button">
                                     <i class="dollar icon"></i>
                                     Cobrar
+                                </button>
+                                <button @click="$parent.exonerarEscF(detalle.id, detalle.idUsuario, detalle.nombre, detalle.apellido, detalle.fechaP,detalle.nivel)" type="button" class="ui red button">
+                                    <i class="close icon"></i>
+                                    Exonerar
                                 </button>
                                 </td>
                                 <td v-if="detalle.estado == '2'">

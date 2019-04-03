@@ -8,6 +8,12 @@ class EgresosController extends ControladorBase {
         require_once './app/view/Egresos/Egresos.php';
     }
 
+    public static function convertir()
+    {
+        //self::loadMain();
+        require_once './app/view/Egresos/ajax.php';
+    }
+
     public static function cajaChicaGeneral()
     {
         self::loadMain();

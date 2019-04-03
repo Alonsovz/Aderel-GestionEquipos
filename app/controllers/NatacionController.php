@@ -186,6 +186,21 @@ class NatacionController extends ControladorBase {
         echo $daoI->guardarOtro();
 
     }
+
+
+    public function exonerar(){
+        $id = $_REQUEST["idCobroNa"];
+        //$cantidad = $_REQUEST["cantidadN"];
+
+        $dao = new DaoNatacion();
+
+        $dao->objeto->setIdPago($id);
+
+        echo $dao->exonerar();
+
+    
+
+    }
  
 
 }
