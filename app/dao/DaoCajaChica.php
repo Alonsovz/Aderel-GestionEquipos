@@ -83,6 +83,50 @@ class DaoCajaChica extends DaoBase {
         }
     }
 
+
+    public function gestionCajaAderel() {
+        $_query = "update tipoCaja set monto = '".$this->objeto->getCantidad()."' where idTipo=2;" ;
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function gestionCajaGeneral() {
+        $_query = "update tipoCaja set monto = '".$this->objeto->getCantidad()."' where idTipo=1;" ;
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    public function nuevoMontoG() {
+     //   $resta= $this->objeto->getCantidad();
+        $_query = "update tipoCaja set montoActual = montoActual - '".$this->objeto->getCantidad()."' where idTipo=1;" ;
+
+        $resultado = $this->con->ejecutar($_query);
+
+        
+    }
+
+    public function nuevoMontoA() {
+        //   $resta= $this->objeto->getCantidad();
+           $_query = "update tipoCaja set montoActual = montoActual - '".$this->objeto->getCantidad()."' where idTipo=2;" ;
+   
+           $resultado = $this->con->ejecutar($_query);
+   
+           
+       }
+
     public function registrarAderel() {
         $_query = "insert into cajaChica values(null,curdate(),'".$this->objeto->getCantidad()."',
         '".$this->objeto->getCantidadLetras()."','".$this->objeto->getConcepto()."','".$this->objeto->getRecibido()."',2,
@@ -147,6 +191,70 @@ class DaoCajaChica extends DaoBase {
         $json = json_encode($resultado->fetch_assoc());
 
         return $json;
+    }
+
+    public function montoEnCajaG() {
+        $_query = "select *, format(monto,2) as monto from tipoCaja where idTipo=1";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $mon = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+            $mon = $fila['monto'];
+        }
+
+        //$json = substr($json,0, strlen($json) - 1);
+
+        return $mon;
+    }
+
+    public function montoEnCajaActualG() {
+        $_query = "select *, format(montoActual,2) as montoActual from tipoCaja where idTipo=1";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $mon = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+            $mon = $fila['montoActual'];
+        }
+
+        //$json = substr($json,0, strlen($json) - 1);
+
+        return $mon;
+    }
+
+    public function montoEnCajaActualA() {
+        $_query = "select *, format(montoActual,2) as montoActual from tipoCaja where idTipo=2";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $mon = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+            $mon = $fila['montoActual'];
+        }
+
+        //$json = substr($json,0, strlen($json) - 1);
+
+        return $mon;
+    }
+
+    public function montoEnCajaA() {
+        $_query = "select *, format(monto,2) as monto from tipoCaja where idTipo=2";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $mon = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+            $mon = $fila['monto'];
+        }
+
+        //$json = substr($json,0, strlen($json) - 1);
+
+        return $mon;
     }
 
 

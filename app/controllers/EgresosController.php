@@ -17,12 +17,20 @@ class EgresosController extends ControladorBase {
     public static function cajaChicaGeneral()
     {
         self::loadMain();
+        $dao = new DaoCajaChica();
+        $monto = $dao->montoEnCajaG();
+
+        $montoActual = $dao->montoEnCajaActualG();
         require_once './app/view/Egresos/CajaChicaGeneral.php';
     }
 
     public static function cajaChicaAderel()
     {
         self::loadMain();
+        $dao = new DaoCajaChica();
+        $monto = $dao->montoEnCajaA();
+
+        $montoActual = $dao->montoEnCajaActualA();
         require_once './app/view/Egresos/CajaChicaAderel.php';
     }
 

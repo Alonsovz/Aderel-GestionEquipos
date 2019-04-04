@@ -26,14 +26,25 @@
 
 <div class="content" class="ui equal width form">
 
-<a style="font-size: 20px;">
-    <i class="dollar icon"></i> Monto actual de Caja: $200.00 
+<a style="font-size: 20px; color: green;">
+    <i class="dollar icon"></i> Monto maximo que acepta la caja: $ <?php echo $monto; ?>
     </a>
     <br>
+    <br>
+    <hr>
+    <br>
+    <a style="font-size: 20px; color:black;">
+    <i class="dollar icon"></i> Monto actual de la caja:  <?php if($montoActual < 10 ){ ?>
+                                                <a style="font-weight:bold; color:red; font-size: 20px;"> $ <?php echo $montoActual;
+                                                 }else{?> </a>
+                                                 <a style="font-weight:bold; color:blue; font-size: 20px;"> $ <?php echo $montoActual;
+                                                 }?> </a>
+    </a>
     
  <br>
+ <br>
 <div id="emitirNuevo">
-<form class="ui form" id="frmCaja">
+<form class="ui form" id="frmCaja" style="font-size: 17px;">
     <div class="field">
         <div class="fields">
             <div class="two wide field">
@@ -54,7 +65,7 @@
             <br>
             <div class="eight wide field">
                 <label><i class="dollar icon"></i> Recibí de Asociación deportiva y recreativa Lourdense la cantidad:</label>
-                <div id="cantidadLe" name="cantidadLe" style="font-size:22px;"></div>
+                <div id="cantidadLe" name="cantidadLe" style="font-size:17px;"></div>
             </div>
             <input type="hidden" id="cantidadLetras" name="cantidadLetras">
         </div>
@@ -97,11 +108,11 @@
 <div class="ui tiny modal" id="modalGestion">
 
 <div class="header">
-<i class="box icon"></i><i class="dollar icon"></i>Cantidad disponible para caja chica ADEREL actual: <a>30.00</a>
+<i class="box icon"></i><i class="dollar icon"></i>Cantidad disponible para caja chica general actual: $ <?php echo $monto; ?>
 </div>
 
 <div class="content">
-<form class="ui form" id="actualizarCaja">
+<form class="ui form" id="frmActualizarCaja">
     <div class="field">
         <div class="fields">
             <div class="sixteen wide field">
@@ -118,7 +129,7 @@
     Cancelar
 </button>
 
-<button class="ui blue button">
+<button class="ui blue button" id="actualizarCaja">
     Actualizar  
 </button>
 </div>
@@ -178,6 +189,7 @@ $(document).ready(function(){
     $("#valesEmitidos").hide();
     $("#btnNuevo").hide();
     $("#cantidad").mask("###0.00", {reverse: true});
+    $("#cantidadActualizar").mask("###0.00", {reverse: true});
 
 
 var f = new Date();
@@ -188,9 +200,13 @@ $("#fechaVista").val(fecha);
 
 $("#btnConvertir").click(function(){
    var cantidad = $("#cantidad").val();
-   var canti = $("#cantidadLe").load("app/view/Egresos/ajax.php",{ cantidad : cantidad });
-    
-    
+
+   if(cantidad==''){
+
+   }else{
+    var canti = $("#cantidadLe").load("app/view/Egresos/ajax.php",{ cantidad : cantidad });
+   }
+   
    });
 
    $("#concepto").keyup(function(){
@@ -229,7 +245,7 @@ $("#btnCancelarA").click(function(){
     $("#modalCajaAderel").modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
     $("#modalGestion").modal("hide");
-    
+    $("#cantidadActualizar").val('');
 });
 
 function limpiar(){
@@ -241,6 +257,19 @@ function limpiar(){
 }
 
 $("#btnGuardar").click(function(){
+    var dis = <?php echo $montoActual; ?>;
+    var can = $("#cantidad").val();
+    if(can > dis){
+        swal({
+        title: 'Error',
+        text: 'El monto solicitado excede la cantidad disponible en caja',
+        type: 'error',
+        showConfirmButton: true
+        });
+
+    }else{
+    alertify.confirm("¿Emitir vale de caja?",
+            function(){
     const form = $('#frmCaja');
 
                 const datosFormulario = new FormData(form[0]);
@@ -265,16 +294,69 @@ $("#btnGuardar").click(function(){
                                 timer: 1700
 
                         }).then((result) => {
-                            if (result.value) {
-                                location.href = '?';
-                            }
+
+                                location.href = '?1=EgresosController&2=cajaChicaGeneral';
+                            
                         }); 
-                        $('#dtCajaG').DataTable().ajax.reload();
-                      limpiar();
+                       
                     } 
                 }
             
         });
+
+    },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            });
+        }
+
+    });
+    
+
+
+    $("#actualizarCaja").click(function(){
+        alertify.confirm("¿Desea actualizar el monto que la caja aceptará?",
+            function(){
+    const form = $('#frmActualizarCaja');
+
+                const datosFormulario = new FormData(form[0]);
+         
+        
+            $.ajax({
+                enctype: 'multipart/form-data',
+                contentType: false,
+                processData: false,
+                cache: false,
+                type: 'POST',
+                url: '?1=CajaChicaController&2=gestionCajaGeneral',
+                data: datosFormulario,
+                success: function(r) {
+                    if(r == 1) {
+                     $('#modalGestion').modal('hide');
+                        swal({
+                            title: 'Listo',
+                            text: 'El monto disponible para la caja ha sido actualizado',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            location.href = '?1=EgresosController&2=cajaChicaGeneral';
+                        }); 
+                        
+                    } 
+                }
+            
+        });
+
+    },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            }); 
 
     });
     </script>

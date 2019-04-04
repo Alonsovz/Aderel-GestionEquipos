@@ -49,8 +49,11 @@ idEliminado int
 create table tipoCaja(
 idTipo int primary key unique auto_increment,
 nombre varchar(40),
-monto double
+monto double,
+montoActual double
 );
+
+
 
 create table cajaChica(
 id int primary key unique auto_increment,
@@ -354,8 +357,8 @@ insert into nivelEscuela values(null,'6to nivel','Jorge Cardoza','Martes y Jueve
 
 insert into escuelaFut values(null,'','','','','1999-02-01','','','','',curdate(),curdate(),1,1,1);
 
-insert into tipoCaja values(null,'Caja General',200);
-insert into tipoCaja values(null,'Caja Aderel',200);
+insert into tipoCaja values(null,'Caja General',200,200);
+insert into tipoCaja values(null,'Caja Aderel',200,200);
 
 -- ===========================================================================
 -- Procedimientos Usuarios
@@ -593,7 +596,7 @@ $$
 
 
 
-select * from torneos
+select * from cajaChica where idTipo=1
 
        
        

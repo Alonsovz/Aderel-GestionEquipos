@@ -45,8 +45,8 @@
    $miles = floor($n / 1000);
    $units = $n % 1000;
    $r = "";
-   if ($miles == 1) $r .= "Mil" ;
-   else if ($miles > 1) $r .= tresnumeros($miles, false) . "Mil" ;
+   if ($miles == 1) $r .= "Mil " ;
+   else if ($miles > 1) $r .= tresnumeros($miles, false) . "Mil " ;
    if ($units > 0) $r .= tresnumeros($units, $last);
    return $r;
    }

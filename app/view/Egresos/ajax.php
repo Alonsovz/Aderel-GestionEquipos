@@ -1,7 +1,7 @@
 <?php
    
    include("funcion.php");
-   echo $pagado =NumeroLetra($_POST['cantidad']);
+   echo $pagado =ucwords (NumeroLetra($_POST['cantidad']));
    
    ?>
    

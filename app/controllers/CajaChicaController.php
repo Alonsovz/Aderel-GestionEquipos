@@ -46,6 +46,32 @@ class CajaChicaController extends ControladorBase {
 
 
         echo $dao->registrarGeneral();
+        echo $dao-> nuevoMontoG();
+    }
+
+
+    public function gestionCajaAderel()
+    {
+        $dao = new DaoCajaChica();
+
+        $cantidad = $_REQUEST["cantidadActualizar"];
+        
+        $dao->objeto->setCantidad($cantidad);
+
+
+        echo $dao->gestionCajaAderel();
+    }
+
+    public function gestionCajaGeneral()
+    {
+        $dao = new DaoCajaChica();
+
+        $cantidad = $_REQUEST["cantidadActualizar"];
+        
+        $dao->objeto->setCantidad($cantidad);
+
+
+        echo $dao->gestionCajaGeneral();
     }
 
     public function registrarAderel()
@@ -66,6 +92,7 @@ class CajaChicaController extends ControladorBase {
 
 
         echo $dao->registrarAderel();
+        echo $dao-> nuevoMontoA();
     }
 
 

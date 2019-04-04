@@ -7,6 +7,7 @@ class cajaChica extends ModeloBase{
     private $concepto;
     private $recibido;
     private $idVale;
+
     
     
 
