@@ -45,11 +45,23 @@
     <br>
     <div class="row tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
 
-    <a class="ui blue inverted segment" style="width: 49%; text-align:center; font-size: 25px; margin:auto;"
+    <a class="ui blue inverted segment" style="width: 32%; text-align:center; font-size: 25px;"
     href="?1=EgresosController&2=Egresos">
     <i class="money bill icon"></i>
     Egreso por cheque
-    </a>    
+    </a> 
+
+    <a class="ui yellow inverted segment" style="width: 32%; text-align:center; font-size: 25px;"
+    href="?1=EgresosController&2=reintegroCajaG">
+    <i class="dollar icon"></i>
+    Reintegro caja general
+    </a>
+
+    <a class="ui blue inverted segment" style="width: 32%; text-align:center; font-size: 25px;"
+    href="?1=EgresosController&2=reintegroCajaA">
+    <i class="dollar icon"></i>
+    Reintegro caja aderel
+    </a>   
     </div>
 
 </div>

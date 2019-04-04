@@ -127,6 +127,24 @@ class DaoCajaChica extends DaoBase {
            
        }
 
+       public function reintegroCajaA() {
+        //   $resta= $this->objeto->getCantidad();
+           $_query = "update tipoCaja set montoActual = montoActual + '".$this->objeto->getCantidad()."' where idTipo=2;" ;
+   
+           $resultado = $this->con->ejecutar($_query);
+   
+           
+       }
+
+       public function reintegroCajaG() {
+        //   $resta= $this->objeto->getCantidad();
+           $_query = "update tipoCaja set montoActual = montoActual + '".$this->objeto->getCantidad()."' where idTipo=1;" ;
+   
+           $resultado = $this->con->ejecutar($_query);
+   
+           
+       }
+
     public function registrarAderel() {
         $_query = "insert into cajaChica values(null,curdate(),'".$this->objeto->getCantidad()."',
         '".$this->objeto->getCantidadLetras()."','".$this->objeto->getConcepto()."','".$this->objeto->getRecibido()."',2,

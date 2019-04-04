@@ -24,6 +24,27 @@ class EgresosController extends ControladorBase {
         require_once './app/view/Egresos/CajaChicaGeneral.php';
     }
 
+    public static function reintegroCajaA()
+    {
+        self::loadMain();
+        $dao = new DaoCajaChica();
+        $monto = $dao->montoEnCajaA();
+
+        $montoActual = $dao->montoEnCajaActualA();
+        require_once './app/view/Egresos/reintegroCajaChicaA.php';
+    }
+
+    public static function reintegroCajaG()
+    {
+        self::loadMain();
+        $dao = new DaoCajaChica();
+        $monto = $dao->montoEnCajaG();
+
+        $montoActual = $dao->montoEnCajaActualG();
+        require_once './app/view/Egresos/reintegroCajaChicaG.php';
+    }
+
+
     public static function cajaChicaAderel()
     {
         self::loadMain();
@@ -84,6 +105,63 @@ class EgresosController extends ControladorBase {
         $dao->objeto->setAnio($anios);
 
 
+        echo $dao->registrar();
+    }
+
+
+    public function reintegroCajaGe()
+    {
+        $dao = new DaoEgresos();
+
+        $chequeP = $_REQUEST["cheque"];
+        //$conceptoEgresoP = $_REQUEST["conceptoEgreso"];
+        $cantidadP = $_REQUEST["cantidad"];
+        //$retencionP = $_REQUEST["retencionMonto"];
+       // $pagadoP = $_REQUEST["pagado"];
+        $meses = $_REQUEST["mes"];
+        $anios = $_REQUEST["anio"];
+        
+        
+        $dao->objeto->setChNo($chequeP);
+        $dao->objeto->setConceptoEgreso('Reintegro Caja Chica General');
+        $dao->objeto->setCantidad($cantidadP);
+        $dao->objeto->setRetencion(0);
+        $dao->objeto->setPagado($cantidadP);
+        $dao->objeto->setMes($meses);
+        $dao->objeto->setAnio($anios);
+
+        $daoC = new DaoCajaChica();
+        $daoC->objeto->setCantidad($cantidadP);
+
+        echo $daoC->reintegroCajaG();
+        echo $dao->registrar();
+    }
+
+    public function reintegroCajaAA()
+    {
+        $dao = new DaoEgresos();
+
+        $chequeP = $_REQUEST["cheque"];
+        //$conceptoEgresoP = $_REQUEST["conceptoEgreso"];
+        $cantidadP = $_REQUEST["cantidad"];
+        //$retencionP = $_REQUEST["retencionMonto"];
+       // $pagadoP = $_REQUEST["pagado"];
+        $meses = $_REQUEST["mes"];
+        $anios = $_REQUEST["anio"];
+        
+        
+        $dao->objeto->setChNo($chequeP);
+        $dao->objeto->setConceptoEgreso('Reintegro Caja Chica Aderel');
+        $dao->objeto->setCantidad($cantidadP);
+        $dao->objeto->setRetencion(0);
+        $dao->objeto->setPagado($cantidadP);
+        $dao->objeto->setMes($meses);
+        $dao->objeto->setAnio($anios);
+
+        $daoC = new DaoCajaChica();
+        $daoC->objeto->setCantidad($cantidadP);
+
+        echo $daoC->reintegroCajaA();
         echo $dao->registrar();
     }
 

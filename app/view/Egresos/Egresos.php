@@ -112,13 +112,18 @@ $(function() {
                             <div class="four wide field">
                                 <label><i class="money bill alternate icon"></i>Ch NO</label>
                                 <input type="text" name="cheque" placeholder="N° Cheque" id="cheque">
+                                <div class="field">
+                <a id="label-error" style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;" class="ui blue fluid large label">
+                    ChNo ya fue utilizado</a>
+                </div>
+                       
                                 <div class="ui red pointing label"  id="labelCheque"
                 style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
                 Completa este campo</div>
                             </div>
                             <div class="twelve wide field">
                                 <label><i class="edit icon"></i>Concepto de Egreso</label>
-                                <textarea rows="4" placeholder="Concepto de Egreso" id="conceptoEgreso" name="conceptoEgreso" class="requerido">
+                                <textarea rows="4" id="conceptoEgreso" name="conceptoEgreso" placeholder="Concepto de Egreso" >
                                 </textarea>
                                 <div class="ui red pointing label"  id="labelConcepto"
                 style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
@@ -126,12 +131,7 @@ $(function() {
                             </div>     
                     </div>
                 </div>  
-                <div class="field">
-                <a id="label-error" style="display: none; margin: 0; text-align:center; width:23%; font-size: 12px;" class="ui blue fluid large label">
-                    ChNo ya fue utilizado</a>
-                <div class="ui blue pointing label" style="display: none;">
-                </div>
-                </div>
+                
                 <div class="field">
                     <div class="fields">
                                 <div class="six wide field">
