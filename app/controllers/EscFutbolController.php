@@ -264,6 +264,17 @@ class EscFutbolController extends ControladorBase {
         echo $dao->cargarDatosPrimerN();
     }
 
+
+    public function cargarDatos() {
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoEscuela();
+
+        $dao->objeto->setId($id);
+
+        echo $dao->cargarDatos();
+    }
+
     public function editarPrimerN(){  
 
         $dao = new DaoEscuela();

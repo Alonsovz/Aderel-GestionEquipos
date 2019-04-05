@@ -652,6 +652,17 @@ class DaoEscuela extends DaoBase {
         return $_json;
     }
 
+    public function cargarDatos() {
+
+        $_query = "select * from nivelEscuela where idEscuela = ".$this->objeto->getId();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $json = json_encode($resultado->fetch_assoc());
+
+        return $json;
+    }
+
     public function editarPrimerN(){
         $_query = "update escuelaFut set nombre='".$this->objeto->getNombre()."', apellido='".$this->objeto->getApellido()."', 
         fechaNacimiento='".$this->objeto->getFechaNacimiento()."', foto = '".$this->objeto->getImg()."',

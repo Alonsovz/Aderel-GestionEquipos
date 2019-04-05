@@ -21,33 +21,38 @@
                     6to Nivel Escuela de futbol Aderel (16-17 años)<font color="#04B4AE" size="20px">.</font>
                     <br>
                     <div class="row tiles" style="display: flex !important; align-items: baseline; justify-content: space-between; width:65%">
-                    <button class="ui teal button">
+                    
+                    
+                    <button class="ui teal button" id="uno">
                     <a href="?1=EscFutbolController&2=primer" style="color:white;">
                         1er Nivel (6-7 años)
                     </a>
                     </button>
-
-                    <button class="ui blue button">
+                    <button class="ui blue button" id="2">
                     <a href="?1=EscFutbolController&2=segundo" style="color:white;">
                         2do Nivel (8-9 años)
                     </a>
                     </button>
-                    <button class="ui yellow button">
+                    <button class="ui yellow button" id="3">
                     <a href="?1=EscFutbolController&2=tercer" style="color:white;">
                         3er Nivel (10-11 años)
                     </a>
                     </button>
-                    <button class="ui red button">
+                    <button class="ui red button" id="4">
                     <a href="?1=EscFutbolController&2=cuarto" style="color:white;">
                         4to Nivel (12-13 años)
                     </a>
                     </button>
-                    <button class="ui olive button">
+                    <button class="ui olive button" id="5">
                     <a href="?1=EscFutbolController&2=quinto" style="color:white;">
                         5to Nivel (14-15 años)
                     </a>
                     </button>
-                    
+                    <button class="ui purple button" id="6">
+                    <a href="?1=EscFutbolController&2=sexto" style="color:black;">
+                        6to Nivel (16-17 años)
+                    </a>
+                    </button>
                     </div>
                 </div>
         </div>
@@ -58,6 +63,12 @@
                     <i class="plus icon"></i>
                     Agregar
                 </button>
+
+                <button class="ui right floated olive labeled icon button" id="btnGestion">
+                    <i class="cogs icon"></i>
+                    Gestion General
+                </button>
+
             </div>
         </div>
 
@@ -203,6 +214,59 @@
         Guardar
         </button>
     </div>
+
+
+
+    <div class="ui modal" id="modalgestion">
+    <div class="header">
+        <i class="futbol icon"></i>Gestión general del sexto nivel
+    </div>
+    <div class="content">
+        <div  class="ui equal width form">
+            <form id="frmGestion" class="ui form">
+                <div class="field">
+                        <div class="fields">
+                                <div class="four wide field">
+                                    <label><i class="male icon"></i>Profesor</label>
+                                    <input type="text" name="profesor"  id="profesor">
+                                </div>
+                        </div>
+                </div>
+
+                <div class="field">
+                        <div class="fields">
+                                <div class="eight wide field">
+                                    <label><i class="calendar icon"></i>Dias</label>
+                                    <input type="text" name="dias"  id="dias">
+                                </div>
+                                <div class="eight wide field">
+                                    <label><i class="time icon"></i>Horarios</label>
+                                    <input type="text" name="horario"  id="horario">
+                                </div>
+
+                                <div class="eight wide field">
+                                    <label><i class="futbol icon"></i>Cancha</label>
+                                    <input type="text" name="cancha"  id="cancha">
+                                </div>
+                                
+                                
+                        </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+    <div class="actions">
+        <button class="ui yellow button" id="cerrarGestion">
+        Cerrar
+        </button>
+        <button class="ui blue button" id="guardarGestion">
+        Guardar
+        </button>
+    </div>
+</div>
+
 </div>
 <script src="./res/tablas/tablaSextoN.js"></script>
 <script src="./res/js/modalRegistrar.js"></script>
@@ -333,13 +397,47 @@ var app = new Vue({
                         console.log(err);
                     });
             },
-           
+            cargarGestion(id) {
+                this.id = parseInt(id);
+
+                fetch("?1=EscFutbolController&2=cargarDatos&id=" + id)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(dat => {
+
+                        console.log(dat);
+
+                        // $('#frmEditar input[name="idDetalle"]').val(dat.codigoUsuari);
+                        $('#frmGestion input[name="profesor"]').val(dat.profesor);
+                        $('#frmGestion input[name="dias"]').val(dat.dias);
+                      $('#frmGestion input[name="horario"]').val(dat.hora);
+                      $('#frmGestion input[name="cancha"]').val(dat.cancha);
+                    //  $('#frmGestion input[name="fecha"]').val(dat.fecha);
+                        //$('#frmInscribir select[name="selectCategoria"]').dropdown('set selected', dat.idCategoria);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
             
 
         }
     });
 </script>
 <script>
+
+
+
+$("#btnGestion").click(function(){
+    $("#modalgestion").modal('setting', 'closable', false).modal('show');
+    app.cargarGestion(6);
+});
+
+$("#cerrarGestion").click(function(){
+    $("#modalgestion").modal('hide');
+});
+
 var reinscribirUsuario=(ele)=>{
   $('#modalInscribir').modal('setting', 'closable', false).modal('show');
   $('#idEliminar').val($(ele).attr("id"));
@@ -371,6 +469,9 @@ $(document).ready(function(){
     $('#frmEditar input[name="dui"]').mask("99999999-9");
     $('#frmEditar input[name="telefono"]').mask("9999-9999");
     $('#frmEditar input[name="error"]').css("display","none");
+    $("#6").removeClass("ui purple button");
+    $("#6").addClass("ui purple basic button");
+    
 });
 $('#btnModalRegistroJugador').click(function() {
 $('#modalAgregarJugador').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');

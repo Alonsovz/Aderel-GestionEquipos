@@ -22,13 +22,17 @@
                     2do Nivel Escuela de futbol Aderel (8-9 años)<font color="#04B4AE" size="20px">.</font>
                     <br>
                     <div class="row tiles" style="display: flex !important; align-items: baseline; justify-content: space-between; width:65%">
+                    
                     <button class="ui teal button">
                     <a href="?1=EscFutbolController&2=primer" style="color:white;">
                         1er Nivel (6-7 años)
                     </a>
                     </button>
-
-                   
+                    <button class="ui blue button" id="2">
+                    <a href="?1=EscFutbolController&2=segundo" style="color:black;">
+                        2do Nivel (8-9 años)
+                    </a>
+                    </button>
                     <button class="ui yellow button">
                     <a href="?1=EscFutbolController&2=tercer" style="color:white;">
                         3er Nivel (10-11 años)
@@ -58,6 +62,10 @@
                 <button class="ui right floated blue labeled icon button" id="btnModalRegistroJugador">
                     <i class="plus icon"></i>
                     Agregar
+                </button>
+                <button class="ui right floated red labeled icon button" id="btnGestion">
+                    <i class="cogs icon"></i>
+                    Gestion General
                 </button>
             </div>
         </div>
@@ -205,6 +213,58 @@
     </div>
 </div>
 
+<div class="ui modal" id="modalgestion">
+    <div class="header">
+        <i class="futbol icon"></i>Gestión general del segundo nivel
+    </div>
+    <div class="content">
+        <div  class="ui equal width form">
+            <form id="frmGestion" class="ui form">
+                <div class="field">
+                        <div class="fields">
+                                <div class="four wide field">
+                                    <label><i class="male icon"></i>Profesor</label>
+                                    <input type="text" name="profesor"  id="profesor">
+                                </div>
+                        </div>
+                </div>
+
+                <div class="field">
+                        <div class="fields">
+                                <div class="eight wide field">
+                                    <label><i class="calendar icon"></i>Dias</label>
+                                    <input type="text" name="dias"  id="dias">
+                                </div>
+                                <div class="eight wide field">
+                                    <label><i class="time icon"></i>Horarios</label>
+                                    <input type="text" name="horario"  id="horario">
+                                </div>
+
+                                <div class="eight wide field">
+                                    <label><i class="futbol icon"></i>Cancha</label>
+                                    <input type="text" name="cancha"  id="cancha">
+                                </div>
+                                
+                                
+                        </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+    <div class="actions">
+        <button class="ui yellow button" id="cerrarGestion">
+        Cerrar
+        </button>
+        <button class="ui blue button" id="guardarGestion">
+        Guardar
+        </button>
+    </div>
+</div>
+
+
+
 </div>
 <script src="./res/tablas/tablaSegundoN.js"></script>
 <script src="./res/js/modalRegistrar.js"></script>
@@ -335,7 +395,29 @@ var app = new Vue({
                         console.log(err);
                     });
             },
-           
+            cargarGestion(id) {
+                this.id = parseInt(id);
+
+                fetch("?1=EscFutbolController&2=cargarDatos&id=" + id)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(dat => {
+
+                        console.log(dat);
+
+                        // $('#frmEditar input[name="idDetalle"]').val(dat.codigoUsuari);
+                        $('#frmGestion input[name="profesor"]').val(dat.profesor);
+                        $('#frmGestion input[name="dias"]').val(dat.dias);
+                      $('#frmGestion input[name="horario"]').val(dat.hora);
+                      $('#frmGestion input[name="cancha"]').val(dat.cancha);
+                    //  $('#frmGestion input[name="fecha"]').val(dat.fecha);
+                        //$('#frmInscribir select[name="selectCategoria"]').dropdown('set selected', dat.idCategoria);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
             
 
         }
@@ -343,6 +425,15 @@ var app = new Vue({
 </script>
 
 <script>
+$("#btnGestion").click(function(){
+    $("#modalgestion").modal('setting', 'closable', false).modal('show');
+    app.cargarGestion(2);
+});
+
+$("#cerrarGestion").click(function(){
+    $("#modalgestion").modal('hide');
+});
+
 var eliminar=(ele)=>{
   $('#modalEliminar').modal('setting', 'closable', false).modal('show');
   $('#idEliminar').val($(ele).attr("id"));
@@ -374,6 +465,8 @@ $(document).ready(function(){
     $('#frmEditar input[name="dui"]').mask("99999999-9");
     $('#frmEditar input[name="telefono"]').mask("9999-9999");
     $('#frmEditar input[name="error"]').css("display","none");
+    $("#2").removeClass("ui blue button");
+    $("#2").addClass("ui blue basic button");
 });
 $('#btnModalRegistroJugador').click(function() {
 $('#modalAgregarJugador').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');

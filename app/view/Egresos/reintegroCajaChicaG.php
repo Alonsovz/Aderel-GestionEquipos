@@ -5,6 +5,7 @@ $anio= date('Y');
 <div class="ui  modal" id="reintegroCaja">
 <div class="header">
 <i class="box icon"></i><i class="dollar icon"></i>Reintegro para caja Chica General<br><br>
+<hr><br>
 <a style="font-size:20px; color:green;">Monto a mantener en caja: $ <?php echo $monto; ?></a>
 <br><br>
 <a style="font-size: 20px; color:black;">

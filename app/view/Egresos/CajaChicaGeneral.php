@@ -1,5 +1,5 @@
 
-
+<div id="app">
 <div class="ui fullscreen longer modal" id="modalCajaAderel">
 <div class="header">
     <br>
@@ -180,9 +180,150 @@
 
 </div>
 
+<div class="ui  modal" id="modalVerVale" >
+
+<div class="header">
+<i class="list icon"></i><i class="dolar icon"></i> Vale emitido
+</div>
+<div class="content" class="ui equal width form">
+    <form class="ui form" id="frmVerVale"> 
+        <div class="field">
+            <div class="fields">
+
+            <div class="three wide field">
+            <label><i class="calendar icon"></i>Fecha de emisión</label>
+            <input type="text" name="fecha"  id="fecha" readonly>
+            
+            </div>
+
+
+            <div class="three wide field">
+            <label><i class="dollar icon"></i>Cantidad</label>
+            <input type="text" name="cantidadV"  id="cantidadV" readonly>
+            
+            </div>
+
+            <div class="ten wide field">
+            <label><i class="dollar icon"></i>Recibido</label>
+            <input type="text" name="recibido" id="recibido" readonly>
+            
+            </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="fields">
+            <div class="eight wide field">
+            <label><i class="list icon"></i>Concepto</label>
+            <textarea rows="4" name="concepto" id="concepto" readonly></textarea>
+            </div>
+
+            <div class="eight wide field">
+            <label><i class="male icon"></i>Recibido por:</label>
+            <input type="text" name="recibidoPor"  id="recibidoPor" readonly>
+            
+            </div>
+            </div>
+        </div>
+       
+    </form>
+</div>
+    <div class="actions">
+        <button class="ui blue button" id="btnListo" >
+        Listo
+        </button>
+    </div>
+</div>
+
+</div>
+
 
 <script src="./res/tablas/tablaCajaGeneral.js"></script>
 <script>
+var app = new Vue({
+        el: "#app",
+        data: {
+            
+            campos_editarE: [
+                {
+                    label: 'Nombre del Equipo',
+                    name: 'nombre',
+                    type: 'text'
+                },
+                {
+                    label: 'Encargado del Equipo:',
+                    name: 'encargado',
+                    type: 'text'
+                },
+                {
+                    label: 'Teléfono Encargado:',
+                    name: 'telefonoE',
+                    type: 'text'
+                },
+                {
+                    label: 'Encargado Aux del Equipo:',
+                    name: 'encargadoAux',
+                    type: 'text'
+                },
+                {
+                    label: 'Teléfono Aux del Equipo:',
+                    name: 'telefonoAux',
+                    type: 'text'
+                },
+                {
+                    name: 'idDetalleE',
+                    type: 'hidden'
+                }
+
+            ],
+            camposFondoComun: [{
+                name: 'idEliminar',
+                type: 'hidden'
+            }],
+            campos_eliminarE: [{
+                name: 'idEliminar',
+                type: 'hidden'
+            }]
+        },
+        methods: {
+             
+
+            cargarDatos(id) {
+                this.id = parseInt(id);
+
+                fetch("?1=CajaChicaController&2=cargarDatosCajaA&id=" + id)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(dat => {
+
+                        console.log(dat);
+
+                        // $('#frmEditar input[name="idDetalle"]').val(dat.codigoUsuari);
+                        $('#frmVerVale input[name="recibido"]').val(dat.recibo);
+                        $('#frmVerVale input[name="cantidadV"]').val(dat.cantidad);
+                      $('#frmVerVale textarea[name="concepto"]').val(dat.concepto);
+                      $('#frmVerVale input[name="recibidoPor"]').val(dat.recibido);
+                      $('#frmVerVale input[name="fecha"]').val(dat.fecha);
+                        //$('#frmInscribir select[name="selectCategoria"]').dropdown('set selected', dat.idCategoria);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
+
+        }
+    });
+</script>
+<script>
+
+var ver=(ele)=>{
+     $('#modalVerVale').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+    app.cargarDatos($(ele).attr('id'));
+  }
+
+
 $(document).ready(function(){
     $("#modalCajaAderel").modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
@@ -246,6 +387,12 @@ $("#btnCancelarA").click(function(){
                             .modal('show');
     $("#modalGestion").modal("hide");
     $("#cantidadActualizar").val('');
+});
+
+$("#btnListo").click(function(){
+    $("#modalCajaAderel").modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+   $("#modalVerVale").modal("hide");
 });
 
 function limpiar(){

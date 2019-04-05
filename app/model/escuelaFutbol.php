@@ -13,10 +13,29 @@ class escuelaFutbol extends ModeloBase{
     private $idEscuela;
     private $img;
     private $idPago;
+    private $id;
    
 
     public function __construct() {
 
+    }
+
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
     
     public function getIdPago()

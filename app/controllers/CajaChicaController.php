@@ -125,5 +125,15 @@ class CajaChicaController extends ControladorBase {
     }
    
 
+    public function cargarDatosCajaA() {
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoCajaChica();
+
+        $dao->objeto->setIdVale($id);
+
+        echo $dao->cargarDatosCajaA();
+    }
+
     
  }

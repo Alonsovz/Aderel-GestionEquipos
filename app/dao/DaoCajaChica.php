@@ -199,10 +199,10 @@ class DaoCajaChica extends DaoBase {
         }
     }
 
-    public function cargarDatosCategoriaM() {
+    public function cargarDatosCajaA() {
 
-        $_query = "select * from categorias
-        where idGenero=2 and idCategoria = ".$this->objeto->getIdCategoria();
+        $_query = "select *,format(cantidad,2) as cantidad,DATE_FORMAT(fecha, '%d/%m/%Y') as fecha
+         from cajaChica where id = ".$this->objeto->getIdVale();
 
         $resultado = $this->con->ejecutar($_query);
 
