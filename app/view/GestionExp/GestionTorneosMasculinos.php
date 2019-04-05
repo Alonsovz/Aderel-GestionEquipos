@@ -119,6 +119,89 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
 
 </div>
 
+<div class="ui modal" id="modalResultados">
+
+<div class="header">
+Resultado del partido
+</div>
+<div class="content">
+
+<div class="ui equal width form">
+    <form id="frmResultado">
+    <div class="field">
+        <div class="fields">
+        <div class="three wide field">
+            <label><center>Vuelta</center></label>
+                        <input type="text" id="vuelta" name="vuelta" readonly>
+            </div>
+        
+
+        <div class="three wide field">
+            <label><center>Jornada</center></label>
+                        <input type="text" id="jornada" name="jornada" readonly>
+       </div>
+        
+
+        <div class="three wide field">
+            <label><center><i class="calendar icon"></i>Fecha</center></label>
+                        <input type="text" id="fecha" name="fecha" >
+            
+        </div>
+
+        <div class="three wide field">
+            <label><center><i class="time icon"></i>Hora</center></label>
+                        <input type="text" id="hora" name="hora" >
+            
+        </div>
+
+    </div>
+    </div>
+    <br>
+    <div class="ui divider"></div>
+    <br>
+        <div class="field">
+            <div class="fields">
+                <div class="five wide field">
+                <label><center><i class="users icon"></i>Equipo</center></label>
+                    <input type="text" id="equipo1" name="equipo1">
+                </div>
+
+                <div class="two wide field">
+                <label><center><i class="futbol icon"></i>Goles</center></label>
+                    <input type="number" id="goles1" name="goles1">
+                </div>
+
+                <div class="one wide field">
+                <label><br></label>
+                    <center><a style="font-size:22px; color:black;">vs</a></center>
+                </div>
+
+                <div class="two wide field">
+                <label><center><i class="futbol icon"></i>Goles</center></label>
+                    <input type="number" id="goles2" name="goles2">
+                </div>
+
+                <div class="five wide field">
+                <label><center><i class="users icon"></i>Equipo</center></label>
+                    <input type="text" id="equipo2" name="equipo2">
+                </div>
+
+                
+            </div>
+        </div>
+</form>
+</div>
+
+</div>
+
+<div class="actions">
+<button class="ui yellow button" id="cerrarRes">
+Cancelar
+</button>
+</div>
+
+</div>
+
 
 <script src="./res/tablas/tablaTorneosM.js"></script>
 <script src="./res/js/modalRegistrar.js"></script>
@@ -249,6 +332,18 @@ var appE = new Vue({
                         console.log(err);
                     });
             },
+            resultados(equipo1,equipo2,vuelta,jornada,hora,fecha){
+                $("#equipo1").val(equipo1);
+                $("#equipo2").val(equipo2);
+                $("#vuelta").val(vuelta);
+                $("#jornada").val(jornada);
+                $("#fecha").val(hora);
+                $("#hora").val(fecha);
+
+                $('#modalResultados').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+
+            }
 
             
             
@@ -259,6 +354,12 @@ var appE = new Vue({
     });
 </script>
 <script>
+$("#cerrarRes").click(function(){
+    $('#modalDetallesJornadasM').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+    $('#modalResultados').modal('hide');
+});
+
 var eliminarTorneo=(ele)=>{
   $('#modalEliminarT').modal('setting', 'closable', false).modal('show');
   $('#idEliminar').val($(ele).attr("id"));

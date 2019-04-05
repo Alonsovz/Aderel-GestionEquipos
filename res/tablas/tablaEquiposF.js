@@ -30,9 +30,6 @@ $(function() {
                     "data": "Categoria"
                 },
                 {
-                    "data": "estado"
-                },
-                {
                     "data": "torneo"
                 },
                 {

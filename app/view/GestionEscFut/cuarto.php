@@ -224,6 +224,7 @@
                 <div class="field">
                         <div class="fields">
                                 <div class="four wide field">
+                                <input type="hidden" id="id" name="id" value="4">
                                     <label><i class="male icon"></i>Profesor</label>
                                     <input type="text" name="profesor"  id="profesor">
                                 </div>
@@ -234,16 +235,35 @@
                         <div class="fields">
                                 <div class="eight wide field">
                                     <label><i class="calendar icon"></i>Dias</label>
-                                    <input type="text" name="dias"  id="dias">
+                                    <select name="dias"  id="dias" class="ui dropdown">
+                                    <option value="Lunes y Martes">Lunes y Martes</option>
+                                    <option value="Lunes y Miercoles">Lunes y Miércoles</option>
+                                    <option value="Lunes y Jueves">Lunes y Jueves</option>
+                                    <option value="Lunes y Viernes">Lunes y Viernes</option>
+                                    <option value="Martes y Miércoles">Martes y Miércoles</option>
+                                    <option value="Martes y Jueves">Martes y Jueves</option>
+                                    <option value="Martes y Viernes">Martes y Viernes</option>
+                                    <option value="Miércoles y Jueves">Miércoles y Jueves</option>
+                                    <option value="Miércoles y Viernes">Miércoles y Viernes</option>
+                                    <option value="Jueves y Viernes">Jueves y Viernes</option>
+                                    </select>
                                 </div>
                                 <div class="eight wide field">
                                     <label><i class="time icon"></i>Horarios</label>
-                                    <input type="text" name="horario"  id="horario">
+                                    <select  name="horario"  id="horario" class="ui dropdown">
+                                    <option value="4:00 pm a 5:00 pm">4:00 pm a 5:00 pm</option>
+                                    <option value="5:00 pm a 6:00 pm">5:00 pm a 6:00 pm</option>
+                                    <option value="6:00 pm a 7:00 pm">6:00 pm a 7:00 pm</option>
+                                    <option value="7:00 pm a 8:00 pm">7:00 pm a 8:00 pm</option>
+                                    </select>
                                 </div>
 
                                 <div class="eight wide field">
                                     <label><i class="futbol icon"></i>Cancha</label>
-                                    <input type="text" name="cancha"  id="cancha">
+                                    <select  name="cancha"  id="cancha" class="ui dropdown">
+                                    <option value="1">Cancha 1</option>
+                                    <option value="2">Cancha 2</option>
+                                    </select>
                                 </div>
                                 
                                 
@@ -407,9 +427,9 @@ var app = new Vue({
 
                         // $('#frmEditar input[name="idDetalle"]').val(dat.codigoUsuari);
                         $('#frmGestion input[name="profesor"]').val(dat.profesor);
-                        $('#frmGestion input[name="dias"]').val(dat.dias);
-                      $('#frmGestion input[name="horario"]').val(dat.hora);
-                      $('#frmGestion input[name="cancha"]').val(dat.cancha);
+                        $('#frmGestion select[name="dias"]').dropdown('set selected', dat.dias);
+                        $('#frmGestion select[name="horario"]').dropdown('set selected', dat.hora);
+                      $('#frmGestion select[name="cancha"]').dropdown('set selected', dat.cancha);
                     //  $('#frmGestion input[name="fecha"]').val(dat.fecha);
                         //$('#frmInscribir select[name="selectCategoria"]').dropdown('set selected', dat.idCategoria);
                     })
@@ -548,6 +568,49 @@ $("#btnGuardarJugador").click(function(){
                     } 
                 }
             });
+
+});
+
+$("#guardarGestion").click(function(){
+
+alertify.confirm("¿Guardar cambios?",
+        function(){
+const form = $('#frmGestion');
+
+const datosFormulario = new FormData(form[0]);
+
+
+    $.ajax({
+    enctype: 'multipart/form-data',
+    contentType: false,
+    processData: false,
+    cache: false,
+    type: 'POST',
+    url: '?1=EscFutbolController&2=gestionGeneral',
+    data: datosFormulario,
+    success: function(r) {
+        if(r == 1) {
+            $('#modalgestion').modal('hide');
+            swal({
+                title: 'Listo',
+                text: 'Cambios guardados con éxito',
+                type: 'success',
+                showConfirmButton: false,
+                    timer: 1700
+
+            }).then((result) => {
+                
+            }); 
+        
+        } 
+    }
+    });
+},
+        function(){
+            //$("#modalCalendar").modal('toggle');
+            alertify.error('Cancelado');
+            
+        });
 
 });
 

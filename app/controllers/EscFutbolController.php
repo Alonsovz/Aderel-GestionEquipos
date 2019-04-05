@@ -294,6 +294,24 @@ class EscFutbolController extends ControladorBase {
 
     }
 
+
+    public function gestionGeneral(){  
+
+        $dao = new DaoEscuela();
+
+        $dao->objeto->setProfesor($_REQUEST["profesor"]);
+        $dao->objeto->setDias($_REQUEST["dias"]);
+        $dao->objeto->setHora($_REQUEST["horario"]);
+        $dao->objeto->setCancha($_REQUEST["cancha"]);
+        $dao->objeto->setId($_REQUEST["id"]);
+      
+
+        echo $dao->gestionGeneral();
+
+    }
+
+
+
     public function eliminarPrimerN() {
         $datos = $_REQUEST["id"];
 

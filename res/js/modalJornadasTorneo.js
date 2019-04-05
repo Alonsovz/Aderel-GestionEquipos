@@ -21,7 +21,6 @@ Vue.component('modal-jornadas', {
                         <th>Jornada</th>
                         <th>Enfrentamiento</th>
                         <th>N° Partido</th>
-                        <th>N° Cancha</th>
                         <th>Fecha</th>
                         <th>Hora</th>
                         <th>Acciones</th>
@@ -34,14 +33,15 @@ Vue.component('modal-jornadas', {
                         <td>{{detalle.jornada}}</td> 
                         <td>{{detalle.equipo1}} vs {{detalle.equipo2}}</td>         
                         <td>{{detalle.partido}}</td>
-                        <td>{{detalle.cancha}}</td>
                         <td>{{detalle.fecha}}</td>
                         <td>{{detalle.hora}}</td>
                         
                         <td>
-                                <button @click="" type="button" class="ui blue button">
-                                    <i class="pencil icon"></i> Resultados
-                                </button>
+                         <button @click="$parent.resultados(detalle.equipo1, detalle.equipo2, detalle.vuelta, detalle.jornada,
+                            detalle.hora, detalle.fecha)" 
+                         type="button" class="ui blue button">
+                              <i class="pencil icon"></i> Resultados
+                        </button>
                         </td>
                                 </tr>
                     </tbody>

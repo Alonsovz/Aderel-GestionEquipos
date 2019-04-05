@@ -14,12 +14,82 @@ class escuelaFutbol extends ModeloBase{
     private $img;
     private $idPago;
     private $id;
-   
+   private $profesor;
+   private $dias;
+   private $hora;
+   private $cancha;
 
     public function __construct() {
 
     }
 
+    public function getCancha()
+    {
+        return $this->cancha;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setCancha($cancha)
+    {
+        $this->cancha = $cancha;
+
+        return $this;
+    }
+
+    public function getHora()
+    {
+        return $this->hora;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setHora($hora)
+    {
+        $this->hora = $hora;
+
+        return $this;
+    }
+
+    public function getDias()
+    {
+        return $this->dias;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setDias($dias)
+    {
+        $this->dias = $dias;
+
+        return $this;
+    }
+
+    public function getProfesor()
+    {
+        return $this->profesor;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setProfesor($profesor)
+    {
+        $this->profesor = $profesor;
+
+        return $this;
+    }
 
     public function getId()
     {

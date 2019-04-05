@@ -75,8 +75,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
                                         <th style="background-color: #86B404; color:white;">Tel. Encargado</th>
                                         <th style="background-color: #86B404; color:white;">Encargado Aux</th>
                                         <th style="background-color: #86B404; color:white;">Tel. Aux</th>
-                                        <th style="background-color: #86B404; color:white;">Categoría del Equipo</th>
-                                        <th style="background-color: #86B404; color:white;">Estado en torneo</th>
+                                        <th style="background-color: #86B404; color:white;">Categoría</th>
                                         <th style="background-color: #86B404; color:white;">Torneo </th>
                                         <th style="background-color: #86B404; color:white;">Acciones</th>
                                     </tr>

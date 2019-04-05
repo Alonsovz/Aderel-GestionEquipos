@@ -692,6 +692,8 @@ class DaoEscuela extends DaoBase {
     }
 
 
+
+
     public function moverPrimerN() {
         
         $_query = "update escuelaFut set idEscuela=2 where idUsuario = ".$this->objeto->getIdJugador();
@@ -703,6 +705,21 @@ class DaoEscuela extends DaoBase {
         } else {
             return 0;
         }
+    }
+
+    public function gestionGeneral(){
+
+        $_query = "update nivelEscuela set profesor= '".$this->objeto->getProfesor()."', dias= '".$this->objeto->getDias()."', hora='".$this->objeto->getHora()."', cancha = '".$this->objeto->getCancha()."'
+         where idEscuela =".$this->objeto->getId();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+
     }
 
     public function ficha() {
