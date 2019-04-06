@@ -1,6 +1,6 @@
 
 
-<br><div id="appT">
+<br><div id="appE">
 
 <modal-registrar id_form="frmRegistrarT" id="modalRegistrarT" url="?1=TorneosController&2=registrarF" titulo="Registrar Torneo"
 :campos="campos_registroT" tamanio='tiny' ></modal-registrar>
@@ -90,7 +90,7 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
                 </div>
 
      
-</div>
+
 
 
 <div class="ui tiny modal" id="sorteos">
@@ -120,6 +120,207 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
 
 </div>
 
+<div class="ui  fullscreen longer modal" id="modalResultados"  style="overflow: scroll;">
+
+<div class="header">
+<div class="ui equal width form">
+<form id="">
+<div class="field">
+        <div class="fields">
+        <div class="seven wide field">
+        <h3><i class="cogs icon"></i> Datos generales del partido</h3>
+</div>
+
+        <div class="one wide field">
+            <label><center>Vuelta</center></label>
+                        <input type="text" id="vuelta" name="vuelta" readonly>
+            </div>
+        
+
+        <div class="one wide field">
+            <label><center>Jornada</center></label>
+                        <input type="text" id="jornada" name="jornada" readonly>
+       </div>
+        
+
+        <div class="three wide field">
+            <label><center><i class="calendar icon"></i>Fecha</center></label>
+                        <input type="date" id="fecha" name="fecha" >
+            
+        </div>
+
+        <div class="three wide field">
+            <label><center><i class="time icon"></i>Hora</center></label>
+                        <input type="time" id="hora" name="hora" >
+            
+        </div>
+
+    </div>
+    </div>
+</div>
+</div>
+<div class="scrolling content">
+
+<div class="ui equal width form">
+    <form id="frmResultado">
+
+    <h3><i class="futbol icon"></i> Marcador del partido</h3>
+    <br>
+        <div class="field">
+            <div class="fields">
+                <div class="five wide field">
+                <label><center><i class="users icon"></i>Equipo</center></label>
+                    <input type="text" id="equipo1" name="equipo1">
+                </div>
+
+                <div class="two wide field">
+                <label><center><i class="futbol icon"></i>Goles</center></label>
+                    <input type="number" id="goles1" name="goles1">
+                </div>
+
+                <div class="one wide field">
+                <label><br></label>
+                    <center><a style="font-size:22px; color:black;">vs</a></center>
+                </div>
+
+                <div class="two wide field">
+                <label><center><i class="futbol icon"></i>Goles</center></label>
+                    <input type="number" id="goles2" name="goles2">
+                </div>
+
+                <div class="five wide field">
+                <label><center><i class="users icon"></i>Equipo</center></label>
+                    <input type="text" id="equipo2" name="equipo2">
+                </div>
+
+                
+            </div>
+        </div>
+        </form><br>
+        <div class="ui divider"></div>
+        
+        <button class="ui blue button" id="btnGoleo"><i class="futbol icon"></i>Goleadores</button>
+        <button class="ui yellow button" id="btnAmonestados"><i class="thumbs down icon"></i>Amonestados</button>
+        
+        <div id="goles">
+        <div class="ui divider"></div>
+        <a style="font-size:22px; color:black;"><i class="futbol icon"></i>Goleadores del partido</h3></a>
+        <span style="float:right;">
+                    <button @click="agregarDetalle" class="ui pink circular icon button"><i class="plus icon"></i> Agregar</button>
+        </span>        <br><br><br>
+                <table class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                        <thead>
+                            <tr>
+                                <th style="background-color: #DF01A5; color:white;"><i class="male icon"></i>Goleadores</th>
+                                <th style="background-color: #DF01A5; color:white;"><i class="futbol icon"></i>Goles anotados</th>
+                                <th style="background-color: #DF01A5; color:white;"><i class="trash icon"></i>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(envio, index) in envios">
+                            <td>
+                            <select v-model="envio.goleadores" class="ui search selection dropdown" id="goleadores"
+                             name="goleadores">
+                               <option v-for="option in goleadoresOps" :value="option.idJugador">{{option.correlativo}}--
+                               {{option.nombre}} {{option.apellido}}
+                               </option>
+                             </select>
+                            </td>
+                            <td>  
+                            <input class="requerido" v-model="envio.goles" type="number" placeholder="Goles anotados ">
+                            </td>
+                            <td>
+                            <center>
+                              <button type="button" @click="eliminarDetalle(index)" class="ui negative mini circular icon button"><i
+                                  class="times icon"></i></button>
+                                  </center>
+                            </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+        <span style="float:right;">
+        <button @click="" class="ui green circular icon button"><i class="check icon"></i> Guardar</button>
+        </span> 
+        </div>
+
+        <div id="amonestados">
+
+        <div class="ui divider"></div>
+        <a style="font-size:22px; color:black;"><i class="thumbs down icon"></i>Amonestados del partido</a>
+        <span style="float:right;">
+                    <button @click="agregarDetalleC" class="ui olive circular icon button"><i class="plus icon"></i> Agregar</button>
+        </span>        <br><br><br>
+                <table class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                        <thead>
+                            <tr>
+                                <th style="background-color: #CD2020; color: white;"><i class="male icon"></i>Jugador</th>
+                                <th style="background-color: #CD2020; color: white;"><i class="futbol icon"></i>Tarjeta</th>
+                                <th style="background-color: #CD2020; color: white;"><i class="futbol icon"></i>Observación</th>
+                                <th style="background-color: #CD2020; color: white;"><i class="futbol icon"></i>Tiempo de suspensión</th>
+                                <th style="background-color: #CD2020; color: white;"><i class="trash icon"></i>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(castigo, index) in castigos">
+                            <td>
+                            <select v-model="castigo.goleadores" class="ui search selection dropdown" id="goleadores"
+                             name="goleadores">
+                               <option v-for="option in goleadoresOps" :value="option.idJugador">{{option.nombre}} {{option.apellido}}--
+                               {{option.correlativo}}
+                               </option>
+                             </select>
+                            </td>
+                            <td>  
+                            <select class="ui search dropdown"  name="tarjeta" id="tarjeta">
+                            <option value="Tarjeta Amarilla" selected>Tarjeta Amarilla</option>
+                            <option value="Doble Amarilla">Doble Amarilla</option>
+                            <option value="Roja Directa">Roja  Directa</option>
+                            </select>
+                            </td>
+                            <td>
+                            <textarea rows="2" name="observacion"  id="observacion" placeholder="Observación"></textarea>
+                            </td>
+                            
+                            
+                            <td>
+                            <input   type="text" placeholder="Tiempo de suspensión" name="suspension" id="suspension">
+                            </td>
+                            <td>
+                            <center>
+                              <button type="button" @click="eliminarDetalleC(index)" class="ui negative mini circular icon button"><i
+                                  class="times icon"></i></button>
+                                  </center>
+                            </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <span style="float:right;">
+        <button @click="" class="ui green circular icon button"><i class="check icon"></i> Guardar</button>
+        </span>
+        
+        </div>
+
+</div>
+
+</div>
+<br><br>
+<div class="actions">
+<button class="ui red button" id="cerrarRes">
+<i class="close icon"></i>
+Cancelar
+</button>
+
+<button @click="" class="ui violet button"><i class="save icon">
+</i> Guardar Todo
+</button>
+
+</div>
+
+</div>
+</div>
+
 <script src="./res/tablas/tablaTorneosF.js"></script>
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
@@ -128,9 +329,20 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
 <script src="./res/js/modalJornadasTorneo.js"></script>
 <script>
 var appE = new Vue({
-        el: "#appT",
+        el: "#appE",
         data: {
             detalles: [],
+            envios: [{
+                goleadores: '5',
+                goles: '',
+            }],
+            castigos : [{
+                goleadores: '5',
+                suspension: '',
+            }],
+
+            goleadoresOps: <?php echo $goleadoresCmb?>,
+
             campos_registroT: [{
                     label: 'Nombre del Torneo',
                     name: 'nombreTorneo',
@@ -248,10 +460,78 @@ var appE = new Vue({
                         console.log(err);
                     });
             },
+            resultados(equipo1,equipo2,vuelta,jornada,hora,fecha){
+                $("#equipo1").val(equipo1);
+                $("#equipo2").val(equipo2);
+                $("#vuelta").val(vuelta);
+                $("#jornada").val(jornada);
+                $("#fecha").val(fecha);
+                $("#hora").val(hora);
+
+                $('#modalResultados').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+
+            },
+            eliminarDetalle(index) {
+                this.envios.splice(index, 1);
+            },
+            agregarDetalle() {
+                this.envios.push({
+                    goleadores: '5',
+                    goles: '',
+            
+                });
+            $('.ui.search.dropdown.selection').dropdown();
+            $('.ui.search.dropdown.selection').css('max-width', '100%');
+            $('.ui.search.dropdown.selection').css('min-width', '100%');
+            $('.ui.search.dropdown.selection').css('width', '100%');
+            },
+            eliminarDetalleC(index) {
+                this.castigos.splice(index, 1);
+            },
+            agregarDetalleC() {
+                this.castigos.push({
+                    goleadores: '5',
+                    //goles: '',
+            
+                });
+            $('.ui.search.dropdown.selection').dropdown();
+            $('.ui.search.dropdown.selection').css('max-width', '100%');
+            $('.ui.search.dropdown.selection').css('min-width', '100%');
+            $('.ui.search.dropdown.selection').css('width', '100%');
+            }
         }
     });
 </script>
 <script>
+$(document).ready(function(){
+    $('.ui.search.dropdown.selection').dropdown();
+            $('.ui.search.dropdown.selection').css('max-width', '100%');
+            $('.ui.search.dropdown.selection').css('min-width', '100%');
+            $('.ui.search.dropdown.selection').css('width', '100%'); 
+
+            $("#goles").hide();
+            $("#amonestados").hide();
+});
+$("#btnGoleo").click(function(){
+    $("#amonestados").hide('10');
+    $("#goles").show('10');
+    
+});
+
+$("#btnAmonestados").click(function(){
+    $("#goles").hide('10');
+    $("#amonestados").show('10');
+    
+    
+});
+
+$("#cerrarRes").click(function(){
+    $('#modalDetallesJornadasM').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+    $('#modalResultados').modal('hide');
+});
+
 var eliminarTorneo=(ele)=>{
   $('#modalEliminarT').modal('setting', 'closable', false).modal('show');
   $('#idEliminar').val($(ele).attr("id"));

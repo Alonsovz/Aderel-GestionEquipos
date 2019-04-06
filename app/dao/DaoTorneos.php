@@ -396,6 +396,38 @@ class DaoTorneos extends DaoBase {
         
     }
 
+    public function mostrarGoleadoresCmb() {
+        $_query = "select * from jugadores where idEliminado=1 and idFondo = 1 and idJugador>1 and idGenero=2";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+            $json .= json_encode($fila).',';
+        }
+
+        $json = substr($json,0, strlen($json) - 1);
+
+        return '['.$json.']';
+    }
+
+    public function mostrarGoleadorasCmb() {
+        $_query = "select * from jugadores where idEliminado=1 and idFondo = 1 and idJugador>1 and idGenero=1";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+            $json .= json_encode($fila).',';
+        }
+
+        $json = substr($json,0, strlen($json) - 1);
+
+        return '['.$json.']';
+    }
+
 
 }
 

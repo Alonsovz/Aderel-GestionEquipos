@@ -13,6 +13,11 @@ class TorneosController extends ControladorBase {
         self::loadMain();
         $daoC = new DaoCategorias();
         $categoriasCMB = $daoC->mostrarCategoriasCmbM();
+
+        $daoJ = new DaoTorneos();
+        $goleadoresCmb = $daoJ->mostrarGoleadoresCmb();
+
+
         require_once './app/view/GestionExp/GestionTorneosMasculinos.php';
     }
 
@@ -33,6 +38,9 @@ class TorneosController extends ControladorBase {
         self::loadMain();
         $daoC = new DaoCategorias();
         $categoriasCMB = $daoC->mostrarCategoriasCmbF();
+
+        $daoJ = new DaoTorneos();
+        $goleadoresCmb = $daoJ->mostrarGoleadorasCmb();
         require_once './app/view/GestionExp/GestionTorneosFemeninas.php';
     }
 
