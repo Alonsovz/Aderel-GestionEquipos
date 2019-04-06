@@ -279,7 +279,7 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
                             </select>
                             </td>
                             <td>
-                            <textarea rows="2" name="observacion"  id="observacion" placeholder="Observación"></textarea>
+                            <textarea rows="2" name="observacion" id="observacion" placeholder="Observación"></textarea>
                             </td>
                             
                             
