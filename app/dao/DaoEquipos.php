@@ -110,7 +110,7 @@ class DaoEquipos extends DaoBase {
     public function registrarM() {
         $_query = "insert into equipos values(null,'".$this->objeto->getNombreEquipo()."', '".$this->objeto->getEncargado()."',
         '".$this->objeto->getTelefonoE()."','".$this->objeto->getEncargadoAux()."','".$this->objeto->getTelefonoAux()."',
-        '".$this->objeto->getIdCategoria()."',1,2,2,1,3,1)";
+        '".$this->objeto->getIdCategoria()."',1,2,2,1,3,1,1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -149,6 +149,27 @@ class DaoEquipos extends DaoBase {
             return 0;
         }
     }
+
+    public function carnetsGratis() {
+        $_query = "update equipos set carnets= '".$this->objeto->getCarnets()."' where idEquipo = ".$this->objeto->getIdEquipo();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        
+    }
+
+    public function restarCarnet() {
+        $_query = "update equipos set carnets= carnets -1  where idEquipo = ".$this->objeto->getIdEquipo();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
 
     public function actualizarCupos() {
 
@@ -239,7 +260,7 @@ class DaoEquipos extends DaoBase {
     public function registrarF() {
         $_query = "insert into equipos values(null,'".$this->objeto->getNombreEquipo()."', '".$this->objeto->getEncargado()."',
         '".$this->objeto->getTelefonoE()."','".$this->objeto->getEncargadoAux()."','".$this->objeto->getTelefonoAux()."',
-        '".$this->objeto->getIdCategoria()."',1,1,1,1,3,1)";
+        '".$this->objeto->getIdCategoria()."',1,1,1,1,3,1,1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -430,7 +451,7 @@ class DaoEquipos extends DaoBase {
 
     public function cobrarEquipo()
     {
-        $_query = "select e.*,e.nombre as nombreE,c.edadMinima as edad, c.nombreCategoria as Categoria, i.estado as estado, t.nombreTorneo as torneo,
+        $_query = "select e.*,e.nombre as nombreE,c.edadMinima as edad, c.nombreCategoria as Categoria, c.carnetGratis as carnets, i.estado as estado, t.nombreTorneo as torneo,
         t.idTorneo as idT from equipos e
        inner join categorias c on c.idCategoria = e.idCategoria
        inner join inscripcion i on i.idInscripcion = e.idInscripcion
@@ -445,7 +466,7 @@ class DaoEquipos extends DaoBase {
 
             $object = json_encode($fila);
 
-            $btnCobrar = '<button id=\"'.$fila["idEquipo"].'\" idTorneoEq=\"'.$fila["idT"].'\" nombreE=\"'.$fila["nombreE"].'\" categoriaE=\"'.$fila["Categoria"].'\" torneoE=\"'.$fila["torneo"].'\" class=\"ui btnEditarE icon green small button\" onclick=\"cobrarEquipo(this)\"><i class=\"dollar icon\"></i> Cobrar</button>';
+            $btnCobrar = '<button id=\"'.$fila["idEquipo"].'\" idTorneoEq=\"'.$fila["idT"].'\" carnets=\"'.$fila["carnets"].'\" nombreE=\"'.$fila["nombreE"].'\" categoriaE=\"'.$fila["Categoria"].'\" torneoE=\"'.$fila["torneo"].'\" class=\"ui btnEditarE icon green small button\" onclick=\"cobrarEquipo(this)\"><i class=\"dollar icon\"></i> Cobrar</button>';
               
              
                 $acciones = ', "Acciones": "'.$btnCobrar.'"';

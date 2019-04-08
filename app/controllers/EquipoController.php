@@ -343,12 +343,15 @@ public function registrarF() {
         $id = $_REQUEST["idEquipoCobro"];
         $cantidad = $_REQUEST["cantidadCobroE"];
         $idT = $_REQUEST["idTorneoEq"];
+        $cupos = $_REQUEST["cupos"];
 
         $dao = new DaoEquipos();
 
         $dao->objeto->setIdEquipo($id);
+        $dao->objeto->setCarnets($cupos);
 
         echo $dao->cobrarInscripcion();
+        echo $dao->carnetsGratis();
 
 
         $daoI = new DaoIngresos();

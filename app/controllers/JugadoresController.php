@@ -294,6 +294,28 @@ class JugadoresController extends ControladorBase {
         echo $daoI->guardarOtro();
     }
 
+    public function exonerar(){
+
+        $id = $_REQUEST["idJugador"];
+        $idE = $_REQUEST["idEquip"];
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setIdJugador($id);
+
+
+        $daoE = new DaoEquipos();
+
+        $daoE->objeto->setIdEquipo($idE);
+
+        echo $dao->cobrarInscripcion();
+
+        echo $daoE->restarCarnet();
+
+
+        
+    }
+
 }
 
 

@@ -12,10 +12,18 @@ class IngresosController extends ControladorBase {
         require_once './app/view/Ingresos/Ingresos.php';
     }
 
+
+
     public static function nuevoIngreso()
     {
         self::loadMain();
         require_once './app/view/Ingresos/nuevoIngreso.php';
+    }
+
+    public static function nuevo()
+    {
+        self::loadMain();
+        require_once './app/view/Ingresos/nuevoI.php';
     }
 
     public static function IngresosBD()

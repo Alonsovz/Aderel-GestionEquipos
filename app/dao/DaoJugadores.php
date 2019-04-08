@@ -522,7 +522,8 @@ class DaoJugadores extends DaoBase {
 
         public function mostrarJugPendPago(){
             $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,i.estado, 
-            i.pago as pago,e.nombre as equipo, t.nombreTorneo as torneo from inscriJugador i
+            i.pago as pago,e.nombre as equipo,e.cuposMayores as cupos, e.carnets as carnets,
+             t.nombreTorneo as torneo,i.idEquipo as idEquipo from inscriJugador i
             inner join equipos e on e.idEquipo = i.idEquipo
             inner join jugadores j on j.idJugador = i.idJugador
             inner join torneos t on t.idTorneo = i.idTorneo
@@ -540,7 +541,7 @@ class DaoJugadores extends DaoBase {
 
                
                 
-                $btnCobrar = '<button id=\"'.$fila["idJugador"].'\" torneo=\"'.$fila["torneo"].'\" nombre=\"'.$fila["nombre"].'\" apellido=\"'.$fila["apellido"].'\" equipo=\"'.$fila["equipo"].'\" class=\"ui  icon green small button\" onclick=\"cobrarJugador(this)\"><i class=\"dollar icon\"></i> Cobrar</button>';
+                $btnCobrar = '<button id=\"'.$fila["idJugador"].'\" idEq=\"'.$fila["idEquipo"].'\"  carnets=\"'.$fila["carnets"].'\" torneo=\"'.$fila["torneo"].'\" nombre=\"'.$fila["nombre"].'\" apellido=\"'.$fila["apellido"].'\" equipo=\"'.$fila["equipo"].'\" class=\"ui  icon green small button\" onclick=\"cobrarJugador(this)\"><i class=\"dollar icon\"></i> Cobrar</button>';
                 $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
                     $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnCobrar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
                 
@@ -566,9 +567,6 @@ class DaoJugadores extends DaoBase {
        
 
         $resultado = $this->con->ejecutar($_query);
-        
-        
-        
 
     }
         

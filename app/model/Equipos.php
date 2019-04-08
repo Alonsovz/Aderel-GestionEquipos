@@ -9,11 +9,30 @@ class Equipos extends ModeloBase{
     private $idTorneo;
     private $telefonoAux;
     private $telefonoE;
+    private $carnets;
 
 
     public function __construct() {
 
     }
+
+    public function getCarnets()
+    {
+        return $this->carnets;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setCarnets($carnets)
+    {
+        $this->carnets = $carnets;
+
+        return $this;
+    }
+
     public function getTelefonoAux()
     {
         return $this->telefonoAux;
