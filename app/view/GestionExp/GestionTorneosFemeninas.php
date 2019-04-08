@@ -221,8 +221,8 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
                             <td>
                             <select v-model="envio.goleadores" class="ui search selection dropdown" id="goleadores"
                              name="goleadores">
-                               <option v-for="option in goleadoresOps" :value="option.idJugador">{{option.correlativo}}--
-                               {{option.nombre}} {{option.apellido}}
+                               <option v-for="option in goleadoresOps" :value="option.idJugador">{{option.nombre}} {{option.apellido}} --
+                               {{option.correlativo}}
                                </option>
                              </select>
                             </td>

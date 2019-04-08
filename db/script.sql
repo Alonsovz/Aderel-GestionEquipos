@@ -158,8 +158,11 @@ idInscripcion int,
 idTorneo int,
 idGenero int,
 idFondo int,
+cuposMayores int,
 idEliminado int
 );
+
+
 
 
 create table jugadores(
@@ -177,13 +180,13 @@ idEliminado int
 );
 
 
-
 create table inscriJugador(
 idEquipo int,
 idJugador int,
 idTorneo int,
 estado int,
 pago int,
+idMayor int,
 fechaInscripcion date
 );
 
@@ -296,6 +299,10 @@ alter table inscriJugador add constraint fk_inscriJugador_equipos foreign key (i
 alter table inscriJugador add constraint fk_inscriJugador_jugadores foreign key (idJugador) references jugadores(idJugador);
 alter table inscriJugador add constraint fk_inscriJugador_torneos foreign key (idTorneo) references torneos(idTorneo);
 
+
+
+
+
 alter table escuelaFut add constraint fk_escuelaFut_nivelEscuela foreign key (idEscuela) references nivelEscuela(idEscuela);
 
 alter table usuario add constraint fk_usuario_rol foreign key (codigoRol) references rol(codigoRol);
@@ -339,8 +346,8 @@ insert into torneos values(null,'No se ha inscrito en torneo',0,0,0,1,2,1,1);
 
 insert into jugadores values(null,'FF000001','nada','nada','nada','nada','1999-02-12','',1,1,1);
 
-insert into equipos values (null, 'Sin Equipo','No definido','No definido','','',1,1,1,1,1,1);
-insert into equipos values (null, 'Sin Equipo','No definido','No definido','','',1,1,2,2,1,1);
+insert into equipos values (null, 'Sin Equipo','No definido','No definido','','',1,1,1,1,1,3,1);
+insert into equipos values (null, 'Sin Equipo','No definido','No definido','','',1,1,2,2,1,3,1);
 
 insert into gimnasio values(null,'GY000002','','','','2019-02-02','1','2019-02-01','2019-03-01',1,1);
 
@@ -596,7 +603,14 @@ $$
 
 
 
-select * from cajaChica where idTipo=1
-
+select i.*,j.*,DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento, i.pago as pago,
+        DATE_FORMAT(i.fechaInscripcion, '%d/%m/%Y') as fechaIns from inscriJugador i 
+        inner join jugadores j on j.idJugador= i.idJugador 
+        where i.idMayor=
+        
+        select i.*,j.*,DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento, i.pago as pago,
+        DATE_FORMAT(i.fechaInscripcion, '%d/%m/%Y') as fechaIns from inscriJugador i 
+        inner join jugadores j on j.idJugador= i.idJugador 
+        where i.idMayor=1
        
        

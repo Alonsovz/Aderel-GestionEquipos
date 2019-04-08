@@ -5,7 +5,7 @@ class Reporte {
         require_once './vendor/autoload.php';
     }
   
-      public function nomina($encargados,$nomina,$nombreEquipo,$torneo,$idFondo ) {
+      public function nomina($encargados,$nomina,$nombreEquipo,$torneo,$idFondo, $nominaMayores) {
         
         $nombreE = $nombreEquipo ->fetch_assoc();
         $nombreE = $nombreE["nombre"];
@@ -15,6 +15,7 @@ class Reporte {
 
         $fondo = $idFondo ->fetch_assoc();
         $fondo = $fondo["idFondo"];
+
 
         $tabla = '';
         $tabla .= ' <style>
@@ -101,15 +102,67 @@ class Reporte {
                        
                      </h3>";
         }
-        $tabla .= "<hr><h2><font color=''>
+        $tabla .= "<hr><h3><font color=''>
+        
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 Lista de jugadores mayores a la edad máxima de la categoría del equipo</font></h3>";
+                 while($fila = $nominaMayores->fetch_assoc()) {
+                    $tabla .= "
+                    <br><hr>
+                    <table style='border: 1px solid white; font-size:18px;'>
+                    
+                    <tr>
+                        <td rowspan=4> <img src=".$fila["foto"]." style='width:120px;'/></td>
+                        <td><b>Cod. Exp:</b> ".$fila["correlativo"]."</td>
+                        <td><b>Nombre:</b> ".$fila["nombre"]." ".$fila["apellido"]."</td>
+                        
+                    </tr>
+                    <tr>
+                        <td><br><b>Teléfono :</b> ".$fila["telefono"]."</td>";
+                        if($fondo==1){
+                        $tabla .= "   
+                        <td><br><b>Firma:</b> ______________________</td>";
+        
+                        }
+                        $tabla .= "
+                    </tr>
+                    <tr>
+                        <td><b>DUI :</b> ".$fila["dui"]."</td>
+                        <td><b>Fecha de Nacimiento:</b> ".$fila["fechaNacimiento"]."</td>
+                    </tr>
+                    <tr>
+                    <br>
+                        <td><b>Inscripción :</b> ".$fila["fechaIns"]."</td>";
+                        if($fila["pago"] == 1){
+                            $tabla .= "   
+                            <td style='background-color: #FA5858;'><br><b>Pendiente de pago</b></td>";
+            
+                            }
+                            else{
+                                $tabla .= "   
+                                <td style='background-color: #81F79F;'><br><b>Inscrito</b></td>";
+                            }
+                            
+                        $tabla .= "
+                        
+                        
+                    </tr>
+                </table>
+                    
+                    ";
+            
+                    }
+
+                    $tabla .= "<hr><h2><font color=''>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                 Lista de Jugadores del Equipo</font></h2>";
+                 Lista de jugadores del equipo</font></h2>";
+
         while($fila = $nomina->fetch_assoc()) {
             $tabla .= "
-            <br><hr>
+            <hr>
             <table style='border: 1px solid white; font-size:18px;'>
 			
 			<tr>
@@ -133,9 +186,18 @@ class Reporte {
             </tr>
             <tr>
             <br>
-                <td colspan=2><b>Fecha inscripción :</b> ".$fila["fechaIns"]."</td>
-                
-			</tr>
+                <td><b>Inscripción :</b> ".$fila["fechaIns"]."</td>";
+                if($fila["pago"] == 1){
+                $tabla .= "   
+                <td style='background-color: #FA5858;'><br><b>Pendiente de pago</b></td>";
+
+                }
+                else{
+                    $tabla .= "   
+                    <td style='background-color: #81F79F;'><br><b>Inscrito</b></td>";
+                }
+                $tabla .= "
+            </tr>
 		</table>
             
             ";

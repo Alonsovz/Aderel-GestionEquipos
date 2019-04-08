@@ -309,9 +309,12 @@ public function registrarF() {
         $idFondo = $dao->encargadosEquipo();
         
         $nomina = $dao->jugadoresEquipo();
+
+        $nominaMayores = $dao->jugadoresEquipoMayores(); 
+
         
 
-        $reporte->nomina($encargados,$nomina,$nombreEquipo,$torneo,$idFondo );
+        $reporte->nomina($encargados,$nomina,$nombreEquipo,$torneo,$idFondo,$nominaMayores);
     }
 
     public function validarInscripcion(){

@@ -167,7 +167,8 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
     <br>
         <div class="field">
             <div class="fields">
-                <div class="five wide field">
+            <div class="five wide field"></div>
+                <div class="three wide field">
                 <label><center><i class="users icon"></i>Equipo</center></label>
                     <input type="text" id="equipo1" name="equipo1">
                 </div>
@@ -187,12 +188,12 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
                     <input type="number" id="goles2" name="goles2">
                 </div>
 
-                <div class="five wide field">
+                <div class="three wide field">
                 <label><center><i class="users icon"></i>Equipo</center></label>
                     <input type="text" id="equipo2" name="equipo2">
                 </div>
 
-                
+                <div class="five wide field"></div>
             </div>
         </div>
         </form><br>
@@ -219,8 +220,8 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
                             <td>
                             <select v-model="envio.goleadores" class="ui search selection dropdown" id="goleadores"
                              name="goleadores">
-                               <option v-for="option in goleadoresOps" :value="option.idJugador">{{option.correlativo}}--
-                               {{option.nombre}} {{option.apellido}}
+                               <option v-for="option in goleadoresOps" :value="option.idJugador"> {{option.nombre}} {{option.apellido}}--
+                               {{option.correlativo}}
                                </option>
                              </select>
                             </td>
@@ -264,8 +265,8 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
                             <td>
                             <select v-model="castigo.goleadores" class="ui search selection dropdown" id="goleadores"
                              name="goleadores">
-                               <option v-for="option in goleadoresOps" :value="option.idJugador">{{option.nombre}} {{option.apellido}}--
-                               {{option.correlativo}}
+                               <option v-for="option in goleadoresOps" :value="option.idJugador">{{option.nombre}} {{option.apellido}} --
+                                {{option.correlativo}}
                                </option>
                              </select>
                             </td>
@@ -480,6 +481,7 @@ var appE = new Vue({
             
                 });
             $('.ui.search.dropdown.selection').dropdown();
+          //  $('.ui.search.dropdown.selection').addClass('ui search selection dropdown');
             $('.ui.search.dropdown.selection').css('max-width', '100%');
             $('.ui.search.dropdown.selection').css('min-width', '100%');
             $('.ui.search.dropdown.selection').css('width', '100%');

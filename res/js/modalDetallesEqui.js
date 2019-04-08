@@ -37,7 +37,11 @@ Vue.component('modal-detalles', {
                                 <td>{{detalle.edad}}</td>
                                 <td style="background-color: lightblue;">{{detalle.equipo}}</td>
                                 <td v-if="detalle.pago == '1'" style="background-color: #FA5858;">
-                                <b>Pendiente de Pago</b>
+                                <b>Pendiente de Pago</b>--
+                                <button @click="" type="button" class="ui gray button" style="color: black; font-weight:bold;">
+                                    <i class="dollar icon"></i>
+                                    Eliminar
+                                </button>
                             </td>
                             <td v-else-if="detalle.pago == '2'">
                             <button @click="" type="button" class="ui olive button">

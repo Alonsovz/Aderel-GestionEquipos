@@ -164,6 +164,24 @@ class JugadoresController extends ControladorBase {
         echo $dao->inscribirJugadorM();
     }
 
+    public function inscribirJugadorMayor() {
+        $idJ = $_REQUEST["idJugador"];
+        $idEquipo = $_REQUEST["idEquipo"];
+        $idTorneo = $_REQUEST["idTorneo"];
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setIdJugador($idJ);
+        $dao->objeto->setIdEquipo($idEquipo);
+        $dao->objeto->setIdTorneo($idTorneo);
+
+        echo $dao->inscribirJugadorMayor();
+
+        $daoE = new DaoEquipos();
+        $daoE->objeto->setIdEquipo($idEquipo);
+        echo $daoE->actualizarCupos();
+    }
+
 
     public function guardarJugadorM() {
         // var_dump($_REQUEST);

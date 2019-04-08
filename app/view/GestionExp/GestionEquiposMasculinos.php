@@ -145,33 +145,48 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
 <div class="content">
 <div style="margin-bottom: 0em !important; width: 100% !important;" class="ui tiny fluid horizontal divided list">
 
-        <div class="item" style="font-size:20px;">
+        <div class="item" style="font-size:16px;">
         <i class="users icon"></i>
-            <div class="content" style="font-size:20px;">
+            <div class="content" style="font-size:16px;">
                {{datosDetalle.nombre}}
             </div>
         </div>
-        <div class="item" style="font-size:20px;">
+        <div class="item" style="font-size:16px;">
         <i class="chart bar outline icon"></i>
-            <div class="content" style="font-size:20px;">
+            <div class="content" style="font-size:16px;">
             {{datosDetalle.Categoria}}
             {{datosDetalle.idCategoria}}
             </div>
         </div>
-        <div class="item" style="font-size:20px;">
+        <div class="item" style="font-size:16px;">
         <i class="user outline icon"></i>
-            <div class="content" style="font-size:20px;">
+            <div class="content" style="font-size:16px;">
           {{datosDetalle.encargado}}
             </div>
             <input type="hidden" id="idEqui" >
             <input type="hidden" id="idTor" >
             
         </div>
-        <div class="item" style="font-size:20px;">
+        <div class="item" style="font-size:16px;">
         <i class="chart bar outline icon"></i>
-        <div class="content" style="font-size: 20px;">
+        <div class="content" style="font-size: 16px;">
         Edad Minima de la Categoria: 
             <a id="edadMinima"></a>
+        </div>
+        </div>
+
+        <div class="item" style="font-size:16px;">
+        <i class="chart bar outline icon"></i>
+        <div class="content" style="font-size: 16px;">
+        Edad Máxima de la Categoria: 
+            <a id="edadMaxima"></a>
+        </div>
+        </div>
+        <div class="item" style="font-size:16px;">
+        <i class="list icon"></i>
+        <div class="content" style="font-size: 16px;">
+        Cupos para mayores de la categoria: 
+            <a id="cupos"></a>
         </div>
         </div>
     </div>
@@ -224,16 +239,9 @@ var appE = new Vue({
         el: "#appE",
         data: {
             detalles: [],
-            datosDetalle: {
-                nombre: '',
-                Categoria: '',
-                encargado: '',
-            },
-            datosDetalleE: {
-                nombre: '',
-                Categoria: '',
-                encargado: '',
-            },
+            datosDetalle: [],
+            datosDetalleE: [],
+
             campos_registroE: [{
                     label: 'Nombre del Equipo',
                     name: 'nombreEquipo',
@@ -449,7 +457,73 @@ var inscribir=(ele)=>{
             type: 'error',
             showConfirmButton: true
                         });
-        }else{
+        }
+        else if($("#cupos").text()==0 && $(ele).attr("edad")>$("#edadMaxima").text()  ){
+            swal({
+            title: 'Error!',
+            text: 'Ya no hay cupos disponibles para jugadores mayores a la edad máxima de la categoría',
+            type: 'error',
+            showConfirmButton: true
+                        });
+        }
+        else if($(ele).attr("edad")>$("#edadMaxima").text() && $("#cupos").text()<=3 && $("#cupos").text()>0 ){
+            alertify.confirm("¿Desea inscribir el jugador? Está a punto de escribir un jugador de mayor edad a la categoria",
+            function(){
+           var idEquipo = $("#idEqui").val();
+           var idJugador = $(ele).attr("id");
+           var idTorneo = $("#idTor").val();
+           
+
+
+             $.ajax({
+                type: 'POST',
+                url: '?1=JugadoresController&2=inscribirJugadorMayor',
+                data: {
+                    idEquipo : idEquipo,
+                    idJugador : idJugador,
+                    idTorneo : idTorneo,
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        appE.datosDetalle = [];
+                        $('#modalCambios').modal('hide');
+                        swal({
+                            title: 'Listo!',
+                            text: 'Jugador inscrito con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            swal({
+                        title: 'Listo!!',
+                        text: 'Tus Datos se actualizarán',
+                        type: 'warning',
+                        showConfirmButton: false,
+                        timer: 2500
+                        }).then(
+                        function () {
+                            location.href = "?1=EquipoController&2=gestionM";
+                        },
+                        
+);
+                        }); 
+                        $('#dtInscriM').DataTable().ajax.reload();
+                        
+                    } 
+                }
+
+             });
+            },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            }); 
+        }
+        
+        
+        else{
         alertify.confirm("¿Desea inscribir el jugador?",
             function(){
            var idEquipo = $("#idEqui").val();
@@ -467,7 +541,9 @@ var inscribir=(ele)=>{
                 },
                 success: function(r) {
                     if(r == 1) {
+                        $('#modalCambios').modal('hide');
                         swal({
+                           
                             title: 'Listo!',
                             text: 'Jugador inscrito con éxito',
                             type: 'success',
@@ -475,9 +551,8 @@ var inscribir=(ele)=>{
                                 timer: 1700
 
                         }).then((result) => {
-                            if (result.value) {
-                                location.href = '?';
-                            }
+                            $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show')
                         }); 
                         $('#dtInscriM').DataTable().ajax.reload();
                         
@@ -523,6 +598,8 @@ var verJugadoresE=(ele)=>{
                 $("#idEqui").val($(ele).attr("id"));
                 $("#idTor").val($(ele).attr("idTorneo"));
                 $("#edadMinima").text($(ele).attr("edadMinima"));
+                $("#edadMaxima").text($(ele).attr("edadMax"));
+                $("#cupos").text($(ele).attr("cuposM"));
                 $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
             }

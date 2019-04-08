@@ -171,6 +171,21 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
             <a id="edadMinima"></a>
         </div>
         </div>
+
+        <div class="item" style="font-size:16px;">
+        <i class="chart bar outline icon"></i>
+        <div class="content" style="font-size: 16px;">
+        Edad Máxima de la Categoria: 
+            <a id="edadMaxima"></a>
+        </div>
+        </div>
+        <div class="item" style="font-size:16px;">
+        <i class="list icon"></i>
+        <div class="content" style="font-size: 16px;">
+        Cupos para mayores de la categoria: 
+            <a id="cupos"></a>
+        </div>
+        </div>
     </div>
     <div class="ui divider"></div>
                 <div class="row">
@@ -444,7 +459,72 @@ var inscribir=(ele)=>{
             type: 'error',
             showConfirmButton: true
                         });
-        }else{
+        }
+        else if($("#cupos").text()==0){
+            swal({
+            title: 'Error!',
+            text: 'Ya no hay cupos disponibles para jugadores mayores a la edad máxima de la categoría',
+            type: 'error',
+            showConfirmButton: true
+                        });
+        }
+        else if($(ele).attr("edad")>$("#edadMaxima").text() && $("#cupos").text()<=3 && $("#cupos").text()>0 ){
+            alertify.confirm("¿Desea inscribir la jugadora? Está a punto de escribir una jugadora de mayor edad a la categoria",
+            function(){
+           var idEquipo = $("#idEqui").val();
+           var idJugador = $(ele).attr("id");
+           var idTorneo = $("#idTor").val();
+           
+
+
+             $.ajax({
+                type: 'POST',
+                url: '?1=JugadoresController&2=inscribirJugadorMayor',
+                data: {
+                    idEquipo : idEquipo,
+                    idJugador : idJugador,
+                    idTorneo : idTorneo,
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        appE.datosDetalle = [];
+                        $('#modalCambios').modal('hide');
+                        swal({
+                            title: 'Listo!',
+                            text: 'Jugadora inscrita con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            swal({
+                        title: 'Listo!!',
+                        text: 'Tus Datos se actualizarán',
+                        type: 'warning',
+                        showConfirmButton: false,
+                        timer: 2500
+                        }).then(
+                        function () {
+                            location.href = "?1=EquipoController&2=gestionF";
+                        },
+                        
+);
+                        }); 
+                        $('#dtInscriM').DataTable().ajax.reload();
+                        
+                    } 
+                }
+
+             });
+            },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            }); 
+        }
+        
+        else{
 
     alertify.confirm("¿Desea  inscribir la  jugadora?",
             function(){
@@ -463,17 +543,17 @@ var idEquipo = $("#idEqui").val();
                 },
                 success: function(r) {
                     if(r == 1) {
+                        $('#modalCambios').modal('hide');
                         swal({
                             title: 'Listo!',
-                            text: 'Jugador inscrito con éxito',
+                            text: 'Jugadora inscrita con éxito',
                             type: 'success',
                             showConfirmButton: false,
                                 timer: 1700
 
                         }).then((result) => {
-                            if (result.value) {
-                                location.href = '?';
-                            }
+                            $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show')
                         }); 
                         $('#dtInscriM').DataTable().ajax.reload();
                         
@@ -497,6 +577,8 @@ var modalCambiar=(ele)=>{
                 $("#idEqui").val($(ele).attr("id"));
                 $("#idTor").val($(ele).attr("idTorneo"));
                 $("#edadMinima").text($(ele).attr("edadMinima"));
+                $("#cupos").text($(ele).attr("cuposM"));
+                $("#edadMaxima").text($(ele).attr("edadMax"));
                 $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
             }

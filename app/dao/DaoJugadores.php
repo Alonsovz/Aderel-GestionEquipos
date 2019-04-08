@@ -176,7 +176,22 @@ class DaoJugadores extends DaoBase {
 
     public function inscribirJugadorM(){
         $_query = "insert into inscriJugador values('".$this->objeto->getIdEquipo()."','".$this->objeto->getIdJugador()."',
-        '".$this->objeto->getIdTorneo()."',2,1,curdate())";
+        '".$this->objeto->getIdTorneo()."',2,1,1,curdate())";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+
+    }
+
+
+    public function inscribirJugadorMayor(){
+        $_query = "insert into inscriJugador values('".$this->objeto->getIdEquipo()."','".$this->objeto->getIdJugador()."',
+        '".$this->objeto->getIdTorneo()."',2,1,2,curdate())";
 
         $resultado = $this->con->ejecutar($_query);
 
