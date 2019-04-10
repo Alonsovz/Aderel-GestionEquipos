@@ -33,6 +33,12 @@ anio varchar(10),
 idEliminado int
 );
 
+create table chequeras(
+idChequera int primary key unique auto_increment,
+chequera varchar(50),
+idEliminado int
+);
+
 create table egresos(
 idEgreso int primary key unique auto_increment,
 chNo int,
@@ -43,6 +49,7 @@ pagado double,
 fechaEgreso date,
 mes varchar(10),
 anio varchar(10),
+idChequera int,
 idEliminado int
 );
 
@@ -281,7 +288,7 @@ estado int
 
 alter table partidos add constraint fk_partidos_jornadas foreign key (jornadas_id) references jornadas(id);
 
-
+alter table egresos add constraint fk_egresos_chequeras foreign key (idChequera) references chequeras(idChequera);
 
 alter table jornadas add constraint fk_jornadas_torneos foreign key (idTorneo) references torneos(idTorneo);
 
@@ -325,10 +332,12 @@ insert into usuario values(null,'Alonso','Mejia','alonso','mejiafabio383@gmail.c
 insert into ingresos values (null,'Escuela','2019-03-18',2000,'#140E93','#E6C404','03','2019',1);
 insert into ingresos values (null,'Fondo Comun','2019-03-19',2000,'#140E93','#E6C404','03','2019',1);
 
-insert into egresos values(null,4089,'Pago de impuestos de la renta',1000,160,840,'2019-03-11','03','2019',1);
-insert into egresos values(null,4090,'Pago de recibos',1000,160,840,'2019-03-12','03','2019',1);
+insert into chequeras values(null, 'Chequera Banco America Central',1);
 
-insert into remanentes values(null,5000,10000,4000,500,300,7000,'03','2019');
+insert into egresos values(null,4089,'Pago de impuestos de la renta',1000,160,840,'2019-04-11','04','2019',1,1);
+insert into egresos values(null,4090,'Pago de recibos',1000,160,840,'2019-04-12','04','2019',1,1);
+
+insert into remanentes values(null,5000,10000,4000,500,300,7000,'04','2019');
 
 
 insert into genero values(null,'Femenino');
@@ -512,11 +521,12 @@ create procedure editarEgreso(
     in cantidad double,
     in retencion double,
     in pagado double,
+    in idChequera int,
     in id int
 )
 begin
 	update egresos
-    set chNo = chNo, conceptoEgreso = conceptoEgreso, cantidad = cantidad, retencion = retencion, pagado = pagado
+    set chNo = chNo, conceptoEgreso = conceptoEgreso, cantidad = cantidad, retencion = retencion, pagado = pagado, idChequera= idChequera
     where idEgreso = id;
 end
 $$
@@ -604,6 +614,9 @@ $$
 
 
 
-select * from equipos
+select e.*, c.chequera  from egresos e 
+inner join chequeras c on c.idChequera = e.idChequera
+where e.idEliminado=1
+
        
        
