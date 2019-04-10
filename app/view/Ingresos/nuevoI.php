@@ -1,3 +1,8 @@
+<br>
+<div id="app">
+<modal-pagos :detalles="detalles"></modal-pagos>
+<modal-pagosfutbol :detalles="detalles"></modal-pagosfutbol>
+<modal-pagosnatacion :detalles="detalles"></modal-pagosnatacion>
 <div class="ui fullscreen longer modal" id="modalIngreso">
 <div class="header">
 <i class="dollar sign icon"></i><i class="money bill icon"></i> Agregar Ingreso
@@ -582,7 +587,7 @@
 
 
 </div>
-
+</div>
 <script src="./res/tablas/tablaFondoComun.js"></script>
 <script src="./res/tablas/tablaPagosGim.js"></script>
 <script src="./res/js/modalPagos.js"></script>

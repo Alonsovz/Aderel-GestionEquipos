@@ -3,7 +3,7 @@ $(function() {
     overflowRestore();
 });
 </script>
-<br><br>
+<br>
 <?php
             $fechaMaxima = date('Y-m-d');
             $fechaMax = strtotime ( '-0 day' , strtotime ( $fechaMaxima ) ) ;
@@ -100,7 +100,7 @@ $(function() {
 
 
 <!--modal agregar-->
-<div class="ui tiny modal" id="modalAgregar">
+<div class="ui  modal" id="modalAgregar">
 
         <div class="header">
         <i class="money bill alternate  icon"></i> Agregar nuevo Egreso
@@ -109,7 +109,7 @@ $(function() {
             <form class="ui form" id="frmEgresos">
                 <div class="field">
                     <div class="fields">
-                            <div class="four wide field">
+                            <div class="two wide field">
                                 <label><i class="money bill alternate icon"></i>Ch NO</label>
                                 <input type="text" name="cheque" placeholder="N° Cheque" id="cheque">
                                 <div class="field">
@@ -121,7 +121,15 @@ $(function() {
                 style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
                 Completa este campo</div>
                             </div>
-                            <div class="twelve wide field">
+
+                            <div class="five wide field">
+                                <label><i class="money bill alternate icon"></i>Chequera</label>
+                                <select name="chequeras" id="chequeras" class="ui search dropdown"></select>
+                                
+                            </div>
+
+
+                            <div class="nine wide field">
                                 <label><i class="edit icon"></i>Concepto de Egreso</label>
                                 <textarea rows="4" id="conceptoEgreso" name="conceptoEgreso" placeholder="Concepto de Egreso" >
                                 </textarea>
@@ -225,6 +233,7 @@ $(function() {
                             <th style="background-color: #E6C404;">Cantidad</th>
                             <th style="background-color: #E6C404;">Retención</th>
                             <th style="background-color: #E6C404;">Pagado</th>
+                            <th style="background-color: #E6C404;">Chequera</th>
                             <th style="background-color: #E6C404;">Fecha</th>
                             <th style="background-color: #E6C404;">Acciones</th>
                            
@@ -279,7 +288,7 @@ var app = new Vue({
                     type: 'number'
                 },
                 {
-                    label: 'Concepto de Ingreso:',
+                    label: 'Concepto de Egreso:',
                     name: 'conceptoEgreso',
                     type: 'text'
                 },
@@ -303,6 +312,12 @@ var app = new Vue({
                     label: 'Pagado',
                     name: 'pagado',
                     type: 'text',
+                },
+                {
+                    label: 'Chequera:',
+                    name: 'selectChequera',
+                    type: 'select',
+                    options: <?php echo $chequeCMB;?>,
                 },
                 
                 {
@@ -349,7 +364,7 @@ var app = new Vue({
                         
                        // $('#frmEditar input[name="agregar"]').val("Agregar");
                         $('#frmEditar input[name="pagado"]').val(dat.pagado);
-                        //$('#frmEditar input[name="fechaEgreso"]').val(dat.fechaEgreso);
+                        $('#frmEditar select[name="selectChequera"]').dropdown('set selected', dat.idChequera);
                     })
                     .catch(err => {
                         console.log(err);
@@ -400,36 +415,36 @@ $(document).ready(function(){
 <script>
 
 
-$(document).on("click", "input[name=quitar]", function () {
+$(document).on("click", "#frmEditar input[name=quitar]", function () {
     if($("#frmEditar input[name=quitar]").val()=="Agregar Retención"){
         
     var cantidad = $("#frmEditar input[name='cantidad']").val();
     var retencion = cantidad * 0.10;
     var totalPagado = cantidad - retencion;
     
-    $("input[name=retencion]").val(retencion);
-    $("input[name=pagado]").val(totalPagado);
+    $("#frmEditar input[name=retencion]").val(retencion);
+    $("#frmEditar input[name=pagado]").val(totalPagado);
 
-    if($("input[name=retencion]").val()>0){
+    if($(" #frmEditar input[name=retencion]").val()>0){
         $('#frmEditar input[name="quitar"]').val("Quitar Retención");
         
     }
     }else{
         var cantidad = $("#frmEditar input[name='cantidad']").val();
     
-    $("input[name=retencion]").val('0');
-    $("input[name=pagado]").val(cantidad);
-    if($("input[name=retencion]").val()==0){
+    $('#frmEditar input[name=retencion]').val('0');
+    $('#frmEditar input[name=pagado]').val(cantidad);
+    if($('#frmEditar input[name=retencion]').val()==0){
         $('#frmEditar input[name="quitar"]').val("Agregar Retención");
     }
     }
 });
 $("#frmEditar input[name='cantidad']").keyup(function(){
-    $("input[name=retencion]").val('0');
+    $("#frmEditar input[name=retencion]").val('0');
     var cantidad = $("#frmEditar input[name='cantidad']").val();
-    $("input[name=pagado]").val(cantidad);
+    $("#frmEditar input[name=pagado]").val(cantidad);
 
-    if($("input[name=retencion]").val()==0){
+    if($("#frmEditar input[name=retencion]").val()==0){
         $('#frmEditar input[name="quitar"]').val("Agregar Retención");
     }
 });
@@ -513,7 +528,7 @@ return false;
 
     $("#cantidad").keyup(function(){
         var cantidadNeta=$("#cantidad").val();
-        $("#pagado").val(cantidadNeta.toFixed(2));
+        $("#pagado").val(cantidadNeta);
     });
 
 
@@ -529,6 +544,7 @@ return false;
             $("#retencionMonto").val('');
             $("#pagado").val('');
             $("#divRetencion").hide();
+            $("#divPagado").hide();
             $('#label-error').css('display', 'none');
             $("#btnGuardar").attr("disabled", false);
             }
@@ -600,6 +616,7 @@ return false;
               var pagadoP = $('#pagado').val();
               var  meses = $('#mes').val();
               var  anios = $('#anio').val();
+              var  chequeras = $('#chequeras').val();
          
             
             
@@ -614,6 +631,7 @@ return false;
                         pagado: pagadoP,
                         mes: meses,
                         anio: anios,
+                        chequera: chequeras,
                     },
                     success: function(r) {
                                     if(r == 1) {
@@ -672,7 +690,16 @@ $(function () {
             });
         });
 
+        $(function() {
+            var option = '';
+            var chequeras = '<?php echo $chequerasCMB; ?>';
 
+            $.each(JSON.parse(chequeras), function() {
+                option = `<option value="${this.idChequera}">${this.chequera}</option>`;
+
+                $('#chequeras').append(option);
+            });
+        });
 
         
 

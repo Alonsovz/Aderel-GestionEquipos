@@ -5,7 +5,21 @@ class EgresosController extends ControladorBase {
     public static function Egresos()
     {
         self::loadMain();
+        $dao = new DaoEgresos();
+        
+
+        $chequerasCMB = $dao->mostrarChequerasCMB();
+        $chequeCMB = $dao->mostrarChequeCmb();
         require_once './app/view/Egresos/Egresos.php';
+    }
+
+    public static function chequeras()
+    {
+        self::loadMain();
+
+       
+
+        require_once './app/view/Egresos/gestionChequeras.php';
     }
 
     public static function convertir()
@@ -61,6 +75,13 @@ class EgresosController extends ControladorBase {
         echo $dao->mostrarEgresos();
     }
 
+    public function mostrarChequeras() {
+        $dao = new DaoEgresos();
+
+        echo $dao->mostrarChequeras();
+    }
+
+
     public function cargarDatosEgresos() {
         $id = $_REQUEST["id"];
 
@@ -70,6 +91,63 @@ class EgresosController extends ControladorBase {
 
         echo $dao->cargarDatosEgresos();
     }
+
+    public function cargarDatosChequeras() {
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoEgresos();
+
+        $dao->objeto->setIdEgreso($id);
+
+        echo $dao->cargarDatosChequeras();
+    }
+
+    public function editarChequera() {
+
+      //  $datos = $_REQUEST["datos"];
+
+        //$datos = json_decode($datos);
+
+        $dao = new DaoEgresos();
+
+    
+        $dao->objeto->setConceptoEgreso($_REQUEST["chequera"]);
+        
+        $dao->objeto->setIdEgreso($_REQUEST["idDetalle"]);
+
+        echo $dao->editarChequera();
+    }
+
+    public function registrarChequera()
+    {
+        $datos = $_REQUEST["datos"];
+
+        $datos = json_decode($datos);
+
+        $dao = new DaoEgresos();
+
+        //$chequera = $_REQUEST["chequera"];
+     
+        
+        
+        $dao->objeto->setConceptoEgreso($datos->chequera);
+
+
+
+        echo $dao->registrarChequera();
+    }
+
+    public function eliminarChequera() {
+        $datos = $_REQUEST["id"];
+
+        $dao = new DaoEgresos();
+
+        $dao->objeto->setIdChequera($datos);
+
+        echo $dao->eliminarChequera();
+    }
+
+
     public function verPorMes() {
         $dao = new DaoEgresos();
       
@@ -94,6 +172,7 @@ class EgresosController extends ControladorBase {
         $pagadoP = $_REQUEST["pagado"];
         $meses = $_REQUEST["mes"];
         $anios = $_REQUEST["anio"];
+        $chequera = $_REQUEST["chequera"];
         
         
         $dao->objeto->setChNo($chequeP);
@@ -103,6 +182,7 @@ class EgresosController extends ControladorBase {
         $dao->objeto->setPagado($pagadoP);
         $dao->objeto->setMes($meses);
         $dao->objeto->setAnio($anios);
+        $dao->objeto->setIdCheque($chequera);
 
 
         echo $dao->registrar();
@@ -167,19 +247,19 @@ class EgresosController extends ControladorBase {
 
 
     public function editar() {
-        $datos = $_REQUEST["datos"];
-
-        $datos = json_decode($datos);
+//
+      //  $datos = json_decode($datos);
 
         $dao = new DaoEgresos();
 
-        $dao->objeto->setChNo($datos->chNo);
-        $dao->objeto->setConceptoEgreso($datos->conceptoEgreso);
-        $dao->objeto->setCantidad($datos->cantidad);
-        $dao->objeto->setRetencion($datos->retencion);
-        $dao->objeto->setPagado($datos->pagado);
-       // $dao->objeto->setFechaEgreso($datos->fechaEgreso);
-        $dao->objeto->setIdEgreso($datos->idDetalle);
+        $dao->objeto->setChNo($_REQUEST["chNo"]);
+        $dao->objeto->setConceptoEgreso($_REQUEST["conceptoEgreso"]);
+        $dao->objeto->setCantidad($_REQUEST["cantidad"]);
+        $dao->objeto->setRetencion($_REQUEST["retencion"]);
+        $dao->objeto->setPagado($_REQUEST["pagado"]);
+        $dao->objeto->setIdCheque($_REQUEST["selectChequera"]);
+
+        $dao->objeto->setIdEgreso($_REQUEST["idDetalle"]);
 
         echo $dao->editar();
     }

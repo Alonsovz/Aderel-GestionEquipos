@@ -12,10 +12,29 @@ class Egresos extends ModeloBase{
     private $fecha2;
     private $mes;
     private $anio;
+    private $idCheque;
 
 
     public function __construct() {
 
+    }
+
+
+    public function getIdCheque()
+    {
+        return $this->idCheque;
+    }
+
+    /**
+     * Set the value of idEgreso
+     *
+     * @return  self
+     */ 
+    public function setIdCheque($idCheque)
+    {
+        $this->idCheque = $idCheque;
+
+        return $this;
     }
 
     public function getFechaEgreso()

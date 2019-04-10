@@ -1,36 +1,18 @@
-var tablaEgresos;
+var tablaChequeras;
 
 $(function() {
-    if($('#dtEgresos').length) {
-        tablaEgresos = $('#dtEgresos').DataTable({
+    if($('#dtChequeras').length) {
+        tablaChequeras = $('#dtChequeras').DataTable({
             "ajax": {
-                "url": "?1=EgresosController&2=mostrarEgresos",
+                "url": "?1=EgresosController&2=mostrarChequeras",
                 "type": "POST"
             },
             "columns": [
                 {
-                    "data": "idEgreso"
-                },
-                {
-                    "data": "chNo"
-                },
-                {
-                    "data": "conceptoEgreso"
-                },
-                {
-                    "data": "cantidad"
-                },
-                {
-                    "data": "retencion"
-                },
-                {
-                    "data": "pagado"
+                    "data": "idChequera"
                 },
                 {
                     "data": "chequera"
-                },  
-                {
-                    "data": "fechaEgreso"
                 },
                 {
                     "data": "Acciones"             
@@ -66,6 +48,6 @@ $(function() {
         });
 
          // Ocultar columna de id de Usuario
-         tablaEgresos.column(0).visible(false);
+         tablaChequeras.column(0).visible(false);
     }
 });
