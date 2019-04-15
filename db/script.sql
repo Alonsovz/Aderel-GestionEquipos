@@ -137,6 +137,8 @@ CREATE TABLE partidos (
   jornadas_id INT NOT NULL
   );
   
+  
+  
 CREATE TABLE jornadas (
   id int primary key auto_increment,
   vuelta_N INT NULL,
@@ -326,11 +328,16 @@ alter table categorias add constraint fk_categorias_genero foreign key (idGenero
 alter table equipos add constraint fk_equipos_genero foreign key (idGenero) references genero(idGenero);
 
 insert into rol values(1,'Administrador');
-insert into usuario values(null,'Fabio Alonso','Mejia Velasquez','mejia','fabiomejiash@gmail.com',sha1('123'),1,1);
-insert into usuario values(null,'Alonso','Mejia','alonso','mejiafabio383@gmail.com',sha1('123'),1,1);
+insert into rol values(2,'Gestor de Torneos');
+insert into rol values(3,'Supervisor y Control');
+insert into rol values(4,'Tesorero');
 
-insert into ingresos values (null,'Escuela','2019-03-18',2000,'#140E93','#E6C404','03','2019',1);
-insert into ingresos values (null,'Fondo Comun','2019-03-19',2000,'#140E93','#E6C404','03','2019',1);
+insert into usuario values(null,'Fabio Alonso','Mejia Velasquez','mejia','fabiomejiash@gmail.com',sha1('123'),1,1);
+insert into usuario values(null,'Alonso','Mejia','alonso','mejiafabio383@gmail.com',sha1('123'),2,1);
+insert into usuario values(null,'Juan','Perez','juan','juanPerez383@gmail.com',sha1('123'),3,1);
+
+insert into ingresos values (null,'Escuela','2019-03-18',2000,'#140E93','#E6C404','04','2019',1);
+insert into ingresos values (null,'Fondo Comun','2019-03-19',2000,'#140E93','#E6C404','04','2019',1);
 
 insert into chequeras values(null, 'Chequera Banco America Central',1);
 
@@ -490,9 +497,10 @@ end $$
 delimiter $$
 create procedure mostrarEgresos()
 begin
-	select idEgreso, chNo, conceptoEgreso, format(cantidad,2) as cantidad, format(retencion,2) as retencion, format(pagado,2) as pagado,
-    DATE_FORMAT(fechaEgreso, '%d/%m/%Y') as fechaEgreso,mes,anio,idEliminado from egresos
-    where  idEliminado=1;
+	select e.*, c.chequera as chequera, format(e.cantidad,2) as cantidad, format(e.retencion,2) as retencion, format(pagado,2) as pagado,
+    DATE_FORMAT(e.fechaEgreso, '%d/%m/%Y') as fechaEgreso from egresos e
+    inner join chequeras c on c.idChequera = e.idChequera
+    where  e.idEliminado=1;
 end	
 $$
 
@@ -552,8 +560,9 @@ create procedure reporteEgresosPorMes(
 begin
 select idEgreso,chNo,conceptoEgreso,format(cantidad,2) as cantidad, format(retencion,2) as retencion, format(pagado,2) as pagado,
 DATE_FORMAT(fechaEgreso, '%d/%m/%Y') as fechaEgreso,mes,anio,idEliminado from egresos
-where mes= 03 and anio= 2019 and idEliminado = 1 order by idEgreso DESC ;
+where mes= mess and anio= anios and idEliminado = 1 order by idEgreso DESC ;
 end $$
+
 
 
 
@@ -613,10 +622,6 @@ end
 $$
 
 
-
-select e.*, c.chequera  from egresos e 
-inner join chequeras c on c.idChequera = e.idChequera
-where e.idEliminado=1
-
+select * from ingresos
        
        

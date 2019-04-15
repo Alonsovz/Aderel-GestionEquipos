@@ -19,14 +19,20 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
                     <div class="titulo">
                     <i class="trophy icon"></i> <i class="futbol icon"></i>
                         Torneos Femeninos<font color="#A901DB" size="20px">.</font>
-                        
+                        <?php
+
+if($_SESSION["descRol"] == 'Administrador') {
+
+    ?>
+
                            <button class="ui pink button">
                               <a href="?1=CategoriaController&2=gestionF"  style="color:white;">
                               <i class="chart bar outline icon"></i>
                               Categorías de Torneo
                                </a>
                            </button>
-
+                           
+   
                             <button class="ui olive button">
                             <a href="?1=EquipoController&2=gestionF"  style="color:white;">
                             <i class="users icon"></i><i class="futbol icon"></i>
@@ -40,6 +46,17 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
                             Jugadores
                             </a>
                             </button>
+
+<?php }else{ ?>
+
+<button class="ui pink button">
+<a href="?1=CategoriaController&2=gestionF"  style="color:white;">
+<i class="chart bar outline icon"></i>
+Categorías de Torneo
+ </a>
+</button>
+
+<?php } ?>
                     </div>
                     
             

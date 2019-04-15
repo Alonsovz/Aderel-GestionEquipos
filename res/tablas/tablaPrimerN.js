@@ -11,6 +11,7 @@ $(function() {
                 {
                     "data": "idUsuario"
                 },
+                
                 {
                     "data": "Acciones"
                 },

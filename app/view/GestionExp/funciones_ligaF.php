@@ -408,7 +408,7 @@ const enviar =()=>{
 
                         }).then((result) => {
                             if (result.value) {
-                                $("#btnGuardar").attr("disabled", true);
+                                location.href = "?1=TorneosController&2=gestionM";
                             }
                         }); 
                         

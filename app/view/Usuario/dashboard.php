@@ -43,8 +43,14 @@
 
  if($_SESSION["descRol"] == 'Administrador') {
      require_once 'dashboardAdmin.php';
- } else {
-     require_once 'dashboardSoli.php';
+ } else if($_SESSION["descRol"] == 'Supervisor y Control') {
+    require_once 'dashboardAdmin.php';
+}
+else if($_SESSION["descRol"] == 'Tesorero') {
+    require_once './app/view/Ingresos/nuevoIngreso.php';
+}
+else{
+     require_once 'dashboardTorneos.php';
  }
 
 ?>

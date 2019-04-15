@@ -76,27 +76,13 @@ class DaoRemanente extends DaoBase {
 
     public function saldoAnterior() {
         $_query = "select format(nuevoSaldo,2) as nuevoSaldo from remanentes 
-        where idRemanente=(select max(idRemanente) from remanentes) 
-        and mes='{$this->objeto->getMes()}' and anio='{$this->objeto->getAnio()}'";
+        where idRemanente=(select max(idRemanente) from remanentes) ";
 
         $resultado = $this->con->ejecutar($_query);
 
-        if($resultado->num_rows == 1) {
-            $fila = $resultado->fetch_assoc();
+        $json = json_encode($resultado->fetch_assoc());
 
-            
-                
-                session_start();
-                 $_SESSION["nuevoSaldo"] = $fila["nuevoSaldo"];
-                            
-                    return 1;
-                
-        
-           
-        }
-        else {
-            return 0;
-        }
+        return $json;
         
     }
 
@@ -105,8 +91,9 @@ class DaoRemanente extends DaoBase {
         idRemanente=(select max(idRemanente) from remanentes) 
         and mes='{$this->objeto->getMes()}' and anio='{$this->objeto->getAnio()}'";
 
-        $resultado = $this->con->ejecutar($_query);
 
+        $resultado = $this->con->ejecutar($_query);
+        
         return $resultado;
         
     }

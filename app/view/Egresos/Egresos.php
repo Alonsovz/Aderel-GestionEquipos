@@ -349,6 +349,8 @@ var app = new Vue({
                     .then(dat => {
 
                         console.log(dat);
+                        
+
 
                         // $('#frmEditar input[name="idDetalle"]').val(dat.codigoUsuari);
                         $('#frmEditar input[name="chNo"]').val(dat.chNo);
@@ -402,8 +404,8 @@ $(document).ready(function(){
     
     
     $("#frmEditar input[name='cantidad']").mask("###0.00", {reverse: true});
-    $('#frmEditar input[name="retencion"]').prop('disabled', true);
-    $('#frmEditar input[name="pagado"]').prop('disabled', true);
+    $('#frmEditar input[name="retencion"]').attr('readonly', true);
+    $('#frmEditar input[name="pagado"]').attr('readonly', true);
     $('#frmEditar input[name="pagado"]').css("background-color", "#F0ECEC");
     $('#frmEditar input[name="pagado"]').css("color", "black");
     $('#frmEditar input[name="pagado"]').css("font-weight", "bold");
@@ -422,8 +424,8 @@ $(document).on("click", "#frmEditar input[name=quitar]", function () {
     var retencion = cantidad * 0.10;
     var totalPagado = cantidad - retencion;
     
-    $("#frmEditar input[name=retencion]").val(retencion);
-    $("#frmEditar input[name=pagado]").val(totalPagado);
+    $("#frmEditar input[name=retencion]").val(retencion.toFixed(2));
+    $("#frmEditar input[name=pagado]").val(totalPagado.toFixed(2));
 
     if($(" #frmEditar input[name=retencion]").val()>0){
         $('#frmEditar input[name="quitar"]').val("Quitar Retención");
@@ -431,9 +433,10 @@ $(document).on("click", "#frmEditar input[name=quitar]", function () {
     }
     }else{
         var cantidad = $("#frmEditar input[name='cantidad']").val();
+        cantidad = parseFloat(cantidad);
     
     $('#frmEditar input[name=retencion]').val('0');
-    $('#frmEditar input[name=pagado]').val(cantidad);
+    $('#frmEditar input[name=pagado]').val(cantidad.toFixed(2));
     if($('#frmEditar input[name=retencion]').val()==0){
         $('#frmEditar input[name="quitar"]').val("Agregar Retención");
     }
@@ -442,7 +445,9 @@ $(document).on("click", "#frmEditar input[name=quitar]", function () {
 $("#frmEditar input[name='cantidad']").keyup(function(){
     $("#frmEditar input[name=retencion]").val('0');
     var cantidad = $("#frmEditar input[name='cantidad']").val();
-    $("#frmEditar input[name=pagado]").val(cantidad);
+    cantidad = parseFloat(cantidad);
+
+    $("#frmEditar input[name=pagado]").val(cantidad.toFixed(2));
 
     if($("#frmEditar input[name=retencion]").val()==0){
         $('#frmEditar input[name="quitar"]').val("Agregar Retención");

@@ -8,9 +8,10 @@ class DaoEgresos extends DaoBase {
     }
 
     public function mostrarEgresos() {
-        $_query = "select e.*, c.chequera as chequera  from egresos e 
+        $_query = "select e.*, c.chequera as chequera, format(e.cantidad,2) as cantidad, format(e.retencion,2) as retencion, format(pagado,2) as pagado,
+        DATE_FORMAT(e.fechaEgreso, '%d/%m/%Y') as fechaEgreso from egresos e
         inner join chequeras c on c.idChequera = e.idChequera
-        where e.idEliminado=1";
+        where  e.idEliminado=1;";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -21,8 +22,8 @@ class DaoEgresos extends DaoBase {
             $object = json_encode($fila);
 
            
-            $btnEditar = '<button id=\"'.$fila["idEgreso"].'\" class=\"ui btnEditar icon blue small button\"><i class=\"edit icon\"></i></button>';
-            $btnEliminar = '<button id=\"'.$fila["idEgreso"].'\" class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i></button>';
+            $btnEditar = '<button id=\"'.$fila["idEgreso"].'\" class=\"ui btnEditar icon blue small button\"><i class=\"edit icon\"></i> Editar</button>';
+            $btnEliminar = '<button id=\"'.$fila["idEgreso"].'\" class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Anular</button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.'"';
 
@@ -48,8 +49,8 @@ class DaoEgresos extends DaoBase {
             $object = json_encode($fila);
 
            
-            $btnEditar = '<button id=\"'.$fila["idChequera"].'\" class=\"ui btnEditar icon blue small button\" onclick=\"editar(this)\"><i class=\"edit icon\"></i></button>';
-            $btnEliminar = '<button id=\"'.$fila["idChequera"].'\" class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i></button>';
+            $btnEditar = '<button id=\"'.$fila["idChequera"].'\" class=\"ui btnEditar icon blue small button\" onclick=\"editar(this)\"><i class=\"edit icon\"></i> Editar</button>';
+            $btnEliminar = '<button id=\"'.$fila["idChequera"].'\" class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.'"';
 
@@ -236,28 +237,11 @@ class DaoEgresos extends DaoBase {
          from egresos where idEliminado=1
          and mes='{$this->objeto->getMes()}' and anio='{$this->objeto->getAnio()}'";
 
-        $resultado = $this->con->ejecutar($_query);
+         $resultado = $this->con->ejecutar($_query);
 
-        if($resultado->num_rows == 1) {
-            $fila = $resultado->fetch_assoc();
-
-            if($fila["idEliminado"] == 1) {
-                //session_unset();
-                session_start();
-                 $_SESSION["cantidad"] = $fila["cantidad"];
-                 $_SESSION["retencion"] = $fila["retencion"];
-                 $_SESSION["pagado"] = $fila["pagado"];
-                            
-                    return 1;
-                
-            } 
-            else{
-                return 2;
-            }
-        }
-        else {
-            return 0;
-        }
+         $json = json_encode($resultado->fetch_assoc());
+ 
+         return $json;
         
     }
     public function totalCantidad() {

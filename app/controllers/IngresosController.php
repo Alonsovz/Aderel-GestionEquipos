@@ -20,6 +20,12 @@ class IngresosController extends ControladorBase {
         require_once './app/view/Ingresos/nuevoIngreso.php';
     }
 
+    public static function cierreMes()
+    {
+        self::loadMain();
+        require_once './app/view/Ingresos/cierreMes.php';
+    }
+
     public static function nuevo()
     {
         self::loadMain();
@@ -58,6 +64,7 @@ class IngresosController extends ControladorBase {
     {
         require_once './app/view/Ingresos/IngresosBD.php?accion';
     }
+    
     public function llamaReporte()
     {
         $dao = new DaoIngresos();

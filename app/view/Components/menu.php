@@ -7,8 +7,14 @@
 
         if($_SESSION["descRol"] == 'Administrador') {
             require_once 'menuAdmin.php';
-        } else {
-            require_once 'menuSolicitante.php';
+        } else if($_SESSION["descRol"] == 'Supervisor y Control') {
+            require_once 'menuSupervisor.php';
+        }
+        else if($_SESSION["descRol"] == 'Tesorero') {
+            require_once 'menuFinanzas.php';
+        }
+        else{
+            require_once 'menuTorneos.php';
         }
 
     ?>

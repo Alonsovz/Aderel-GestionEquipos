@@ -62,30 +62,14 @@ class DaoIngresos extends DaoBase {
     
 
     public function mostrarTotal() {
-        $_query = "select format(SUM(cantidad),2) as $,idEliminado  from Ingresos where  idEliminado=1
+        $_query = "select format(SUM(cantidad),2) as ingresoMes, idEliminado  from Ingresos where  idEliminado=1
          and mes='{$this->objeto->getMes()}' and anio='{$this->objeto->getAnio()}'";
 
-        $resultado = $this->con->ejecutar($_query);
+         $resultado = $this->con->ejecutar($_query);
 
-        if($resultado->num_rows == 1) {
-            $fila = $resultado->fetch_assoc();
-
-            if($fila["idEliminado"] == 1) {
-                
-                session_start();
-                 $_SESSION["$"] = $fila["$"];
-                            
-                    return 1;
-                
-            } 
-            else{
-               // $_SESSION["$"] = "0.00";
-                return 2;
-            }
-        }
-        else {
-            return 0;
-        }
+         $json = json_encode($resultado->fetch_assoc());
+ 
+         return $json;
         
     }
 

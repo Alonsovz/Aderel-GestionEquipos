@@ -16,6 +16,12 @@ class UsuarioController extends ControladorBase {
         self::loadMain();    
         require_once './app/view/Usuario/dashboard.php';
     }
+    
+    public static function reporteria() {
+        
+        self::loadMain();    
+        require_once './app/view/Usuario/reporteria.php';
+    }
 
     public static function gestion() {
         self::loadMain();
@@ -223,18 +229,18 @@ class UsuarioController extends ControladorBase {
     }
 
     public function editar() {
-        $datos = $_REQUEST["datos"];
+       // $datos = $_REQUEST["datos"];
 
-        $datos = json_decode($datos);
+      //  $datos = json_decode($datos);
 
         $dao = new DaoUsuario();
 
-        $dao->objeto->setNombre($datos->nombre);
-        $dao->objeto->setApellido($datos->apellido);
-        $dao->objeto->setNomUsuario($datos->user);
-        $dao->objeto->setEmail($datos->correo);
-        $dao->objeto->setCodigoRol($datos->rol);
-        $dao->objeto->setCodigoUsuario($datos->idDetalle);
+        $dao->objeto->setNombre($_REQUEST["nombre"]);
+        $dao->objeto->setApellido($_REQUEST["apellido"]);
+        $dao->objeto->setNomUsuario($_REQUEST["user"]);
+        $dao->objeto->setEmail($_REQUEST["correo"]);
+        $dao->objeto->setCodigoRol($_REQUEST["rol"]);
+        $dao->objeto->setCodigoUsuario($_REQUEST["idDetalle"]);
 
         echo $dao->editar();
     }

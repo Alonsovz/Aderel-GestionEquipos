@@ -2,10 +2,13 @@
 
 <div class="ui fullscreen longer modal" id="modalCajaAderel">
 <div class="header">
-    <br>
+
    
 <i class="dollar sign icon"></i><i class="box icon"></i><i class="money bill icon"></i>Egreso de Caja Aderel
-
+<span style="float:right">
+<img src='./res/img/logoaderel.png' width="80">
+</span>
+<br><br><br>
 </div><br>
             
             <button class="ui right floated green labeled icon button" id="btnGestion">

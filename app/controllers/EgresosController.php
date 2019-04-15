@@ -255,9 +255,9 @@ class EgresosController extends ControladorBase {
         $dao->objeto->setChNo($_REQUEST["chNo"]);
         $dao->objeto->setConceptoEgreso($_REQUEST["conceptoEgreso"]);
         $dao->objeto->setCantidad($_REQUEST["cantidad"]);
-        $dao->objeto->setRetencion($_REQUEST["retencion"]);
-        $dao->objeto->setPagado($_REQUEST["pagado"]);
-        $dao->objeto->setIdCheque($_REQUEST["selectChequera"]);
+         $dao->objeto->setRetencion($_REQUEST["retencion"]);
+     $dao->objeto->setPagado($_REQUEST["pagado"]);
+       $dao->objeto->setIdCheque($_REQUEST["selectChequera"]);
 
         $dao->objeto->setIdEgreso($_REQUEST["idDetalle"]);
 

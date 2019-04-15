@@ -17,29 +17,44 @@ sub_titulo="¿Está seguro de querer eliminar esta categoria?" :campos="campos_e
                             <i class="chart bar outline icon"></i>
                             <i class="male icon"></i>  Categorías Masculinas<font color="red" size="20px">.</font>
                             
-                        
-                        <button  class="ui green button">
-                        <a href="?1=TorneosController&2=gestionM" style="color:white;">
-                            <i class="trophy icon"></i>
-                        Torneos
-                        </a>
-                        </button>
+                      
+                            <?php
 
-                        <button class="ui blue button">
-                        <a href="?1=EquipoController&2=gestionM"  style="color:white;">
-                        <i class="users icon"></i><i class="futbol icon"></i>
+if($_SESSION["descRol"] == 'Administrador') {
+
+    ?>                           
+
+                            <button class="ui purple button">
+                            <a href="?1=TorneosController&2=gestionF"  style="color:white;">
+                            <i class="trophy icon"></i>
+                            Torneos
+                            </a>
+                            </button>
+
+                            <button class="ui olive button">
+                            <a href="?1=EquipoController&2=gestionF"  style="color:white;">
+                            <i class="users icon"></i><i class="futbol icon"></i>
                             Equipos
                             </a>
-                        </button>
+                            </button>
 
-                        
+                            <button class="ui violet button">
+                            <a href="?1=JugadoresController&2=gestionF"  style="color:white;">
+                                <i class="female icon"></i><i class="futbol icon"></i>
+                            Jugadores
+                            </a>
+                            </button>
 
-                        <button class="ui yellow button">
-                        <a href="?1=JugadoresController&2=gestionM"  style="color:white;">
-                        <i class="male icon"></i><i class="futbol icon"></i>
-                        Jugadores
-                        </a>
-                        </button>
+                            <?php }else{ ?>
+
+                                <button class="ui purple button">
+                            <a href="?1=TorneosController&2=gestionF"  style="color:white;">
+                            <i class="trophy icon"></i>
+                            Torneos
+                            </a>
+                            </button>
+
+<?php } ?>
                       
                     </div>
         </div>

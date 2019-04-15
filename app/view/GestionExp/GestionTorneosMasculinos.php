@@ -21,27 +21,44 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
                     <i class="trophy icon"></i> <i class="futbol icon"></i>
                         Torneos Masculinos<font color="#1CC647" size="20px">.</font>
                     
+                        <?php
 
-                        <button class="ui red button" >
-                            <a href="?1=CategoriaController&2=gestionM" style="color:white;">
-                                <i class="chart bar outline icon"></i>
-                            Categorías de Torneo
-                            </a>
-                        </button> 
+if($_SESSION["descRol"] == 'Administrador') {
 
-                        <button class="ui blue button">
-                            <a href="?1=EquipoController&2=gestionM"  style="color:white;">
+    ?>
+
+                           <button class="ui pink button">
+                              <a href="?1=CategoriaController&2=gestionF"  style="color:white;">
+                              <i class="chart bar outline icon"></i>
+                              Categorías de Torneo
+                               </a>
+                           </button>
+                           
+   
+                            <button class="ui olive button">
+                            <a href="?1=EquipoController&2=gestionF"  style="color:white;">
                             <i class="users icon"></i><i class="futbol icon"></i>
-                                Equipos
-                                </a>
-                        </button>
+                            Equipos
+                            </a>
+                            </button>
 
-                        <button class="ui yellow button">
-                            <a href="?1=JugadoresController&2=gestionM"  style="color:white;">
-                            <i class="male icon"></i><i class="futbol icon"></i>
+                            <button class="ui violet button">
+                            <a href="?1=JugadoresController&2=gestionF"  style="color:white;">
+                                <i class="female icon"></i><i class="futbol icon"></i>
                             Jugadores
                             </a>
                             </button>
+
+<?php }else{ ?>
+
+<button class="ui pink button">
+<a href="?1=CategoriaController&2=gestionF"  style="color:white;">
+<i class="chart bar outline icon"></i>
+Categorías de Torneo
+ </a>
+</button>
+
+<?php } ?>
                         </div>
             </div>
             <div class="row title-bar">
@@ -459,7 +476,7 @@ var appE = new Vue({
                         console.log(err);
                     });
             },
-            resultados(equipo1,equipo2,vuelta,jornada,hora,fechaP){
+            resultados(equipo1,equipo2,vuelta,jornada,hora,fecha){
                 $("#equipo1").val(equipo1);
                 $("#equipo2").val(equipo2);
                 $("#vuelta").val(vuelta);

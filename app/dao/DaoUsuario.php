@@ -65,7 +65,7 @@ class DaoUsuario extends DaoBase {
 
 
     public function registrar() {
-        $_query = "call registrarUsuario('".$this->objeto->getNombre()."', '".$this->objeto->getApellido()."','".$this->objeto->getNomUsuario()."', '".$this->objeto->getEmail()."', '".sha1($this->objeto->getPass())."',".$this->objeto->getCodigoRol().",1)";
+        $_query = "insert into usuario values(null,'".$this->objeto->getNombre()."', '".$this->objeto->getApellido()."','".$this->objeto->getNomUsuario()."', '".$this->objeto->getEmail()."', '".sha1($this->objeto->getPass())."',".$this->objeto->getCodigoRol().",1)";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -92,7 +92,8 @@ class DaoUsuario extends DaoBase {
 
 
     public function cambiarDatos() {
-        $_query = "update usuario set nombre = '".$this->objeto->getNombre()."', apellido='".$this->objeto->getApellido()."' where codigoUsuario = ".$this->objeto->getCodigoUsuario();
+        $_query = "update usuario set nombre = '".$this->objeto->getNombre()."', 
+        apellido='".$this->objeto->getApellido()."' where codigoUsuario = ".$this->objeto->getCodigoUsuario();
         $resultado = $this->con->ejecutar($_query);
 
         if($resultado) {
@@ -143,7 +144,11 @@ class DaoUsuario extends DaoBase {
     }
 
     public function editar() {
-        $_query = "call editarUsuario('".$this->objeto->getNombre()."', '".$this->objeto->getApellido()."','".$this->objeto->getNomUsuario()."', '".$this->objeto->getEmail()."', ".$this->objeto->getCodigoRol().", ".$this->objeto->getCodigoUsuario().")";
+        $_query = "update usuario set nombre = '".$this->objeto->getNombre()."',
+        apellido = '".$this->objeto->getApellido()."',
+        nomUsuario ='".$this->objeto->getNomUsuario()."', 
+        email = '".$this->objeto->getEmail()."', 
+        codigoRol = ".$this->objeto->getCodigoRol()." where codigoUsuario = ".$this->objeto->getCodigoUsuario();
 
         $resultado = $this->con->ejecutar($_query);
 

@@ -32,8 +32,10 @@ class RemanenteController extends ControladorBase {
 
     public function saldoAnterior() {
         $dao = new DaoRemanente();
+
         $mes = $_REQUEST["mes"];
         $anio = $_REQUEST["anio"];
+
         $dao->objeto->setMes($mes);
         $dao->objeto->setAnio($anio);
 

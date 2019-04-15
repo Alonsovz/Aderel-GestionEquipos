@@ -219,16 +219,6 @@
 
     </div>
 
-<br>
-
-<div class="item">
-<hr><br>
-        <a href="?1=UsuarioController&2=reporteria"  style="color:white; ">
-            Reportes
-        </a>
-
-        </div>
-
 
 
 

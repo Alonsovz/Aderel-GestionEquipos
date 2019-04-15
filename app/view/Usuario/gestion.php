@@ -1,7 +1,7 @@
 <br><br><div id="app">
 
     <modal-registrar id_form="frmRegistrar" id="modalRegistrar" url="?1=UsuarioController&2=registrar" titulo="Registrar Usuario"
-        :campos="campos_registro" tamanio='tiny' style="overflow: scroll;"></modal-registrar>
+        :campos="campos_registro" tamanio='tiny' ></modal-registrar>
 
     <modal-editar id_form="frmEditar" id="modalEditar" url="?1=UsuarioController&2=editar" titulo="Editar Usuario"
         :campos="campos_editar" tamanio='tiny'></modal-editar>
@@ -99,8 +99,16 @@ var app = new Vue({
                     type: 'select',
                     options: [
                         {
+                            val: 4,
+                            text: 'Tesorero'
+                        },
+                        {
+                            val: 3,
+                            text: 'Supervisor y Control'
+                        },
+                        {
                             val: 2,
-                            text: 'Ejecutivo'
+                            text: 'Gestor de Torneos'
                         },
                         {
                             val: 1,
@@ -137,12 +145,21 @@ var app = new Vue({
                     type: 'select',
                     options: [
                         {
+                            val: 4,
+                            text: 'Tesorero'
+                        },
+                        {
+                            val: 3,
+                            text: 'Supervisor y Control'
+                        },
+                        {
                             val: 2,
-                            text: 'Ejecutivo'
-                        },{
+                            text: 'Gestor de Torneos'
+                        },
+                        {
                             val: 1,
                             text: 'Administrador'
-                        }
+                        },
                     ]
                 },
                 {
