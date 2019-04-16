@@ -46,10 +46,18 @@ class SorteoController extends ControladorBase {
 
         }
 
-        
+        $posiciones=$_REQUEST['posiciones'];
+        $posiciones = json_decode($posiciones,true);
 
-         
+        $daoPosiciones = new DaoPosiciones();
 
+        for ($i=0; $i < count($posiciones['idEquipos']); $i++) { 
+            $posicion = new Posiciones();
+            $posicion->setIdTorneo($posiciones['idTorneo']);
+            $posicion->setIdEquipo($posiciones['idEquipos'][$i]);
+
+            $daoPosiciones->registrar($posicion);
+        }
         
         echo 'ok';//xd
 

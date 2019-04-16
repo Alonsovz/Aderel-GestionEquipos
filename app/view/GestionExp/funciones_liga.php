@@ -57,6 +57,15 @@ $id= $_POST["idTor"];
 echo "<script>
 const nEquipos = ".$contador.";
 const idTorneo = ".$id.";
+
+const posiciones = {
+	idTorneo:$id,
+	idEquipos:[";
+	foreach ($equipos as $equipo) {
+		echo $equipo['id'].",";
+	}
+	echo "]
+}
 </script>";
 
 if ($N%2!=0) 
@@ -395,7 +404,10 @@ const enviar =()=>{
 
 	$.ajax({
 		type:'post',
-		data:{datos:JSON.stringify(datosEnviar)},
+		data:{
+			datos:JSON.stringify(datosEnviar),
+			posiciones: JSON.stringify(posiciones)
+		},
 		url:'?1=SorteoController&2=getRegistrar',
         success: function(r) {
                     if(r == "ok") {

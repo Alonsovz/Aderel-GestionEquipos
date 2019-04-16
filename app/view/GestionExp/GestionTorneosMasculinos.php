@@ -28,7 +28,7 @@ if($_SESSION["descRol"] == 'Administrador') {
     ?>
 
                            <button class="ui pink button">
-                              <a href="?1=CategoriaController&2=gestionF"  style="color:white;">
+                              <a href="?1=CategoriaController&2=gestionM"  style="color:white;">
                               <i class="chart bar outline icon"></i>
                               Categorías de Torneo
                                </a>
@@ -36,14 +36,14 @@ if($_SESSION["descRol"] == 'Administrador') {
                            
    
                             <button class="ui olive button">
-                            <a href="?1=EquipoController&2=gestionF"  style="color:white;">
+                            <a href="?1=EquipoController&2=gestionM"  style="color:white;">
                             <i class="users icon"></i><i class="futbol icon"></i>
                             Equipos
                             </a>
                             </button>
 
                             <button class="ui violet button">
-                            <a href="?1=JugadoresController&2=gestionF"  style="color:white;">
+                            <a href="?1=JugadoresController&2=gestionM"  style="color:white;">
                                 <i class="female icon"></i><i class="futbol icon"></i>
                             Jugadores
                             </a>
@@ -52,7 +52,7 @@ if($_SESSION["descRol"] == 'Administrador') {
 <?php }else{ ?>
 
 <button class="ui pink button">
-<a href="?1=CategoriaController&2=gestionF"  style="color:white;">
+<a href="?1=CategoriaController&2=gestionM"  style="color:white;">
 <i class="chart bar outline icon"></i>
 Categorías de Torneo
  </a>
