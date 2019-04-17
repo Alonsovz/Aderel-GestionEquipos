@@ -420,7 +420,7 @@ const enviar =()=>{
 
                         }).then((result) => {
                             if (result.value) {
-                                location.href = "?1=TorneosController&2=gestionM";
+                                location.href = "?1=TorneosController&2=gestionF";
                             }
                         }); 
                         

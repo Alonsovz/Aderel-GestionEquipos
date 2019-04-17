@@ -430,6 +430,26 @@ class EscFutbolController extends ControladorBase {
 
     }
 
+    
+    public function escuelaFutUsers() {
+        $id = $_REQUEST["id"];
+        $dao = new DaoEscuela();
+        
+        require_once './app/reportes/escuelaFutUsers.php';
+        
+      
+
+        $reporte = new Reporte();
+
+        //$dao->objeto->setCodigoArea($idA);
+        $dao->objeto->setIdJugador($id);
+        $resultado = $dao->escuelaFutUsers();
+        $resultado1 = $dao->escuelaFutUsers();
+
+        $encargados = $dao->encargados();
+
+        $reporte->escuelaFutUsers($resultado,$resultado1, $encargados);
+    }
 
 }
 

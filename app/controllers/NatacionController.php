@@ -201,6 +201,22 @@ class NatacionController extends ControladorBase {
     
 
     }
+
+    public function usuariosNat() {
+        $dao = new DaoNatacion();
+        
+        require_once './app/reportes/NatacionUsers.php';
+        
+      
+
+        $reporte = new Reporte();
+
+        //$dao->objeto->setCodigoArea($idA);
+      //  $dao->objeto->setIdUsuario($id);
+        $resultado = $dao->usuariosNat();
+
+        $reporte->NatacionUsers($resultado);
+    }
  
 
 }

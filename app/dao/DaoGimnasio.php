@@ -238,6 +238,18 @@ class DaoGimnasio extends DaoBase {
         return $resultado;
     }
 
+    public function usuariosGim(){
+        $query = "select *,DATE_FORMAT(fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        DATE_FORMAT(fechaInscripcion, '%d/%m/%Y') as fechaInscripcion,
+        DATE_FORMAT(fechaFinal, '%d/%m/%Y') as fechaFinal,
+        TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad
+         from gimnasio where idEliminado=1 and estado=2 order by idUsuario desc";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
 
     public function primerPago(){
         $_query = "insert into pagoGimnasio values(null, '".$this->objeto->getIdUsuario()."',

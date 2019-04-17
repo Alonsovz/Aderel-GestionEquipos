@@ -32,12 +32,14 @@ class DaoTorneos extends DaoBase {
                 $btnVer = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon green small button\" onclick=\"verEquipos(this)\"><i class=\"users icon\"></i> Equipos</button>';
                 $sorteo = '<button id=\"'.$fila["idTorneo"].'\"  equipos=\"'.$fila["inscritos"]. '\" name=\"'.$fila["nombreTorneo"]. '\"  class=\"ui icon yellow small button\" onclick=\"sorteos(this)\"><i class=\"futbol icon\"></i> Sorteo</button>';
                 $btnReporte = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon purple small button\" onclick=\"reporte(this)\"><i class=\"calendar icon\"></i>Calendarización</button>';
-                $btnGestion = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon gray small button\" onclick=\"calendarizacion(this)\"><i class=\"calendar icon\"></i>Gestionar</button>';
+                $btnGestion = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon orange small button\" onclick=\"calendarizacion(this)\"><i class=\"calendar icon\"></i>Gestionar</button>';
+
+                $btnEstad = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon blue small button\" onclick=\"estadisticas(this)\"><i class=\"sort amount up icon\"></i>Estadísticas</button>';
 
                 if($fila["sorteo"]==1){
                     $acciones = ', "Acciones": "'.$btnVer.''.$sorteo .''.$btnEditar.' '.$btnEliminar.'"';
                 }else{
-                    $acciones = ', "Acciones": "'.$btnVer.''.$btnEditar.' '.$btnEliminar.''.$btnReporte .''.$btnGestion.'"';
+                    $acciones = ', "Acciones": "'.$btnVer.''.$btnEstad.''.$btnReporte .''.$btnGestion.'"';
                 }
                 
 
@@ -69,17 +71,20 @@ class DaoTorneos extends DaoBase {
                 $object = json_encode($fila);
                
                
-                $btnGestion = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon gray small button\" onclick=\"calendarizacion(this)\"><i class=\"calendar icon\"></i>Gestionar</button>';
+               
                 $btnEditar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEditarT icon blue small button\" onclick=\"editarTorneo(this)\"><i class=\"edit icon\"></i> Editar </button>';
                 $btnEliminar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEliminarT icon negative small button\" onclick=\"eliminarTorneo(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
                 $btnVer = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon green small button\" onclick=\"verEquipos(this)\"><i class=\"users icon\"></i> Equipos</button>';
                 $sorteo = '<button id=\"'.$fila["idTorneo"].'\"  equipos=\"'.$fila["inscritos"]. '\" name=\"'.$fila["nombreTorneo"]. '\"  class=\"ui icon yellow small button\" onclick=\"sorteos(this)\"><i class=\"futbol icon\"></i>Sorteo</button>';
                 $btnReporte = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon olive small button\" onclick=\"reporte(this)\"><i class=\"calendar icon\"></i>Calendarización</button>';
+                $btnGestion = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon orange small button\" onclick=\"calendarizacion(this)\"><i class=\"calendar icon\"></i>Gestionar</button>';
+
+                $btnEstad = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon blue small button\" onclick=\"estadisticas(this)\"><i class=\"sort amount up icon\"></i>Estadísticas</button>';
 
                 if($fila["sorteo"]==1){
                     $acciones = ', "Acciones": "'.$btnVer.''.$sorteo .''.$btnEditar.' '.$btnEliminar.'"';
                 }else{
-                    $acciones = ', "Acciones": "'.$btnVer.''.$btnEditar.' '.$btnEliminar.''.$btnReporte .''.$btnGestion.'"';
+                    $acciones = ', "Acciones": "'.$btnVer.''.$btnEstad.''.$btnReporte .''.$btnGestion.'"';
                 }
                 
                 
@@ -381,6 +386,30 @@ class DaoTorneos extends DaoBase {
         inner JOIN jornadas j on j.id = p.jornadas_id
         inner join torneos t on t.idTorneo = j.idTorneo
         WHERE  j.idTorneo =".$this->objeto->getIdTorneo();
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function posiciones(){
+        $query = "select p.*, e.nombre as nombreE, t.nombreTorneo as Torneo, (p.golesFavor - p.golesContra) as diferencia from posiciones p
+        inner join equipos e on e.idEquipo = p.idEquipo 
+        inner join torneos t on t.idTorneo = p.idTorneo
+        where p.idTorneo = ".$this->objeto->getIdTorneo()." ORDER BY puntaje DESC, diferencia DESC";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function goleadores(){
+        $query = "select g.*, e.nombre as equipo, t.nombreTorneo as torneo, j.nombre as nombre, j.apellido as apellido from goleadores g
+        inner join inscriJugador i on i.idJugador = g.idJugador
+        inner join equipos e on e.idEquipo = i.idEquipo
+        inner join torneos t on t.idTorneo = i.idTorneo
+        inner join jugadores j on j.idJugador = i.idJugador
+        where i.idTorneo = ".$this->objeto->getIdTorneo()."  order by goles desc";
 
         $resultado = $this->con->ejecutar($query);
 

@@ -311,8 +311,8 @@
                     <label><i class="dollar icon"></i>Selecciona el área: </label>
                     <select class="ui  dropdown" id="otrosRpts">
                     <option value="" selected="selected">Selecciona una opción</option>
-                        <option value="Gimnasio">Gimnasio</option>
-                        <option value="Escuela de Natacion">Escuela de Natación</option>
+                        <option value="1">Gimnasio</option>
+                        <option value="2">Escuela de Natación</option>
                         
 
                     </select>
@@ -408,6 +408,53 @@ $(document).on("click", "#btnEscuelaFut", function () {
 $(document).on("click", "#btnOtros", function () {
     $('#rptOtros').modal('setting', 'autofocus', true).modal('setting', 'closable', false).modal('show');
 });
+
+
+$(document).on("click", "#otrosRpt", function () {
+    var op= $('#otrosRpts').val();
+
+    if(op == 1){
+        window.open('?1=GimnasioController&2=usuariosGim');
+        return false;
+    }
+
+    if(op == 2){
+        window.open('?1=NatacionController&2=usuariosNat');
+        return false;
+    }
+});
+
+
+$(document).on("click", "#verEscuelaFut", function () {
+    var op= $('#nivel').val();
+
+    if(op == 1){
+        window.open('?1=EscFutbolController&2=escuelaFutUsers&id='+1);
+        return false;
+    }
+
+    if(op == 2){
+        window.open('?1=EscFutbolController&2=escuelaFutUsers&id='+2);
+        return false;
+    }
+    if(op == 3){
+        window.open('?1=EscFutbolController&2=escuelaFutUsers&id='+3);
+        return false;
+    }
+    if(op == 4){
+        window.open('?1=EscFutbolController&2=escuelaFutUsers&id='+4);
+        return false;
+    }
+    if(op == 5){
+        window.open('?1=EscFutbolController&2=escuelaFutUsers&id='+5);
+        return false;
+    }
+    if(op == 6){
+        window.open('?1=EscFutbolController&2=escuelaFutUsers&id='+6);
+        return false;
+    }
+});
+
 
 
 </script>

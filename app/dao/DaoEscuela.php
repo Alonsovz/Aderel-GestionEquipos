@@ -927,6 +927,26 @@ class DaoEscuela extends DaoBase {
 
     }
 
+    public function escuelaFutUsers(){
+        $query = "select *,DATE_FORMAT(fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        DATE_FORMAT(fechaInscripcion, '%d/%m/%Y') as fechaInscripcion,
+        DATE_FORMAT(fechaFinal, '%d/%m/%Y') as fechaFinal,
+        TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from escuelaFut
+          where idEliminado=1 and estado=2 and idEscuela=".$this->objeto->getIdJugador();
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function encargados(){
+        $query = "select * from nivelEscuela where idEscuela =".$this->objeto->getIdJugador();
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
 
 
 

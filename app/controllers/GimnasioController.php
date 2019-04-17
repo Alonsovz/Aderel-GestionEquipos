@@ -133,6 +133,23 @@ class GimnasioController extends ControladorBase {
     }
 
 
+    public function usuariosGim() {
+        $dao = new DaoGimnasio();
+        
+        require_once './app/reportes/GimnasioUsers.php';
+        
+      
+
+        $reporte = new Reporte();
+
+        //$dao->objeto->setCodigoArea($idA);
+      //  $dao->objeto->setIdUsuario($id);
+        $resultado = $dao->usuariosGim();
+
+        $reporte->GimnasioUsers($resultado);
+    }
+
+
     public function pagos(){
         $id = $_REQUEST["id"];
 

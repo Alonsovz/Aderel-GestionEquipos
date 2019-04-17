@@ -488,11 +488,10 @@ var inscribir=(ele)=>{
                         appE.datosDetalle = [];
                         $('#modalCambios').modal('hide');
                         swal({
-                            title: 'Listo!',
-                            text: 'Jugador inscrito con éxito',
+                            title: 'Jugador Inscrito',
+                            text: 'Realice el cobro en caja para finalizar su inscripción',
                             type: 'success',
-                            showConfirmButton: false,
-                                timer: 1700
+                            showConfirmButton: true,
 
                         }).then((result) => {
                             swal({
@@ -544,11 +543,10 @@ var inscribir=(ele)=>{
                         $('#modalCambios').modal('hide');
                         swal({
                            
-                            title: 'Listo!',
-                            text: 'Jugador inscrito con éxito',
+                            title: 'Jugador Inscrito',
+                            text: 'Realice el cobro en caja para finalizar su inscripción',
                             type: 'success',
-                            showConfirmButton: false,
-                                timer: 1700
+                            showConfirmButton: true,
 
                         }).then((result) => {
                             $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)

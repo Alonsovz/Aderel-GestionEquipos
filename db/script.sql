@@ -147,7 +147,18 @@ CREATE TABLE jornadas (
   idTorneo INT(11) NOT NULL
 );
 
-
+CREATE TABLE posiciones (
+  idPosiciones int primary key auto_increment,
+  idEquipo int,
+  idTorneo int,
+  golesFavor int,
+  golesContra int,
+  puntaje int,
+  partidosJugados int,
+  partidosEmpatados int,
+  partidosPerdidos int,
+  partidosGanados int
+);
 
 
 create table inscripcion(
@@ -201,6 +212,11 @@ fechaInscripcion date
 );
 
 
+CREATE TABLE goleadores (
+  idGoleador int primary key auto_increment,
+  idJugador int,
+  goles int
+);
 
 create table gimnasio(
 idUsuario int primary key auto_increment,
@@ -327,6 +343,11 @@ alter table torneos add constraint fk_torneos_genero foreign key (idGenero) refe
 alter table categorias add constraint fk_categorias_genero foreign key (idGenero) references genero(idGenero);
 alter table equipos add constraint fk_equipos_genero foreign key (idGenero) references genero(idGenero);
 
+alter table posiciones add constraint fk_posiciones_equipos foreign key (idEquipo) references equipos(idEquipo);
+alter table posiciones add constraint fk_posiciones_torneos foreign key (idTorneo) references torneos(idTorneo);
+
+alter table goleadores add constraint fk_goleadores_inscriJugador foreign key (idJugador) references inscriJugador(idJugador);
+
 insert into rol values(1,'Administrador');
 insert into rol values(2,'Gestor de Torneos');
 insert into rol values(3,'Supervisor y Control');
@@ -336,8 +357,8 @@ insert into usuario values(null,'Fabio Alonso','Mejia Velasquez','mejia','fabiom
 insert into usuario values(null,'Alonso','Mejia','alonso','mejiafabio383@gmail.com',sha1('123'),2,1);
 insert into usuario values(null,'Juan','Perez','juan','juanPerez383@gmail.com',sha1('123'),3,1);
 
-insert into ingresos values (null,'Escuela','2019-03-18',2000,'#140E93','#E6C404','04','2019',1);
-insert into ingresos values (null,'Fondo Comun','2019-03-19',2000,'#140E93','#E6C404','04','2019',1);
+insert into ingresos values (null,'Escuela','2019-04-11',2000,'#140E93','#E6C404','04','2019',1);
+insert into ingresos values (null,'Fondo Comun','2019-04-14',2000,'#140E93','#E6C404','04','2019',1);
 
 insert into chequeras values(null, 'Chequera Banco America Central',1);
 
@@ -622,6 +643,21 @@ end
 $$
 
 
-select * from ingresos
+select p.*, e.nombre as nombreE, t.nombreTorneo as Torneo, (p.golesFavor - p.golesContra) as diferencia from posiciones p
+inner join equipos e on e.idEquipo = p.idEquipo 
+inner join torneos t on t.idTorneo = p.idTorneo
+where p.idTorneo = 4 ORDER BY puntaje DESC, diferencia DESC;
        
-       
+select * from inscriJugador  
+
+
+     
+select g.*, e.nombre as equipo, t.nombreTorneo as torneo, j.nombre as nombre, j.apellido as apellido from goleadores g
+inner join inscriJugador i on i.idJugador = g.idJugador
+inner join equipos e on e.idEquipo = i.idEquipo
+inner join torneos t on t.idTorneo = i.idTorneo
+inner join jugadores j on j.idJugador = i.idJugador
+where i.idTorneo = 3 order by goles desc
+
+
+	select * from nivelEscuela where idEscuela =1

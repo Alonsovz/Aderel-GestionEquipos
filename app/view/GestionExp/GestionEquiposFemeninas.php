@@ -490,11 +490,10 @@ var inscribir=(ele)=>{
                         appE.datosDetalle = [];
                         $('#modalCambios').modal('hide');
                         swal({
-                            title: 'Listo!',
-                            text: 'Jugadora inscrita con éxito',
+                            title: 'Jugadora Inscrita',
+                            text: 'Realice el cobro en caja para finalizar su inscripción',
                             type: 'success',
-                            showConfirmButton: false,
-                                timer: 1700
+                            showConfirmButton: true,
 
                         }).then((result) => {
                             swal({
@@ -545,11 +544,10 @@ var idEquipo = $("#idEqui").val();
                     if(r == 1) {
                         $('#modalCambios').modal('hide');
                         swal({
-                            title: 'Listo!',
-                            text: 'Jugadora inscrita con éxito',
+                            title: 'Jugadora Inscrita',
+                            text: 'Realice el cobro en caja para finalizar su inscripción',
                             type: 'success',
-                            showConfirmButton: false,
-                                timer: 1700
+                            showConfirmButton: true,
 
                         }).then((result) => {
                             $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)

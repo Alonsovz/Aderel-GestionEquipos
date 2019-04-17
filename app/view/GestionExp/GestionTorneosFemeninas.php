@@ -13,6 +13,8 @@
 sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_eliminarT" tamanio='tiny'></modal-eliminar>
 <modal-detalles :detalles="detalles"></modal-detalles>
 <modal-jornadas :detalles="detalles"></modal-jornadas>
+<modal-posiciones :detalles="detalles"></modal-posiciones>
+<modal-goleo :detalles="detalles"></modal-goleo>
 
     <div class="ui grid">
             <div class="row">
@@ -184,8 +186,9 @@ Categorías de Torneo
     <h3><i class="futbol icon"></i> Marcador del partido</h3>
     <br>
         <div class="field">
-            <div class="fields">
-                <div class="five wide field">
+        <div class="fields">
+            <div class="five wide field"></div>
+                <div class="three wide field">
                 <label><center><i class="users icon"></i>Equipo</center></label>
                     <input type="text" id="equipo1" name="equipo1">
                 </div>
@@ -205,12 +208,12 @@ Categorías de Torneo
                     <input type="number" id="goles2" name="goles2">
                 </div>
 
-                <div class="five wide field">
+                <div class="three wide field">
                 <label><center><i class="users icon"></i>Equipo</center></label>
                     <input type="text" id="equipo2" name="equipo2">
                 </div>
 
-                
+                <div class="five wide field"></div>
             </div>
         </div>
         </form><br>
@@ -336,6 +339,45 @@ Cancelar
 </div>
 
 </div>
+
+
+<div class="ui  modal" id="eleccion">
+<div class="header">
+<i class="sort amount up icon"></i> Estadísticas
+</div>
+
+<div class="content">
+
+<input type="hidden" id="idTorneoEs">
+    <div class="row tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
+
+    <button class="ui red inverted segment"  style="width: 30%; text-align:center;" id="verPosiciones">
+     Posiciones
+     <div class="ui divider"></div>
+     <i class="futbol icon"></i> <i class="calendar icon"></i>
+    </button>
+
+    <button class="ui orange inverted segment" id="tablaGol" style="width: 30%; text-align:center;">
+    Goleadores
+    <div class="ui divider"></div>
+    <i class="futbol icon"></i> <i class="male icon"></i>
+    </button>
+
+    <button class="ui yellow inverted segment" id="tablaCastigo" style="width: 30%; text-align:center;">
+     Jugadores Castigados
+     <div class="ui divider"></div>
+     <i class="futbol icon"></i> <i class="trash icon"></i>
+    </button>
+
+    </div>
+</div>
+<div class="actions">
+<button class="ui black deny button">
+Cancelar
+</button>
+</div>
+</div>
+
 </div>
 
 <script src="./res/tablas/tablaTorneosF.js"></script>
@@ -344,6 +386,8 @@ Cancelar
 <script src="./res/js/modalEliminar.js"></script>
 <script src="./res/js/modalDetallesE.js"></script>
 <script src="./res/js/modalJornadasTorneo.js"></script>
+<script src="./res/js/modalPosicionesTorneo.js"></script>
+<script src="./res/js/modalGoleadores.js"></script>
 <script>
 var appE = new Vue({
         el: "#appE",
@@ -428,6 +472,24 @@ var appE = new Vue({
             });
 
             },
+            tablaPosiciones(id) {
+
+            this.idTorneo = parseInt(id);
+
+            $('#frmDetalles').addClass('loading');
+            $.ajax({
+            type: 'POST',
+            url: '?1=TorneosController&2=posiciones',
+            data: {
+            id: id
+            },
+            success: function (data) {
+            appE.detalles = JSON.parse(data);
+            $('#frmDetalles').removeClass('loading');
+            }
+            });
+
+            },
             cargarDetallesJornadas(id) {
 
             this.idTorneo = parseInt(id);
@@ -449,6 +511,25 @@ var appE = new Vue({
             cerrarModal() {
                 this.detalles = [];
             },
+
+            goleadores(id) {
+
+                this.idTorneo = parseInt(id);
+
+                $('#frmDetalles').addClass('loading');
+                $.ajax({
+                type: 'POST',
+                url: '?1=TorneosController&2=goleadores',
+                data: {
+                id: id
+                },
+                success: function (data) {
+                appE.detalles = JSON.parse(data);
+                $('#frmDetalles').removeClass('loading');
+                }
+                });
+
+                },
             
             refrescarTabla() {
                 tablaTorneosF.ajax.reload();  
@@ -529,6 +610,8 @@ $(document).ready(function(){
 
             $("#goles").hide();
             $("#amonestados").hide();
+    
+
 });
 $("#btnGoleo").click(function(){
     $("#amonestados").hide('10');
@@ -570,6 +653,12 @@ var verEquipos=(ele)=>{
                 .modal('show');
             appE.cargarDetalles($(ele).attr('id'));
 }
+var estadisticas=(ele)=>{
+     $('#eleccion').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+    $("#idTorneoEs").val($(ele).attr('id'));
+   // appE.goleadores($(ele).attr('id'));
+  }
 
 var sorteos=(ele)=>{
     $("#disponibles").val($(ele).attr("equipos"));
@@ -584,6 +673,18 @@ var reporte=(ele)=>{
 window.open('?1=TorneosController&2=calendario&id='+id,'_blank');
 return false;
 }
+
+$("#verPosiciones").click(function(){
+    appE.tablaPosiciones($("#idTorneoEs").val());
+    $('#modalPosiciones').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+  });
+
+  $("#tablaGol").click(function(){
+    appE.goleadores($("#idTorneoEs").val());
+    $('#modalGoleo').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+  });
 
 
 function cerrar(){
