@@ -234,8 +234,7 @@
                 <div class="six wide field">
                     <label><i class="dollar icon"></i>Selecciona el área: </label>
                     <select class="ui  dropdown" id="morosos">
-                    <option value="" selected="selected">Selecciona una opción</option>
-                        <option value="gimnasio">Gimnasio</option>
+                        <option value="gimnasio" selected="selected">Gimnasio</option>
                         <option value="escuelaFutbol">Escuela de Fútbol</option>
                         <option value="escuelaNatacion">Escuela de Natacion</option>
                     </select>
@@ -271,8 +270,7 @@
                 <div class="six wide field">
                     <label><i class="futbol icon"></i>Selecciona el nivel: </label>
                     <select class="ui  dropdown" id="nivel">
-                    <option value="" selected="selected">Selecciona una opción</option>
-                        <option value="1">1er nivel</option>
+                        <option value="1" selected="selected">1er nivel</option>
                         <option value="2">2do Nivel</option>
                         <option value="3">3er Nivel</option>
                         <option value="4">4to Nivel</option>
@@ -310,8 +308,7 @@
                 <div class="six wide field">
                     <label><i class="dollar icon"></i>Selecciona el área: </label>
                     <select class="ui  dropdown" id="otrosRpts">
-                    <option value="" selected="selected">Selecciona una opción</option>
-                        <option value="1">Gimnasio</option>
+                        <option value="1" selected="selected">Gimnasio</option>
                         <option value="2">Escuela de Natación</option>
                         
 
