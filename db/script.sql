@@ -648,7 +648,7 @@ inner join equipos e on e.idEquipo = p.idEquipo
 inner join torneos t on t.idTorneo = p.idTorneo
 where p.idTorneo = 4 ORDER BY puntaje DESC, diferencia DESC;
        
-select * from inscriJugador  
+select * from escuelaFut  
 
 
      
@@ -660,4 +660,24 @@ inner join jugadores j on j.idJugador = i.idJugador
 where i.idTorneo = 3 order by goles desc
 
 
-	select * from nivelEscuela where idEscuela =1
+select p.*,DATE_FORMAT(p.fechasPago, '%d/%m/%Y') as fechaP, g.nombre as nombre,curdate() as fechaActual, g.apellido as apellido from pagoGimnasio p
+        inner join gimnasio  g on g.idUsuario = p.idUsuario
+         where p.idUsuario =3
+         
+         	select p.*,count(p.fechasPago) as cuotasAtrasadas,e.*,DATE_FORMAT(e.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        TIMESTAMPDIFF(YEAR,e.fechaNacimiento,CURDATE()) AS edad
+        from pagoNatacion p
+    inner join natacion e on e.idUsuario = p.idUsuario
+    where p.fechasPago < curdate() and p.estado= 1 group by p.idUsuario
+    
+    
+    select g.*, SUM(g.goles) as goles, e.nombre as equipo, t.nombreTorneo as torneo, j.nombre as nombre, j.apellido as apellido from goleadores g
+        inner join inscriJugador i on i.idJugador = g.idJugador
+        inner join equipos e on e.idEquipo = i.idEquipo
+        inner join torneos t on t.idTorneo = i.idTorneo
+        inner join jugadores j on j.idJugador = i.idJugador
+        where i.idTorneo = 3  group by g.idJugador order by goles desc
+    
+    select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,
+        DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento from jugadores j
+         where j.idEliminado = 1 and j.idJugador>1 and j.idFondo=2
