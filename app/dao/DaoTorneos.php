@@ -380,12 +380,13 @@ class DaoTorneos extends DaoBase {
 
 
     public function calendarioGestionT(){
-        $query = "select j.orden as jornada, j.vuelta_N as vuelta, j.descansa_id_Equipo as descansa,
-        p.equipo1_id as equipo1, p.equipo2_id as equipo2, p.partido_N as partido, p.cancha as cancha,
-        p.fecha as fecha, p.hora as hora,t.nombreTorneo as nombreT FROM partidos p 
-        inner JOIN jornadas j on j.id = p.jornadas_id
-        inner join torneos t on t.idTorneo = j.idTorneo
-        WHERE  j.idTorneo =".$this->objeto->getIdTorneo();
+        $query = "
+        select j.orden as jornada, j.vuelta_N as vuelta, j.descansa_id_Equipo as descansa,
+                p.equipo1_id as equipo1, p.equipo2_id as equipo2, p.partido_N as partido, p.cancha as cancha,
+                p.fecha as fecha, p.hora as hora,t.nombreTorneo as nombreT, t.idTorneo as idTor FROM partidos p 
+                inner JOIN jornadas j on j.id = p.jornadas_id
+                inner join torneos t on t.idTorneo = j.idTorneo
+                WHERE  j.idTorneo =".$this->objeto->getIdTorneo();
 
         $resultado = $this->con->ejecutar($query);
 
@@ -409,7 +410,7 @@ class DaoTorneos extends DaoBase {
         inner join equipos e on e.idEquipo = i.idEquipo
         inner join torneos t on t.idTorneo = i.idTorneo
         inner join jugadores j on j.idJugador = i.idJugador
-        where i.idTorneo = ".$this->objeto->getIdTorneo()."  group by g.idJugador order by goles desc";
+        where t.idTorneo = ".$this->objeto->getIdTorneo()."  group by g.idJugador order by goles desc";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -463,6 +464,45 @@ class DaoTorneos extends DaoBase {
         $resultado = $this->con->ejecutar($query);
 
         return $resultado;
+    }
+
+
+    public function guardarEquipo1(){
+
+        $_query = "update posiciones set golesFavor =golesFavor + '".$this->objeto->getGoles1()."' ,
+         golesContra = golesContra + '".$this->objeto->getGolesContra1()."' ,
+         puntaje = puntaje + '".$this->objeto->getPuntaje1()."' ,
+         partidosJugados = partidosJugados + 1,  partidosEmpatados = partidosEmpatados + '".$this->objeto->getPartidosEmpatados1()."' ,
+         partidosGanados = partidosGanados + '".$this->objeto->getPartidosGanados1()."' ,
+         partidosPerdidos = partidosPerdidos + '".$this->objeto->getPartidosPerdidos1()."' 
+        where idEquipo = (select idEquipo from equipos where nombre= '".$this->objeto->getEquipo1()."') 
+        and idTorneo  = ".$this->objeto->getIdTorneo();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+
+    }
+
+    public function guardarEquipo2(){
+
+        $_query = "update posiciones set golesFavor =golesFavor + '".$this->objeto->getGoles2()."' ,
+         golesContra = golesContra + '".$this->objeto->getGolesContra2()."' ,
+         puntaje = puntaje + '".$this->objeto->getPuntaje2()."' ,
+         partidosJugados = partidosJugados + 1,  partidosEmpatados = partidosEmpatados + '".$this->objeto->getPartidosEmpatados2()."' ,
+         partidosGanados = partidosGanados + '".$this->objeto->getPartidosGanados2()."' ,
+         partidosPerdidos = partidosPerdidos + '".$this->objeto->getPartidosPerdidos2()."' 
+        where idEquipo = (select idEquipo from equipos where nombre= '".$this->objeto->getEquipo2()."') 
+        and idTorneo  = ".$this->objeto->getIdTorneo();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        
+
     }
 
 

@@ -328,6 +328,94 @@ class TorneosController extends ControladorBase {
         }
     }
 
+
+    public function guardarResultado(){
+        $golesLocal = $_REQUEST["goles1"];
+        $golesVisita = $_REQUEST["goles2"];
+        $equipo1 = $_REQUEST["equipo1"];
+        $equipo2 = $_REQUEST["equipo2"];
+        $idTorneo = $_REQUEST["idTorneo"];
+
+        $dao = new DaoTorneos();
+
+
+        if($golesLocal > $golesVisita){
+            $dao->objeto->setEquipo1($equipo1);
+            $dao->objeto->setPartidosPerdidos1(0);
+            $dao->objeto->setPartidosGanados1(1);
+            $dao->objeto->setPartidosEmpatados1(0);
+            $dao->objeto->setPuntaje1(3);
+            $dao->objeto->setGoles1($golesLocal);
+            $dao->objeto->setGolesContra1($golesVisita);
+            $dao->objeto->setIdTorneo($idTorneo);
+
+            echo $dao->guardarEquipo1();
+
+            $dao->objeto->setEquipo2($equipo2);
+            $dao->objeto->setPartidosPerdidos2(1);
+            $dao->objeto->setPartidosGanados2(0);
+            $dao->objeto->setPartidosEmpatados2(0);
+            $dao->objeto->setPuntaje2(0);
+            $dao->objeto->setGoles2($golesVisita);
+            $dao->objeto->setGolesContra2($golesLocal);
+            $dao->objeto->setIdTorneo($idTorneo);
+
+            echo $dao->guardarEquipo2();
+
+        }
+        else if($golesLocal < $golesVisita){
+
+            $dao->objeto->setEquipo1($equipo1);
+            $dao->objeto->setPartidosPerdidos1(1);
+            $dao->objeto->setPartidosGanados1(0);
+            $dao->objeto->setPartidosEmpatados1(0);
+            $dao->objeto->setPuntaje1(0);
+            $dao->objeto->setGoles1($golesLocal);
+            $dao->objeto->setGolesContra1($golesVisita);
+            $dao->objeto->setIdTorneo($idTorneo);
+
+            echo $dao->guardarEquipo1();
+
+            $dao->objeto->setEquipo2($equipo2);
+            $dao->objeto->setPartidosPerdidos2(0);
+            $dao->objeto->setPartidosGanados2(1);
+            $dao->objeto->setPartidosEmpatados2(0);
+            $dao->objeto->setPuntaje2(3);
+            $dao->objeto->setGoles2($golesVisita);
+            $dao->objeto->setGolesContra2($golesLocal);
+            $dao->objeto->setIdTorneo($idTorneo);
+
+            echo $dao->guardarEquipo2();
+
+        }
+        else if($golesLocal == $golesVisita){
+
+            $dao->objeto->setEquipo1($equipo1);
+            $dao->objeto->setPartidosPerdidos1(0);
+            $dao->objeto->setPartidosGanados1(0);
+            $dao->objeto->setPartidosEmpatados1(1);
+            $dao->objeto->setPuntaje1(1);
+            $dao->objeto->setGoles1($golesLocal);
+            $dao->objeto->setGolesContra1($golesVisita);
+            $dao->objeto->setIdTorneo($idTorneo);
+
+            echo $dao->guardarEquipo1();
+
+            $dao->objeto->setEquipo2($equipo2);
+            $dao->objeto->setPartidosPerdidos2(0);
+            $dao->objeto->setPartidosGanados2(0);
+            $dao->objeto->setPartidosEmpatados2(1);
+            $dao->objeto->setPuntaje2(1);
+            $dao->objeto->setGoles2($golesVisita);
+            $dao->objeto->setGolesContra2($golesLocal);
+            $dao->objeto->setIdTorneo($idTorneo);
+
+            echo $dao->guardarEquipo2();
+
+        }
+
+    }
+
 }
 
 

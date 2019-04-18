@@ -149,6 +149,11 @@ Categorías de Torneo
         <div class="seven wide field">
         <h3><i class="cogs icon"></i> Datos generales del partido</h3>
 </div>
+<div class="three wide field">
+            <label><center>Torneo</center></label>
+                        <input type="text" id="nombreTor" name="nombreTor" readonly>
+                        <input type="hidden" id="idTo" name="idTo" readonly>
+            </div>
 
         <div class="one wide field">
             <label><center>Vuelta</center></label>
@@ -259,9 +264,7 @@ Categorías de Torneo
                         </tbody>
                     </table>
                     <br>
-        <span style="float:right;">
-        <button @click="" class="ui green circular icon button"><i class="check icon"></i> Guardar</button>
-        </span> 
+         
         </div>
 
         <div id="amonestados">
@@ -316,9 +319,7 @@ Categorías de Torneo
                         </tbody>
                     </table>
                     <br>
-                    <span style="float:right;">
-        <button @click="" class="ui green circular icon button"><i class="check icon"></i> Guardar</button>
-        </span>
+                  
         
         </div>
 
@@ -332,7 +333,8 @@ Categorías de Torneo
 Cancelar
 </button>
 
-<button @click="" class="ui violet button"><i class="save icon">
+
+<button id="guardarTodo" class="ui violet button"><i class="save icon">
 </i> Guardar Todo
 </button>
 
@@ -571,13 +573,15 @@ var appE = new Vue({
                         console.log(err);
                     });
             },
-            resultados(equipo1,equipo2,vuelta,jornada,hora,fecha){
+            resultados(equipo1,equipo2,vuelta,jornada,hora,fecha,nombreT,idTor){
                 $("#equipo1").val(equipo1);
                 $("#equipo2").val(equipo2);
                 $("#vuelta").val(vuelta);
                 $("#jornada").val(jornada);
                 $("#fecha").val(fecha);
                 $("#hora").val(hora);
+                $("#nombreTor").val(nombreT);
+                $("#idTo").val(idTor);
 
                 $('#modalResultados').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
@@ -610,7 +614,44 @@ var appE = new Vue({
             $('.ui.search.dropdown.selection').css('max-width', '100%');
             $('.ui.search.dropdown.selection').css('min-width', '100%');
             $('.ui.search.dropdown.selection').css('width', '100%');
-            }
+            },
+            guardarGoleador() {
+
+                if (this.envios.length) {
+
+                    $('#frmGoleador').addClass('loading');
+                    $.ajax({
+                        type: 'POST',
+                        data: {
+                            detalles: JSON.stringify(this.envios)
+                        },
+                        url: '?1=TorneosController&2=registrarGoleador',
+                        success: function (r) {
+                            $('#frmGoleador').removeClass('loading');
+                            if (r == 1) {
+                                swal({
+                                    title: 'Listo!',
+                            text: 'Goleadores guardados con éxito',
+                            type: 'success',
+                            showConfirmButton: true
+                                }).then((result) => {
+                                    if (result.value) {
+                                        appE.envios = [{
+                                            goleadores: '2',
+                                            goles: ''
+                                        }];
+
+                                    //  app.modalNuevoEnvio();
+                                    }
+                                });           
+                            }
+                            
+                        }
+                    });
+                }
+
+                }
+
         }
     });
 </script>
@@ -703,4 +744,44 @@ $("#verPosiciones").click(function(){
 function cerrar(){
     $('#sorteos').modal('hide');
 }
+
+$("#guardarTodo").click(function(){
+    
+    var idTorneo = $('#idTo').val();
+               var equipo1 = $('#equipo1').val();
+               var equipo2 = $('#equipo2').val();
+               var goles1 = $('#goles1').val();
+               var goles2 = $('#goles2').val();
+         
+        
+            $.ajax({
+                type: 'POST',
+                url: '?1=TorneosController&2=guardarResultado',
+                data: {
+                    idTorneo : idTorneo,
+                    equipo1 : equipo1,
+                    equipo2 : equipo2,
+                    goles2 : goles2,
+                    goles1 : goles1,
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        $('#modalResultado').modal('hide');
+                        swal({
+                            title: 'Listo!',
+                            text: 'Resultado guardado con éxito',
+                            type: 'success',
+                            showConfirmButton: true
+
+                        }).then((result) => {
+                            if (result.value) {
+                                appE.guardarGoleador();
+                            }
+                        }); 
+                        
+                        
+                    } 
+                }
+            });
+});
 </script>

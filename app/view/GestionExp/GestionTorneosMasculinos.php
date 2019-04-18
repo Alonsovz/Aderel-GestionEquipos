@@ -142,12 +142,18 @@ Categorías de Torneo
 
 <div class="header">
 <div class="ui equal width form">
-<form id="">
+<form id="frmResultado">
 <div class="field">
         <div class="fields">
         <div class="seven wide field">
         <h3><i class="cogs icon"></i> Datos generales del partido</h3>
 </div>
+
+<div class="three wide field">
+            <label><center>Torneo</center></label>
+                        <input type="text" id="nombreTor" name="nombreTor" readonly>
+                        <input type="hidden" id="idTo" name="idTo" readonly>
+            </div>
 
         <div class="one wide field">
             <label><center>Vuelta</center></label>
@@ -180,7 +186,7 @@ Categorías de Torneo
 <div class="scrolling content">
 
 <div class="ui equal width form">
-    <form id="frmResultado">
+    
 
     <h3><i class="futbol icon"></i> Marcador del partido</h3>
     <br>
@@ -259,9 +265,7 @@ Categorías de Torneo
                         </tbody>
                     </table>
                     <br>
-        <span style="float:right;">
-        <a id="guardarGol" class="ui brown circular icon button"><i class="check icon"></i> Guardar</a>
-        </span> 
+        
         </div>
 
         <div id="amonestados">
@@ -316,9 +320,7 @@ Categorías de Torneo
                         </tbody>
                     </table>
                     <br>
-        <span style="float:right;">
-        <button @click="" class="ui green circular icon button"><i class="check icon"></i> Guardar</button>
-        </span> 
+        
 
         </div>
 </div>
@@ -332,7 +334,7 @@ Categorías de Torneo
 Cancelar
 </button>
 
-<button @click="" class="ui violet button"><i class="save icon">
+<button id="guardarTodo" class="ui violet button"><i class="save icon">
 </i> Guardar Todo
 </button>
 
@@ -574,13 +576,15 @@ var appE = new Vue({
                         console.log(err);
                     });
             },
-            resultados(equipo1,equipo2,vuelta,jornada,hora,fecha){
+            resultados(equipo1,equipo2,vuelta,jornada,hora,fecha,nombreT,idTor){
                 $("#equipo1").val(equipo1);
                 $("#equipo2").val(equipo2);
                 $("#vuelta").val(vuelta);
                 $("#jornada").val(jornada);
                 $("#fecha").val(fecha);
                 $("#hora").val(hora);
+                $("#nombreTor").val(nombreT);
+                $("#idTo").val(idTor);
 
                 $('#modalResultados').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
@@ -630,8 +634,10 @@ var appE = new Vue({
                             $('#frmGoleador').removeClass('loading');
                             if (r == 1) {
                                 swal({
-                                    title: 'Goleadores Guardados',
-                                    type: 'success'
+                                    title: 'Listo!',
+                            text: 'Goleadores guardados con éxito',
+                            type: 'success',
+                            showConfirmButton: true
                                 }).then((result) => {
                                     if (result.value) {
                                         appE.envios = [{
@@ -684,7 +690,7 @@ $("#btnGoleo").click(function(){
 });
 
 $("#guardarGol").click(function(){
-    appE.guardarGoleador();
+    
     
 });
 
@@ -756,4 +762,45 @@ var sorteos=(ele)=>{
 function cerrar(){
     $('#sorteos').modal('hide');
 }
+
+
+$("#guardarTodo").click(function(){
+    
+    var idTorneo = $('#idTo').val();
+               var equipo1 = $('#equipo1').val();
+               var equipo2 = $('#equipo2').val();
+               var goles1 = $('#goles1').val();
+               var goles2 = $('#goles2').val();
+         
+        
+            $.ajax({
+                type: 'POST',
+                url: '?1=TorneosController&2=guardarResultado',
+                data: {
+                    idTorneo : idTorneo,
+                    equipo1 : equipo1,
+                    equipo2 : equipo2,
+                    goles2 : goles2,
+                    goles1 : goles1,
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        $('#modalResultado').modal('hide');
+                        swal({
+                            title: 'Listo!',
+                            text: 'Resultado guardado con éxito',
+                            type: 'success',
+                            showConfirmButton: true
+
+                        }).then((result) => {
+                            if (result.value) {
+                                appE.guardarGoleador();
+                            }
+                        }); 
+                        
+                        
+                    } 
+                }
+            });
+});
 </script>
