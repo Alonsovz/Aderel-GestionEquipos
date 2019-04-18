@@ -303,6 +303,31 @@ class TorneosController extends ControladorBase {
         echo'['.$json.']';
     }
 
+    public function registrarGoleador(){
+        $detalles = json_decode($_REQUEST["detalles"]);
+
+        $contador = 0;
+
+        $dao = new DaoTorneos();
+
+        foreach($detalles as $detalle) {
+            $dao->objeto->setIdJugador($detalle->goleadores);
+            $dao->objeto->setGoles($detalle->goles);
+
+            if($dao->registrarGoleador()) {
+                $contador++;
+            } else {
+                echo 'nell';
+            }
+        }
+
+        if($contador == count($detalles)) {
+            echo 1;
+        } else {
+            echo 2;
+        }
+    }
+
 }
 
 

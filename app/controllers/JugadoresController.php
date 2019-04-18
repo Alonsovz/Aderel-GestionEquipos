@@ -316,6 +316,24 @@ class JugadoresController extends ControladorBase {
         
     }
 
+
+    public function fondoComunRpt() {
+        //  $id = $_REQUEST["id"];
+          $dao = new DaoJugadores();
+          
+          require_once './app/reportes/fondoComunRpt.php';
+          
+        
+  
+          $reporte = new Reporte();
+  
+          //$dao->objeto->setCodigoArea($idA);
+        //  $dao->objeto->setIdJugador($id);
+          $resultado = $dao->fondoComunRpt();
+  
+          $reporte->fondoComunRpt($resultado);
+      }
+
 }
 
 

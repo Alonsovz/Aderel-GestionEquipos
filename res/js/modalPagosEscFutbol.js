@@ -28,9 +28,13 @@ Vue.component('modal-pagosfutbol', {
                         <tr v-for="detalle in detalles" :codigo-equipo="detalle.idUsuario">     
                         <td>{{detalle.nombre}} {{detalle.apellido}}</td>         
                         <td>{{detalle.fechaP}}</td>
-                        <td v-if="detalle.estado == '1'" style="background-color: #F7BE81;">
+                        <td v-if="detalle.estado == '1' && detalle.fechasPago < detalle.fechaActual " style="background-color: #FA5858;">
                                 Pendiente de Pago
                             </td>
+                        <td v-else-if="detalle.estado == '1' && detalle.fechasPago >= detalle.fechaActual " style="background-color: #F7BE81;">
+                        Pendiente de Pago
+                        </td>
+
                         <td v-else-if="detalle.estado == '2'" style="background-color: #58FAAC;">
                             Pagado
                         </td>

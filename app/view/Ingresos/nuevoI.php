@@ -989,7 +989,8 @@ $("#guardarGimE").click(function(){
                 data: datosFormulario,
                 success: function(r) {
                     if(r == 1) {
-                        $("#modalCobroGim").modal("hide");
+                        $("#modalExonerarGim").modal("hide");
+
                         swal({
                             title: 'Listo',
                             text: 'Cuota exonerada con éxito',

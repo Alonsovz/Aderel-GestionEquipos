@@ -569,6 +569,19 @@ class DaoJugadores extends DaoBase {
         $resultado = $this->con->ejecutar($_query);
 
     }
+
+    public function fondoComunRpt()
+    {
+        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,
+        DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento from jugadores j
+         where j.idEliminado = 1 and j.idJugador>1 and j.idFondo=2";
+
+        
+
+            $resultado = $this->con->ejecutar($_query);
+
+            return $resultado;
+    }
         
         
         

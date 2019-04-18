@@ -234,9 +234,9 @@
                 <div class="six wide field">
                     <label><i class="dollar icon"></i>Selecciona el área: </label>
                     <select class="ui  dropdown" id="morosos">
-                        <option value="gimnasio" selected="selected">Gimnasio</option>
-                        <option value="escuelaFutbol">Escuela de Fútbol</option>
-                        <option value="escuelaNatacion">Escuela de Natacion</option>
+                        <option value="1" selected="selected">Gimnasio</option>
+                        <option value="2">Escuela de Fútbol</option>
+                        <option value="3">Escuela de Natacion</option>
                     </select>
                 </div>
                 <div class="six wide field">
@@ -305,11 +305,12 @@
         <div class="field">
             <div class="fields">      
             <div class="two wide field"></div> 
-                <div class="six wide field">
+                <div class="eight wide field">
                     <label><i class="dollar icon"></i>Selecciona el área: </label>
                     <select class="ui  dropdown" id="otrosRpts">
                         <option value="1" selected="selected">Gimnasio</option>
                         <option value="2">Escuela de Natación</option>
+                        <option value="3">Jugadores en Fondo Común</option>
                         
 
                     </select>
@@ -419,6 +420,10 @@ $(document).on("click", "#otrosRpt", function () {
         window.open('?1=NatacionController&2=usuariosNat');
         return false;
     }
+    if(op == 3){
+        window.open('?1=JugadoresController&2=fondoComunRpt');
+        return false;
+    }
 });
 
 
@@ -450,6 +455,26 @@ $(document).on("click", "#verEscuelaFut", function () {
         window.open('?1=EscFutbolController&2=escuelaFutUsers&id='+6);
         return false;
     }
+});
+
+
+$(document).on("click", "#verMorosos", function () {
+    var op= $('#morosos').val();
+
+    if(op == 1){
+        window.open('?1=GimnasioController&2=morososGimnasio');
+        return false;
+    }
+
+    if(op == 2){
+        window.open('?1=EscFutbolController&2=morososEscFutbol');
+        return false;
+    }
+    if(op == 3){
+        window.open('?1=NatacionController&2=morososNatacion');
+        return false;
+    }
+    
 });
 
 

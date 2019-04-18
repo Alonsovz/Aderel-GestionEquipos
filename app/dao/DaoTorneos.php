@@ -404,12 +404,12 @@ class DaoTorneos extends DaoBase {
     }
 
     public function goleadores(){
-        $query = "select g.*, e.nombre as equipo, t.nombreTorneo as torneo, j.nombre as nombre, j.apellido as apellido from goleadores g
+        $query = "select g.*, SUM(g.goles) as goles, e.nombre as equipo, t.nombreTorneo as torneo, j.nombre as nombre, j.apellido as apellido from goleadores g
         inner join inscriJugador i on i.idJugador = g.idJugador
         inner join equipos e on e.idEquipo = i.idEquipo
         inner join torneos t on t.idTorneo = i.idTorneo
         inner join jugadores j on j.idJugador = i.idJugador
-        where i.idTorneo = ".$this->objeto->getIdTorneo()."  order by goles desc";
+        where i.idTorneo = ".$this->objeto->getIdTorneo()."  group by g.idJugador order by goles desc";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -455,6 +455,14 @@ class DaoTorneos extends DaoBase {
         $json = substr($json,0, strlen($json) - 1);
 
         return '['.$json.']';
+    }
+
+    public function registrarGoleador(){
+        $query="Insert into goleadores values (null,'".$this->objeto->getIdJugador()."','".$this->objeto->getGoles()."')";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
     }
 
 

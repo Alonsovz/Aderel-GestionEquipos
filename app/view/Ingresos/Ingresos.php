@@ -182,7 +182,7 @@
         <div class="row">
                 <div class="titulo">
                 <i class="dollar icon"></i> <i class="money bill icon"></i>
-                        Ingresos <font color="#1CC647" size="20px">.</font>
+                        Ingresos <font color="#1CC647" size="20px">.</font><br><br>
 
                         <div class="sixteen wide column">
                         <a href="?1=IngresosController&2=nuevoIngreso" class="ui left floated red button">

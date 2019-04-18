@@ -39,7 +39,7 @@ class DaoEquipos extends DaoBase {
                 $acciones = ', "Acciones": "<div style=background-color:#F3F781;>'.$btnEliminar.'  Equipo pendiente de pago de inscripción </div>" ';
             }
             else if($fila["idFondo"]==2){
-                $acciones = ', "Acciones": "'.$btnVer.''.$btnNomina.'"';
+                $acciones = ', "Acciones": "<div style=background-color:#F78181;>'.$btnVer.''.$btnNomina.' Enviado a fondo común"';
             }
                else{
                 $btnInscrbir = '';
@@ -89,7 +89,7 @@ class DaoEquipos extends DaoBase {
                 $acciones = ', "Acciones": "<div style=background-color:#F3F781;>'.$btnEliminar.'  Equipo pendiente de pago de inscripción </div>" ';
             }
             else if($fila["idFondo"]==2){
-                $acciones = ', "Acciones": "'.$btnVer.''.$btnNomina.'"';
+                $acciones = ', "Acciones": "<div style=background-color:#F78181;>'.$btnVer.''.$btnNomina.' Enviado a fondo común"';
             }
                else{
                 $btnInscrbir = '';

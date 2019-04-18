@@ -329,7 +329,8 @@ class DaoNatacion extends DaoBase {
     }
 
     public function pagos(){
-        $_query="select p.*,DATE_FORMAT(p.fechasPago, '%d/%m/%Y') as fechaP, g.nombre as nombre, g.apellido as apellido 
+        $_query="select p.*,DATE_FORMAT(p.fechasPago, '%d/%m/%Y') as fechaP, g.nombre as nombre, g.apellido as apellido,
+        curdate() as fechaActual 
         from pagoNatacion p
         inner join natacion  g on g.idUsuario = p.idUsuario
          where p.idUsuario =".$this->objeto->getIdUsuario();
@@ -371,6 +372,18 @@ class DaoNatacion extends DaoBase {
         
         
 
+    }
+
+    public function morosos(){
+        $query = "select p.*,count(p.fechasPago) as cuotasAtrasadas,e.*,DATE_FORMAT(e.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        TIMESTAMPDIFF(YEAR,e.fechaNacimiento,CURDATE()) AS edad
+        from pagoNatacion p
+    inner join natacion e on e.idUsuario = p.idUsuario
+    where p.fechasPago < curdate() and p.estado= 1 group by p.idUsuario";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
     }
 
 }   

@@ -511,6 +511,19 @@ var appE = new Vue({
             cerrarModal() {
                 this.detalles = [];
             },
+            cerrarModalG() {
+                
+                $('#eleccion').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                 .modal('show');
+                 this.detalles = [];
+            },
+
+            cerrarModalT() {
+                
+                $('#eleccion').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                 .modal('show');
+                 this.detalles = [];
+            },
 
             goleadores(id) {
 

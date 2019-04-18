@@ -882,7 +882,7 @@ class DaoEscuela extends DaoBase {
 
 
     public function pagos(){
-        $_query="select p.*,DATE_FORMAT(p.fechasPago, '%d/%m/%Y') as fechaP, g.nombre as nombre, g.apellido as apellido,
+        $_query="select p.*,DATE_FORMAT(p.fechasPago, '%d/%m/%Y') as fechaP,curdate() as fechaActual, g.nombre as nombre, g.apellido as apellido,
         n.nivel as nivel
          from pagoEscuelaFut p
         inner join escuelaFut  g on g.idUsuario = p.idUsuario
@@ -941,6 +941,18 @@ class DaoEscuela extends DaoBase {
 
     public function encargados(){
         $query = "select * from nivelEscuela where idEscuela =".$this->objeto->getIdJugador();
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function morosos(){
+        $query = "	select p.*,count(p.fechasPago) as cuotasAtrasadas,e.*,DATE_FORMAT(e.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        TIMESTAMPDIFF(YEAR,e.fechaNacimiento,CURDATE()) AS edad
+        from pagoEscuelaFut p
+    inner join escuelaFut e on e.idUsuario = p.idUsuario
+    where p.fechasPago < curdate() and p.estado= 1 group by p.idUsuario order by e.idEscuela asc";
 
         $resultado = $this->con->ejecutar($query);
 

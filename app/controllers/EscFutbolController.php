@@ -451,6 +451,24 @@ class EscFutbolController extends ControladorBase {
         $reporte->escuelaFutUsers($resultado,$resultado1, $encargados);
     }
 
+
+    public function morososEscFutbol() {
+      //  $id = $_REQUEST["id"];
+        $dao = new DaoEscuela();
+        
+        require_once './app/reportes/morososEscFutbol.php';
+        
+      
+
+        $reporte = new Reporte();
+
+        //$dao->objeto->setCodigoArea($idA);
+      //  $dao->objeto->setIdJugador($id);
+        $resultado = $dao->morosos();
+
+        $reporte->morososEscFutbol($resultado);
+    }
+
 }
 
 

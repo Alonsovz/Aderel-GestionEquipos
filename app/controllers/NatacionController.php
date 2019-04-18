@@ -217,6 +217,23 @@ class NatacionController extends ControladorBase {
 
         $reporte->NatacionUsers($resultado);
     }
+
+    public function morososNatacion() {
+        //  $id = $_REQUEST["id"];
+          $dao = new DaoNatacion();
+          
+          require_once './app/reportes/morososNatacion.php';
+          
+        
+  
+          $reporte = new Reporte();
+  
+          //$dao->objeto->setCodigoArea($idA);
+        //  $dao->objeto->setIdJugador($id);
+          $resultado = $dao->morosos();
+  
+          $reporte->morososNatacion($resultado);
+      }
  
 
 }

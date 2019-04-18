@@ -348,7 +348,7 @@ class DaoGimnasio extends DaoBase {
 
 
     public function pagos(){
-        $_query="select p.*,DATE_FORMAT(p.fechasPago, '%d/%m/%Y') as fechaP, g.nombre as nombre, g.apellido as apellido from pagoGimnasio p
+        $_query="select p.*,DATE_FORMAT(p.fechasPago, '%d/%m/%Y') as fechaP, g.nombre as nombre,curdate() as fechaActual, g.apellido as apellido from pagoGimnasio p
         inner join gimnasio  g on g.idUsuario = p.idUsuario
          where p.idUsuario =".$this->objeto->getIdUsuario();
 
@@ -389,6 +389,18 @@ class DaoGimnasio extends DaoBase {
         
         
 
+    }
+
+    public function morosos(){
+        $query = "	select p.*,count(p.fechasPago) as cuotasAtrasadas,e.*,DATE_FORMAT(e.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        TIMESTAMPDIFF(YEAR,e.fechaNacimiento,CURDATE()) AS edad
+        from pagoGimnasio p
+    inner join gimnasio e on e.idUsuario = p.idUsuario
+    where p.fechasPago < curdate() and p.estado= 1 group by p.idUsuario";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
     }
 
 

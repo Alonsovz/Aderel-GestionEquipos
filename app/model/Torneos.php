@@ -6,9 +6,44 @@ class Torneos extends ModeloBase{
     private $numeroEquipos;
     private $disponibles;
     private $idCategoria;
+    private $goles;
+    private $idJugador;
 
     public function __construct() {
 
+    }
+    public function getIdJugador()
+    {
+        return $this->idJugador;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setIdJugador($idJugador)
+    {
+        $this->idJugador = $idJugador;
+
+        return $this;
+    }
+
+    public function getGoles()
+    {
+        return $this->goles;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setGoles($goles)
+    {
+        $this->goles = $goles;
+
+        return $this;
     }
 
     public function getIdCategoria()

@@ -226,6 +226,7 @@ Categorías de Torneo
         <span style="float:right;">
                     <button @click="agregarDetalle" class="ui pink circular icon button"><i class="plus icon"></i> Agregar</button>
         </span>        <br><br><br>
+        <form action="" class="ui form" id="frmGoleador">
                 <table class="ui selectable very compact celled table" style="width:100%; margin:auto;">
                         <thead>
                             <tr>
@@ -245,10 +246,11 @@ Categorías de Torneo
                              </select>
                             </td>
                             <td>  
-                            <input class="requerido" v-model="envio.goles" type="number" placeholder="Goles anotados ">
+                            <input class="requerido" v-model="envio.goles" name="goles" id="goles" type="number" placeholder="Goles anotados ">
                             </td>
                             <td>
                             <center>
+            </form>
                               <button type="button" @click="eliminarDetalle(index)" class="ui negative mini circular icon button"><i
                                   class="times icon"></i></button>
                                   </center>
@@ -258,7 +260,7 @@ Categorías de Torneo
                     </table>
                     <br>
         <span style="float:right;">
-        <button @click="" class="ui brown circular icon button"><i class="check icon"></i> Guardar</button>
+        <a id="guardarGol" class="ui brown circular icon button"><i class="check icon"></i> Guardar</a>
         </span> 
         </div>
 
@@ -531,6 +533,20 @@ var appE = new Vue({
                 this.detalles = [];
             },
 
+            cerrarModalG() {
+                
+                $('#eleccion').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                 .modal('show');
+                 this.detalles = [];
+            },
+
+            cerrarModalT() {
+                
+                $('#eleccion').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                 .modal('show');
+                 this.detalles = [];
+            },
+
             refrescarTabla() {
                 tablaTorneosM.ajax.reload();  
             },
@@ -598,7 +614,41 @@ var appE = new Vue({
             $('.ui.search.dropdown.selection').css('max-width', '100%');
             $('.ui.search.dropdown.selection').css('min-width', '100%');
             $('.ui.search.dropdown.selection').css('width', '100%');
-            }
+            },
+            guardarGoleador() {
+
+                if (this.envios.length) {
+
+                    $('#frmGoleador').addClass('loading');
+                    $.ajax({
+                        type: 'POST',
+                        data: {
+                            detalles: JSON.stringify(this.envios)
+                        },
+                        url: '?1=TorneosController&2=registrarGoleador',
+                        success: function (r) {
+                            $('#frmGoleador').removeClass('loading');
+                            if (r == 1) {
+                                swal({
+                                    title: 'Goleadores Guardados',
+                                    type: 'success'
+                                }).then((result) => {
+                                    if (result.value) {
+                                        appE.envios = [{
+                                            goleadores: '2',
+                                            goles: ''
+                                        }];
+
+                                      //  app.modalNuevoEnvio();
+                                    }
+                                });           
+                            }
+                            
+                        }
+                    });
+                }
+
+                }
 
 
 
@@ -630,6 +680,11 @@ $("#cerrarRes").click(function(){
 $("#btnGoleo").click(function(){
     $("#amonestados").hide('10');
     $("#goles").show('10');
+    
+});
+
+$("#guardarGol").click(function(){
+    appE.guardarGoleador();
     
 });
 

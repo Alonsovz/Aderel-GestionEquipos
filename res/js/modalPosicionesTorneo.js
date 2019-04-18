@@ -21,15 +21,15 @@ Vue.component('modal-posiciones', {
                 <table v-if="detalles" class="ui table"  style="text-align:center;">
                     <thead>
                         <tr>
-                        <th>Equipos</th>
-                        <th>PJ</th>
-                        <th>G</th>
-                        <th>E</th>
-                        <th>P</th>
-                        <th>Puntos</th>
-                        <th>GF</th>
-                        <th>GE</th>
-                        <th>DG</th>
+                        <th style="background-color: #58D3F7;">Equipo</th>
+                        <th style="background-color: #58D3F7;">PJ</th>
+                        <th style="background-color: #58D3F7;">G</th>
+                        <th style="background-color: #58D3F7;">E</th>
+                        <th style="background-color: #58D3F7;">P</th>
+                        <th style="background-color: #58D3F7;">Puntos</th>
+                        <th style="background-color: #58D3F7;">GF</th>
+                        <th style="background-color: #58D3F7;">GE</th>
+                        <th style="background-color: #58D3F7;">DG</th>
 
                         </tr>
                     </thead>
@@ -60,7 +60,7 @@ Vue.component('modal-posiciones', {
 
         
         <div class="actions">
-            <button @click="" class="ui deny black button">
+            <button @click="$parent.cerrarModalT()" class="ui blue button">
                 Cerrar
             </button>
         </div>
