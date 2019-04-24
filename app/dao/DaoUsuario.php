@@ -171,6 +171,18 @@ class DaoUsuario extends DaoBase {
         }
     }
 
+    public function reestablecerU() {
+        $_query = "update usuario set idEliminado=1 where codigoUsuario = ".$this->objeto->getCodigoUsuario();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
 
     public function editarUser() {
         $_query = "update usuario set nomUsuario='".$this->objeto->getNomUsuario()."' where codigoUsuario = ".$this->objeto->getCodigoUsuario();
@@ -196,8 +208,8 @@ class DaoUsuario extends DaoBase {
             $object = json_encode($fila);
 
            
-            $btnEditar = '<button id=\"'.$fila["codigoUsuario"].'\" class=\"ui btnEditar icon blue small button\"><i class=\"edit icon\"></i></button>';
-            $btnEliminar = '<button id=\"'.$fila["codigoUsuario"].'\" class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i></button>';
+            $btnEditar = '<button id=\"'.$fila["codigoUsuario"].'\" class=\"ui btnEditar icon blue small button\"><i class=\"edit icon\"></i> Editar</button>';
+            $btnEliminar = '<button id=\"'.$fila["codigoUsuario"].'\" class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Eliminar</button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.'"';
 
@@ -223,8 +235,8 @@ class DaoUsuario extends DaoBase {
             $object = json_encode($fila);
 
            
-            $btnEditar = '<button id=\"'.$fila["codigoUsuario"].'\" class=\"ui btnEditar icon blue small button\"><i class=\"edit icon\"></i></button>';
-            $btnEliminar = '<button id=\"'.$fila["codigoUsuario"].'\" class=\"ui  yellow small button\"><i class=\"sync icon\"></i>Reestablecer</button>';
+          
+            $btnEliminar = '<button id=\"'.$fila["codigoUsuario"].'\" class=\"ui  yellow small button\" onclick=\"reestablecerU(this)\"><i class=\"sync icon\"></i>Reestablecer</button>';
 
             $acciones = ', "Acciones": " '.$btnEliminar.'"';
 

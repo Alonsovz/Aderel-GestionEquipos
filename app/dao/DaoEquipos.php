@@ -75,7 +75,7 @@ class DaoEquipos extends DaoBase {
             $object = json_encode($fila);
 
             
-            $btnQuitar = '<button  id=\"'.$fila["idEquipo"].'\" class=\"ui  icon olive small button\" ><i class=\"sync icon\"></i> Reestablecer</button>';
+            $btnQuitar = '<button  id=\"'.$fila["idEquipo"].'\" class=\"ui  icon olive small button\"  onclick=\"reestablecerE(this)\"><i class=\"sync icon\"></i> Reestablecer</button>';
             
             
                 $acciones = ', "Acciones": "'.$btnQuitar.'"';
@@ -309,6 +309,18 @@ class DaoEquipos extends DaoBase {
 
     public function eliminarF() {
         $_query = "update equipos set idEliminado=2 where idGenero=1 and idEquipo = ".$this->objeto->getIdEquipo();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function reestablecerE() {
+        $_query = "update equipos set idEliminado=1 where idEquipo = ".$this->objeto->getIdEquipo();
 
         $resultado = $this->con->ejecutar($_query);
 

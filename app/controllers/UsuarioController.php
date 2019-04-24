@@ -274,6 +274,16 @@ class UsuarioController extends ControladorBase {
         echo $dao->eliminar();
     }
 
+    public function reestablecerU() {
+       // $datos = $_REQUEST["id"];
+
+        $dao = new DaoUsuario();
+
+        $dao->objeto->setCodigoUsuario($_REQUEST["id"]);
+
+        echo $dao->reestablecerU();
+    }
+
     public function mostrarUsuarios() {
         $dao = new DaoUsuario();
 

@@ -115,7 +115,7 @@ class DaoJugadores extends DaoBase {
                     
                 $object = json_encode($fila);
 
-                $btnQuitar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui  icon blue small button\" ><i class=\"sync icon\"></i> Reestablecer</button>';
+                $btnQuitar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui  icon blue small button\" onclick=\"reestablecerJ(this)\"><i class=\"sync icon\"></i> Reestablecer</button>';
                 $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
                 
@@ -283,6 +283,18 @@ class DaoJugadores extends DaoBase {
 
     public function eliminarM() {
         $_query = "update jugadores set idEliminado=2 where idGenero = 2 and idJugador = ".$this->objeto->getIdJugador();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function reestablecerJ() {
+        $_query = "update jugadores set idEliminado=1 where idJugador = ".$this->objeto->getIdJugador();
 
         $resultado = $this->con->ejecutar($_query);
 

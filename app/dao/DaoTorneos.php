@@ -459,7 +459,7 @@ class DaoTorneos extends DaoBase {
     }
 
     public function registrarGoleador(){
-        $query="Insert into goleadores values (null,'".$this->objeto->getIdJugador()."','".$this->objeto->getIdTorneo()."',
+        $query="Insert into goleadores values (null,'".$this->objeto->getIdJugador()."',4,
         '".$this->objeto->getGoles()."')";
 
         $resultado = $this->con->ejecutar($query);

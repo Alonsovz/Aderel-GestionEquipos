@@ -1,18 +1,18 @@
-<?php
-            $fechaMaxima = date('Y-m-d');
-            $fechaMax = strtotime ( '-0 day' , strtotime ( $fechaMaxima ) ) ;
-            $fechaMax = date ( 'Y-m-d' , $fechaMax );
-             
-            $fechaMinima = date('Y-m-d');
-            $fechaMin = strtotime ( '-1 day' , strtotime ( $fechaMinima ) ) ;
-            $fechaMini = date ( 'Y-m-d' , $fechaMin );
 
-            $anio= date('Y');
-            $mes = date('M');
-            $mesN = date('m')
-?>
 
 <div id="app">
+<modal-eliminar id_form="frmReeestablecerE" id="modalReestablecerE" url="?1=EquipoController&2=reestablecerE" titulo="Reestablecer equipo"
+sub_titulo="¿Está seguro de querer reestablecer este equipo?" :campos="campos_reestablecerE" tamanio='tiny'></modal-eliminar>
+
+
+<modal-eliminar id_form="frmReeestablecerJ" id="modalReestablecerJ" url="?1=JugadoresController&2=reestablecerJ" titulo="Reestablecer jugador/a"
+sub_titulo="¿Está seguro de querer reestablecer este jugador/a?" :campos="campos_reestablecerJ" tamanio='tiny'></modal-eliminar>
+
+
+<modal-eliminar id_form="frmReeestablecerU" id="modalReestablecerU" url="?1=UsuarioController&2=reestablecerU" titulo="Reestablecer usuario/a"
+sub_titulo="¿Está seguro de querer reestablecer este usuario/a?" :campos="campos_reestablecerU" tamanio='tiny'></modal-eliminar>
+
+
 <br><br>
 <div class="ui grid">
         <div class="row">
@@ -134,8 +134,50 @@
 <script src="./res/tablas/tablaUsuariosE.js"></script>
 <script src="./res/tablas/tablaJugadoresE.js"></script>
 <script src="./res/tablas/tablaEquiposE.js"></script>
-<script>
+<script src="./res/js/modalReestablecer.js"></script>
 
+<script>
+var app = new Vue({
+        el: "#app",
+        data: {
+            campos_reestablecerE: [{
+                name: 'idReestablecer',
+                type: 'hidden'
+            }],
+            campos_reestablecerJ: [{
+                name: 'idReestablecer',
+                type: 'hidden'
+            }],
+            campos_reestablecerU: [{
+                name: 'idReestablecer',
+                type: 'hidden'
+            }]
+        },
+        methods: {
+            refrescarTabla() {
+                tablaUsuariosE.ajax.reload();
+                tablaJugadoresE.ajax.reload();
+                tablaEquiposE.ajax.reload();
+            },
+            
+        }
+    });
+
+
+var reestablecerE=(ele)=>{
+  $('#modalReestablecerE').modal('setting', 'closable', false).modal('show');
+  $('#idReestablecer').val($(ele).attr("id"));
+}
+
+var reestablecerJ=(ele)=>{
+  $('#modalReestablecerJ').modal('setting', 'closable', false).modal('show');
+  $('#idReestablecer').val($(ele).attr("id"));
+}
+
+var reestablecerU=(ele)=>{
+  $('#modalReestablecerU').modal('setting', 'closable', false).modal('show');
+  $('#idReestablecer').val($(ele).attr("id"));
+}
 
 
 

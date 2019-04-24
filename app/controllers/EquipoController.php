@@ -198,6 +198,16 @@ public function registrarF() {
         echo $dao->eliminarF();
     }
 
+    public function reestablecerE() {
+        // $datos = ;
+ 
+         $dao = new DaoEquipos();
+ 
+         $dao->objeto->setIdEquipo($_REQUEST["id"]);
+ 
+         echo $dao->reestablecerE();
+     }
+
     public function cargarDatosEquipoF() {
         $id = $_REQUEST["id"];
 

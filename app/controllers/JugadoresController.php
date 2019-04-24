@@ -150,6 +150,16 @@ class JugadoresController extends ControladorBase {
         echo $dao->eliminarM();
     }
 
+    public function reestablecerJ() {
+       // $datos = $_REQUEST["id"];
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setIdJugador($_REQUEST["id"]);
+
+        echo $dao->reestablecerJ();
+    }
+
     public function inscribirJugadorM() {
         $idJ = $_REQUEST["idJugador"];
         $idEquipo = $_REQUEST["idEquipo"];
