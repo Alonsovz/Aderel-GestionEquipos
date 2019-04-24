@@ -386,7 +386,7 @@ class DaoTorneos extends DaoBase {
                 p.fecha as fecha, p.hora as hora,t.nombreTorneo as nombreT, t.idTorneo as idTor FROM partidos p 
                 inner JOIN jornadas j on j.id = p.jornadas_id
                 inner join torneos t on t.idTorneo = j.idTorneo
-                WHERE  j.idTorneo =".$this->objeto->getIdTorneo();
+                WHERE  p.estado=1 and j.idTorneo =".$this->objeto->getIdTorneo();
 
         $resultado = $this->con->ejecutar($query);
 
@@ -410,7 +410,7 @@ class DaoTorneos extends DaoBase {
         inner join equipos e on e.idEquipo = i.idEquipo
         inner join torneos t on t.idTorneo = i.idTorneo
         inner join jugadores j on j.idJugador = i.idJugador
-        where t.idTorneo = ".$this->objeto->getIdTorneo()."  group by g.idJugador order by goles desc";
+        where g.idTorneo = ".$this->objeto->getIdTorneo()."  group by g.idJugador order by goles desc";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -459,7 +459,8 @@ class DaoTorneos extends DaoBase {
     }
 
     public function registrarGoleador(){
-        $query="Insert into goleadores values (null,'".$this->objeto->getIdJugador()."','".$this->objeto->getGoles()."')";
+        $query="Insert into goleadores values (null,'".$this->objeto->getIdJugador()."','".$this->objeto->getIdTorneo()."',
+        '".$this->objeto->getGoles()."')";
 
         $resultado = $this->con->ejecutar($query);
 

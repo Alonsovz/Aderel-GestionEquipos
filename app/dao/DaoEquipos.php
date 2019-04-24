@@ -57,6 +57,41 @@ class DaoEquipos extends DaoBase {
     }
 
 
+    public function mostrarEquiposE()
+    {
+        $_query = "select e.*,e.nombre as nombreE,e.cuposMayores as cupos,c.edadMinima as edad,c.edadMaxima as edadM, c.nombreCategoria as Categoria, i.estado as estado, t.nombreTorneo as torneo,
+        t.idTorneo as idT from equipos e
+        inner join categorias c on c.idCategoria = e.idCategoria
+        inner join inscripcion i on i.idInscripcion = e.idInscripcion
+        inner join torneos t on t.idTorneo = e.idTorneo
+        where  e.idEliminado=2";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $_json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $object = json_encode($fila);
+
+            
+            $btnQuitar = '<button  id=\"'.$fila["idEquipo"].'\" class=\"ui  icon olive small button\" ><i class=\"sync icon\"></i> Reestablecer</button>';
+            
+            
+                $acciones = ', "Acciones": "'.$btnQuitar.'"';
+               
+
+            $object = substr_replace($object, $acciones, strlen($object) -1, 0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        return '{"data": ['.$_json .']}';
+    }
+
+
     public function mostrarEquiposM()
     {
         $_query = "select e.*,e.nombre as nombreE,e.cuposMayores as cupos,c.edadMinima as edad,c.edadMaxima as edadM, c.nombreCategoria as Categoria, i.estado as estado, t.nombreTorneo as torneo,

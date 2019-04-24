@@ -15,12 +15,24 @@ class GestionExpController extends ControladorBase {
         echo $dao->mostrarEquiposM();
     }
 
+
+    public function mostrarEquiposE() {
+        $dao = new DaoEquipos();
+
+        echo $dao->mostrarEquiposE();
+    }
+
     public function mostrarCategoriasM() {
         $dao = new DaoCategorias();
 
         echo $dao->mostrarCategoriasM();
     }
 
+    public function mostrarJugadoresE() {
+        $dao = new DaoJugadores();
+
+        echo $dao->mostrarJugadoresE();
+    }
     
 
     public function mostrarJugadoresM() {

@@ -23,6 +23,14 @@ class UsuarioController extends ControladorBase {
         require_once './app/view/Usuario/reporteria.php';
     }
 
+
+    public static function papeleria() {
+        
+        self::loadMain();    
+        require_once './app/view/Usuario/papeleria.php';
+    }
+
+
     public static function gestion() {
         self::loadMain();
         require_once './app/view/Usuario/gestion.php';
@@ -270,6 +278,12 @@ class UsuarioController extends ControladorBase {
         $dao = new DaoUsuario();
 
         echo $dao->mostrarUsuarios();
+    }
+
+    public function mostrarUsuariosE() {
+        $dao = new DaoUsuario();
+
+        echo $dao->mostrarUsuariosE();
     }
 
     // Reportes 

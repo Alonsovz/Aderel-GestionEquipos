@@ -134,7 +134,8 @@ CREATE TABLE partidos (
   equipo2_id varchar(100),
   fecha VARCHAR(45) NULL,
   hora VARCHAR(45) NULL,
-  jornadas_id INT NOT NULL
+  jornadas_id INT NOT NULL,
+  estado int
   );
   
   
@@ -215,8 +216,14 @@ fechaInscripcion date
 CREATE TABLE goleadores (
   idGoleador int primary key auto_increment,
   idJugador int,
+  idTorneo int,
   goles int
 );
+
+ 
+
+
+
 
 create table gimnasio(
 idUsuario int primary key auto_increment,
@@ -347,6 +354,8 @@ alter table posiciones add constraint fk_posiciones_equipos foreign key (idEquip
 alter table posiciones add constraint fk_posiciones_torneos foreign key (idTorneo) references torneos(idTorneo);
 
 alter table goleadores add constraint fk_goleadores_inscriJugador foreign key (idJugador) references inscriJugador(idJugador);
+alter table goleadores add constraint fk_goleadores_inscriJugadorT foreign key (idTorneo) references inscriJugador(idTorneo);
+
 
 insert into rol values(1,'Administrador');
 insert into rol values(2,'Gestor de Torneos');
@@ -460,6 +469,16 @@ begin
 	from usuario u
 	inner join rol r on r.codigoRol = u.codigoRol
     where u.idEliminado=1;
+end
+$$
+
+delimiter $$
+create procedure mostrarUsuariosE()
+begin
+	select u.*, r.descRol
+	from usuario u
+	inner join rol r on r.codigoRol = u.codigoRol
+    where u.idEliminado=2;
 end
 $$
 -- ===========================================================================
@@ -633,7 +652,7 @@ end
 $$
 
 
-drop table jornadas
+
 delimiter $$
 create procedure mostrarCategorias()
 begin
@@ -643,41 +662,4 @@ end
 $$
 
 
-select p.*, e.nombre as nombreE, t.nombreTorneo as Torneo, (p.golesFavor - p.golesContra) as diferencia from posiciones p
-inner join equipos e on e.idEquipo = p.idEquipo 
-inner join torneos t on t.idTorneo = p.idTorneo
-where p.idTorneo = 4 ORDER BY puntaje DESC, diferencia DESC;
-       
-select * from escuelaFut  
-
-
-     
-select g.*, e.nombre as equipo, t.nombreTorneo as torneo, j.nombre as nombre, j.apellido as apellido from goleadores g
-inner join inscriJugador i on i.idJugador = g.idJugador
-inner join equipos e on e.idEquipo = i.idEquipo
-inner join torneos t on t.idTorneo = i.idTorneo
-inner join jugadores j on j.idJugador = i.idJugador
-where i.idTorneo = 3 order by goles desc
-
-
-select p.*,DATE_FORMAT(p.fechasPago, '%d/%m/%Y') as fechaP, g.nombre as nombre,curdate() as fechaActual, g.apellido as apellido from pagoGimnasio p
-        inner join gimnasio  g on g.idUsuario = p.idUsuario
-         where p.idUsuario =3
-         
-         	select p.*,count(p.fechasPago) as cuotasAtrasadas,e.*,DATE_FORMAT(e.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
-        TIMESTAMPDIFF(YEAR,e.fechaNacimiento,CURDATE()) AS edad
-        from pagoNatacion p
-    inner join natacion e on e.idUsuario = p.idUsuario
-    where p.fechasPago < curdate() and p.estado= 1 group by p.idUsuario
-    
-    
-    select g.*, SUM(g.goles) as goles, e.nombre as equipo, t.nombreTorneo as torneo, j.nombre as nombre, j.apellido as apellido from goleadores g
-        inner join inscriJugador i on i.idJugador = g.idJugador
-        inner join equipos e on e.idEquipo = i.idEquipo
-        inner join torneos t on t.idTorneo = i.idTorneo
-        inner join jugadores j on j.idJugador = i.idJugador
-        where i.idTorneo = 3  group by g.idJugador order by goles desc
-    
-    select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,
-        DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento from jugadores j
-         where j.idEliminado = 1 and j.idJugador>1 and j.idFondo=2
+select * from usuario

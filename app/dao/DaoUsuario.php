@@ -211,6 +211,33 @@ class DaoUsuario extends DaoBase {
         return '{"data": ['.$_json .']}';
     }
 
+    public function mostrarUsuariosE() {
+        $_query = "call mostrarUsuariosE()";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $_json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $object = json_encode($fila);
+
+           
+            $btnEditar = '<button id=\"'.$fila["codigoUsuario"].'\" class=\"ui btnEditar icon blue small button\"><i class=\"edit icon\"></i></button>';
+            $btnEliminar = '<button id=\"'.$fila["codigoUsuario"].'\" class=\"ui  yellow small button\"><i class=\"sync icon\"></i>Reestablecer</button>';
+
+            $acciones = ', "Acciones": " '.$btnEliminar.'"';
+
+            $object = substr_replace($object, $acciones, strlen($object) -1, 0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        return '{"data": ['.$_json .']}';
+    }
+
 
     public function reporteUsuario() {
         $query = "call reporteUsuario({$this->objeto->getCodigoUsuario()})";
@@ -219,6 +246,8 @@ class DaoUsuario extends DaoBase {
 
         return $resultado;
     }
+
+    
 
     public function reporteUsuarioDiario() {
         $query = "call reporteUsuarioDiario({$this->objeto->getCodigoUsuario()})";

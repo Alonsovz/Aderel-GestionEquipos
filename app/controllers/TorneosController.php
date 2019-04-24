@@ -305,6 +305,7 @@ class TorneosController extends ControladorBase {
 
     public function registrarGoleador(){
         $detalles = json_decode($_REQUEST["detalles"]);
+        $idTor = $_REQUEST["idTor"];
 
         $contador = 0;
 
@@ -313,6 +314,7 @@ class TorneosController extends ControladorBase {
         foreach($detalles as $detalle) {
             $dao->objeto->setIdJugador($detalle->goleadores);
             $dao->objeto->setGoles($detalle->goles);
+            $dao->objeto->setIdTorneo($idTor);
 
             if($dao->registrarGoleador()) {
                 $contador++;

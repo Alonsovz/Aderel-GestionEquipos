@@ -399,6 +399,7 @@ var appE = new Vue({
             envios: [{
                 goleadores: '2',
                 goles: '',
+               
             }],
             castigos : [{
                 goleadores: '2',
@@ -620,6 +621,7 @@ var appE = new Vue({
             $('.ui.search.dropdown.selection').css('width', '100%');
             },
             guardarGoleador() {
+                var idTor = $("#idTo").val();
 
                 if (this.envios.length) {
 
@@ -627,7 +629,8 @@ var appE = new Vue({
                     $.ajax({
                         type: 'POST',
                         data: {
-                            detalles: JSON.stringify(this.envios)
+                            detalles: JSON.stringify(this.envios),
+                            idTor : idTor,
                         },
                         url: '?1=TorneosController&2=registrarGoleador',
                         success: function (r) {

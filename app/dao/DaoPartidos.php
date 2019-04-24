@@ -9,7 +9,7 @@ class DaoPartidos extends DaoBase {
     public function registrar($partido)
     {
         try {
-            $_query = "INSERT INTO `partidos` (`jornadas_id`, `partido_N`, `cancha`, `equipo1_id`, `equipo2_id`, `fecha`, `hora`) 
+            $_query = "INSERT INTO `partidos` (`jornadas_id`, `partido_N`, `cancha`, `equipo1_id`, `equipo2_id`, `fecha`, `hora`,`estado`) 
             VALUES (".
             $partido->getJornada_id().", ".
             $partido->getPartido_N().",".
@@ -17,7 +17,7 @@ class DaoPartidos extends DaoBase {
             $partido->getEquipo1_id()."','".
             $partido->getEquipo2_id()."','".
             $partido->getFecha()."','".
-            $partido->getHora()."')";
+            $partido->getHora()."',1)";
             return $this->con->ejecutar($_query);
             
         } catch (\Throwable $th) {
