@@ -225,7 +225,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
     <div class="header" style="color:black; font-size:19px;">
     Trasnferir a <a id="nombreJ" ></a> <a id="apellidoJ"></a> a otro equipo.
     <br>
-    Equipo actual <a id="equipoJ"></a>. <input type="hidden" id="idJugador">
+    Equipo actual <a id="equipoJ"></a>. <input type="hidden" id="idJugador"><input type="hidden" id="idEquipoT">
     </div>
     <div class="content">
         <form class="ui form">
@@ -236,7 +236,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
     </div>
 
     <div class="actions">
-    <button class="ui black deny button">
+    <button class="ui black deny button" id="btnCerrarT">
     Cancelar
     </button>
 
@@ -404,7 +404,7 @@ var appE = new Vue({
                 $('#modalRegistrarE').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal(
                     'show');
             },
-            traspasos(nombre,apellido,equipo,idJugador) {
+            traspasos(nombre,apellido,equipo,idJugador,idEquipo) {
                 $('#traspaso').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal(
                     'show');
 
@@ -412,6 +412,7 @@ var appE = new Vue({
                     $("#apellidoJ").text(apellido);
                     $("#equipoJ").text(equipo);
                     $("#idJugador").val(idJugador);
+                    $("#idEquipoT").val(idEquipo);
             },
             cargarDatosE() {
                 var id = $("#idDetalleE").val();
@@ -670,7 +671,12 @@ var inscribirEquipo=(ele)=>{
      
 
 
-    
+    $('#btnCerrarT').click(function() {
+               var idEquipo = $('#idEquipoT').val();
+               $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+    appE.cargarDetalles(idEquipo);
+            });    
 
 
         $(function() {
@@ -731,6 +737,7 @@ var inscribirEquipo=(ele)=>{
             function(){
                var idJugador = $('#idJugador').val();
              var idEquipo = $('#equiposD').val();
+             var idEquipoT = $('#idEquipoT').val();
          
         
             $.ajax({
@@ -749,7 +756,13 @@ var inscribirEquipo=(ele)=>{
                             type: 'success',
                             showConfirmButton: true
 
-                        }); 
+                        }).then((result) => {
+                            if (result.value) {
+                                $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                                .modal('show');
+                                appE.cargarDetalles(idEquipoT);
+                            }
+                        });
                         
                         
                     } 

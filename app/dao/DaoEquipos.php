@@ -506,7 +506,7 @@ class DaoEquipos extends DaoBase {
     }
 
     public function mostrarJugadoresInsM(){
-        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,i.estado, i.pago as pago,e.nombre as equipo from inscriJugador i
+        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,i.estado,i.idEquipo as idE, i.pago as pago,e.nombre as equipo from inscriJugador i
         inner join equipos e on e.idEquipo = i.idEquipo
         inner join jugadores j on j.idJugador = i.idJugador
         where i.idEquipo='".$this->objeto->getIdEquipo()."'  and i.estado=2 group by i.idJugador";

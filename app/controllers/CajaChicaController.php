@@ -14,6 +14,11 @@ class CajaChicaController extends ControladorBase {
 
         echo $dao->mostrarAderel();
     }
+    public function mostrarE() {
+        $dao = new DaoCajaChica();
+
+        echo $dao->mostrarE();
+    }
 
     public function cargarDatosCaja() {
         $id = $_REQUEST["id"];
@@ -23,6 +28,46 @@ class CajaChicaController extends ControladorBase {
         $dao->objeto->setIdVale($id);
 
         echo $dao->cargarDatosCaja();
+    }
+
+    public function reestablecerV() {
+        $dao = new DaoCajaChica();
+      
+        $id = $_REQUEST["idVale"];
+        $idTipo = $_REQUEST["idTipo"];
+
+        $dao->objeto->setIdVale($id);
+        $dao->objeto->setId($idTipo);
+        
+        echo $dao->reestablecer();        
+    }
+
+    public function eliminarA() {
+        $dao = new DaoCajaChica();
+      
+        $id = $_REQUEST["idVale"];
+        $cantidad = $_REQUEST["monto"];
+
+        $dao->objeto->setCantidad($cantidad);
+        $dao->objeto->setIdVale($id);
+       
+        
+        echo $dao->eliminarC();
+        echo $dao->sumarMontoA();        
+    }
+
+    public function eliminarG() {
+        $dao = new DaoCajaChica();
+      
+        $id = $_REQUEST["idVale"];
+        $cantidad = $_REQUEST["monto"];
+
+        $dao->objeto->setCantidad($cantidad);
+        $dao->objeto->setIdVale($id);
+       
+        
+        echo $dao->eliminarC();
+        echo $dao->sumarMontoG();        
     }
     
 

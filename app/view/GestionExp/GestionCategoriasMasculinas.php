@@ -24,21 +24,21 @@ if($_SESSION["descRol"] == 'Administrador') {
 
     ?>                           
 
-                            <button class="ui purple button">
+                            <button class="ui green button">
                             <a href="?1=TorneosController&2=gestionM"  style="color:white;">
                             <i class="trophy icon"></i>
                             Torneos
                             </a>
                             </button>
 
-                            <button class="ui olive button">
+                            <button class="ui blue button">
                             <a href="?1=EquipoController&2=gestionM"  style="color:white;">
                             <i class="users icon"></i><i class="futbol icon"></i>
                             Equipos
                             </a>
                             </button>
 
-                            <button class="ui violet button">
+                            <button class="ui yellow button">
                             <a href="?1=JugadoresController&2=gestionM"  style="color:white;">
                                 <i class="female icon"></i><i class="futbol icon"></i>
                             Jugadores

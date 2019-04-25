@@ -49,6 +49,12 @@ class IngresosController extends ControladorBase {
         echo $dao->mostrarIngresosTabla();
     }
 
+    public function mostrarIngresosTablaE() {
+        $dao = new DaoIngresos();
+
+        echo $dao->mostrarIngresosTablaE();
+    }
+
     public function verPorMes() {
         $dao = new DaoIngresos();
       
@@ -58,6 +64,16 @@ class IngresosController extends ControladorBase {
         $dao->objeto->setAnio($anioE);
 
         echo $dao->mostrarTotal();        
+    }
+
+    public function reestablecerI() {
+        $dao = new DaoIngresos();
+      
+        $id = $_REQUEST["id"];
+
+        $dao->objeto->setId($id);
+        
+        echo $dao->reestablecer();        
     }
 
     public static function IngresosBDIngresar()

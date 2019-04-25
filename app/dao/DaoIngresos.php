@@ -59,6 +59,35 @@ class DaoIngresos extends DaoBase {
 
         return '{"data": ['.$_json .']}';
     }
+
+
+    public function mostrarIngresosTablaE() {
+        $_query = "select id,title,format(SUM(Cantidad),2) as cantidad,DATE_FORMAT(start, '%d/%m/%Y') as start from Ingresos
+         where idEliminado=2
+        group by start,title order by start desc;";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $_json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $object = json_encode($fila);
+
+            
+            $btnEliminar = '<button id=\"'.$fila["id"].'\" class=\"ui red button\" onclick=\"reestablecerI(this)\"><i class=\"recycle icon\"></i> Reestablecer</button>';
+
+            $acciones = ', "Acciones": "'.$btnEliminar.'"';
+
+            $object = substr_replace($object, $acciones, strlen($object) -1, 0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        return '{"data": ['.$_json .']}';
+    }
     
 
     public function mostrarTotal() {
@@ -162,6 +191,18 @@ class DaoIngresos extends DaoBase {
     public function guardarOtro(){
         $_query = "insert into ingresos values (null,'".$this->objeto->getTitle()."',curdate(),'".$this->objeto->getCantidad()."',
         '#140E93','#E6C404',DATE_FORMAT(CURDATE(),'%m'),year(CURRENT_DATE()),1);";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function reestablecer() {
+        $_query = "update ingresos set idEliminado=1 where id = ".$this->objeto->getId();
 
         $resultado = $this->con->ejecutar($_query);
 

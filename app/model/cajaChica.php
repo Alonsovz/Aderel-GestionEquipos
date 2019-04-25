@@ -7,6 +7,7 @@ class cajaChica extends ModeloBase{
     private $concepto;
     private $recibido;
     private $idVale;
+    private $id;
 
     
     
@@ -15,7 +16,22 @@ class cajaChica extends ModeloBase{
 
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
 
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */ 
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
 
     /**

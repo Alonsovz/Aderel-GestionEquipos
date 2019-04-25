@@ -37,6 +37,36 @@ class DaoEgresos extends DaoBase {
         return '{"data": ['.$_json .']}';
     }
 
+    public function mostrarEgresosE() {
+        $_query = "select e.*, c.chequera as chequera, format(e.cantidad,2) as cantidad, format(e.retencion,2) as retencion, format(pagado,2) as pagado,
+        DATE_FORMAT(e.fechaEgreso, '%d/%m/%Y') as fechaEgreso from egresos e
+        inner join chequeras c on c.idChequera = e.idChequera
+        where  e.idEliminado=2;";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $_json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $object = json_encode($fila);
+
+           
+           
+            $btnEliminar = '<button id=\"'.$fila["idEgreso"].'\" class=\"ui green button\" onclick=\"reestablecerEg(this)\"><i class=\"recycle icon\"></i> Reestablecer</button>';
+
+            $acciones = ', "Acciones": "'.$btnEliminar.'"';
+
+            $object = substr_replace($object, $acciones, strlen($object) -1, 0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        return '{"data": ['.$_json .']}';
+    }
+
     public function mostrarChequeras() {
         $_query = "select * from chequeras where idEliminado=1";
 
@@ -186,6 +216,18 @@ class DaoEgresos extends DaoBase {
 
     public function eliminar() {
         $_query = "update egresos set idEliminado=2 where idEgreso = ".$this->objeto->getIdEgreso();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function reestablecer() {
+        $_query = "update egresos set idEliminado=1 where idEgreso = ".$this->objeto->getIdEgreso();
 
         $resultado = $this->con->ejecutar($_query);
 

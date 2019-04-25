@@ -75,6 +75,12 @@ class EgresosController extends ControladorBase {
         echo $dao->mostrarEgresos();
     }
 
+    public function mostrarEgresosE() {
+        $dao = new DaoEgresos();
+
+        echo $dao->mostrarEgresosE();
+    }
+
     public function mostrarChequeras() {
         $dao = new DaoEgresos();
 
@@ -273,6 +279,17 @@ class EgresosController extends ControladorBase {
 
         echo $dao->eliminar();
     }
+
+    public function reestablecerEg() {
+        $datos = $_REQUEST["id"];
+
+        $dao = new DaoEgresos();
+
+        $dao->objeto->setIdEgreso($datos);
+
+        echo $dao->reestablecer();
+    }
+
     public function getChNo()
     {
         $dao=new DaoEgresos();

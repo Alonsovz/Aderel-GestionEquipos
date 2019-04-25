@@ -22,10 +22,41 @@ class DaoCajaChica extends DaoBase {
 
            
             $btnEditar = '<button id=\"'.$fila["id"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editar(this)\"><i class=\"edit icon\"></i> Editar</button>';
-            $btnEliminar = '<button id=\"'.$fila["id"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminar(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
+            $btnEliminar = '<button id=\"'.$fila["id"].'\" monto=\"'.$fila["cantidad"].'\" class=\"ui  icon red small button\" onclick=\"eliminar(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
             $btnVer = '<button id=\"'.$fila["id"].'\" class=\"ui icon green small button\" onclick=\"ver(this)\"><i class=\"list icon\"></i> Ver</button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$btnVer.'"';
+
+            $object = substr_replace($object, $acciones, strlen($object) -1, 0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        return '{"data": ['.$_json .']}';
+    }
+
+    public function mostrarE()
+    {
+        $_query = "select c.*,format(c.cantidad,2) as cantidad, DATE_FORMAT(c.fecha, '%d/%m/%Y') as fecha,t.nombre as tipo  from cajaChica c
+        inner join tipoCaja t on t.idTipo = c.idTipo
+        where c.idEliminado=2";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $_json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $object = json_encode($fila);
+
+           
+            
+            $btnEliminar = '<button id=\"'.$fila["id"].'\" idTipo=\"'.$fila["idTipo"].'\" class=\"ui purple button\" onclick=\"reestablecerC(this)\"><i class=\"recycle icon\"></i> Reestablecer</button>';
+            
+
+            $acciones = ', "Acciones": "'.$btnEliminar.'"';
 
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
 
@@ -52,7 +83,7 @@ class DaoCajaChica extends DaoBase {
 
            
             $btnEditar = '<button id=\"'.$fila["id"].'\" class=\"ui btnEditarC icon blue small button\" onclick=\"editar(this)\"><i class=\"edit icon\"></i> Editar</button>';
-            $btnEliminar = '<button id=\"'.$fila["id"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminar(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
+            $btnEliminar = '<button id=\"'.$fila["id"].'\" monto=\"'.$fila["cantidad"].'\" class=\"ui btnEliminarC icon red small button\" onclick=\"eliminar(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
             $btnVer = '<button id=\"'.$fila["id"].'\" class=\"ui icon green small button\" onclick=\"ver(this)\"><i class=\"list icon\"></i> Ver</button>';
 
             $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.''.$btnVer.'"';
@@ -118,6 +149,25 @@ class DaoCajaChica extends DaoBase {
         
     }
 
+    public function sumarMontoG() {
+        //   $resta= $this->objeto->getCantidad();
+           $_query = "update tipoCaja set montoActual = montoActual + '".$this->objeto->getCantidad()."' where idTipo=1;" ;
+   
+           $resultado = $this->con->ejecutar($_query);
+   
+           
+       }
+
+       public function sumarMontoA() {
+        //   $resta= $this->objeto->getCantidad();
+           $_query = "update tipoCaja set montoActual = montoActual + '".$this->objeto->getCantidad()."' where idTipo=2;" ;
+   
+           $resultado = $this->con->ejecutar($_query);
+   
+           
+       }
+
+
     public function nuevoMontoA() {
         //   $resta= $this->objeto->getCantidad();
            $_query = "update tipoCaja set montoActual = montoActual - '".$this->objeto->getCantidad()."' where idTipo=2;" ;
@@ -159,9 +209,11 @@ class DaoCajaChica extends DaoBase {
         }
     }
 
-    public function registrarF() {
-        $_query = "insert into categorias values(null,'".$this->objeto->getNombreCategoria()."',
-         '".$this->objeto->getEdadMinima()."',1,1)";
+   
+
+    public function reestablecer() {
+        $_query = "update cajaChica set idEliminado = 1 
+         where id='".$this->objeto->getId()."' and idTipo = ".$this->objeto->getIdVale();
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -172,23 +224,8 @@ class DaoCajaChica extends DaoBase {
         }
     }
 
-
-    public function eliminarM() {
-        $_query = "update categorias set idEliminado=2 where idGenero=2 and idCategoria = ".$this->objeto->getIdCategoria();
-
-        $resultado = $this->con->ejecutar($_query);
-
-        if($resultado) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-    public function editarM() {
-        $_query = "update categorias set nombreCategoria ='".$this->objeto->getNombreCategoria()."',
-        edadMinima = '".$this->objeto->getEdadMinima()."'
-         where idGenero=2 and idCategoria = ".$this->objeto->getIdCategoria();
+    public function eliminarC() {
+        $_query = "update cajaChica set idEliminado = 2 where id=".$this->objeto->getIdVale();
 
         $resultado = $this->con->ejecutar($_query);
 

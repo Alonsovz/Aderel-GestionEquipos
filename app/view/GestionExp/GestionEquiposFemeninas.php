@@ -229,11 +229,12 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
         Equipos disponibles:
         <select name="equiposD" id="equiposD">
         </select>
+        <input type="hidden" id="idEquipoT">
         </form>
     </div>
 
     <div class="actions">
-    <button class="ui black deny button">
+    <button class="ui black deny button" id="btnCerrarT">
     Cancelar
     </button>
 
@@ -367,7 +368,7 @@ var appE = new Vue({
             });
 
             },
-            traspasos(nombre,apellido,equipo,idJugador) {
+            traspasos(nombre,apellido,equipo,idJugador,idEquipo) {
                 $('#traspaso').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal(
                     'show');
 
@@ -375,6 +376,7 @@ var appE = new Vue({
                     $("#apellidoJ").text(apellido);
                     $("#equipoJ").text(equipo);
                     $("#idJugador").val(idJugador);
+                    $("#idEquipoT").val(idEquipo);
             },
             verDetalle(id){
                 this.idJugador = parseInt(id);
@@ -654,7 +656,12 @@ var ver=(ele)=>{
      
 
 
-    
+    $('#btnCerrarT').click(function() {
+               var idEquipo = $('#idEquipoT').val();
+               $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+    appE.cargarDetalles(idEquipo);
+            });   
 
 
         $(function() {
@@ -721,6 +728,7 @@ var ver=(ele)=>{
             function(){
                var idJugador = $('#idJugador').val();
              var idEquipo = $('#equiposD').val();
+             var idEquipoT = $('#idEquipoT').val();
          
         
             $.ajax({
@@ -739,7 +747,13 @@ var ver=(ele)=>{
                             type: 'success',
                             showConfirmButton: true
 
-                        }); 
+                        }).then((result) => {
+                            if (result.value) {
+                                $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                                .modal('show');
+                                appE.cargarDetalles(idEquipoT);
+                            }
+                        });
                         
                         
                     } 

@@ -1,5 +1,6 @@
 <div id="app">
 
+
 <div class="ui fullscreen longer modal" id="modalCajaAderel">
 <div class="header">
 
@@ -245,9 +246,34 @@
     </div>
 </div>
 
+
+<div id="eliminarC" class="ui tiny modal">
+<div class="header">
+                    Eliminar vale de caja ADEREL
+                </div>
+                <div class="content">
+                    <h4>¿Desea eliminar el vale a la caja?</h4>
+                    <form action="" class="ui equal width form">
+                        <input type="hidden" name="idVale" id="idVale">
+                        <input type="hidden" name="montoC" id="montoC">
+
+                    </form>        
+                </div>
+                <div class="actions">
+                    <button class="ui black deny button" id="btnCancelar">
+                        Cancelar
+                    </button>
+                    <button class="ui right red button" id="btnEl" >
+                        Eliminar
+                    </button>
+                </div>
+</div>
+
 </div>
 
 <script src="./res/tablas/tablaCajaAderel.js"></script>
+<script src="./res/js/modalEliminar.js"></script>
+
 <script>
 var app = new Vue({
         el: "#app",
@@ -508,4 +534,50 @@ $("#btnGuardar").click(function(){
             });
 
     });
+
+    var eliminar=(ele)=>{
+  $('#eliminarC').modal('setting', 'closable', false).modal('show');
+ $('#idVale').val($(ele).attr("id"));
+ $('#montoC').val($(ele).attr("monto"));
+}
+
+$("#btnCancelar").click(function(){
+    $("#modalCajaAderel").modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+});
+
+$('#btnEl').click(function() {
+               var idVale = $('#idVale').val();
+               var monto = $('#montoC').val();
+
+         
+        
+            $.ajax({
+                type: 'POST',
+                url: '?1=CajaChicaController&2=eliminarA',
+                data: {
+                    idVale : idVale,
+                    monto : monto
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        $('#eliminarC').modal('hide');
+                        swal({
+                            title: 'Eliminado',
+                            text: 'El elemento fue eliminado exitosamente',
+                            type: 'success',
+                            showConfirmButton: false,
+                            timer: 1500
+
+                        }).then((result) => {
+                           
+                            location.href = '?1=EgresosController&2=cajaChicaAderel';
+                            
+                        }); 
+                        $('#dtCajaA').DataTable().ajax.reload();
+                        
+                    } 
+                }
+            });
+            });
     </script>
