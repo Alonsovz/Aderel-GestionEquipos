@@ -205,7 +205,6 @@ idEliminado int
 create table inscriJugador(
 idEquipo int,
 idJugador int,
-idTorneo int,
 estado int,
 pago int,
 idMayor int,
@@ -330,7 +329,7 @@ alter table pagoNatacion add constraint fk_pagoNatacion_natacion foreign key (id
 
 alter table inscriJugador add constraint fk_inscriJugador_equipos foreign key (idEquipo) references equipos(idEquipo);
 alter table inscriJugador add constraint fk_inscriJugador_jugadores foreign key (idJugador) references jugadores(idJugador);
-alter table inscriJugador add constraint fk_inscriJugador_torneos foreign key (idTorneo) references torneos(idTorneo);
+
 
 
 
@@ -353,8 +352,9 @@ alter table equipos add constraint fk_equipos_genero foreign key (idGenero) refe
 alter table posiciones add constraint fk_posiciones_equipos foreign key (idEquipo) references equipos(idEquipo);
 alter table posiciones add constraint fk_posiciones_torneos foreign key (idTorneo) references torneos(idTorneo);
 
-alter table goleadores add constraint fk_goleadores_inscriJugador foreign key (idJugador) references inscriJugador(idJugador);
-alter table goleadores add constraint fk_goleadores_inscriJugadorT foreign key (idTorneo) references inscriJugador(idTorneo);
+alter table goleadores add constraint fk_goleadores_jugadores foreign key (idJugador) references jugadores(idJugador);
+alter table goleadores add constraint fk_goleadores_torneos foreign key (idTorneo) references torneos(idTorneo);
+
 
 
 insert into rol values(1,'Administrador');
@@ -661,5 +661,13 @@ begin
 end	
 $$
 
+select e.nombre as equipo, sum(g.goles) as goles from equipos e
+inner join torneos t on t.idTorneo = e.idTorneo
+inner join goleadores g on g.idTorneo = t.idTorneo
+inner join jugadores j on j.idJugador = g.idJugador
+inner join inscriJugador i on i.idJugador = j.idJugador
+ where t.idTorneo=4 group by equipo, g.idJugador order by goles desc
 
-select * from usuario
+
+select * from inscriJugador
+

@@ -218,7 +218,31 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
 </div>
 </div>
 
+<div class="ui tiny modal" id="traspaso">
+    <div class="header" style="color:black; font-size:19px;">
+    Trasnferir a <a id="nombreJ" ></a> <a id="apellidoJ"></a> a otro equipo.
+    <br>
+    Equipo actual <a id="equipoJ"></a>. <input type="hidden" id="idJugador">
+    </div>
+    <div class="content">
+        <form class="ui form">
+        Equipos disponibles:
+        <select name="equiposD" id="equiposD">
+        </select>
+        </form>
+    </div>
 
+    <div class="actions">
+    <button class="ui black deny button">
+    Cancelar
+    </button>
+
+    <button class="ui green button" id="btnTransferir">
+    Transferir
+    </button>
+
+    </div>
+</div>
 
 </div>
 
@@ -342,6 +366,15 @@ var appE = new Vue({
             }
             });
 
+            },
+            traspasos(nombre,apellido,equipo,idJugador) {
+                $('#traspaso').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal(
+                    'show');
+
+                    $("#nombreJ").text(nombre);
+                    $("#apellidoJ").text(apellido);
+                    $("#equipoJ").text(equipo);
+                    $("#idJugador").val(idJugador);
             },
             verDetalle(id){
                 this.idJugador = parseInt(id);
@@ -642,7 +675,15 @@ var ver=(ele)=>{
 
                 
             });
-           
+
+            var opcion = '';
+            var equipo = '<?php echo $equipos?>';
+
+            $.each(JSON.parse(equipo), function() {
+                opcion = `<option value="${this.idEquipo}">Equipo: ${this.nombreE} -- Categoria: ${this.Categoria}</option>`;
+
+                $('#equiposD').append(opcion);
+            });
 
             $('#btnInscribirE').click(function() {
                var idEquipo = $('#idE').val();
@@ -672,6 +713,44 @@ var ver=(ele)=>{
                     } 
                 }
             });
+            });
+
+
+            $('#btnTransferir').click(function() {
+                alertify.confirm("¿Desea transferir a la jugadora?",
+            function(){
+               var idJugador = $('#idJugador').val();
+             var idEquipo = $('#equiposD').val();
+         
+        
+            $.ajax({
+                type: 'POST',
+                url: '?1=EquipoController&2=traspaso',
+                data: {
+                    idJugador : idJugador,
+                    idEquipo : idEquipo,
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        $('#traspaso').modal('hide');
+                        swal({
+                            title: 'Listo!',
+                            text: 'Jugadora transferida, para completar el traspaso debe realizar el cobro correspondiente en caja!',
+                            type: 'success',
+                            showConfirmButton: true
+
+                        }); 
+                        
+                        
+                    } 
+                }
+            });
+        },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            }); 
             });
 
             

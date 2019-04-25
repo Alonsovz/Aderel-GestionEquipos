@@ -23,6 +23,9 @@ class EquipoController extends ControladorBase {
         $daoT = new DaoTorneos();
         $torneos = $daoT->cargarTorneosM();
 
+        $daoE = new DaoEquipos();
+        $equipos = $daoE->mostrarEquiposTraM();
+
         self::loadMain();
         require_once './app/view/GestionExp/GestionEquiposMasculinos.php';
     }
@@ -35,6 +38,9 @@ class EquipoController extends ControladorBase {
 
         $daoT = new DaoTorneos();
         $torneos = $daoT->cargarTorneosF();
+
+        $daoE = new DaoEquipos();
+        $equipos = $daoE->mostrarEquiposTraF();
 
         self::loadMain();
 
@@ -127,6 +133,19 @@ public function registrarM() {
         $dao->objeto->setIdCategoria($id);
 
         echo $dao->cargarTorneosM();
+    }
+
+
+    public function traspaso() {
+        $id = $_REQUEST["idJugador"];
+        $idEquipo = $_REQUEST["idEquipo"];
+
+        $dao = new DaoEquipos();
+
+        $dao->objeto->setIdJugador($id);
+        $dao->objeto->setIdEquipo($idEquipo);
+
+        echo $dao->traspaso();
     }
 
     public function editarM() {

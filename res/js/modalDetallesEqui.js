@@ -44,7 +44,7 @@ Vue.component('modal-detalles', {
                                 </button>
                             </td>
                             <td v-else-if="detalle.pago == '2'">
-                            <button @click="" type="button" class="ui olive button">
+                            <button @click="$parent.traspasos(detalle.nombre, detalle.apellido ,detalle.equipo,detalle.idJugador)" type="button" class="ui olive button">
                                     <i class="dollar icon"></i>
                                     Traspasos
                                 </button>

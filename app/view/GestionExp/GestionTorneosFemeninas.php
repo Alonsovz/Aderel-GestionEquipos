@@ -630,7 +630,7 @@ var appE = new Vue({
                     $.ajax({
                         type: 'POST',
                         data: {
-                            detalles: JSON.stringify(this.envios),
+                            goleos: JSON.stringify(this.envios),
                             idTor : idTor,
                         },
                         url: '?1=TorneosController&2=registrarGoleador',

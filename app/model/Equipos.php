@@ -10,11 +10,29 @@ class Equipos extends ModeloBase{
     private $telefonoAux;
     private $telefonoE;
     private $carnets;
-
+    private $idJugador;
 
     public function __construct() {
 
     }
+
+    public function getIdJugador()
+    {
+        return $this->idJugador;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setIdJugador($idJugador)
+    {
+        $this->idJugador = $idJugador;
+
+        return $this;
+    }
+
 
     public function getCarnets()
     {

@@ -212,8 +212,7 @@ class DaoJugadores extends DaoBase {
     }
 
     public function inscribirJugadorM(){
-        $_query = "insert into inscriJugador values('".$this->objeto->getIdEquipo()."','".$this->objeto->getIdJugador()."',
-        '".$this->objeto->getIdTorneo()."',2,1,1,curdate())";
+        $_query = "insert into inscriJugador values('".$this->objeto->getIdEquipo()."','".$this->objeto->getIdJugador()."',2,1,1,curdate())";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -227,8 +226,7 @@ class DaoJugadores extends DaoBase {
 
 
     public function inscribirJugadorMayor(){
-        $_query = "insert into inscriJugador values('".$this->objeto->getIdEquipo()."','".$this->objeto->getIdJugador()."',
-        '".$this->objeto->getIdTorneo()."',2,1,2,curdate())";
+        $_query = "insert into inscriJugador values('".$this->objeto->getIdEquipo()."','".$this->objeto->getIdJugador()."',2,1,2,curdate())";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -575,7 +573,7 @@ class DaoJugadores extends DaoBase {
              t.nombreTorneo as torneo,i.idEquipo as idEquipo from inscriJugador i
             inner join equipos e on e.idEquipo = i.idEquipo
             inner join jugadores j on j.idJugador = i.idJugador
-            inner join torneos t on t.idTorneo = i.idTorneo
+            inner join torneos t on t.idTorneo = e.idTorneo
             where i.pago=1 and i.estado=2 group by i.idJugador";
 
 

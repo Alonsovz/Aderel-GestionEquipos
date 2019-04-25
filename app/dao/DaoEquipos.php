@@ -205,6 +205,18 @@ class DaoEquipos extends DaoBase {
         }
     }
 
+    public function traspaso() {
+        $_query = "update inscriJugador set pago=1,idEquipo= '".$this->objeto->getIdEquipo()."' where idJugador = ".$this->objeto->getIdJugador();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
 
     public function actualizarCupos() {
 
@@ -287,6 +299,49 @@ class DaoEquipos extends DaoBase {
         $json = substr($json,0, strlen($json) - 1);
 
         return '['.$json.']';
+    }
+
+
+    public function mostrarEquiposTraM() {
+        $_query = "select e.*,e.nombre as nombreE,e.cuposMayores as cupos,c.edadMinima as edad,c.edadMaxima as edadM, c.nombreCategoria as Categoria, i.estado as estado, t.nombreTorneo as torneo,
+        t.idTorneo as idT from equipos e
+       inner join categorias c on c.idCategoria = e.idCategoria
+       inner join inscripcion i on i.idInscripcion = e.idInscripcion
+       inner join torneos t on t.idTorneo = e.idTorneo
+       where  e.idEliminado=1  and e.idGenero=2 and e.idEquipo>2";
+
+       $resultado = $this->con->ejecutar($_query);
+
+       $json = '';
+
+       while($fila = $resultado->fetch_assoc()) {
+           $json .= json_encode($fila).',';
+       }
+
+       $json = substr($json,0, strlen($json) - 1);
+
+       return '['.$json.']';
+    }
+
+    public function mostrarEquiposTraF() {
+        $_query = "select e.*,e.nombre as nombreE,e.cuposMayores as cupos,c.edadMinima as edad,c.edadMaxima as edadM, c.nombreCategoria as Categoria, i.estado as estado, t.nombreTorneo as torneo,
+        t.idTorneo as idT from equipos e
+       inner join categorias c on c.idCategoria = e.idCategoria
+       inner join inscripcion i on i.idInscripcion = e.idInscripcion
+       inner join torneos t on t.idTorneo = e.idTorneo
+       where  e.idEliminado=1  and e.idGenero=1 and e.idEquipo>2";
+
+       $resultado = $this->con->ejecutar($_query);
+
+       $json = '';
+
+       while($fila = $resultado->fetch_assoc()) {
+           $json .= json_encode($fila).',';
+       }
+
+       $json = substr($json,0, strlen($json) - 1);
+
+       return '['.$json.']';
     }
 
 
