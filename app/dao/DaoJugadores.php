@@ -224,6 +224,26 @@ class DaoJugadores extends DaoBase {
 
     }
 
+    public function getDui()
+    {
+
+        $_query="select dui from jugadores WHERE dui='".$this->objeto->getDui()."'";
+       
+
+        $resultado=$this->con->ejecutar($_query)->fetch_assoc();
+        if($resultado['dui']!=null)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+        
+        
+
+    }
+
 
     public function inscribirJugadorMayor(){
         $_query = "insert into inscriJugador values('".$this->objeto->getIdEquipo()."','".$this->objeto->getIdJugador()."',2,1,2,curdate())";

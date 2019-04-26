@@ -669,5 +669,11 @@ inner join inscriJugador i on i.idJugador = j.idJugador
  where t.idTorneo=4 group by equipo, g.idJugador order by goles desc
 
 
-select * from inscriJugador
+select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,i.estado,i.idEquipo as idE, i.pago as pago,e.nombre as equipo from inscriJugador i
+        inner join equipos e on e.idEquipo = i.idEquipo
+        inner join jugadores j on j.idJugador = i.idJugador
+        where i.idEquipo=6  and i.estado=2 group by i.idJugador
 
+select c.*,format(c.cantidad,2) as cantidad, DATE_FORMAT(c.fecha, '%d/%m/%Y') as fecha,t.nombre as tipo  from cajaChica c
+        inner join tipoCaja t on t.idTipo = c.idTipo
+        where c.idEliminado=2

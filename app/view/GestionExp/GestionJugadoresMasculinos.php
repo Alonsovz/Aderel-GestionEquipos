@@ -148,6 +148,10 @@
                                     style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
                                     Completa este campo
                                     </div>
+                                    <div class="ui red pointing label"  id="duiC"
+                                    style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                    Dui ya existe
+                                    </div>
                         </div>
                        
 
@@ -171,50 +175,7 @@
 </div>
 
 
-<div class="ui tiny modal" id="modalInscribirJ"  style="overflow: scroll;">
 
-<div class="header">
-<i class="male icon"></i><i class="futbol icon"></i> Inscribir Jugador
-</div>
-<div class="content" class="ui equal width form">
-    <form class="ui form" id="frmInscribirJ"> 
-        <div class="field">
-            <div class="fields">
-            <div class="eight wide field">
-            <label><i class="users icon"></i>Nombre del jugador</label>
-            <input type="text" name="nombreJugador" id="nombreJugador" readonly>
-            </div>
-
-            <div class="eight wide field">
-            <label><i class="chart bar outline icon"></i>Edad del Jugador</label>
-            <input type="text" name="edadJ"  id="edadJ" readonly>
-            <input type="hidden" name="idJ"  id="idJ">
-            </div>
-            </div>
-        </div>
-        
-        <div class="field">
-            <div class="fields">
-            <div class="four wide field"></div>
-                <div class="eight wide field">
-                <label><i class="trophy icon"></i>Equipos disponibles</label>
-                <select name="equipo" id="equipo" class="ui search dropdown" style="">
-                        </select>
-                         
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-    <div class="actions">
-        <button id="btnCerrarJ" class="ui yellow button">
-            Cancelar
-        </button>
-        <button class="ui blue button" id="btnInscribir" >
-        Guardar
-        </button>
-    </div>
-</div>
 
 <script src="./res/tablas/tablaJugadoresM.js"></script>
 
@@ -264,7 +225,7 @@ var appJ = new Vue({
                 },
                 {
                     label: 'Edad:',
-                    name: 'edad',
+                    name: 'edadJ',
                     type: 'text', 
                 },
                 {
@@ -341,7 +302,7 @@ var appJ = new Vue({
                         $('#frmEditarJ input[name="dui"]').val(dat.dui);
                         $('#frmEditarJ input[name="imagenNueva"]').val(dat.foto);
                         $('#frmEditarJ input[name="fechaNacimiento"]').val(dat.fechaNacimiento);
-                        $('#frmEditarJ input[name="edad"]').val(dat.edad);
+                        $('#frmEditarJ input[name="edadJ"]').val(dat.edad);
                         $('#frmEditarJ input[name="telefono"]').val(dat.telefono);
                         //$('#frmEditarJ select[name="equipo"]').dropdown('set selected', dat.idEquipo);
                     })
@@ -383,24 +344,38 @@ var appJ = new Vue({
 
 
 function limpiar(){
-    //$("#age").hide(); 
+    $("#age").hide(); 
                 $('#nombreJ').val('');
                 $('#apellidoJ').val('');
-                $('#dui').val('');
+                $('#duiJ').val('');
                 $('#fechaNac').val('');
                 $('#Imagen').val('');
-                $('#telefono').val('');
+                $('#edad').val('');
+                $("#telefono").val('');
+                $("#labelDui").hide();
+                $("#labelFecha").hide();
+                $("#labelNombre").hide();
+                $("#labelApellido").hide();
+                $("#duiC").hide();
+                $("#btnGuardarJugador").attr("disabled", false);
                 
 }
 $(function(){
 $('#btnCerrar').click(function() { 
-//$("#age").hide();   
+                $("#age").hide();   
                 $('#nombreJ').val('');
                 $('#apellidoJ').val('');
-                $('#dui').val('');
+                $('#duiJ').val('');
+                $('#edad').val('');
                 $('#fechaNac').val('');
-                $("#telefono").val('');
                 $('#Imagen').val('');
+                $("#telefono").val('');
+                $("#labelDui").hide();
+                $("#labelFecha").hide();
+                $("#labelNombre").hide();
+                $("#labelApellido").hide();
+                $("#duiC").hide();
+                $("#btnGuardarJugador").attr("disabled", false);
                 $('#modalAgregarJugador').modal('hide');
             });
             $('#btnCerrarJ').click(function() { 
@@ -490,19 +465,19 @@ $('#modalAgregarJugador').modal('setting', 'autofocus', false).modal('setting', 
                     $("#labelNombre").css("display","block");
                     $("#btnGuardarJugador").attr("disabled", true);
                 }
-                if($("#apellidoJ").val()==""){
+                else if($("#apellidoJ").val()==""){
                     $("#labelApellido").css("display","block");
                     $("#btnGuardarJugador").attr("disabled", false);
                 }
-                if($("#img").val()==""){
+               else if($("#img").val()==""){
                     $("#labelFoto").css("display","block");
                     $("#btnGuardarJugador").attr("disabled", false);
                 }
-                if($("#fechaNac").val()==""){
+               else if($("#fechaNac").val()==""){
                     $("#labelFecha").css("display","block");
                     $("#btnGuardarJugador").attr("disabled", false);
                 }
-                if($("#dui").val()==""){
+               else if($("#dui").val()==""){
                     $("#labelDui").css("display","block");
                     $("#btnGuardarJugador").attr("disabled", false);
                 }
@@ -634,7 +609,7 @@ function resultadoE(){
 
 var edad = Edad(fecha);
 
-$('#frmEditarJ input[name="edad"]').val(edad);
+$('#frmEditarJ input[name="edadJ"]').val(edad);
 
 if(edad>18){
     $('#frmEditarJ input[name="dui"]').mask("99999999-9");
@@ -662,6 +637,38 @@ Edad(fecha);
 resultadoE();
 
 
+});
+
+
+$("#duiJ").change(function(){
+
+var user=$("#duiJ").val();
+
+     $.ajax({
+     type: 'POST',
+     url: '?1=jugadoresController&2=getDui',
+     data:{user},
+     success: function(r) {
+
+             if(r==1)
+             {
+                 
+                 $("#btnGuardarJugador").attr("disabled", true);
+             //    $("#duiC").siblings('div.ui.red.pointing.label').html('El usuario ya existe!')
+                 $("#duiC").css('display', 'inline-block');
+             }    
+             else{
+
+                 $("#btnGuardarJugador").attr("disabled", false);
+             }  
+     }
+         });
+
+});
+
+$("#duiJ").keyup(function(){
+
+ $("#btnGuardarJugador").attr("disabled", false);
 });
 
 </script>

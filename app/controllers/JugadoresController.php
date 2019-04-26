@@ -130,7 +130,7 @@ class JugadoresController extends ControladorBase {
         $dao->objeto->setApellido($_REQUEST['apellido']);
         $dao->objeto->setDui($_REQUEST['dui']);
         $dao->objeto->setFechaNacimiento($_REQUEST['fechaNacimiento']);
-        $dao->objeto->setEdad($_REQUEST['edad']);
+        $dao->objeto->setEdad($_REQUEST['edadJ']);
         //$dao->objeto->setIdEquipo($_REQUEST['equipo']);
         $dao->objeto->setImg($_REQUEST['imagenNueva']);
         $dao->objeto->setIdJugador($_REQUEST['idDetalleE']);
@@ -172,6 +172,15 @@ class JugadoresController extends ControladorBase {
         $dao->objeto->setIdTorneo($idTorneo);
 
         echo $dao->inscribirJugadorM();
+    }
+
+    public function getDui()
+    {
+        $dao=new DaoJugadores();
+        $user=$_REQUEST['user'];
+        $dao->objeto->setDui($user);
+
+        echo $dao->getDui();
     }
 
     public function inscribirJugadorMayor() {
