@@ -246,7 +246,7 @@ Categorías de Torneo
                             <td>
                             <select v-model="envio.goleadores" class="ui search selection dropdown" id="goleadores"
                              name="goleadores">
-                               <option v-for="option in goleadoresOps" :value="option.idJugador"> {{option.nombre}} {{option.apellido}}--
+                               <option v-for="option in goleadoresOps" :key='option.idJugador' :value="option.idJugador"> {{option.nombre}} {{option.apellido}}--
                                {{option.correlativo}}
                                </option>
                              </select>
@@ -290,7 +290,7 @@ Categorías de Torneo
                             <td>
                             <select v-model="castigo.goleadores" class="ui search selection dropdown" id="goleadores"
                              name="goleadores">
-                               <option v-for="option in goleadoresOps" :value="option.idJugador">{{option.nombre}} {{option.apellido}} --
+                               <option v-for="option in goleadoresOps" :key='option.idJugador' :value="option.idJugador">{{option.nombre}} {{option.apellido}} --
                                 {{option.correlativo}}
                                </option>
                              </select>
@@ -405,8 +405,8 @@ var appE = new Vue({
                 goleadores: '2',
                 suspension: '',
             }],
-
-            goleadoresOps: <?php echo $goleadoresCmb?>,
+            jugadores:<?php echo $goleadoresCmb?>,
+            goleadoresOps: [],
 
             campos_registroT: [{
                     label: 'Nombre del Torneo',
@@ -460,75 +460,75 @@ var appE = new Vue({
         methods: {
             cargarDetalles(id) {
 
-            this.idTorneo = parseInt(id);
+                this.idTorneo = parseInt(id);
 
-            $('#frmDetalles').addClass('loading');
-            $.ajax({
-            type: 'POST',
-            url: '?1=TorneosController&2=mostrarEquiposCM',
-            data: {
-            id: id
-            },
-            success: function (data) {
-            appE.detalles = JSON.parse(data);
-            $('#frmDetalles').removeClass('loading');
-            }
-            });
+                $('#frmDetalles').addClass('loading');
+                $.ajax({
+                type: 'POST',
+                url: '?1=TorneosController&2=mostrarEquiposCM',
+                data: {
+                id: id
+                },
+                success: function (data) {
+                appE.detalles = JSON.parse(data);
+                $('#frmDetalles').removeClass('loading');
+                }
+                });
 
             },
             cargarDetallesJornadas(id) {
 
-            this.idTorneo = parseInt(id);
+                this.idTorneo = parseInt(id);
 
-            $('#frmDetalles').addClass('loading');
-            $.ajax({
-            type: 'POST',
-            url: '?1=TorneosController&2=calendarioGestionT',
-            data: {
-            id: id
-            },
-            success: function (data) {
-            appE.detalles = JSON.parse(data);
-            $('#frmDetalles').removeClass('loading');
-            }
-            });
+                $('#frmDetalles').addClass('loading');
+                $.ajax({
+                type: 'POST',
+                url: '?1=TorneosController&2=calendarioGestionT',
+                data: {
+                id: id
+                },
+                success: function (data) {
+                appE.detalles = JSON.parse(data);
+                $('#frmDetalles').removeClass('loading');
+                }
+                });
 
             },
 
             tablaPosiciones(id) {
 
-            this.idTorneo = parseInt(id);
+                this.idTorneo = parseInt(id);
 
-            $('#frmDetalles').addClass('loading');
-            $.ajax({
-            type: 'POST',
-            url: '?1=TorneosController&2=posiciones',
-            data: {
-            id: id
-            },
-            success: function (data) {
-            appE.detalles = JSON.parse(data);
-            $('#frmDetalles').removeClass('loading');
-            }
-            });
+                $('#frmDetalles').addClass('loading');
+                $.ajax({
+                type: 'POST',
+                url: '?1=TorneosController&2=posiciones',
+                data: {
+                id: id
+                },
+                success: function (data) {
+                appE.detalles = JSON.parse(data);
+                $('#frmDetalles').removeClass('loading');
+                }
+                });
 
             },
             goleadores(id) {
 
-            this.idTorneo = parseInt(id);
+                this.idTorneo = parseInt(id);
 
-            $('#frmDetalles').addClass('loading');
-            $.ajax({
-            type: 'POST',
-            url: '?1=TorneosController&2=goleadores',
-            data: {
-            id: id
-            },
-            success: function (data) {
-            appE.detalles = JSON.parse(data);
-            $('#frmDetalles').removeClass('loading');
-            }
-            });
+                $('#frmDetalles').addClass('loading');
+                $.ajax({
+                type: 'POST',
+                url: '?1=TorneosController&2=goleadores',
+                data: {
+                id: id
+                },
+                success: function (data) {
+                appE.detalles = JSON.parse(data);
+                $('#frmDetalles').removeClass('loading');
+                }
+                });
 
             },
             
@@ -587,8 +587,19 @@ var appE = new Vue({
                 $("#nombreTor").val(nombreT);
                 $("#idTo").val(idTor);
 
+                
+                const arrayJugadores = this.jugadores.filter((goleador,i)=>{
+                    return goleador.idEquipo == equipo1 || goleador.idEquipo == equipo2;
+                });
+                console.log('arrayJugadores :', arrayJugadores);
+
+                this.goleadoresOps.splice(0,this.goleadoresOps.length);
+                arrayJugadores.forEach((value,i)=>{
+                    this.goleadoresOps.push(value);
+                });
+                
                 $('#modalResultados').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
-                            .modal('show');
+                    .modal('show');
 
             },
             eliminarDetalle(index) {

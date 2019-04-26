@@ -427,7 +427,10 @@ class DaoTorneos extends DaoBase {
     }
 
     public function mostrarGoleadoresCmb() {
-        $_query = "select * from jugadores where idEliminado=1 and idFondo = 1 and idJugador>1 and idGenero=2";
+        $_query = "select j.*, equipos.nombre as idEquipo from jugadores j 
+        inner join inscrijugador incri on j.idJugador= incri.idJugador 
+        inner join equipos on equipos.idEquipo= incri.idEquipo
+        where j.idEliminado=1 and j.idFondo = 1 and j.idJugador>1 and j.idGenero=2";
 
         $resultado = $this->con->ejecutar($_query);
 
