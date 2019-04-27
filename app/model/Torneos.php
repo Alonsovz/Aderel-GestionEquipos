@@ -28,8 +28,174 @@ class Torneos extends ModeloBase{
     private $puntaje1;
     private $puntaje2;
 
+    private $tarjeta;
+    private $observacion;
+    private $partidos;
+    private $tarjetas;
+
+    private $hora;
+    private $fecha;
+    private $jornada;
+    private $vuelta;
+    private $idPartido;
+
+
     public function __construct() {
 
+    }
+
+    public function getIdPartido()
+    {
+        return $this->idPartido;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setIdPartido($idPartido)
+    {
+        $this->idPartido = $idPartido;
+
+        return $this;
+    }
+
+    public function getVuelta()
+    {
+        return $this->vuelta;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setVuelta($vuelta)
+    {
+        $this->vuelta = $vuelta;
+
+        return $this;
+    }
+
+    public function getJornada()
+    {
+        return $this->jornada;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setJornada($jornada)
+    {
+        $this->jornada = $jornada;
+
+        return $this;
+    }
+
+    public function getFecha()
+    {
+        return $this->fecha;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setFecha($fecha)
+    {
+        $this->fecha = $fecha;
+
+        return $this;
+    }
+
+    public function getHora()
+    {
+        return $this->hora;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setHora($hora)
+    {
+        $this->hora = $hora;
+
+        return $this;
+    }
+
+
+    public function getTarjetas()
+    {
+        return $this->tarjetas;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setTarjetas($tarjetas)
+    {
+        $this->tarjetas = $tarjetas;
+
+        return $this;
+    }
+
+    public function getPartidos()
+    {
+        return $this->partidos;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setPartidos($partidos)
+    {
+        $this->partidos = $partidos;
+
+        return $this;
+    }
+
+    public function getObservacion()
+    {
+        return $this->observacion;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setObservacion($observacion)
+    {
+        $this->observacion = $observacion;
+
+        return $this;
+    }
+
+    public function getTarjeta()
+    {
+        return $this->tarjeta;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setTarjeta($tarjeta)
+    {
+        $this->tarjeta = $tarjeta;
+
+        return $this;
     }
 
     public function getPuntaje2()

@@ -38,7 +38,7 @@ Vue.component('modal-jornadas', {
                         
                         <td>
                          <button @click="$parent.resultados(detalle.equipo1, detalle.equipo2, detalle.vuelta, detalle.jornada,
-                            detalle.hora, detalle.fecha,detalle.nombreT, detalle.idTor)" 
+                            detalle.hora, detalle.fecha,detalle.nombreT, detalle.idTor,detalle.idPartido)" 
                          type="button" class="ui blue button">
                               <i class="pencil icon"></i> Resultados
                         </button>

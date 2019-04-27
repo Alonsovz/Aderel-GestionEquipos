@@ -219,6 +219,16 @@ CREATE TABLE goleadores (
   goles int
 );
 
+
+CREATE TABLE castigos (
+  idCastigo int primary key auto_increment,
+  idJugador int,
+  idTorneo int,
+  tarjeta varchar(30),
+  observación varchar(500),
+  partidos int
+);
+
  
 
 
@@ -354,6 +364,9 @@ alter table posiciones add constraint fk_posiciones_torneos foreign key (idTorne
 
 alter table goleadores add constraint fk_goleadores_jugadores foreign key (idJugador) references jugadores(idJugador);
 alter table goleadores add constraint fk_goleadores_torneos foreign key (idTorneo) references torneos(idTorneo);
+
+	alter table castigos add constraint fk_castigos_jugadores foreign key (idJugador) references jugadores(idJugador);
+	alter table castigos add constraint fk_castigos_torneos foreign key (idTorneo) references torneos(idTorneo);
 
 
 
@@ -677,3 +690,15 @@ select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,i.estado,i.id
 select c.*,format(c.cantidad,2) as cantidad, DATE_FORMAT(c.fecha, '%d/%m/%Y') as fecha,t.nombre as tipo  from cajaChica c
         inner join tipoCaja t on t.idTipo = c.idTipo
         where c.idEliminado=2
+        
+        
+        select j.orden as jornada, j.vuelta_N as vuelta, j.descansa_id_Equipo as descansa,
+                p.equipo1_id as equipo1, p.equipo2_id as equipo2, p.partido_N as partido, p.cancha as cancha, p.id as idPartido,
+                p.fecha as fecha, p.hora as hora,t.nombreTorneo as nombreT, t.idTorneo as idTor FROM partidos p 
+                inner JOIN jornadas j on j.id = p.jornadas_id
+                inner join torneos t on t.idTorneo = j.idTorneo
+                WHERE  p.estado=1 and j.idTorneo =4
+                
+                
+                
+                update partidos set estado=1 where id=4

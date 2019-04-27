@@ -153,6 +153,7 @@ Categorías de Torneo
             <label><center>Torneo</center></label>
                         <input type="text" id="nombreTor" name="nombreTor" readonly>
                         <input type="hidden" id="idTo" name="idTo" readonly>
+                        
             </div>
 
         <div class="one wide field">
@@ -176,6 +177,7 @@ Categorías de Torneo
         <div class="three wide field">
             <label><center><i class="time icon"></i>Hora</center></label>
                         <input type="time" id="hora" name="hora" >
+                        <input type="hidden" id="idPartido" name="idPartido" >
             
         </div>
 
@@ -186,13 +188,13 @@ Categorías de Torneo
 <div class="scrolling content">
 
 <div class="ui equal width form">
-    
-
+<div class="field">
+            <div class="fields">  
+<div class="five wide field">
     <h3><i class="futbol icon"></i> Marcador del partido</h3>
-    <br>
-        <div class="field">
-            <div class="fields">
-            <div class="five wide field"></div>
+    </div>
+        
+            
                 <div class="three wide field">
                 <label><center><i class="users icon"></i>Equipo</center></label>
                     <input type="text" id="equipo1" name="equipo1">
@@ -272,45 +274,44 @@ Categorías de Torneo
 
         <div class="ui divider"></div>
         <a style="font-size:22px; color:black;"><i class="thumbs down icon"></i>Amonestados del partido</a>
+        <br> 
+        <b>Nota:</b> Si un jugador será suspendido por un período mas extenso, debe gestionarse en el módulo de sanciones.
         <span style="float:right;">
                     <button @click="agregarDetalleC" class="ui olive circular icon button"><i class="plus icon"></i> Agregar</button>
         </span>        <br><br><br>
+        <form action="" class="ui form" id="frmAmonestados">
                 <table class="ui selectable very compact celled table" style="width:100%; margin:auto;">
                         <thead>
                             <tr>
                                 <th style="background-color: #CD2020; color: white;"><i class="male icon"></i>Jugador</th>
                                 <th style="background-color: #CD2020; color: white;"><i class="futbol icon"></i>Tarjeta</th>
                                 <th style="background-color: #CD2020; color: white;"><i class="futbol icon"></i>Observación</th>
-                                <th style="background-color: #CD2020; color: white;"><i class="futbol icon"></i>Tiempo de suspensión</th>
                                 <th style="background-color: #CD2020; color: white;"><i class="trash icon"></i>Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(castigo, index) in castigos">
                             <td>
-                            <select v-model="castigo.goleadores" class="ui search selection dropdown" id="goleadores"
-                             name="goleadores">
+                            <select v-model="castigo.goleadores" class="ui search selection dropdown" id="amonestado"
+                             name="amonestado">
                                <option v-for="option in goleadoresOps" :key='option.idJugador' :value="option.idJugador">{{option.nombre}} {{option.apellido}} --
                                 {{option.correlativo}}
                                </option>
                              </select>
                             </td>
                             <td>  
-                            <select class="ui search dropdown"  name="tarjeta" id="tarjeta">
+                            <select class="ui search dropdown"  name="tarjeta" id="tarjeta" v-model="castigo.tarjeta">
                             <option value="Tarjeta Amarilla" selected>Tarjeta Amarilla</option>
                             <option value="Doble Amarilla">Doble Amarilla</option>
                             <option value="Roja Directa">Roja  Directa</option>
                             </select>
                             </td>
                             <td>
-                            <textarea rows="2" name="observacion"  id="observacion" placeholder="Observación"></textarea>
+                            <textarea rows="2" name="observacion"  id="observacion" v-model="castigo.observacion" placeholder="Observación"></textarea>
                             </td>
-                            
-                            
+                        
                             <td>
-                            <input   type="text" placeholder="Tiempo de suspensión" name="suspension" id="suspension">
-                            </td>
-                            <td>
+        </form>
                             <center>
                               <button type="button" @click="eliminarDetalleC(index)" class="ui negative mini circular icon button"><i
                                   class="times icon"></i></button>
@@ -397,13 +398,15 @@ var appE = new Vue({
             detalles: [],
           //  detallesgoles: [],
             envios: [{
-                goleadores: '2',
+                goleadores: '3',
                 goles: '',
                
             }],
             castigos : [{
                 goleadores: '2',
-                suspension: '',
+                tarjeta: 'Tarjeta Amarilla',
+                observacion: '',
+
             }],
             jugadores:<?php echo $goleadoresCmb?>,
             goleadoresOps: [],
@@ -577,7 +580,7 @@ var appE = new Vue({
                         console.log(err);
                     });
             },
-            resultados(equipo1,equipo2,vuelta,jornada,hora,fecha,nombreT,idTor){
+            resultados(equipo1,equipo2,vuelta,jornada,hora,fecha,nombreT,idTor,idPartido){
                 $("#equipo1").val(equipo1);
                 $("#equipo2").val(equipo2);
                 $("#vuelta").val(vuelta);
@@ -586,6 +589,7 @@ var appE = new Vue({
                 $("#hora").val(hora);
                 $("#nombreTor").val(nombreT);
                 $("#idTo").val(idTor);
+                $("#idPartido").val(idPartido);
 
                 
                 const arrayJugadores = this.jugadores.filter((goleador,i)=>{
@@ -623,7 +627,8 @@ var appE = new Vue({
             agregarDetalleC() {
                 this.castigos.push({
                     goleadores: '2',
-                    //goles: '',
+                tarjeta: 'Tarjeta Amarilla',
+                observacion: '',
             
                 });
             $('.ui.search.dropdown.selection').dropdown();
@@ -647,21 +652,45 @@ var appE = new Vue({
                         success: function (r) {
                             $('#frmGoleador').removeClass('loading');
                             if (r == 1) {
-                                swal({
-                                    title: 'Listo!',
-                            text: 'Goleadores guardados con éxito',
-                            type: 'success',
-                            showConfirmButton: true
-                                }).then((result) => {
-                                    if (result.value) {
+                                
                                         appE.envios = [{
                                             goleadores: '2',
                                             goles: ''
                                         }];
 
-                                      //  app.modalNuevoEnvio();
-                                    }
-                                });           
+                                       
+                                            
+                            }
+                            
+                        }
+                    });
+                }
+
+                },
+                guardarAmonestado() {
+                var idTorn = $("#idTo").val();
+
+                if (this.castigos.length) {
+
+                    $('#frmAmonestados').addClass('loading');
+                    $.ajax({
+                        type: 'POST',
+                        data: {
+                            castigo: JSON.stringify(this.castigos),
+                            idTorn : idTorn,
+                        },
+                        url: '?1=TorneosController&2=registrarCastigo',
+                        success: function (r) {
+                            $('#frmAmonestados').removeClass('loading');
+                            if (r == 1) {
+                                
+                                        appE.castigos = [{
+                                            goleadores: '2',
+                                            tarjeta: 'Tarjeta Amarilla',
+                                            observacion: '',
+                                        }];
+                                    
+                                          
                             }
                             
                         }
@@ -669,6 +698,7 @@ var appE = new Vue({
                 }
 
                 }
+
 
 
 
@@ -785,6 +815,10 @@ $("#guardarTodo").click(function(){
                var equipo2 = $('#equipo2').val();
                var goles1 = $('#goles1').val();
                var goles2 = $('#goles2').val();
+               var hora = $('#hora').val();
+               var fecha = $('#fecha').val();
+               var partido = $('#idPartido').val();
+
          
         
             $.ajax({
@@ -796,10 +830,13 @@ $("#guardarTodo").click(function(){
                     equipo2 : equipo2,
                     goles2 : goles2,
                     goles1 : goles1,
+                    hora : hora,
+                    fecha : fecha,
+                    partido : partido,
                 },
                 success: function(r) {
-                    if(r == 1) {
-                        $('#modalResultado').modal('hide');
+                    if(r == 11) {
+                        $('#modalResultados').modal('hide');
                         swal({
                             title: 'Listo!',
                             text: 'Resultado guardado con éxito',
@@ -809,6 +846,10 @@ $("#guardarTodo").click(function(){
                         }).then((result) => {
                             if (result.value) {
                                 appE.guardarGoleador();
+                                appE.guardarAmonestado();
+                                $('#modalDetallesJornadasM').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                                .modal('show');
+                                        appE.cargarDetallesJornadas($("#idTo").val());   
                             }
                         }); 
                         

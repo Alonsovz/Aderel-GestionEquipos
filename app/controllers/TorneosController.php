@@ -330,6 +330,43 @@ class TorneosController extends ControladorBase {
         }
     }
 
+    public function registrarCastigo(){
+        $detalles = json_decode($_REQUEST["castigo"]);
+        $idTor = $_REQUEST["idTorn"];
+
+        $contador = 0;
+
+        $dao = new DaoTorneos();
+
+        foreach($detalles as $detalle) {
+            $dao->objeto->setIdJugador($detalle->goleadores);
+            $dao->objeto->setTarjeta($detalle->tarjeta);
+            $dao->objeto->setObservacion($detalle->observacion);
+
+            if($detalle->tarjeta=="Doble Amarilla"){
+                $dao->objeto->setPartidos(1);
+            }else if($detalle->tarjeta=="Roja Directa"){
+                $dao->objeto->setPartidos(2);
+            }else{
+                $dao->objeto->setPartidos(0);
+            }
+
+           $dao->objeto->setIdTorneo($idTor);
+
+            if($dao->registrarCastigos()) {
+                $contador++;
+            } else {
+                echo 'nell';
+            }
+        }
+
+        if($contador == count($detalles)) {
+            echo 1;
+        } else {
+            echo 2;
+        }
+    }
+
 
     public function guardarResultado(){
         $golesLocal = $_REQUEST["goles1"];
@@ -337,6 +374,9 @@ class TorneosController extends ControladorBase {
         $equipo1 = $_REQUEST["equipo1"];
         $equipo2 = $_REQUEST["equipo2"];
         $idTorneo = $_REQUEST["idTorneo"];
+        $hora = $_REQUEST["hora"];
+        $fecha = $_REQUEST["fecha"];
+        $partido = $_REQUEST["partido"];
 
         $dao = new DaoTorneos();
 
@@ -364,6 +404,13 @@ class TorneosController extends ControladorBase {
 
             echo $dao->guardarEquipo2();
 
+            $dao->objeto->setHora($hora);
+            $dao->objeto->setFecha($fecha);
+            $dao->objeto->setIdPartido($partido);
+
+
+            echo $dao->guardarDatos();
+
         }
         else if($golesLocal < $golesVisita){
 
@@ -389,6 +436,12 @@ class TorneosController extends ControladorBase {
 
             echo $dao->guardarEquipo2();
 
+            $dao->objeto->setHora($hora);
+            $dao->objeto->setFecha($fecha);
+            $dao->objeto->setIdPartido($partido);
+
+            echo $dao->guardarDatos();
+
         }
         else if($golesLocal == $golesVisita){
 
@@ -413,6 +466,15 @@ class TorneosController extends ControladorBase {
             $dao->objeto->setIdTorneo($idTorneo);
 
             echo $dao->guardarEquipo2();
+
+            $dao->objeto->setHora($hora);
+            $dao->objeto->setFecha($fecha);
+            $dao->objeto->setIdPartido($partido);
+
+
+            echo $dao->guardarDatos();
+
+           
 
         }
 

@@ -382,7 +382,7 @@ class DaoTorneos extends DaoBase {
     public function calendarioGestionT(){
         $query = "
         select j.orden as jornada, j.vuelta_N as vuelta, j.descansa_id_Equipo as descansa,
-                p.equipo1_id as equipo1, p.equipo2_id as equipo2, p.partido_N as partido, p.cancha as cancha,
+                p.equipo1_id as equipo1, p.equipo2_id as equipo2, p.partido_N as partido, p.cancha as cancha, p.id as idPartido,
                 p.fecha as fecha, p.hora as hora,t.nombreTorneo as nombreT, t.idTorneo as idTor FROM partidos p 
                 inner JOIN jornadas j on j.id = p.jornadas_id
                 inner join torneos t on t.idTorneo = j.idTorneo
@@ -430,7 +430,7 @@ class DaoTorneos extends DaoBase {
         $_query = "select j.*, equipos.nombre as idEquipo from jugadores j 
         inner join inscrijugador incri on j.idJugador= incri.idJugador 
         inner join equipos on equipos.idEquipo= incri.idEquipo
-        where j.idEliminado=1 and j.idFondo = 1 and j.idJugador>1 and j.idGenero=2";
+        where j.idEliminado=1 and j.idFondo = 1 and j.idJugador>1 and j.idGenero=2 group by incri.idJugador";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -446,7 +446,10 @@ class DaoTorneos extends DaoBase {
     }
 
     public function mostrarGoleadorasCmb() {
-        $_query = "select * from jugadores where idEliminado=1 and idFondo = 1 and idJugador>1 and idGenero=1";
+        $_query = "select j.*, equipos.nombre as idEquipo from jugadores j 
+        inner join inscrijugador incri on j.idJugador= incri.idJugador 
+        inner join equipos on equipos.idEquipo= incri.idEquipo
+        where j.idEliminado=1 and j.idFondo = 1 and j.idJugador>1 and j.idGenero=1 group by incri.idJugador";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -464,6 +467,25 @@ class DaoTorneos extends DaoBase {
     public function registrarGoleador(){
         $query="Insert into goleadores values (null,'".$this->objeto->getIdJugador()."','".$this->objeto->getIdTorneo()."',
         '".$this->objeto->getGoles()."')";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function guardarDatos(){
+        $query="update partidos set fecha ='".$this->objeto->getFecha()."', hora ='".$this->objeto->getHora()."', 
+        hora ='".$this->objeto->getHora()."', estado=2 where id=".$this->objeto->getIdPartido();;
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+    
+
+    public function registrarCastigos(){
+        $query="Insert into castigos values (null,'".$this->objeto->getIdJugador()."','".$this->objeto->getIdTorneo()."',
+        '".$this->objeto->getTarjeta()."','".$this->objeto->getObservacion()."','".$this->objeto->getPartidos()."')";
 
         $resultado = $this->con->ejecutar($query);
 
