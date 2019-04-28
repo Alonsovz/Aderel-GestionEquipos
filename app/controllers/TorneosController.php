@@ -281,6 +281,27 @@ class TorneosController extends ControladorBase {
         echo'['.$json.']';
     }
 
+    public function posicionesRpt(){
+        $id = $_REQUEST["id"];
+
+        require_once './app/reportes/estadisticas.php';
+
+        $dao = new DaoTorneos();
+
+        $reporte = new Reporte();
+
+        $dao->objeto->setIdTorneo($id);
+
+
+        $resultado =$dao->posicionesRpt();
+        $nombreTorneo =$dao->posicionesRpt();
+
+
+        $reporte->estadisticas($resultado ,$nombreTorneo);
+    }
+
+    
+
     public function goleadores(){
         $id = $_REQUEST["id"];
 

@@ -59,7 +59,7 @@ class Reporte {
            <h2>
            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             
            Equipo: <font color=''>".$nombreE."</font><br></h2>
             ";

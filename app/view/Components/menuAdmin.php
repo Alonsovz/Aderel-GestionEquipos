@@ -115,6 +115,14 @@
 
     </div>
 
+    <div class="item">
+    <a href="?1=GestionExpControllerF&2=sancionesF" class="item menu-it" style="color:black;">
+        <i class="female icon"></i><i class="close icon"></i>
+    Sanciones
+    </a>
+
+    </div>
+
     </div>
 
 </div>
@@ -155,6 +163,14 @@
             Jugadores
             </a>
         </div>
+
+        <div class="item">
+    <a href="?1=GestionExpController&2=sancionesM" class="item menu-it" style="color:black;">
+        <i class="male icon"></i><i class="close icon"></i>
+    Sanciones
+    </a>
+
+    </div>
 
     </div>
 </div>

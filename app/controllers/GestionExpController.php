@@ -9,6 +9,12 @@ class GestionExpController extends ControladorBase {
         require_once './app/view/GestionExp/GestionExpediente.php';
     }
 
+    public static function sancionesM()
+    {
+        self::loadMain();
+        require_once './app/view/GestionExp/sancionesM.php';
+    }
+
     public function mostrarEquiposM() {
         $dao = new DaoEquipos();
 

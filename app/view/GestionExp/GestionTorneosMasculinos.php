@@ -347,10 +347,20 @@ Cancelar
 <div class="ui  modal" id="eleccion">
 <div class="header">
 <i class="sort amount up icon"></i> Estadísticas
+
+<div class="row title-bar">
+                    <div class="sixteen wide column">
+
+                        <button class="ui right floated green labeled icon button"  id="imprimirEs">
+                           <i class="file icon"></i>
+                            Imprimir estadísticas
+                        </button>
+                    </div>
+                 </div>
 </div>
 
 <div class="content">
-
+<br>
 <input type="hidden" id="idTorneoEs">
     <div class="row tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
 
@@ -801,6 +811,15 @@ var sorteos=(ele)=>{
     $('#sorteos').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                 .modal('show');
 }
+
+
+$("#imprimirEs").click(function(){
+    var id = $("#idTorneoEs").val();
+window.open('?1=TorneosController&2=posicionesRpt&id='+id,'_blank');
+return false;
+});
+    
+
 
 
 function cerrar(){

@@ -404,6 +404,17 @@ class DaoTorneos extends DaoBase {
         return $resultado;
     }
 
+    public function posicionesRpt(){
+        $query = "select p.*, e.nombre as nombreE, t.nombreTorneo as Torneo, (p.golesFavor - p.golesContra) as diferencia from posiciones p
+        inner join equipos e on e.idEquipo = p.idEquipo 
+        inner join torneos t on t.idTorneo = p.idTorneo
+        where p.idTorneo = ".$this->objeto->getIdTorneo()." ORDER BY puntaje DESC, diferencia DESC";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
     public function goleadores(){
         $query = "select g.*, SUM(distinct(g.goles)) as goles, e.nombre as equipo, t.nombreTorneo as torneo, j.nombre as nombre, j.apellido as apellido from goleadores g
         inner join inscriJugador i on i.idJugador = g.idJugador

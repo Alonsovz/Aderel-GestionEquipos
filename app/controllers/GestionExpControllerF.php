@@ -8,6 +8,13 @@ class GestionExpControllerF extends ControladorBase {
         require_once './app/view/GestionExp/GestionExpedienteF.php';
     }
 
+    public static function sancionesF()
+    {
+        self::loadMain();
+        require_once './app/view/GestionExp/sancionesF.php';
+    }
+
+
     
 
     public function mostrarCategoriasF() {
