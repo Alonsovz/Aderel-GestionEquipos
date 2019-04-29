@@ -259,7 +259,7 @@
 
 
   <!--modal calendario-->
-  <div class="ui tiny modal" id="modalCalendar">
+  <div class="ui  modal" id="modalCalendar">
 
       <div class="header"  style="background-color:#E6C404; color: blue">
         <h5 class="modal-title" id="tituloIngreso">Ingreso ADEREL</h5>
@@ -282,6 +282,15 @@
                   <div class="ui red pointing label"  id="labelTitulo"
                   style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
                   Completa este campo</div>
+                 </div> 
+
+
+                 <div class="five wide field">       
+                      <label><i class="money bill alternate outline icon"></i>Descripción:</label>
+                    
+                    <textarea  rows="3" type="text" name="txtDescripcion" id="txtDescripcion" readonly></textarea>
+                    
+                  
                  </div> 
               
                   <div class="five wide field">    
@@ -408,9 +417,9 @@ return false;
                 $('#btnModificar').show();
                 $('#btnEliminar').show();
                 $("#tituloIngreso").html(calEvent.title);
-                //$("#txtDescripcion").val(calEvent.descripcion);
                 $("#txtTitulo").val(calEvent.title);
                 $("#txtCantidad").val(calEvent.cantidad);
+                $("#txtDescripcion").val(calEvent.descripcion);
                 $('#txtMes').val(calEvent.mes);
                 $('#txtAnio').val(calEvent.anio);
                 $("#txtId").val(calEvent.id);
@@ -422,11 +431,10 @@ return false;
             editable:true,
             eventDrop:function(calEvent)
             {
-              alertify.confirm("¿Desea eliminar el ingreso?",
-            function(){
+              
                 $("#txtId").val(calEvent.id);
                 $("#txtTitulo").val(calEvent.title);
-              //  $("#txtDescripcion").val(calEvent.descripcion);
+               $("#txtDescripcion").val(calEvent.descripcion);
                 $("#txtCantidad").val(calEvent.cantidad);
                 
                 var moment = $('#CalendarioWeb').fullCalendar('getDate');
@@ -440,12 +448,7 @@ return false;
           
                 RecolectarDatosGUI();
                 EnviarInformacion('modificar',NuevoEvento,true);
-              },
-            function(){
-                //$("#modalCalendar").modal('toggle');
-                alertify.error('Cancelado');
-                
-            });
+              
 
             }
             
@@ -541,7 +544,7 @@ function RecolectarDatosGUI()
         {   
             id:$('#txtId').val(),
             title:$('#txtTitulo').val(),
-           // descripcion:$('#txtDescripcion').val(),
+            descripcion:$('#txtDescripcion').val(),
             start:$('#txtFecha').val(),
             cantidad:$('#txtCantidad').val(),
             mes:$('#txtMes').val(),

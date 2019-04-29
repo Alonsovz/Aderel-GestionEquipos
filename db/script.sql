@@ -24,14 +24,19 @@ create table usuario (
 create table ingresos(
 id int primary key unique auto_increment,
 title varchar(50),
+descripcion varchar(500),
 start date,
 cantidad double,
 color varchar(50),
 textColor varchar(50),
 mes varchar(10),
 anio varchar(10),
+idTorneo int,
+categoria varchar(50),
 idEliminado int
 );
+
+
 
 create table chequeras(
 idChequera int primary key unique auto_increment,
@@ -90,10 +95,7 @@ mes varchar(10),
 anio varchar(10)
 );
 
-create table genero(
-idGenero int primary key auto_increment,
-genero varchar(15)
-);
+
 
 create table categorias(
 idCategoria int primary key auto_increment,
@@ -225,15 +227,11 @@ CREATE TABLE castigos (
   idJugador int,
   idTorneo int,
   tarjeta varchar(30),
-  observación varchar(500),
+  observacion varchar(500),
   partidos int
 );
 
  
-
-
-
-
 create table gimnasio(
 idUsuario int primary key auto_increment,
 correlativo varchar(10),
@@ -354,10 +352,7 @@ alter table equipos add constraint fk_equipos_torneos foreign key (idTorneo) ref
 alter table equipos add constraint fk_equipos_inscripcion foreign key (idInscripcion) references inscripcion(idInscripcion);
 alter table torneos add constraint fk_torneos_categorias foreign key (idCategoria) references categorias(idCategoria);
 
-alter table jugadores add constraint fk_jugadores_genero foreign key (idGenero) references genero(idGenero);
-alter table torneos add constraint fk_torneos_genero foreign key (idGenero) references genero(idGenero);
-alter table categorias add constraint fk_categorias_genero foreign key (idGenero) references genero(idGenero);
-alter table equipos add constraint fk_equipos_genero foreign key (idGenero) references genero(idGenero);
+
 
 alter table posiciones add constraint fk_posiciones_equipos foreign key (idEquipo) references equipos(idEquipo);
 alter table posiciones add constraint fk_posiciones_torneos foreign key (idTorneo) references torneos(idTorneo);
@@ -379,8 +374,8 @@ insert into usuario values(null,'Fabio Alonso','Mejia Velasquez','mejia','fabiom
 insert into usuario values(null,'Alonso','Mejia','alonso','mejiafabio383@gmail.com',sha1('123'),2,1);
 insert into usuario values(null,'Juan','Perez','juan','juanPerez383@gmail.com',sha1('123'),3,1);
 
-insert into ingresos values (null,'Escuela','2019-04-11',2000,'#140E93','#E6C404','04','2019',1);
-insert into ingresos values (null,'Fondo Comun','2019-04-14',2000,'#140E93','#E6C404','04','2019',1);
+insert into ingresos values (null,'Escuela','Pago de escuela','2019-04-11',2000,'#140E93','#E6C404','04','2019',1,'Ninguna',1);
+insert into ingresos values (null,'Fondo Comun','Pago de Juanito de fondo común','2019-04-14',2000,'#140E93','#E6C404','04','2019',1,'Ninguna',1);
 
 insert into chequeras values(null, 'Chequera Banco America Central',1);
 
@@ -389,9 +384,6 @@ insert into egresos values(null,4090,'Pago de recibos',1000,160,840,'2019-04-12'
 
 insert into remanentes values(null,5000,10000,4000,500,300,7000,'04','2019');
 
-
-insert into genero values(null,'Femenino');
-insert into genero values(null,'Masculino');
 
 insert into categorias values (null, 'Sin Categoria',0,1,1,1,1);
 insert into categorias values (null, 'Sin Categoria',0,2,1,2,1);
@@ -674,31 +666,8 @@ begin
 end	
 $$
 
-select e.nombre as equipo, sum(g.goles) as goles from equipos e
-inner join torneos t on t.idTorneo = e.idTorneo
-inner join goleadores g on g.idTorneo = t.idTorneo
-inner join jugadores j on j.idJugador = g.idJugador
-inner join inscriJugador i on i.idJugador = j.idJugador
- where t.idTorneo=4 group by equipo, g.idJugador order by goles desc
-
-
-select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,i.estado,i.idEquipo as idE, i.pago as pago,e.nombre as equipo from inscriJugador i
-        inner join equipos e on e.idEquipo = i.idEquipo
-        inner join jugadores j on j.idJugador = i.idJugador
-        where i.idEquipo=6  and i.estado=2 group by i.idJugador
-
-select c.*,format(c.cantidad,2) as cantidad, DATE_FORMAT(c.fecha, '%d/%m/%Y') as fecha,t.nombre as tipo  from cajaChica c
-        inner join tipoCaja t on t.idTipo = c.idTipo
-        where c.idEliminado=2
-        
-        
-        select j.orden as jornada, j.vuelta_N as vuelta, j.descansa_id_Equipo as descansa,
-                p.equipo1_id as equipo1, p.equipo2_id as equipo2, p.partido_N as partido, p.cancha as cancha, p.id as idPartido,
-                p.fecha as fecha, p.hora as hora,t.nombreTorneo as nombreT, t.idTorneo as idTor FROM partidos p 
-                inner JOIN jornadas j on j.id = p.jornadas_id
-                inner join torneos t on t.idTorneo = j.idTorneo
-                WHERE  p.estado=1 and j.idTorneo =4
-                
-                
-                
-                update partidos set estado=1 where id=4
+select id,title,descripcion,DATE_FORMAT(start, '%d/%m/%Y') as start,format(SUM(cantidad),2) as cantidad,
+    color,textColor,mes,anio,idEliminado,idTorneo,categoria from ingresos
+    where  idEliminado=1 group by id;
+    
+    update ingresos set descripcion = 'Pago de escuela' where id=1

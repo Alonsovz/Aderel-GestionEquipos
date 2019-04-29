@@ -16,6 +16,7 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
 <modal-jornadas :detalles="detalles"></modal-jornadas>
 <modal-posiciones :detalles="detalles"></modal-posiciones>
 <modal-goleo :detalles="detalles"></modal-goleo>
+<modal-castigos :detalles="detalles"></modal-castigos>
 
     <div class="ui grid">
             <div class="row">
@@ -376,7 +377,7 @@ Cancelar
     <i class="futbol icon"></i> <i class="male icon"></i>
     </button>
 
-    <button class="ui yellow inverted segment" id="tablaCastigo" style="width: 30%; text-align:center;">
+    <button class="ui yellow inverted segment" id="tablaCast" style="width: 30%; text-align:center;">
      Jugadores Castigados
      <div class="ui divider"></div>
      <i class="futbol icon"></i> <i class="trash icon"></i>
@@ -401,6 +402,7 @@ Cancelar
 <script src="./res/js/modalJornadasTorneo.js"></script>
 <script src="./res/js/modalPosicionesTorneo.js"></script>
 <script src="./res/js/modalGoleadores.js"></script>
+<script src="./res/js/modalCastigos.js"></script>
 <script>
 var appE = new Vue({
         el: "#appE",
@@ -534,6 +536,25 @@ var appE = new Vue({
                 $.ajax({
                 type: 'POST',
                 url: '?1=TorneosController&2=goleadores',
+                data: {
+                id: id
+                },
+                success: function (data) {
+                appE.detalles = JSON.parse(data);
+                $('#frmDetalles').removeClass('loading');
+                }
+                });
+
+            },
+
+            suspendidos(id) {
+
+                this.idTorneo = parseInt(id);
+
+                $('#frmDetalles').addClass('loading');
+                $.ajax({
+                type: 'POST',
+                url: '?1=TorneosController&2=amonestados',
                 data: {
                 id: id
                 },
@@ -782,6 +803,13 @@ var calendarizacion=(ele)=>{
   $("#tablaGol").click(function(){
     appE.goleadores($("#idTorneoEs").val());
     $('#modalGoleo').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+  });
+
+  $("#tablaCast").click(function(){
+    appE.suspendidos($("#idTorneoEs").val());
+    
+    $('#modalCastigos').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
      .modal('show');
   });
 

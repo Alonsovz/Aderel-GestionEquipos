@@ -16,6 +16,7 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
 <modal-jornadas :detalles="detalles"></modal-jornadas>
 <modal-posiciones :detalles="detalles"></modal-posiciones>
 <modal-goleo :detalles="detalles"></modal-goleo>
+<modal-castigos :detalles="detalles"></modal-castigos>
 
     <div class="ui grid">
             <div class="row">
@@ -343,10 +344,19 @@ Cancelar
 
 
 <div class="ui  modal" id="eleccion">
-<div class="header">
-<i class="sort amount up icon"></i> Estadísticas
-</div>
+    <div class="header">
+        <i class="sort amount up icon"></i> Estadísticas
 
+                <div class="row title-bar">
+                    <div class="sixteen wide column">
+
+                        <button class="ui right floated green labeled icon button"  id="imprimirEs">
+                           <i class="file icon"></i>
+                            Imprimir estadísticas
+                        </button>
+                    </div>
+                 </div>
+     </div>
 <div class="content">
 
 <input type="hidden" id="idTorneoEs">
@@ -364,7 +374,7 @@ Cancelar
     <i class="futbol icon"></i> <i class="male icon"></i>
     </button>
 
-    <button class="ui yellow inverted segment" id="tablaCastigo" style="width: 30%; text-align:center;">
+    <button class="ui yellow inverted segment" id="tablaCast" style="width: 30%; text-align:center;">
      Jugadores Castigados
      <div class="ui divider"></div>
      <i class="futbol icon"></i> <i class="trash icon"></i>
@@ -380,7 +390,7 @@ Cancelar
 </div>
 
 </div>
-
+<script src="./res/js/modalCastigos.js"></script>
 <script src="./res/tablas/tablaTorneosF.js"></script>
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
@@ -604,6 +614,25 @@ var appE = new Vue({
                     .modal('show');
 
             },
+            
+            suspendidos(id) {
+
+                this.idTorneo = parseInt(id);
+
+                $('#frmDetalles').addClass('loading');
+                $.ajax({
+                type: 'POST',
+                url: '?1=TorneosController&2=amonestados',
+                data: {
+                id: id
+                },
+                success: function (data) {
+                appE.detalles = JSON.parse(data);
+                $('#frmDetalles').removeClass('loading');
+                }
+                });
+
+},
             eliminarDetalle(index) {
                 this.envios.splice(index, 1);
             },
@@ -730,16 +759,24 @@ $("#btnGoleo").click(function(){
     
 });
 
-$("#guardarGol").click(function(){
+$("#tablaCast").click(function(){
+    appE.suspendidos($("#idTorneoEs").val());
     
-    
-});
+    $('#modalCastigos').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+  });
 
 $("#btnAmonestados").click(function(){
     $("#goles").hide('10');
     $("#amonestados").show('10');
     
     
+});
+
+$("#imprimirEs").click(function(){
+    var id = $("#idTorneoEs").val();
+window.open('?1=TorneosController&2=posicionesRpt&id='+id,'_blank');
+return false;
 });
 
 var eliminarTorneo=(ele)=>{

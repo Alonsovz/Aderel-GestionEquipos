@@ -295,9 +295,11 @@ class TorneosController extends ControladorBase {
 
         $resultado =$dao->posicionesRpt();
         $nombreTorneo =$dao->posicionesRpt();
+        $goleadores =$dao->goleadores();
+        $castigos =$dao->castigos();
 
 
-        $reporte->estadisticas($resultado ,$nombreTorneo);
+        $reporte->estadisticas($resultado ,$nombreTorneo,$goleadores, $castigos);
     }
 
     
@@ -310,6 +312,28 @@ class TorneosController extends ControladorBase {
         $dao->objeto->setIdTorneo($id);
 
         $resultado =$dao->goleadores();
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $json .= json_encode($fila).',';
+
+        }
+
+        $json = substr($json, 0, strlen($json) - 1);
+
+        echo'['.$json.']';
+    }
+
+    public function amonestados(){
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoTorneos();
+
+        $dao->objeto->setIdTorneo($id);
+
+        $resultado =$dao->suspendidos();
 
         $json = '';
 

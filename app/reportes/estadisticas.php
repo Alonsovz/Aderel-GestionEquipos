@@ -5,7 +5,7 @@ class Reporte {
         require_once './vendor/autoload.php';
     }
   
-      public function estadisticas($resultado, $nombreTorneo) {
+      public function estadisticas($resultado, $nombreTorneo , $goleadores, $castigos) {
         $nombreT = $nombreTorneo ->fetch_assoc();
         $nombreT = $nombreT["Torneo"];
 
@@ -87,6 +87,72 @@ class Reporte {
                      </tr>";
         }
         $tabla .= "</table>";
+
+
+        $tabla .= " <div class='ui divider'><br><hr></div>
+            
+            <h2 style='color:#172961;'>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            Tabla de Goleadores</h2>
+            </br>
+            <table class='tabla' style='font-size:17px;'>
+            
+            <tr>
+            <th style='background-color: #82FA58;'>Jugador</th>
+            <th style='background-color: #82FA58;'>Equipo</th>
+            <th style='background-color: #82FA58;'>Goles</th>
+            
+
+            </tr>
+            ";
+            while($fila = $goleadores->fetch_assoc()) {
+                $tabla.="<tr>
+                         <td style='width:400px; '>".$fila['nombre']." ".$fila['apellido']." </td>
+                            <td>".$fila['equipo']."</td>
+                            <td>".$fila['goles']."</td>
+                           
+                           
+                         </tr>";
+            }
+            $tabla .= "</table>";
+
+
+            $tabla .= " <div class='ui divider'><br><hr></div>
+            
+            <h2 style='color:#172961;'>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            Tabla de suspendidos</h2>
+            </br>
+            <table class='tabla' style='font-size:17px;'>
+            
+            <tr>
+            <th style='background-color: #F78181;'>Jugador</th>
+            <th style='background-color: #F78181;'>Equipo</th>
+            <th style='background-color: #F78181;'>Tipo de suspension</th>
+            
+
+            </tr>
+            ";
+            while($fila = $castigos->fetch_assoc()) {
+                $tabla.="<tr>
+                         <td style='width:400px; '>".$fila['nombre']." ".$fila['apellido']." </td>
+                            <td>".$fila['equipo']."</td>
+                            <td>".$fila['tarjeta']."</td>
+                           
+                           
+                         </tr>";
+            }
+            $tabla .= "</table>";
         
         $html = $tabla;
         $pdf = new \Mpdf\Mpdf(['orientation' => 'L']);

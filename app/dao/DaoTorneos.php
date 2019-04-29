@@ -428,6 +428,19 @@ class DaoTorneos extends DaoBase {
         return $resultado;
     }
 
+    public function suspendidos(){
+        $query = "select c.*,e.nombre as equipo, t.nombreTorneo as torneo, j.nombre as nombre, j.apellido as apellido from castigos c
+        inner join inscriJugador i on i.idJugador = c.idJugador
+                inner join equipos e on e.idEquipo = i.idEquipo
+                inner join torneos t on t.idTorneo = c.idTorneo
+                inner join jugadores j on j.idJugador = i.idJugador
+                where c.idTorneo = ".$this->objeto->getIdTorneo()."  and c.tarjeta='Doble Amarilla' or c.tarjeta='Tarjeta Directa'";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
     public function paraSorteo() {
         
         $_query = "update torneos set sorteo= 2 where idTorneo = ".$this->objeto->getIdTorneo();

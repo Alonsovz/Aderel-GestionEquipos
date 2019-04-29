@@ -1,5 +1,5 @@
 
-Vue.component('modal-goleo', {
+Vue.component('modal-castigos', {
 
     props: {
     detalles: {
@@ -9,9 +9,9 @@ Vue.component('modal-goleo', {
     },
     
     
-    template: `<div class="ui modal" id="modalGoleo">
+    template: `<div class="ui modal" id="modalCastigos">
         <div class="header">
-        <h2><i class="futbol icon"></i>Tabla de Goleadores</h2>
+        <h2><i class="futbol icon"></i><i class="close icon"></i>Tabla de suspendidos</h2>
             </div>
         
 
@@ -21,16 +21,21 @@ Vue.component('modal-goleo', {
                 <table v-if="detalles" class="ui selectable very compact celled table"  style="text-align:center;">
                     <thead>
                         <tr>
-                        <th style="background-color: #82FA58;">Nombre del Jugador</th>
-                        <th style="background-color: #82FA58;">Equipo</th>
-                        <th style="background-color: #82FA58;">Goles</th>
+                        <th style="background-color: #F78181;">Nombre del Jugador</th>
+                        <th style="background-color: #F78181;">Equipo</th>
+                        <th style="background-color: #F78181;">Tarjeta</th>
+                        <th style="background-color: #F78181;">Partidos</th>
+                        <th style="background-color: #F78181;">Observaciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="detalle in detalles" :codigo-torneo="detalle.idTorneo">     
                         <td>{{detalle.nombre}} {{detalle.apellido}}</td> 
                         <td>{{detalle.equipo}}</td> 
-                        <td>{{detalle.goles}}</td> 
+                        <td>{{detalle.tarjeta}}</td> 
+                        <td>{{detalle.partidos}}</td> 
+                        <td>{{detalle.observacion}}</td> 
+
                         
                         
                         </tr>
