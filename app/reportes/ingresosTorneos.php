@@ -5,7 +5,7 @@ class Reporte {
         require_once './vendor/autoload.php';
     }
   
-      public function ingresosTorneos($resultado,$resultado1) {
+      public function ingresosTorneos($resultado,$resultado1,$total) {
        
        
 
@@ -57,12 +57,34 @@ class Reporte {
         while($fila = $resultado->fetch_assoc()) {
             $tabla.="<tr>
                         <td>".$fila['title']."</td>
-                        <td>".$fila['cantidad']."</td>
+                        <td>$ ".$fila['cantidad']."</td>
                         <td>".$fila['start']."</td>
                        
                      </tr>";
         }
         $tabla .= "</table>";
+
+        while($fila = $total->fetch_assoc()) {
+            $tabla .= "<p align='right'><b><font color='#172961'>Total :</font> $".$fila['total']."</b></p>";
+    
+            }
+            $tabla .= "<hr><br><br><br><br>
+            <table>
+            <tr>
+            <th style='border: 1px solid black;border-left:0; border-bottom:0;border-top:0;'>F._______________________________<br>
+            <br>Nom:___________________________<br>
+            Presidente ADEREL</th>
+            <th style='border: 1px solid black;border-left:0; border-bottom:0;border-top:0;'>F._______________________________<br>
+            <br>Nom:___________________________<br>
+            Tesorero ADEREL</th>
+            <th style='border: 1px solid black;border-right:0; border-bottom:0;border-top:0;border-left:0;'>F.______________________________<br>
+            <br>Nom:___________________________<br>
+            Elaborado Por</th>
+            </tr>
+            
+        </table>";
+
+        $html = $tabla;
         
         $html = $tabla;
         $pdf = new \Mpdf\Mpdf(['orientation' => 'L']);

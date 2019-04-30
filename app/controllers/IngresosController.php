@@ -153,8 +153,9 @@ class IngresosController extends ControladorBase {
 
         $resultado = $dao->reporteIngresosPorCategorias();
         $resultado1 = $dao->reporteIngresosPorCategorias();
+        $total = $dao->totalIngresosPorCategoria();
        
-        $reporte->ingresosCategoria($resultado, $resultado1);
+        $reporte->ingresosCategoria($resultado, $resultado1,$total);
     }
 
     public function rptTorneos() {
@@ -171,8 +172,9 @@ class IngresosController extends ControladorBase {
 
         $resultado = $dao->reporteIngresosPorTorneos ();
         $resultado1 = $dao->reporteIngresosPorTorneos();
+        $total = $dao->totalIngresoPorTorneo();
        
-        $reporte->ingresosTorneos($resultado, $resultado1);
+        $reporte->ingresosTorneos($resultado, $resultado1,$total);
     }
 
 

@@ -189,7 +189,17 @@ class DaoIngresos extends DaoBase {
 
 
     public function reporteIngresosPorCategorias() {
-        $query = "select *,format((cantidad),2) as cantidad from ingresos where idEliminado=1 and categoria='{$this->objeto->getCategoria()}'";
+        $query = "select *,format((cantidad),2) as cantidad,DATE_FORMAT(start, '%d/%m/%Y') as start
+         from ingresos where idEliminado=1 and categoria='{$this->objeto->getCategoria()}' order by start desc";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function totalIngresosPorCategoria() {
+        $query = "select format(sum(cantidad),2) as total
+         from ingresos where idEliminado=1 and categoria='{$this->objeto->getCategoria()}'";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -197,10 +207,20 @@ class DaoIngresos extends DaoBase {
     }
 
 
-    public function reporteIngresosPorTorneos() {
-        $query = "select i.*,format((i.cantidad),2) as cantidad,t.nombreTorneo as torneo from ingresos i
+    public function totalIngresoPorTorneo() {
+        $query = "select format(sum(i.cantidad),2) as total from ingresos i
         inner join torneos t on t.idTorneo = i.idTorneo
         where i.idEliminado=1 and i.idTorneo='{$this->objeto->getIdTorneo()}'";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function reporteIngresosPorTorneos() {
+        $query = "select i.*,format((i.cantidad),2) as cantidad,t.nombreTorneo as torneo,DATE_FORMAT(i.start, '%d/%m/%Y') as start from ingresos i
+        inner join torneos t on t.idTorneo = i.idTorneo
+        where i.idEliminado=1 and i.idTorneo='{$this->objeto->getIdTorneo()}' order by start desc";
 
         $resultado = $this->con->ejecutar($query);
 
