@@ -26,10 +26,10 @@ Vue.component('modal-posiciones', {
                         <th style="background-color: #58D3F7;">G</th>
                         <th style="background-color: #58D3F7;">E</th>
                         <th style="background-color: #58D3F7;">P</th>
-                        <th style="background-color: #58D3F7;">Puntos</th>
                         <th style="background-color: #58D3F7;">GF</th>
-                        <th style="background-color: #58D3F7;">GE</th>
+                        <th style="background-color: #58D3F7;">GC</th>
                         <th style="background-color: #58D3F7;">DG</th>
+                        <th style="background-color: #58D3F7;">Puntos</th>
 
                         </tr>
                     </thead>
@@ -41,11 +41,10 @@ Vue.component('modal-posiciones', {
                         <td>{{detalle.partidosGanados}}</td>
                         <td>{{detalle.partidosEmpatados}}</td>
                         <td>{{detalle.partidosPerdidos}}</td>
-                        <td style="font-weight: bold;">{{detalle.puntaje}}</td>
                         <td>{{detalle.golesFavor}}</td>
                         <td>{{detalle.golesContra}}</td> 
                         <td>{{detalle.golesFavor - detalle.golesContra}}</td> 
-                        
+                        <td style="font-weight: bold;">{{detalle.puntaje}}</td>
                         
                                 </tr>
                     </tbody>

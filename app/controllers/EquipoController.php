@@ -374,6 +374,9 @@ public function registrarF() {
         $idT = $_REQUEST["idTorneoEq"];
         $cupos = $_REQUEST["cupos"];
 
+        $nombreE = $_REQUEST["nombreEquipo"];
+        $cat = $_REQUEST["categoriaEquipo"];
+
         $dao = new DaoEquipos();
 
         $dao->objeto->setIdEquipo($id);
@@ -385,7 +388,10 @@ public function registrarF() {
 
         $daoI = new DaoIngresos();
 
-        $daoI->objeto->setTitle("Inscripción de Equipos");
+        $daoI->objeto->setTitle("Inscripción de Equipo: ".$nombreE);
+        $daoI->objeto->setDescripcion("Inscripción de Equipo");
+        $daoI->objeto->setIdTorneo($idT);
+        $daoI->objeto->setCategoria($cat);
         $daoI->objeto->setCantidad($cantidad);
 
         

@@ -139,6 +139,43 @@ class IngresosController extends ControladorBase {
     }
 
 
+    public function rptCategorias() {
+        $dao = new DaoIngresos();
+        
+        require_once './app/reportes/ingresosCategoria.php';
+        
+        $cat = $_REQUEST["cate"];
+
+        $reporte = new Reporte();
+
+       
+       $dao->objeto->setCategoria($cat);
+
+        $resultado = $dao->reporteIngresosPorCategorias();
+        $resultado1 = $dao->reporteIngresosPorCategorias();
+       
+        $reporte->ingresosCategoria($resultado, $resultado1);
+    }
+
+    public function rptTorneos() {
+        $dao = new DaoIngresos();
+        
+        require_once './app/reportes/ingresosTorneos.php';
+        
+        $id = $_REQUEST["torneos"];
+
+        $reporte = new Reporte();
+
+       
+       $dao->objeto->setIdTorneo($id);
+
+        $resultado = $dao->reporteIngresosPorTorneos ();
+        $resultado1 = $dao->reporteIngresosPorTorneos();
+       
+        $reporte->ingresosTorneos($resultado, $resultado1);
+    }
+
+
     public function registrarOtro(){
         $nombre = $_REQUEST["txtTitulo"];
         $cantidad = $_REQUEST["cantidad"];
@@ -146,7 +183,9 @@ class IngresosController extends ControladorBase {
         $dao = new DaoIngresos();
         $dao->objeto->setTitle($nombre);
         $dao->objeto->setCantidad($cantidad);
-
+        $dao->objeto->setDescripcion("Ingreso de ".$nombre);
+        $dao->objeto->setIdTorneo(0);
+        $dao->objeto->setCategoria('Ninguna');
         echo $dao->guardarOtro();
     }
 
@@ -154,14 +193,19 @@ class IngresosController extends ControladorBase {
     public function quitarFondo(){
         $id = $_REQUEST["id"];
         $cantidad = $_REQUEST["cantidadF"];
+        $nombre = $_REQUEST["nombre"];
+        $apellido = $_REQUEST["apellido"];
 
         $dao = new DaoJugadores();
         $dao->objeto->setIdJugador($id);
        
         $daoI = new DaoIngresos();
 
-        $daoI->objeto->setTitle("Fondo Común");
+        $daoI->objeto->setTitle("Pago de ".$nombre." ".$apellido." a Fondo Común");
+        $daoI->objeto->setDescripcion("Ingreso de Fondo Común");
         $daoI->objeto->setCantidad($cantidad);
+        $daoI->objeto->setIdTorneo(0);
+        $daoI->objeto->setCategoria('Ninguna');
 
         echo $dao->quitarFondo();
         echo $daoI->guardarOtro();

@@ -270,14 +270,14 @@
         <div class="field">
           <div class="fields">
             <input type="hidden" id="txtId" name="txtId" class="form-control"/>
-              <div class="five wide field">
+              <div class="three wide field">
                       <label><i class="calendar icon"></i>Fecha :</label>
                       <input type="text" id="txtFecha" name="txtFecha" class="form-control" readonly/></br>
                 </div>
-                <div class="five wide field">       
+                <div class="seven wide field">       
                       <label><i class="money bill alternate outline icon"></i>Nombre del Ingreso:</label>
                     
-                    <input type="text" name="txtTitulo" id="txtTitulo" class="form-control input-lg" autocomplete="off" placeholder="Nombre del Ingreso" />
+                    <textarea  rows="3" name="txtTitulo" id="txtTitulo"></textarea>
                     
                   <div class="ui red pointing label"  id="labelTitulo"
                   style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
@@ -293,7 +293,7 @@
                   
                  </div> 
               
-                  <div class="five wide field">    
+                  <div class="three wide field">    
                       <label><i class="dollar icon"></i> Cantidad :</label>
                       <input type="text" id="txtCantidad" name="txtCantidad" class="form-control" placeholder="$0.00"/>
                       <div class="ui red pointing label"  id="labelCantidad"

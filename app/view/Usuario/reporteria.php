@@ -79,6 +79,27 @@
 </div>
 
 
+<div class="row tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
+    <button style="width: 32%; text-align:center;"  class="ui brown inverted segment" id="btnTorneoRpt">
+    Ingresos por Torneos
+        <div class="ui divider"></div>
+        <i class="dollar icon"></i>
+        <i class="trophy icon"></i>
+    </button>
+
+    <button style="width: 32%; text-align:center;"  class="ui purple inverted segment" id="btnCategoriasRpt">
+   Ingresos por Categorias
+        <div class="ui divider"></div>
+        <i class="futbol icon"></i>
+        <i class="sort amount up icon"></i>
+    </button>
+
+   
+   
+    
+</div>
+
+
 
 </div>
 
@@ -256,6 +277,70 @@
     </div>
 </div>
 
+<div class="ui modal" id="rptTorneo" style="width:40%;">
+    <div class="header">
+    <i class="trophy icon"></i> Ingresos por torneos<font color="#DFD102" size="20px">.</font>
+    </div><br>
+    <div class="content" class="ui equal width form">
+    <form class="ui form">
+        <div class="field">
+            <div class="fields">      
+            <div class="two wide field"></div> 
+                <div class="ten wide field">
+                    <label><i class="dollar icon"></i>Selecciona el torneo: </label>
+                    <select class="ui  dropdown" id="torneos">
+    
+                    </select>
+                </div>
+                <div class="six wide field">
+                    <label><br></label>
+                    <a id="verPorTorneos" class="ui blue button">
+                    Ver Reporte
+                    </a>
+                </div>
+            </div>
+        </div> 
+    </form>
+    </div>
+    <div class="actions">
+    <button class="ui black deny button" id="">
+            Cancelar
+        </button>
+    </div>
+</div>
+
+
+<div class="ui modal" id="rptCategorias" style="width:40%;">
+    <div class="header">
+    <i class="trophy icon"></i> Ingresos por Categorias<font color="#DFD102" size="20px">.</font>
+    </div><br>
+    <div class="content" class="ui equal width form">
+    <form class="ui form">
+        <div class="field">
+            <div class="fields">      
+            <div class="two wide field"></div> 
+                <div class="ten wide field">
+                    <label><i class="dollar icon"></i>Selecciona la categoria: </label>
+                    <select class="ui  dropdown" id="categoria">
+    
+                    </select>
+                </div>
+                <div class="six wide field">
+                    <label><br></label>
+                    <a id="verPorCat" class="ui blue button">
+                    Ver Reporte
+                    </a>
+                </div>
+            </div>
+        </div> 
+    </form>
+    </div>
+    <div class="actions">
+    <button class="ui black deny button" id="">
+            Cancelar
+        </button>
+    </div>
+</div>
 
 
 <div class="ui modal" id="rptEscuelaFut" style="width:40%;">
@@ -367,6 +452,14 @@ $(document).on("click", "#btnGenerarReporteEg", function () {
     $('#modalReportesEgresos').modal('setting', 'autofocus', true).modal('setting', 'closable', false).modal('show');
 });
 
+$(document).on("click", "#btnTorneoRpt", function () {
+    $('#rptTorneo').modal('setting', 'autofocus', true).modal('setting', 'closable', false).modal('show');
+});
+
+$(document).on("click", "#btnCategoriasRpt", function () {
+    $('#rptCategorias').modal('setting', 'autofocus', true).modal('setting', 'closable', false).modal('show');
+});
+
 $(document).on("click", "#btnGenerarReporteIng", function () {
     $('#modalReportesIng').modal('setting', 'autofocus', true).modal('setting', 'closable', false).modal('show');
 });
@@ -389,6 +482,20 @@ $(document).on("click", "#btnGenerarReportePorFechas", function () {
         var fecha = $('#fecha1').val();
         var fecha2 = $('#fecha2').val();
 window.open('?1=EgresosController&2=reportePorFechas&fecha='+fecha+'&fecha2='+fecha2,'_blank');
+return false;
+});
+
+
+$(document).on("click", "#verPorCat", function () {
+        var cate = $('#categoria').val();
+window.open('?1=IngresosController&2=rptCategorias&cate='+cate);
+return false;
+});
+
+
+$(document).on("click", "#verPorTorneos", function () {
+        var torneos = $('#torneos').val();
+window.open('?1=IngresosController&2=rptTorneos&torneos='+torneos);
 return false;
 });
 
@@ -478,5 +585,34 @@ $(document).on("click", "#verMorosos", function () {
 });
 
 
+$(function() {
+        
 
+        var option = '';
+        var torneo = '<?php echo $torneos?>';
+
+        $.each(JSON.parse(torneo), function() {
+            option = `<option value="${this.idTorneo}">Torneo: ${this.nombreTorneo} -- Categoria: ${this.cat}</option>`;
+
+            $('#torneos').append(option);
+        });
+
+
+        
+
+
+    });
+
+
+    $(function() {
+    var opcion = '';
+            var equipo = '<?php echo $categoriasCMB?>';
+
+            $.each(JSON.parse(equipo), function() {
+                opcion = `<option value="${this.nombreCategoria}">Categoria: ${this.nombreCategoria}</option>`;
+
+                $('#categoria').append(opcion);
+            });
+
+        });
 </script>

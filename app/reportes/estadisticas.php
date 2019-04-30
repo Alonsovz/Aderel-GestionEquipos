@@ -65,11 +65,11 @@ class Reporte {
             <th style='background-color: #58D3F7;'>G</th>
             <th style='background-color: #58D3F7;'>E</th>
             <th style='background-color: #58D3F7;'>P</th>
-            <th style='background-color: #58D3F7;'>Puntos</th>
+            
             <th style='background-color: #58D3F7;'>GF</th>
-            <th style='background-color: #58D3F7;'>GE</th>
+            <th style='background-color: #58D3F7;'>GC</th>
             <th style='background-color: #58D3F7;'>DG</th>
-
+            <th style='background-color: #58D3F7;'>Puntos</th>
             </tr>
             ";
         while($fila = $resultado->fetch_assoc()) {
@@ -79,10 +79,11 @@ class Reporte {
                         <td>".$fila['partidosGanados']."</td>
                         <td>".$fila['partidosEmpatados']."</td>
                         <td>".$fila['partidosPerdidos']."</td>
-                        <td style='font-weight:bold;'>".$fila['puntaje']."</td>
+                        
                         <td>".$fila['golesFavor']."</td>
                         <td>".$fila['golesContra']."</td>
                         <td>".$fila['diferencia']."</td>
+                        <td style='font-weight:bold;'>".$fila['puntaje']."</td>
                        
                      </tr>";
         }

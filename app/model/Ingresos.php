@@ -12,9 +12,44 @@ class Ingresos extends ModeloBase{
     private $mes;
     private $fecha;
     private $fecha2;
+    private $idTorneo;
+    private $categoria;
 
     public function __construct() {
 
+    }
+    public function getCategoria()
+    {
+        return $this->categoria;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setCategoria($categoria)
+    {
+        $this->categoria = $categoria;
+
+        return $this;
+    }
+
+    public function getIdTorneo()
+    {
+        return $this->idTorneo;
+    }
+
+    /**
+     * Set the value of
+     *
+     * @return  self
+     */ 
+    public function setIdTorneo($idTorneo)
+    {
+        $this->idTorneo = $idTorneo;
+
+        return $this;
     }
 
 

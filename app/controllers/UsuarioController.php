@@ -20,6 +20,14 @@ class UsuarioController extends ControladorBase {
     public static function reporteria() {
         
         self::loadMain();    
+
+        $daoT = new DaoTorneos();
+        $torneos = $daoT->cargarTorneosRpt();
+
+
+        $daoC = new DaoCategorias();
+        $categoriasCMB = $daoC->mostrarCategoriasRpt();
+
         require_once './app/view/Usuario/reporteria.php';
     }
 

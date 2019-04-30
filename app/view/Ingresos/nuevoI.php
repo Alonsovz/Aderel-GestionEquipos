@@ -293,6 +293,9 @@
             <input type="hidden" id="idJ">
             <i class="dollar icon"></i> Cantidad a pagar:
             <input type="text" id="cantidadF" name="cantidadF">
+
+            <input type="hidden" id="nombreF" name="nombreJuF">
+            <input type="hidden" id="apellidoF" name="apellidoJuF">
             </div>
         </form>
 
@@ -433,6 +436,8 @@
             <div class="field">
             <i class="dollar icon"></i> Cantidad a pagar:
             <input type="text" id="cantidadCobroE" name="cantidadCobroE" >
+            <input type="hidden" id="nombreEquipo" name="nombreEquipo" >
+            <input type="hidden" id="categoriaEquipo" name="categoriaEquipo" >
             </div>
         </form>
     </div>
@@ -470,6 +475,13 @@
             <div class="field">
             <i class="dollar icon"></i> Cantidad a pagar:
             <input type="text" id="cantidadCobroJ" name="cantidadCobroJ" >
+            <input type="hidden" id="nombreJu" name="nombreJu" >
+            <input type="hidden" id="apellidoJu" name="apellidoJu" >
+
+            <input type="hidden" id="idToJu" name="idToJu" >
+            <input type="hidden" id="idCatJu" name="idCatJu" >
+            <input type="hidden" id="idEquipoJu" name="idEquipoJu" >
+
             </div>
         </form>
     </div>
@@ -873,6 +885,8 @@ $(document).ready(function(){
 var quitarFondo=(ele)=>{
     $("#nombre").text($(ele).attr("nombre"));
     $("#apellido").text($(ele).attr("apellido"));
+    $("#apellidoF").val($(ele).attr("apellido"));
+    $("#nombreF").val($(ele).attr("nombre"));
     $("#idJ").val($(ele).attr("id"));
     $('#quitarFondo').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                 .modal('show');
@@ -885,6 +899,8 @@ var cobrarEquipo=(ele)=>{
     $("#idTorneoEq").val($(ele).attr("idTorneoEq"));
     $("#categoriaE").text($(ele).attr("categoriaE"));
     $("#idEquipoCobro").val($(ele).attr("id"));
+    $("#nombreEquipo").val($(ele).attr("nombreE"));
+    $("#categoriaEquipo").val($(ele).attr("categoriaE"));
     $("#cupos").val($(ele).attr("carnets"));
     $('#modalCobroInscripcionE').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                 .modal('show');
@@ -893,8 +909,15 @@ var cobrarEquipo=(ele)=>{
 
 var cobrarJugador=(ele)=>{
     $("#nombreJ").text($(ele).attr("nombre"));
+    $("#nombreJu").val($(ele).attr("nombre"));
+    $("#apellidoJu").val($(ele).attr("apellido"));
+    $("#idToJu").val($(ele).attr("idToJu"));
+    $("#idCatJu").val($(ele).attr("categoria"));
+    $("#idEquipoJu").val($(ele).attr("equipo"));
+
     $("#apellidoJ").text($(ele).attr("apellido"));
     $("#equipoJ").text($(ele).attr("equipo"));
+
     $("#torneoJ").text($(ele).attr("torneo"));
     $("#carnetGra").text($(ele).attr("carnets"));
     $("#cuposJ").val($(ele).attr("carnets"));
@@ -1404,6 +1427,8 @@ $("#guardarFondo").click(function(){
     alertify.confirm("¿Desea quitar al jugador de fondo común?",
             function(){
    var id = $("#idJ").val();
+   var nombre = $("#nombre").text();
+   var apellido = $("#apellido").text();
    var cantidadF = $("#cantidadF").val();
          
         
@@ -1413,6 +1438,8 @@ $("#guardarFondo").click(function(){
                 data:{
                     id:id,
                     cantidadF : cantidadF,
+                    nombre : nombre,
+                    apellido : apellido,
                 },
                 success: function(r) {
                     if(r == 11) {

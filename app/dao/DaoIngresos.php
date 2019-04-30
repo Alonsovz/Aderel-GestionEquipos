@@ -188,9 +188,29 @@ class DaoIngresos extends DaoBase {
     }
 
 
+    public function reporteIngresosPorCategorias() {
+        $query = "select *,format((cantidad),2) as cantidad from ingresos where idEliminado=1 and categoria='{$this->objeto->getCategoria()}'";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+
+    public function reporteIngresosPorTorneos() {
+        $query = "select i.*,format((i.cantidad),2) as cantidad,t.nombreTorneo as torneo from ingresos i
+        inner join torneos t on t.idTorneo = i.idTorneo
+        where i.idEliminado=1 and i.idTorneo='{$this->objeto->getIdTorneo()}'";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+
     public function guardarOtro(){
-        $_query = "insert into ingresos values (null,'".$this->objeto->getTitle()."',curdate(),'".$this->objeto->getCantidad()."',
-        '#140E93','#E6C404',DATE_FORMAT(CURDATE(),'%m'),year(CURRENT_DATE()),1);";
+        $_query = "insert into ingresos values (null,'".$this->objeto->getTitle()."','".$this->objeto->getDescripcion()."',curdate(),'".$this->objeto->getCantidad()."',
+        '#140E93','#E6C404',DATE_FORMAT(CURDATE(),'%m'),year(CURRENT_DATE()),".$this->objeto->getIdTorneo().",'".$this->objeto->getCategoria()."',1);";
 
         $resultado = $this->con->ejecutar($_query);
 

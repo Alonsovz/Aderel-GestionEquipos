@@ -296,6 +296,11 @@ class JugadoresController extends ControladorBase {
 
         $id = $_REQUEST["idJugador"];
         $cantidad = $_REQUEST["cantidadCobroJ"];
+        $nombre = $_REQUEST["nombreJu"];
+        $apellido = $_REQUEST["apellidoJu"];
+        $cat = $_REQUEST["idCatJu"];
+        $idT = $_REQUEST["idToJu"];
+        $equipo = $_REQUEST["idEquipoJu"];
 
         $dao = new DaoJugadores();
 
@@ -306,8 +311,11 @@ class JugadoresController extends ControladorBase {
 
         $daoI = new DaoIngresos();
 
-        $daoI->objeto->setTitle("Inscripción de Jugadores");
+        $daoI->objeto->setTitle("Inscripción de Jugador: ".$nombre." ".$apellido." al equipo: ".$equipo);
+        $daoI->objeto->setDescripcion("Inscripción de Jugador");
         $daoI->objeto->setCantidad($cantidad);
+        $daoI->objeto->setIdTorneo($idT);
+        $daoI->objeto->setCategoria($cat);
 
         
         echo $daoI->guardarOtro();

@@ -247,6 +247,24 @@ class DaoTorneos extends DaoBase {
         return '['.$json.']';
     }
 
+    public function cargarTorneosRpt(){
+        $_query = "select t.*, c.nombreCategoria as cat from torneos t
+        inner join categorias c on c.idCategoria= t.idCategoria
+        where t.idEliminado=1 and t.idTorneo>2";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+            $json .= json_encode($fila).',';
+        }
+
+        $json = substr($json,0, strlen($json) - 1);
+
+        return '['.$json.']';
+    }
+
 
     public function verCategoriaF(){
         $_query = "select idCategoria from torneos where  idGenero=1 and idTorneo = ".$this->objeto->getIdTorneo();
@@ -428,7 +446,7 @@ class DaoTorneos extends DaoBase {
         return $resultado;
     }
 
-    public function suspendidos(){
+    public function castigos(){
         $query = "select c.*,e.nombre as equipo, t.nombreTorneo as torneo, j.nombre as nombre, j.apellido as apellido from castigos c
         inner join inscriJugador i on i.idJugador = c.idJugador
                 inner join equipos e on e.idEquipo = i.idEquipo
