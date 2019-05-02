@@ -13,10 +13,28 @@ class Egresos extends ModeloBase{
     private $mes;
     private $anio;
     private $idCheque;
+    private $numeroCuenta;
 
 
     public function __construct() {
 
+    }
+
+    public function getNumeroCuenta()
+    {
+        return $this->numeroCuenta;
+    }
+
+    /**
+     * Set the value of idEgreso
+     *
+     * @return  self
+     */ 
+    public function setNumeroCuenta($numeroCuenta)
+    {
+        $this->numeroCuenta = $numeroCuenta;
+
+        return $this;
     }
 
 

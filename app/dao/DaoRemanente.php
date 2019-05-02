@@ -24,9 +24,10 @@ class DaoRemanente extends DaoBase {
 
 
     public function totalSaldo() {
-        $query = "select format(totalSaldoIngresos,2) as totalSaldoIngresos from remanentes 
-        where idRemanente=(select max(idRemanente) from remanentes)
-        and mes='{$this->objeto->getMes()}' and anio='{$this->objeto->getAnio()}'";
+        $query = "select format(( (select nuevoSaldo from remanentes where idRemanente=(select max(idRemanente) from remanentes))
+        + ( select sum(cantidad) as total from ingresos where mes='{$this->objeto->getMes()}'
+         and anio= '{$this->objeto->getAnio()}'  and idEliminado=1)),2)
+        as totalSaldoIngresos";
 
         $resultado = $this->con->ejecutar($query);
 

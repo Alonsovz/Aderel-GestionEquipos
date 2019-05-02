@@ -23,7 +23,7 @@ create table usuario (
 
 create table ingresos(
 id int primary key unique auto_increment,
-title varchar(50),
+title varchar(500),
 descripcion varchar(500),
 start date,
 cantidad double,
@@ -41,6 +41,26 @@ idEliminado int
 create table chequeras(
 idChequera int primary key unique auto_increment,
 chequera varchar(50),
+numeroCuenta varchar(100),
+monto double,
+idEliminado int
+);
+
+create table cargosBancarios(
+idCargo int primary key unique auto_increment,
+concepto varchar(500),
+monto double,
+fecha date,
+idChequera int,
+idEliminado int
+);
+
+create table remesas(
+idRemesa int primary key unique auto_increment,
+concepto varchar(500),
+monto double,
+fecha date,
+idChequera int,
 idEliminado int
 );
 
@@ -322,6 +342,10 @@ alter table partidos add constraint fk_partidos_jornadas foreign key (jornadas_i
 
 alter table egresos add constraint fk_egresos_chequeras foreign key (idChequera) references chequeras(idChequera);
 
+alter table cargosBancarios add constraint fk_cargosBancarios_chequeras foreign key (idChequera) references chequeras(idChequera);
+
+alter table remesas add constraint fk_remesas_chequeras foreign key (idChequera) references chequeras(idChequera);
+
 alter table jornadas add constraint fk_jornadas_torneos foreign key (idTorneo) references torneos(idTorneo);
 
 alter table cajaChica add constraint fk_cajaChica_tipoCaja foreign key (idTipo) references tipoCaja(idTipo);
@@ -374,17 +398,21 @@ insert into usuario values(null,'Fabio Alonso','Mejia Velasquez','mejia','fabiom
 insert into usuario values(null,'Alonso','Mejia','alonso','mejiafabio383@gmail.com',sha1('123'),2,1);
 insert into usuario values(null,'Juan','Perez','juan','juanPerez383@gmail.com',sha1('123'),3,1);
 
-insert into ingresos values (null,'Escuela','Pago de escuela','2019-04-11',2000,'#140E93','#E6C404','04','2019',1,'Ninguna',1);
-insert into ingresos values (null,'Fondo Comun','Pago de Juanito de fondo común','2019-04-14',2000,'#140E93','#E6C404','04','2019',1,'Ninguna',1);
+insert into ingresos values (null,'Escuela','Pago de escuela','2019-05-01',2000,'#140E93','#E6C404','05','2019',1,'Ninguna',1);
+insert into ingresos values (null,'Fondo Comun','Pago de Juanito de fondo comun','2019-05-02',2000,'#140E93','#E6C404','05','2019',1,'Ninguna',1);
 
-insert into chequeras values(null, 'Chequera Banco America Central',1);
+insert into chequeras values(null, 'Chequera Banco America Central','090123123',2500,1);
 
-insert into egresos values(null,4089,'Pago de impuestos de la renta',1000,160,840,'2019-04-11','04','2019',1,1);
-insert into egresos values(null,4090,'Pago de recibos',1000,160,840,'2019-04-12','04','2019',1,1);
+insert into cargosBancarios values(null, 'Cargo por cheque en blanco' , 200 , curdate(),1,1);
 
-insert into remanentes values(null,5000,10000,4000,500,300,7000,'04','2019');
+insert into remesas values(null, 'Abono a cuenta' , 200 , curdate(),1,1);
 
+insert into egresos values(null,4089,'Pago de impuestos de la renta',1000,160,840,'2019-05-01','05','2019',1,1);
+insert into egresos values(null,4090,'Pago de recibos',1000,160,840,'2019-05-02','05','2019',1,1);
 
+insert into remanentes values(null,5000,10000,4000,500,300,7000,'05','2019');
+
+update remanentes set mes='05' where idRemanente=1
 insert into categorias values (null, 'Sin Categoria',0,1,1,1,1);
 insert into categorias values (null, 'Sin Categoria',0,2,1,2,1);
 
@@ -666,8 +694,7 @@ begin
 end	
 $$
 
-select id,title,descripcion,DATE_FORMAT(start, '%d/%m/%Y') as start,format(SUM(cantidad),2) as cantidad,
-    color,textColor,mes,anio,idEliminado,idTorneo,categoria from ingresos
-    where  idEliminado=1 group by id;
-    
-    update ingresos set descripcion = 'Pago de escuela' where id=1
+
+
+
+

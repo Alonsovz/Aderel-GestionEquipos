@@ -56,7 +56,7 @@
     <div class="menu">
     <div class="item">
     <a href="?1=IngresosController&2=nuevoIngreso" class="item menu-it" style="color:black;">
-        <i class="money bill alternate outline icon"></i>
+        <i class="user icon"></i><i class="dollar icon"></i>
        Gestión de Caja
     </a>
 
@@ -64,8 +64,40 @@
 
     <div class="item">
     <a href="?1=IngresosController&2=cierreMes" class="item menu-it" style="color:black;">
-        <i class="money bill alternate outline icon"></i>
+    <i class="cut icon"></i><i class="dollar icon"></i>
        Cierre de Mes
+    </a>
+
+    </div>
+
+    <div class="item">
+    <a href="?1=EgresosController&2=chequeras" class="item menu-it" style="color:black;">
+    <i class="id card icon"></i> <i class="dollar icon"></i>
+      Cuentas-Chequeras
+    </a>
+
+    </div>
+
+    <div class="item">
+    <a href="?1=RemesasController&2=remesas" class="item menu-it" style="color:black;">
+        <i class="share icon"></i><i class="dollar icon"></i>
+       Remesar cuentas
+    </a>
+
+    </div>
+
+    <div class="item">
+    <a href="?1=RemesasController&2=remesas" class="item menu-it" style="color:black;">
+        <i class="share icon"></i><i class="dollar icon"></i>
+       Remesar cuentas
+    </a>
+
+    </div>
+
+    <div class="item">
+    <a href="?1=RemesasController&2=cargoBancario" class="item menu-it" style="color:black;">
+        <i class="building icon"></i><i class="dollar icon"></i>
+       Cargo Bancario
     </a>
 
     </div>

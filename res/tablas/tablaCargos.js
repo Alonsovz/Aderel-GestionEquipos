@@ -1,24 +1,27 @@
-var tablaChequeras;
+var tablaCargos;
 
 $(function() {
-    if($('#dtChequeras').length) {
-        tablaChequeras = $('#dtChequeras').DataTable({
+    if($('#dtCargos').length) {
+        tablaCargos = $('#dtCargos').DataTable({
             "ajax": {
-                "url": "?1=EgresosController&2=mostrarChequeras",
+                "url": "?1=RemesasController&2=mostrarCargos",
                 "type": "POST"
             },
             "columns": [
                 {
-                    "data": "idChequera"
+                    "data": "idCargo"
                 },
                 {
-                    "data": "chequera"
-                },
-                {
-                    "data": "numeroCuenta"
+                    "data": "concepto"
                 },
                 {
                     "data": "monto"
+                },
+                {
+                    "data": "fecha"
+                },
+                {
+                    "data": "chequera"
                 },
                 {
                     "data": "Acciones"             
@@ -54,6 +57,6 @@ $(function() {
         });
 
          // Ocultar columna de id de Usuario
-         tablaChequeras.column(0).visible(false);
+         tablaCargos.column(0).visible(false);
     }
 });

@@ -118,6 +118,7 @@ class EgresosController extends ControladorBase {
 
     
         $dao->objeto->setConceptoEgreso($_REQUEST["chequera"]);
+        $dao->objeto->setNumeroCuenta($_REQUEST["numeroCuenta"]);
         
         $dao->objeto->setIdEgreso($_REQUEST["idDetalle"]);
 
@@ -137,6 +138,8 @@ class EgresosController extends ControladorBase {
         
         
         $dao->objeto->setConceptoEgreso($datos->chequera);
+        $dao->objeto->setNumeroCuenta($datos->numeroCuenta);
+        $dao->objeto->setCantidad($datos->monto);
 
 
 

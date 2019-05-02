@@ -1400,7 +1400,7 @@ $("#guardarOtro").click(function(){
                 data: datosFormulario,
                 success: function(r) {
                     if(r == 1) {
-                     //$('#modalAgregarJugador').modal('hide');
+                     $('#modalIngreso').modal('hide');
                         swal({
                             title: 'Listo',
                             text: 'Guardado con éxito',
@@ -1408,8 +1408,11 @@ $("#guardarOtro").click(function(){
                             showConfirmButton: false,
                                 timer: 1700
 
-                        }); 
+                        }).then((result) => {
+                            $('#modalIngreso').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
                        limpiarOtro();
+                        });
+                        
                     } 
                 }
             });

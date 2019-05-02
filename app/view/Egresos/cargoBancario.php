@@ -1,7 +1,7 @@
 <br><div id="app">
 
 
-<modal-registrar id_form="frmRegistrar" id="modalRegistrar" url="?1=EgresosController&2=registrarChequera" titulo="Registrar chequera"
+<modal-registrar id_form="frmRegistrar" id="modalRegistrar" url="?1=RemesasController&2=registrarCargo" titulo="Registrar Cargo Bancario"
         :campos="campos_registro" tamanio='tiny'></modal-registrar>
     
     <modal-editar id_form="frmEditar" id="modalEditar" url="?1=EgresosController&2=editarChequera" titulo="Editar chequera"
@@ -15,14 +15,14 @@
         <div class="row">
                 <div class="titulo">
                 <i class="money bill alternate icon"></i>
-                    Gestion de chequeras ADEREL<font color="#DFD102" size="20px">.</font>
-                    <a href="?1=RemesasController&2=remesas" class="ui left floated green button">
-                            <i class="dollar icon"></i><i class="share icon"></i> Remesar
+                    Cargo bancario a cuentas ADEREL<font color="#DFD102" size="20px">.</font>
+                    <a href="?1=EgresosController&2=chequeras" class="ui left floated violet button">
+                            <i class="id card icon"></i><i class="dollar icon"></i> Ver Cuentas
                         </a>
 
-                        <a href="?1=RemesasController&2=cargoBancario" class="ui left floated violet button">
-                            <i class="building icon"></i><i class="dollar icon"></i> Cargos bancarios
-                        </a> 
+                        <a href="?1=RemesasController&2=remesas" class="ui left floated purple button">
+                        <i class="dollar icon"></i><i class="share icon"></i> Remesar
+                        </a>
                 </div> 
         </div>
         <div class="row title-bar">
@@ -41,14 +41,15 @@
         </div>
         <div class="row">
             <div class="sixteen wide column">
-                <table id="dtChequeras" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                <table id="dtCargos" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
                     <thead>
                         <tr>
                         <th style="background-color: #2ECCFA;">ID</th>
-                            <th style="background-color: #2ECCFA;">Chequera</th>
-                            <th style="background-color: #2ECCFA;">N° Cuenta</th>
-                            <th style="background-color: #2ECCFA;">Monto</th>
-                            <th style="background-color: #2ECCFA;">Acciones</th>
+                            <th style="background-color: #1CC647; color:white;">Concepto</th>
+                            <th style="background-color: #1CC647; color:white;">Monto</th>
+                            <th style="background-color: #1CC647; color:white;">Fecha</th>
+                            <th style="background-color: #1CC647; color:white;">Chequera</th>
+                            <th style="background-color: #1CC647; color:white;">Acciones</th>
                            
                         </tr>
                     </thead>
@@ -61,8 +62,8 @@
 
 </div>
 
-<script src="./res/tablas/tablaChequeras.js"></script>
-<script src="./res/js/modalRegistrar.js"></script>
+<script src="./res/tablas/tablaCargos.js"></script>
+<script src="./res/js/modalRegistrarCargo.js"></script>
 <script src="./res/js/modalEditar.js"></script>
 <script src="./res/js/modalEliminar.js"></script>
 
@@ -70,19 +71,21 @@
 var app = new Vue({
         el: "#app",
         data: {
-            campos_registro: [{
-                    label: 'Nombre de la chequera:',
-                    name: 'chequera',
+            campos_registro: [
+                {
+                    label: 'Concepto del cargo:',
+                    name: 'conceptoRe',
                     type: 'text'
                 }
                 ,
                 {
-                    label: 'Número de cuenta:',
-                    name: 'numeroCuenta',
-                    type: 'text'
+                    label: 'Chequera:',
+                    name: 'selectChequera',
+                    type: 'select',
+                    options: <?php echo $chequeras;?>
                 },
                 {
-                    label: 'Monto de dinero en la cuenta:',
+                    label: 'Monto de cargo $$:',
                     name: 'monto',
                     type: 'text'
                 }
@@ -90,13 +93,20 @@ var app = new Vue({
             ],
             campos_editar: [
                 {
-                    label: 'Nombre de la chequera:',
-                    name: 'chequera',
+                    label: 'Concepto del cargo:',
+                    name: 'conceptoRe',
                     type: 'text'
+                }
+                ,
+                {
+                    label: 'Chequera:',
+                    name: 'selectChequera',
+                    type: 'select',
+                    options: <?php echo $chequeras;?>
                 },
                 {
-                    label: 'Número de cuenta:',
-                    name: 'numeroCuenta',
+                    label: 'Monto de cargo $$:',
+                    name: 'monto',
                     type: 'text'
                 },
                 {
@@ -112,7 +122,7 @@ var app = new Vue({
         },
         methods: {
             refrescarTabla() {
-                tablaChequeras.ajax.reload();
+                tablaCargos.ajax.reload();
             },
             modalRegistrar() {
                 $('#modalRegistrar').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal(

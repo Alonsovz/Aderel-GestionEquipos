@@ -68,7 +68,7 @@ class DaoEgresos extends DaoBase {
     }
 
     public function mostrarChequeras() {
-        $_query = "select * from chequeras where idEliminado=1";
+        $_query = "select *, format(monto,2) as monto from chequeras where idEliminado=1";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -131,7 +131,8 @@ class DaoEgresos extends DaoBase {
     }
 
     public function registrarChequera(){
-        $_query = "insert into chequeras values(null,'".$this->objeto->getConceptoEgreso()."',1) ";
+        $_query = "insert into chequeras values(null,'".$this->objeto->getConceptoEgreso()."','".$this->objeto->getNumeroCuenta()."',
+        '".$this->objeto->getcantidad()."',1) ";
     
             $resultado = $this->con->ejecutar($_query);
     
@@ -158,7 +159,7 @@ class DaoEgresos extends DaoBase {
 
 
     public function editarChequera() {
-        $_query = "update chequeras set chequera ='".$this->objeto->getConceptoEgreso()."'
+        $_query = "update chequeras set chequera ='".$this->objeto->getConceptoEgreso()."',numeroCuenta ='".$this->objeto->getNumeroCuenta()."'
          where idChequera = ".$this->objeto->getIdEgreso();
 
         $resultado = $this->con->ejecutar($_query);
@@ -382,4 +383,22 @@ class DaoEgresos extends DaoBase {
 
         return $resultado;
     }
+
+
+    public function mostrarChequeraCmb() {
+        $_query = "select * from chequeras where idEliminado=1;";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+            $json .= '{"val": '.$fila['idChequera'].', "text": "'.$fila['numeroCuenta']. ' -- ' .$fila['chequera'].' "},';
+        }
+
+        $json = substr($json,0, strlen($json) - 1);
+
+        return '['.$json.']';
+    }
+
 }    
