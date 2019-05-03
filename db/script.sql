@@ -672,6 +672,7 @@ $$
 -- Procedimientos Egresos
 -- ===========================================================================
 
+--------
 
 delimiter $$
 create procedure mostrarEquipos()
