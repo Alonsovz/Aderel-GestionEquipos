@@ -302,6 +302,29 @@ class TorneosController extends ControladorBase {
         $reporte->estadisticas($resultado ,$nombreTorneo,$goleadores, $castigos);
     }
 
+    public function calendarioFiltro(){
+        $id = $_REQUEST["id"];
+        $jornada = $_REQUEST["jornada"];
+        $vuelta = $_REQUEST["vuelta"];
+
+        require_once './app/reportes/calendarioFiltro.php';
+
+        $dao = new DaoTorneos();
+
+        $reporte = new Reporte();
+
+        $dao->objeto->setIdTorneo($id);
+        $dao->objeto->setVuelta($vuelta);
+        $dao->objeto->setJornada($jornada);
+
+
+        $resultado =$dao->calendarioFiltro();
+        
+
+
+        $reporte->calendarioFiltro($resultado);
+    }
+
     
 
     public function goleadores(){

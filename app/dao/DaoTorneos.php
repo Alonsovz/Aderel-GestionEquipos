@@ -411,6 +411,21 @@ class DaoTorneos extends DaoBase {
         return $resultado;
     }
 
+    public function calendarioFiltro(){
+        $query = "
+        select j.orden as jornada, j.vuelta_N as vuelta, j.descansa_id_Equipo as descansa,
+                p.equipo1_id as equipo1, p.equipo2_id as equipo2, p.partido_N as partido, p.cancha as cancha, p.id as idPartido,
+                p.fecha as fecha, p.hora as hora,t.nombreTorneo as nombreT, t.idTorneo as idTor FROM partidos p 
+                inner JOIN jornadas j on j.id = p.jornadas_id
+                inner join torneos t on t.idTorneo = j.idTorneo
+                WHERE  p.estado=1 and j.idTorneo =".$this->objeto->getIdTorneo()."
+                 and j.orden = ".$this->objeto->getJornada()." and j.vuelta_N = ".$this->objeto->getVuelta();
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
     public function posiciones(){
         $query = "select p.*, e.nombre as nombreE, t.nombreTorneo as Torneo, (p.golesFavor - p.golesContra) as diferencia from posiciones p
         inner join equipos e on e.idEquipo = p.idEquipo 

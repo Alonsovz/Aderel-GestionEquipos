@@ -392,6 +392,85 @@ Cancelar
 </div>
 </div>
 
+
+<div class="ui tiny modal" id="eleccionRpt">
+    <div class="header">
+    <i class="calendar icon"></i> Reporte
+    </div>
+
+    <div class="content">
+
+    <form class="ui form">
+        <input type="hidden" name="idTorneoRpt" id="idTorneoRpt">
+
+        <div class="field">
+        <div class="fields">
+            <div class="four wide field"></div>
+                <div class="eight wide field">
+                
+                    <button id="imprimirTodo" class="ui blue button" style="margin:auto;">
+                     <i class="print icon"></i>Imprimir todas las jornadas
+                    </button>
+                 </div>
+
+            </div>
+        </div>
+        <div class="ui divider"></div>
+        <br>
+        <h3>Seleccione la vuelta y jornada que desea imprimir</h3><br>
+        <div class="field">
+            <div class="fields">
+                <div class="eight wide field">
+                <label>Vuelta</label>
+                    <select name="vueltaRpt" id="vueltaRpt" class="ui search selection dropdown">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+
+                <div class="eight wide field">
+                <label>Jornada</label>
+                    <select name="jornadaRpt" id="jornadaRpt" class="ui search selection dropdown">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="field">
+        <div class="fields">
+            <div class="six wide field"></div>
+                <div class="eight wide field">
+                
+                    <a id="imprimirRpt" class="ui yellow button" style="margin:auto;">
+                     <i class="print icon"></i>Imprimir
+                    </a>
+                 </div>
+
+            </div>
+        </div>
+    </form>
+    </div>
+
+    <div class="actions">
+    <button class="ui black deny button">
+        Cerrar
+    </button>
+    </div>
+</div>
+
 </div>
 
 <script src="./res/tablas/tablaTorneosM.js"></script>
@@ -814,10 +893,29 @@ var calendarizacion=(ele)=>{
   });
 
 var reporte=(ele)=>{
-    var id = $(ele).attr("id");
+    $('#eleccionRpt').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+    $("#idTorneoRpt").val($(ele).attr('id'));
+}
+
+$("#imprimirTodo").click(function(){
+    var id = $("#idTorneoRpt").val();
 window.open('?1=TorneosController&2=calendario&id='+id,'_blank');
 return false;
-}
+});
+
+$("#imprimirRpt").click(function(){
+    var vuelta = $("#vueltaRpt").val();
+    var jornada = $("#jornadaRpt").val();
+    var id = $("#idTorneoRpt").val();
+
+window.open('?1=TorneosController&2=calendarioFiltro&vuelta='+vuelta+'&jornada='+jornada+'&id='+id,'_blank');
+return false;
+});
+
+
+    
+
 
 
 var editarTorneo=(ele)=>{
