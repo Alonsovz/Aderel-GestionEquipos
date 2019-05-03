@@ -450,7 +450,7 @@ Cancelar
             <div class="six wide field"></div>
                 <div class="eight wide field">
                 
-                    <a id="imprimirRpt" class="ui yellow button" style="margin:auto;">
+                    <a id="imprimirRpt" class="ui red button" style="margin:auto;">
                      <i class="print icon"></i>Imprimir
                     </a>
                  </div>
