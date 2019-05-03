@@ -412,7 +412,7 @@ insert into egresos values(null,4090,'Pago de recibos',1000,160,840,'2019-05-02'
 
 insert into remanentes values(null,5000,10000,4000,500,300,7000,'05','2019');
 
-update remanentes set mes='05' where idRemanente=1
+
 insert into categorias values (null, 'Sin Categoria',0,1,1,1,1);
 insert into categorias values (null, 'Sin Categoria',0,2,1,2,1);
 
@@ -672,7 +672,6 @@ $$
 -- Procedimientos Egresos
 -- ===========================================================================
 
---------
 
 delimiter $$
 create procedure mostrarEquipos()
