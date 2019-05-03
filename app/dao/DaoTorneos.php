@@ -33,13 +33,14 @@ class DaoTorneos extends DaoBase {
                 $sorteo = '<button id=\"'.$fila["idTorneo"].'\"  equipos=\"'.$fila["inscritos"]. '\" name=\"'.$fila["nombreTorneo"]. '\"  class=\"ui icon yellow small button\" onclick=\"sorteos(this)\"><i class=\"futbol icon\"></i> Sorteo</button>';
                 $btnReporte = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon purple small button\" onclick=\"reporte(this)\"><i class=\"calendar icon\"></i>Calendarización</button>';
                 $btnGestion = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon orange small button\" onclick=\"calendarizacion(this)\"><i class=\"calendar icon\"></i>Gestionar</button>';
+                $btnFinal = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon orange small button\" onclick=\"finalistas(this)\"><i class=\"calendar icon\"></i>Cuartos?</button>';
 
                 $btnEstad = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon blue small button\" onclick=\"estadisticas(this)\"><i class=\"sort amount up icon\"></i>Estadísticas</button>';
 
                 if($fila["sorteo"]==1){
                     $acciones = ', "Acciones": "'.$btnVer.''.$sorteo .''.$btnEditar.' '.$btnEliminar.'"';
                 }else{
-                    $acciones = ', "Acciones": "'.$btnVer.''.$btnEstad.''.$btnReporte .''.$btnGestion.'"';
+                    $acciones = ', "Acciones": "'.$btnVer.''.$btnEstad.''.$btnReporte .''.$btnGestion.''.$btnFinal.'"';
                 }
                 
 

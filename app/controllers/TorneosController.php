@@ -525,6 +525,38 @@ class TorneosController extends ControladorBase {
 
     }
 
+    public function guardarClasificatorias()
+    {
+        $clasificatorias = json_decode($_REQUEST['datos'],true);
+        $daoClasi = new DaoClasificatoria();
+
+        foreach ($clasificatorias as $clasi) {
+            $clasificatoria = new Clasificatoria();
+            $clasificatoria->setPartidoN($clasi['partidoN']);
+            $clasificatoria->setEtapa($clasi['etapa']);
+            $clasificatoria->setIdEquipo1($clasi['equiposId'][0]);
+            $clasificatoria->setIdEquipo2($clasi['equiposId'][1]);
+            $clasificatoria->setIdTorneo($clasi['idTorneo']);
+            $clasificatoria->setFecha($clasi['fecha']);
+            $clasificatoria->setHora($clasi['hora']);
+
+            $daoClasi->registrar($clasificatoria);
+        }
+
+        return 'ok';
+    }
+
+    public function guardarGanador()
+    {
+        $idClasificatoria = $_REQUEST['idClasificatoria'];
+        $idEquipo = $_REQUEST['idEquipo'];
+        $daoClasi = new DaoClasificatoria();
+
+        $daoClasi->guardaGanador($idClasificatoria, $idEquipo);
+        
+        return 'ok';
+    }
+
 }
 
 
