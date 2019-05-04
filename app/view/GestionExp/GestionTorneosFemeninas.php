@@ -984,4 +984,52 @@ $("#guardarTodo").click(function(){
                 }
             });
 });
+
+function finalistas(element) {
+    var idTorneo = $(element).attr('id');
+    window.location = '?1=TorneosController&2=getPreviewClasificatoriaF&torneo='+idTorneo;
+
+    $.ajax({
+        type: 'POST',
+        url: '?1=TorneosController&2=posiciones',
+        data: {
+            id: idTorneo
+        },
+        success: function (data) {
+            var datos = JSON.parse(data);
+            let equipos_finalistas;
+            const clasificatorias = [];
+
+            if(datos.length>=10){
+                //solo los primeros 8 equipos
+                equipos_finalistas = datos.slice(0,8);
+                for (let index = 0; index < 4; index++) {
+                    clasificatorias.push({
+                        partidoN:index+1,
+                        etapa:'cuartos',
+                        equiposId:[equipos_finalistas[index].idEquipo,equipos_finalistas[8-index-1].idEquipo],
+                        idTorneo:idTorneo,
+                    });
+                }
+            }else{
+                equipos_finalistas = datos.slice(0,4);
+                for (let index = 0; index < 2; index++) {
+                    clasificatorias.push({
+                        partidoN:index+1,
+                        etapa:'semifinales',
+                        equiposId:[equipos_finalistas[index].idEquipo,equipos_finalistas[4-index-1].idEquipo],
+                        idTorneo:idTorneo,
+                    });
+                }
+            }
+            console.log('clasificatorias :', clasificatorias);
+            $.ajax({
+                type: 'POST',
+                url: '?1=TorneosController&2=guardarClasificatorias',
+                data: {datos: JSON.stringify(clasificatorias)}
+            });
+            
+        }
+    });
+}
 </script>

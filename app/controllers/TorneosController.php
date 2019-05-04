@@ -588,6 +588,12 @@ class TorneosController extends ControladorBase {
         require_once './app/view/GestionExp/GestionClasificatoria.php';
     }
 
+    public function getPreviewClasificatoriaF()
+    {
+        self::loadMain();
+        require_once './app/view/GestionExp/GestionClasificatoriaF.php';
+    }
+
 }
 
 

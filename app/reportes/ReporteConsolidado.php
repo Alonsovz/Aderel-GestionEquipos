@@ -12,7 +12,7 @@ class Reporte {
     
 
 
-    public function reporteConsilidado($mes,$anio, $totalIngresos, $cuentaCorriente,$efectivo,$cajaChica,
+    public function reporteConsilidado($mes,$anio, $totalIngresos, $cuentaCorriente,$totalCuentas,$efectivo,$cajaChicaA,$cajaChicaG,$totalCajas,
     $nuevoSaldo,$ingresosMes,$egresosMes,$validar,$saldoAnterior,$totalIng,$totalCantidad,$totalRetencion,$totalPagado)
     {   
         $nombreMes ="";
@@ -162,31 +162,97 @@ class Reporte {
          </tr>";
         }
 
-        $tabla .= "</table><br>";
+        $tabla .= "</table>";
         while($fila = $totalIng->fetch_assoc()) {
             $tabla .= "<p align='right'><b><font color='#172961'>Total de Ingresos:</font> $".$fila['total']."</b></p><hr>";
     
             }
             $tabla .= "<h2><font color='#BA9B1E'>Totales del Mes:</font></h2>";
         while($fila = $saldoAnterior->fetch_assoc()) {
-            $tabla .= "<b><br><font color='#172961'>Saldo Anterior:</font> $".$fila['saldoAnterior']."</b>";
+            $tabla .= "<b><font color='#172961'>Saldo Anterior:</font> $".$fila['nuevoSaldo']."</b>";
     
             }
         while($fila = $totalIngresos->fetch_assoc()) {
         $tabla .= "<br><b><font color='#172961'>Suma de Ingresos más saldo de mes anterior:</font> $".$fila['totalSaldoIngresos']."</b>";
 
         }
-
+        $tabla .= " <hr><table style='border: 1px solid white;'>
+        <tr style='border: 1px solid white;'>
+        <th style='border: 1px solid white; font-size:18px;'><font color='#DBA901'>Cuentas de Banco:</font></th>
+       
+                <th style='border: 1px solid white;'>Cuenta</th>
+                <th style='border: 1px solid white;'>Monto</th>
+            </tr>";
         while($fila = $cuentaCorriente->fetch_assoc()) {
-            $tabla .= "<br><b><font color='#172961'>Cuenta Corriente:</font> $".$fila['cuentaCorriente']."</b>";
-            }
-        
+         $tabla.="
+         <tr style='border: 1px solid white;'>
+         <td style='border: 1px solid white;'></td>
+            <td style='border: 1px solid white;'>".$fila['chequera']. "</td>
+             <td style='border: 1px solid white;'>$".$fila['monto']."</td>
+            
+             </tr>  
+         ";
+        }
+        $tabla .= "</table>";
+
+        $tabla .= "<b>
+        <table style='border: 1px solid white;'>
+            <tr style='border: 1px solid white;'>
+            <hr>
+                <th style='border: 1px solid white;color:white;'>-----------------------<b></th>
+                <th style='border: 1px solid white;'>Total de dinero en cuentas</th>
+                ";
+
+        while($fila = $totalCuentas->fetch_assoc()) {
+            $tabla.="
+            
+            <th style='border: 1px solid white;'>$".$fila['totalCuentas']."</th>
+            </tr>";
+        }
+        $tabla .= "</table><hr>";
          while($fila = $efectivo->fetch_assoc()) {
                 $tabla .= "<br><b><font color='#172961'>Efectivo:</font> $".$fila['efectivo']."</b>";
              }  
-         while($fila = $cajaChica->fetch_assoc()) {
-             $tabla .= "<br><b><font color='#172961'>Caja Chica:</font> $".$fila['cajaChica']."</b>";
-              }  
+             $tabla .= "<table style='border: 1px solid white;'>
+             <tr style='border: 1px solid white;'>
+             <th style='border: 1px solid white;font-size:18px;'><font color='#DBA901'>Cajas:</font></th>
+                <th style='border: 1px solid white;'>Caja</th>
+                <th style='border: 1px solid white;'>Monto</th>
+            </tr>";
+         while($fila = $cajaChicaA->fetch_assoc()) {
+             $tabla.="
+             <tr style='border: 1px solid white;'>
+             <td style='border: 1px solid white;'></td>
+                <td style='border: 1px solid white;'>Caja chica ADEREL</td>
+                 <td style='border: 1px solid white;'>$".$fila['montoActual']."</td>
+                
+             </tr>";
+            }
+           
+            while($fila = $cajaChicaG->fetch_assoc()) {
+                $tabla.="
+             <tr>
+             <td style='border: 1px solid white;'></td>
+                <td style='border: 1px solid white;'>Caja chica General</td>
+                 <td style='border: 1px solid white;'>$".$fila['montoActual']."</td>
+                
+            </tr> ";
+                 }  
+            $tabla .= "</table>";
+            $tabla .= "<b>
+         <table style='border: 1px solid white;'>
+            <tr style='border: 1px solid white;'>
+            <th style='border: 1px solid white; color:white;'>-------<b></th>
+                <th style='border: 1px solid white;'>Total en Cajas</th>
+                ";
+
+        while($fila = $totalCajas->fetch_assoc()) {
+            $tabla.="
+            
+            <th style='border: 1px solid white;'>$".$fila['totalCajas']."</th>
+            </tr>";
+        }
+        $tabla .= "</table><hr>";
 
         while($fila = $nuevoSaldo->fetch_assoc()) {
               $tabla .= "<br><b><font color='blue'>Nuevo Saldo:</font><font color='#BA9B1E'> $".$fila['nuevoSaldo']."</font></b>
