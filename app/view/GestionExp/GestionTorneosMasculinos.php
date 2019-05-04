@@ -1006,6 +1006,7 @@ $("#guardarTodo").click(function(){
 
 function finalistas(element) {
     var idTorneo = $(element).attr('id');
+    window.location = '?1=TorneosController&2=getPreviewClasificatoria&torneo='+idTorneo;
 
     $.ajax({
         type: 'POST',

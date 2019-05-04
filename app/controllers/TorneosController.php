@@ -551,22 +551,24 @@ class TorneosController extends ControladorBase {
     public function guardarClasificatorias()
     {
         $clasificatorias = json_decode($_REQUEST['datos'],true);
+    
         $daoClasi = new DaoClasificatoria();
 
         foreach ($clasificatorias as $clasi) {
             $clasificatoria = new Clasificatoria();
-            $clasificatoria->setPartidoN($clasi['partidoN']);
-            $clasificatoria->setEtapa($clasi['etapa']);
-            $clasificatoria->setIdEquipo1($clasi['equiposId'][0]);
-            $clasificatoria->setIdEquipo2($clasi['equiposId'][1]);
-            $clasificatoria->setIdTorneo($clasi['idTorneo']);
+            $clasificatoria->setEtapa($_REQUEST['etapa']);
+            $clasificatoria->setPartidoN($clasi['partido']);
+            $clasificatoria->setIdEquipo1($clasi['equipo1']);
+            $clasificatoria->setIdEquipo2($clasi['equipo2']);
+            $clasificatoria->setIdTorneo($_REQUEST['idTorneo']);
             $clasificatoria->setFecha($clasi['fecha']);
             $clasificatoria->setHora($clasi['hora']);
+            $clasificatoria->setCancha($clasi['cancha']);
 
             $daoClasi->registrar($clasificatoria);
         }
 
-        return 'ok';
+        echo 'ok';
     }
 
     public function guardarGanador()
@@ -578,6 +580,12 @@ class TorneosController extends ControladorBase {
         $daoClasi->guardaGanador($idClasificatoria, $idEquipo);
         
         return 'ok';
+    }
+
+    public function getPreviewClasificatoria()
+    {
+        self::loadMain();
+        require_once './app/view/GestionExp/GestionClasificatoria.php';
     }
 
 }

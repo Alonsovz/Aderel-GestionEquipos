@@ -10,6 +10,7 @@ class Clasificatoria extends ModeloBase{
     private $fecha;
     private $hora;
     private $idEquipoGanador;
+    private $cancha;
 
     public function __construct() {
 
@@ -193,6 +194,26 @@ class Clasificatoria extends ModeloBase{
     public function setIdEquipoGanador($idEquipoGanador)
     {
         $this->idEquipoGanador = $idEquipoGanador;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of cancha
+     */ 
+    public function getCancha()
+    {
+        return $this->cancha;
+    }
+
+    /**
+     * Set the value of cancha
+     *
+     * @return  self
+     */ 
+    public function setCancha($cancha)
+    {
+        $this->cancha = $cancha;
 
         return $this;
     }
