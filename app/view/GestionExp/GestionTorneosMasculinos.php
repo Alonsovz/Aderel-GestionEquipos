@@ -392,6 +392,23 @@ Cancelar
 </div>
 </div>
 
+<div class="ui  modal" id="equipoWinner">
+    <div class="header">
+        <i class="sort amount up icon"></i> Equipo Ganador
+    </div>
+
+    <div class="content">
+        <!-- PURO JQUERY -->
+    </div>
+    <div class="actions">
+        <button class="ui black deny button">
+        Cancelar
+        </button>
+        <button id="guardarTodo" class="ui violet button"><i class="save icon"></i> Guardar
+        </button>
+    </div>
+</div>
+
 
 <div class="ui tiny modal" id="eleccionRpt">
     <div class="header">
@@ -1051,4 +1068,41 @@ function finalistas(element) {
         }
     });
 }
+
+const equipoWinner = (elem)=>{
+
+    const id= $(elem).attr('id');
+    $.ajax({
+        type: 'POST',
+        url: '?1=TorneosController&2=getClasificatoria',
+        data: {idTorneo: id},
+        success(data){
+            data = JSON.parse(data);
+            
+            let html='';
+            html+=`<h3>Etapa: ${data[0].etapa}</h3>`;
+            data.forEach(element => {
+                html += `
+                <div class="field">
+                    <h4>Partido: ${element.equipo1.nombre} vs ${element.equipo2.nombre}</h4>
+                    <label>Equipo ganador</label>
+                    <select class="ui fluid dropdown" name='equipoWinner'>
+                        <option value='${element.equipo1.id}'>${element.equipo1.nombre}</option>
+                        <option value='${element.equipo2.id}'>${element.equipo2.nombre}</option>
+                    </select>
+                </div>
+                
+                <br>
+                <div class='ui divider'></div>`;
+            });
+
+            $('#equipoWinner .content').html(html);
+            $('select.dropdown').dropdown();
+            
+            $('#equipoWinner').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+
+        }
+    });    
+};
+
 </script>

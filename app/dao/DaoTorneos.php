@@ -12,46 +12,42 @@ class DaoTorneos extends DaoBase {
     {
         $_query = "select t.*, c.nombreCategoria as categoria from torneos t
         inner join categorias c on c.idCategoria  = t.idCategoria
-         where t.idEliminado = 1 and t.idTorneo>2 and t.idGenero=2";
-
+        where t.idEliminado = 1 and t.idTorneo>2 and t.idGenero=2";
         
-
-            $resultado = $this->con->ejecutar($_query);
-
-            $_json = '';
-
+        $resultado = $this->con->ejecutar($_query);
+        
+        $_json = '';
+        while($fila = $resultado->fetch_assoc()) {
+            $object = json_encode($fila);
             
-            while($fila = $resultado->fetch_assoc()) {
-                    
-                $object = json_encode($fila);
-               
-               
+            
 
-                $btnEditar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEditarT icon blue small button\" onclick=\"editarTorneo(this)\"><i class=\"edit icon\"></i> Editar</button>';
-                $btnEliminar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEliminarT icon negative small button\" onclick=\"eliminarTorneo(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
-                $btnVer = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon green small button\" onclick=\"verEquipos(this)\"><i class=\"users icon\"></i> Equipos</button>';
-                $sorteo = '<button id=\"'.$fila["idTorneo"].'\"  equipos=\"'.$fila["inscritos"]. '\" name=\"'.$fila["nombreTorneo"]. '\"  class=\"ui icon yellow small button\" onclick=\"sorteos(this)\"><i class=\"futbol icon\"></i> Sorteo</button>';
-                $btnReporte = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon purple small button\" onclick=\"reporte(this)\"><i class=\"calendar icon\"></i>Calendarización</button>';
-                $btnGestion = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon orange small button\" onclick=\"calendarizacion(this)\"><i class=\"calendar icon\"></i>Gestionar</button>';
-                $btnFinal = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon orange small button\" onclick=\"finalistas(this)\"><i class=\"calendar icon\"></i>Cuartos?</button>';
-
-                $btnEstad = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon blue small button\" onclick=\"estadisticas(this)\"><i class=\"sort amount up icon\"></i>Estadísticas</button>';
-
-                if($fila["sorteo"]==1){
-                    $acciones = ', "Acciones": "'.$btnVer.''.$sorteo .''.$btnEditar.' '.$btnEliminar.'"';
-                }else{
-                    $acciones = ', "Acciones": "'.$btnVer.''.$btnEstad.''.$btnReporte .''.$btnGestion.''.$btnFinal.'"';
-                }
-                
-
-                $object = substr_replace($object, $acciones, strlen($object) -1,0);
-    
-                $_json .= $object.',';
+            $btnEditar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEditarT icon blue small button\" onclick=\"editarTorneo(this)\"><i class=\"edit icon\"></i> Editar</button>';
+            $btnEliminar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEliminarT icon negative small button\" onclick=\"eliminarTorneo(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
+            $btnVer = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon green small button\" onclick=\"verEquipos(this)\"><i class=\"users icon\"></i> Equipos</button>';
+            $sorteo = '<button id=\"'.$fila["idTorneo"].'\"  equipos=\"'.$fila["inscritos"]. '\" name=\"'.$fila["nombreTorneo"]. '\"  class=\"ui icon yellow small button\" onclick=\"sorteos(this)\"><i class=\"futbol icon\"></i> Sorteo</button>';
+            $btnReporte = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon purple small button\" onclick=\"reporte(this)\"><i class=\"calendar icon\"></i>Calendarización</button>';
+            $btnGestion = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon orange small button\" onclick=\"calendarizacion(this)\"><i class=\"calendar icon\"></i>Gestionar</button>';
+            $btnEstad = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon blue small button\" onclick=\"estadisticas(this)\"><i class=\"sort amount up icon\"></i>Estadísticas</button>';
+            
+            $btnFinal = $this->clasificacionButton($fila["idTorneo"]);
+            
+            
+            if($fila["sorteo"]==1){
+                $acciones = ', "Acciones": "'.$btnVer.''.$sorteo .''.$btnEditar.' '.$btnEliminar.'"';
+            }else{
+                $acciones = ', "Acciones": "'.$btnVer.''.$btnEstad.''.$btnReporte .''.$btnGestion.''.$btnFinal.'"';
             }
-    
-            $_json = substr($_json,0, strlen($_json) - 1);
-    
-            echo '{"data": ['.$_json .']}';
+            
+
+            $object = substr_replace($object, $acciones, strlen($object) -1,0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        echo '{"data": ['.$_json .']}';
     }
 
     public function mostrarTorneosF()
@@ -428,11 +424,13 @@ class DaoTorneos extends DaoBase {
         return $resultado;
     }
 
-    public function posiciones(){
+    public function posiciones($idTorneo=false){
+        if($idTorneo==false)    $this->objeto->getIdTorneo();
+
         $query = "select p.*, e.nombre as nombreE, t.nombreTorneo as Torneo, (p.golesFavor - p.golesContra) as diferencia from posiciones p
         inner join equipos e on e.idEquipo = p.idEquipo 
         inner join torneos t on t.idTorneo = p.idTorneo
-        where p.idTorneo = ".$this->objeto->getIdTorneo()." ORDER BY puntaje DESC, diferencia DESC";
+        where p.idTorneo = ".$idTorneo." ORDER BY puntaje DESC, diferencia DESC";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -588,6 +586,63 @@ class DaoTorneos extends DaoBase {
 
         
 
+    }
+
+
+    private function clasificacionButton($idTorneo)
+    {
+        $_query = 'SELECT * FROM `clasificatoria` WHERE `idTorneo`='.$idTorneo;
+        $clasi = $this->con->ejecutar($_query);
+
+        if($clasi->num_rows==0){    //aun no inicia la clasificacion
+            $nEquipos = $this->posiciones($idTorneo)->num_rows;
+            
+            if($nEquipos>=10)   //cuartos de final
+                $htmlButton='<button id=\"'.$idTorneo.'\" class=\"ui  icon orange small button\" onclick=\"finalistas(this)\"><i class=\"calendar icon\"></i>Cuartos de final</button>';
+            
+            else //seminifinales
+                $htmlButton='<button id=\"'.$idTorneo.'\" class=\"ui  icon orange small button\" onclick=\"finalistas(this)\"><i class=\"calendar icon\"></i>Semifinal</button>';
+            
+        }else{
+            $etapa;
+            
+            while($fila = $clasi->fetch_assoc()) {
+                if($fila['idEquipoGanador']==null) $etapa=$fila['etapa'];
+            }
+            
+            $htmlButton='<button id=\"'.$idTorneo.'\"  class=\"ui  icon orange small button\" onclick=\'equipoWinner(this)\'><i class=\"calendar icon\"></i>Ganadores '.$etapa.'</button>';
+
+        }
+        return $htmlButton;
+    }
+
+    public function equiposClasificacion($idTorneo)
+    {
+        $_query = 'SELECT * FROM `clasificatoria` WHERE `idTorneo`='.$idTorneo;
+        $clasi = $this->con->ejecutar($_query);
+
+        $datos;
+        $cont=0;
+        while($fila = $clasi->fetch_assoc()) {
+            if($fila['idEquipoGanador']==null){
+                $etapa=$fila['etapa'];
+                $_query="SELECT (SELECT nombre from equipos where idEquipo=".$fila['idEquipo1'].") as equipo1, (SELECT nombre from equipos where idEquipo=".$fila['idEquipo2'].") as equipo2;";
+
+                $equipos=$this->con->ejecutar($_query);
+                $nomEquipos=$equipos->fetch_assoc();
+                $datos[$cont]['etapa']             = $etapa;
+                $datos[$cont]['idClasificatoria']  = $fila['idClasificatoria'];
+                $datos[$cont]['equipo1']['id']     = $fila['idEquipo1'];
+                $datos[$cont]['equipo1']['nombre'] = $nomEquipos['equipo1'];
+                $datos[$cont]['equipo2']['id']     = $fila['idEquipo2'];
+                $datos[$cont]['equipo2']['nombre'] = $nomEquipos['equipo2'];
+
+                $cont++;
+            } 
+        }
+        $datos= json_encode($datos);
+        
+        return $datos;
     }
 
 

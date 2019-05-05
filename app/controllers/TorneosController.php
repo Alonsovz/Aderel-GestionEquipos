@@ -264,9 +264,9 @@ class TorneosController extends ControladorBase {
 
         $dao = new DaoTorneos();
 
-        $dao->objeto->setIdTorneo($id);
+        // $dao->objeto->setIdTorneo($id);
 
-        $resultado =$dao->posiciones();
+        $resultado =$dao->posiciones($id);
 
         $json = '';
 
@@ -592,6 +592,13 @@ class TorneosController extends ControladorBase {
     {
         self::loadMain();
         require_once './app/view/GestionExp/GestionClasificatoriaF.php';
+    }
+
+    public function getClasificatoria()
+    {   
+        $idTorneo=$_REQUEST['idTorneo'];
+        $daoTorneo = new DaoTorneos();
+        echo $daoTorneo->equiposClasificacion($idTorneo);
     }
 
 }

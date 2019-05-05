@@ -82,7 +82,7 @@ $(document).ready(()=>{
                         idTorneo:idTorneo,
                     });
                 }
-                etapa='seminifinal';
+                etapa='semifinal';
             }
 
             // INSERTAR EN EL DOM
