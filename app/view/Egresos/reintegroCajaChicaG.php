@@ -50,6 +50,16 @@ Monto actual de la caja:  <?php if($montoActual < 10 ){ ?>
                 Completa este campo</div>
                             </div>     
                    
+                        </div>
+                        </div>
+                            <div class="field">
+                    <div class="fields">
+
+                            <div class="six wide field">
+                                <label><i class="money bill icon"></i>Chequera</label>
+                                <select name="chequera" id="chequera" class="ui dropdown">
+                                </select>
+                            </div> 
                                 <div class="six wide field">
                                 <label><i class="dollar sign icon"></i>Cantidad</label>
                                     <input type="text" name="cantidad" placeholder="$$ 00.00" id="cantidad">
@@ -234,6 +244,21 @@ $(function () {
         }
         
         });
+    });
+
+    $(function() {
+        
+
+        var option = '';
+        var chequera = '<?php echo $chequeras?>';
+
+        $.each(JSON.parse(chequera), function() {
+            option = `<option value="${this.idChequera}">Cuenta: ${this.chequera} -- N° Cuenta: ${this.numeroCuenta}</option>`;
+
+            $('#chequera').append(option);
+        });
+
+
     });
 
 </script>

@@ -43,8 +43,10 @@ class EgresosController extends ControladorBase {
         self::loadMain();
         $dao = new DaoCajaChica();
         $monto = $dao->montoEnCajaA();
-
         $montoActual = $dao->montoEnCajaActualA();
+
+        $daoE = new DaoEgresos();
+        $chequeras = $daoE->mostrarCheque();
         require_once './app/view/Egresos/reintegroCajaChicaA.php';
     }
 
@@ -55,6 +57,9 @@ class EgresosController extends ControladorBase {
         $monto = $dao->montoEnCajaG();
 
         $montoActual = $dao->montoEnCajaActualG();
+
+        $daoE = new DaoEgresos();
+        $chequeras = $daoE->mostrarCheque();
         require_once './app/view/Egresos/reintegroCajaChicaG.php';
     }
 

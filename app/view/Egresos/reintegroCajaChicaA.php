@@ -32,7 +32,7 @@ Monto actual de la caja:  <?php if($montoActual < 10 ){ ?>
             <form class="ui form" id="frmEgresos">
                 <div class="field">
                     <div class="fields">
-                            <div class="four wide field">
+                            <div class="three wide field">
                                 <label><i class="money bill alternate icon"></i>Ch NO</label>
                                 <input type="text" name="cheque" placeholder="N° Cheque" id="cheque">
                                 <div class="ui red pointing label"  id="labelCheque"
@@ -50,6 +50,18 @@ Monto actual de la caja:  <?php if($montoActual < 10 ){ ?>
                                 <div class="ui red pointing label"  id="labelConcepto"
                 style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
                 Completa este campo</div>
+                            </div> 
+
+                            </div>
+                        </div>
+
+                        <div class="field">
+                    <div class="fields">
+
+                            <div class="six wide field">
+                                <label><i class="money bill icon"></i>Chequera</label>
+                                <select name="chequera" id="chequera" class="ui dropdown">
+                                </select>
                             </div>     
                    
                                 <div class="six wide field">
@@ -234,6 +246,22 @@ $(function () {
         }
         
         });
+    });
+
+
+    $(function() {
+        
+
+        var option = '';
+        var chequera = '<?php echo $chequeras?>';
+
+        $.each(JSON.parse(chequera), function() {
+            option = `<option value="${this.idChequera}">Cuenta: ${this.chequera} -- N° Cuenta: ${this.numeroCuenta}</option>`;
+
+            $('#chequera').append(option);
+        });
+
+
     });
 
 </script>

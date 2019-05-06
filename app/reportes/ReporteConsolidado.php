@@ -102,6 +102,7 @@ class Reporte {
                 </th>
             </tr>
             </table>
+            <hr>
             </div>    
                         <h2><font color='#BA9B1E'>Egresos del mes</font> </h2>
             <table class='tabla'>

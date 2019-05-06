@@ -180,5 +180,26 @@ class CajaChicaController extends ControladorBase {
         echo $dao->cargarDatosCajaA();
     }
 
+
+    public function dineroCajaChicaG() {
+        
+
+        $dao = new DaoCajaChica();
+
+      //  $dao->objeto->setIdVale($id);
+
+        echo $dao->cajaChicaGeneral();
+    }
+
+    public function dineroCajaChicaA() {
+        
+
+        $dao = new DaoCajaChica();
+
+      //  $dao->objeto->setIdVale($id);
+
+        echo $dao->cajaChicaAderel();
+    }
+
     
  }

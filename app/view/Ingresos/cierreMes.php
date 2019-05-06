@@ -45,7 +45,8 @@
                      </div>
                      <div class="four wide field">
                                 <label><i class="box icon"></i>Caja Chica General</label>
-                                    <input type="text" id="cajaChicaG" placeholder="Dinero en Caja Chica General" name="cajaChicaG">
+                                    <input type="text" id="cajaChicaG" placeholder="Dinero en Caja Chica General" name="cajaChicaG" readonly
+                                    style="background-color:#F0ECEC; color: black; font-weight:bold;">
                                     <div class="ui red pointing label"  id="labelCaja"
                 style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
                 Completa este campo</div>
@@ -53,7 +54,8 @@
 
                       <div class="four wide field">
                                 <label><i class="box icon"></i>Caja Chica ADEREL</label>
-                                    <input type="text" id="cajaChicaA" placeholder="Dinero en Caja Chica ADEREL" name="cajaChicaA">
+                                    <input type="text" id="cajaChicaA" placeholder="Dinero en Caja Chica ADEREL" name="cajaChicaA" readonly
+                                    style="background-color:#F0ECEC; color: black; font-weight:bold;">
                                     <div class="ui red pointing label"  id="labelCaja"
                 style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
                 Completa este campo</div>
@@ -247,6 +249,46 @@ var app = new Vue({
                         console.log(err);
                     });
             },
+            cajaChicaG(){
+                
+
+                fetch("?1=CajaChicaController&2=dineroCajaChicaG")
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(dat => {
+
+                        console.log(dat);
+
+                        // $('#frmEditar input[name="idDetalle"]').val(dat.codigoUsuari);
+                        $('#frmCierre input[name="cajaChicaG"]').val(dat.montoActual);
+                        
+                      
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            },
+            cajaChicaA(){
+                
+
+                fetch("?1=CajaChicaController&2=dineroCajaChicaA")
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(dat => {
+
+                        console.log(dat);
+
+                        // $('#frmEditar input[name="idDetalle"]').val(dat.codigoUsuari);
+                        $('#frmCierre input[name="cajaChicaA"]').val(dat.montoActual);
+                        
+                      
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            },
            
             
 
@@ -282,6 +324,8 @@ var anio = $("#anio").val();
     app.saldoUltimoMes(mes,anio);
     app.ingresosMes(mes,anio);
     app.egresosMes(mes,anio);
+    app.cajaChicaG();
+    app.cajaChicaA();
 
 
     $('#frmCierre input[name="efectivo"]').mask("###0.00", {reverse: true});

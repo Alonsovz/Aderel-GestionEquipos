@@ -312,6 +312,26 @@ class DaoCajaChica extends DaoBase {
         return $mon;
     }
 
+    public function cajaChicaGeneral() {
+        $_query = "select *, format(montoActual,2) as montoActual from tipoCaja where idTipo=1";
+
+        $resultado = $this->con->ejecutar($_query);
+
+         $json = json_encode($resultado->fetch_assoc());
+ 
+         return $json;
+    }
+
+    public function cajaChicaAderel() {
+        $_query = "select *, format(montoActual,2) as montoActual from tipoCaja where idTipo=2";
+
+        $resultado = $this->con->ejecutar($_query);
+
+         $json = json_encode($resultado->fetch_assoc());
+ 
+         return $json;
+    }
+
 
     
 
