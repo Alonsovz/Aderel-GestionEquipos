@@ -76,6 +76,48 @@ class RemesasController extends ControladorBase {
         echo $dao->restarCargo();
        
     }
+
+    public function editarCargo() {
+        $dao = new DaoRemesasCargos();
+        $dao->objeto->setConcepto($_REQUEST["conceptoRe"]);
+        $dao->objeto->setIdCheque($_REQUEST["selectChequera"]);
+        $dao->objeto->setCantidad($_REQUEST["monto"]);
+        $dao->objeto->setId($_REQUEST["idDetalle"]);
+
+
+
+        echo $dao->editarCargo();
+        echo $dao->restarCargo();
+       
+    }
+
+    public function eliminarCargo() {
+        $dao = new DaoRemesasCargos();
+
+        $dao->objeto->setCantidad($_REQUEST["montoE"]);
+        $dao->objeto->setIdCheque($_REQUEST["idCheque"]);
+        $dao->objeto->setId($_REQUEST["idEliminar"]);
+
+
+
+        echo $dao->eliminarCargo();
+        echo $dao->sumarRemesa();
+       
+    }
+
+    public function eliminarRemesa() {
+        $dao = new DaoRemesasCargos();
+
+        $dao->objeto->setCantidad($_REQUEST["montoE"]);
+        $dao->objeto->setIdCheque($_REQUEST["idCheque"]);
+        $dao->objeto->setId($_REQUEST["idEliminar"]);
+
+
+
+        echo $dao->restarRemesa();
+        echo $dao->eliminarRemesa();
+       
+    }
 }
 
 

@@ -331,8 +331,7 @@ class UsuarioController extends ControladorBase {
        $daoR->objeto->setMes($mes);
        $daoR->objeto->setAnio($anio);
 
-        $totalIngresos = $daoR->totalSaldo1();
-        $SumtotalIngresos = $daoR->totalSaldo1();
+      
 
         $cuentaCorriente = $daoR->cuentasCorrientes();
         $totalCuentas = $daoR->totalCuentasCorrientes();
@@ -344,12 +343,6 @@ class UsuarioController extends ControladorBase {
         $totalCajas = $daoR->totalCajas();
 
 
-        $nuevoSaldo = $daoR->nuevoSaldo1();
-        $validar = $daoR->totalSaldo1();
-        $saldoAnterior1 = $daoR->saldoAnteriorMes1();
-        $saldoAnterior2 = $daoR->saldoAnteriorMes2();
-       
-
         $ingresosMes = $daoI->reporteIngresosPorMes();
         $totalIng = $daoI->totalMes();
 
@@ -358,9 +351,8 @@ class UsuarioController extends ControladorBase {
         $totalRetencion = $daoE->totalRetencion();
         $totalPagado = $daoE->totalPagado();
 
-        $reporte->reporteConsilidado($mes,$anio, $totalIngresos, $cuentaCorriente,$totalCuentas,$efectivo,$cajaChicaG,$cajaChicaA,$totalCajas,
-        $nuevoSaldo,$ingresosMes,$egresosMes,$validar,$saldoAnterior1,$saldoAnterior2,$totalIng,$totalCantidad,$totalRetencion,$totalPagado,
-        $SumtotalIngresos);
+        $reporte->reporteConsilidado($mes,$anio, $cuentaCorriente,$totalCuentas,$efectivo,$cajaChicaG,$cajaChicaA,$totalCajas,
+        $ingresosMes,$egresosMes,$totalIng,$totalCantidad,$totalRetencion,$totalPagado);
     }
 
 

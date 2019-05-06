@@ -113,6 +113,26 @@ class EgresosController extends ControladorBase {
         echo $dao->cargarDatosChequeras();
     }
 
+    public function cargarDatosRemesas() {
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoRemesasCargos();
+
+        $dao->objeto->setIdCheque($id);
+
+        echo $dao->cargarDatosRemesas();
+    }
+
+    public function cargarDatosCargos() {
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoRemesasCargos();
+
+        $dao->objeto->setIdCheque($id);
+
+        echo $dao->cargarDatosCargos();
+    }
+
     public function editarChequera() {
 
       //  $datos = $_REQUEST["datos"];
@@ -198,8 +218,12 @@ class EgresosController extends ControladorBase {
         $dao->objeto->setAnio($anios);
         $dao->objeto->setIdCheque($chequera);
 
+        $daoR = new DaoRemesasCargos();
+        $daoR->objeto->setCantidad($cantidadP);
+        $daoR->objeto->setIdCheque($chequera);
 
         echo $dao->registrar();
+        echo $daoR->restarCargo();
     }
 
 

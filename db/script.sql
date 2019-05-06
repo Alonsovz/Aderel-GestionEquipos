@@ -100,19 +100,6 @@ anio varchar(10),
 idEliminado int
 );
 
-
-
-
-create table remanentes(
-idRemanente int primary key unique auto_increment,
-nuevoSaldo1 double,
-nuevoSaldo2 double,
-mes varchar(10),
-anio varchar(10)
-);
-
-
-
 create table categorias(
 idCategoria int primary key auto_increment,
 nombreCategoria varchar(100),
@@ -705,8 +692,4 @@ begin
 end	
 $$
 
-
-
-select format(nuevoSaldo1,2) as saldoAnterior from remanentes 
-        where idRemanente=(select max(idRemanente) from remanentes)
 

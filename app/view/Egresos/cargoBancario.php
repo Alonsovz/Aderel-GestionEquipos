@@ -4,11 +4,10 @@
 <modal-registrar id_form="frmRegistrar" id="modalRegistrar" url="?1=RemesasController&2=registrarCargo" titulo="Registrar Cargo Bancario"
         :campos="campos_registro" tamanio='tiny'></modal-registrar>
     
-    <modal-editar id_form="frmEditar" id="modalEditar" url="?1=EgresosController&2=editarChequera" titulo="Editar chequera"
+    <modal-editar id_form="frmEditar" id="modalEditar" url="?1=RemesasController&2=editarCargo" titulo="Editar cargo bancario"
         :campos="campos_editar" tamanio='tiny'></modal-editar>
 
-    <modal-eliminar id_form="frmEliminar" id="modalEliminar" url="?1=EgresosController&2=eliminarChequera" titulo="Eliminar chequera"
-        sub_titulo="¿Está seguro de querer eliminar la chequera?" :campos="campos_eliminar" tamanio='tiny'></modal-eliminar>
+    
 
 
 <div class="ui grid">
@@ -59,6 +58,32 @@
             </div>
         </div>
     </div>
+
+
+<div id="eliminarCargo" class="ui tiny modal">
+<div class="header">
+                    Eliminar Cargo Bancario
+                </div>
+                <div class="content">
+                    <h4>¿Desea eliminar el cargo bancario?</h4>
+                    <form action="" class="ui equal width form">
+                        <div class="fields">
+                            <input type="hidden" name="idEliminar" id="idEliminar">
+                            <input type="hidden" name="montoE" id="montoE">
+                            <input type="hidden" name="idCheque" id="idCheque">
+                        </div>
+                    </form>        
+                </div>
+                <div class="actions">
+                    <button class="ui black deny button">
+                        Cancelar
+                    </button>
+                    <button class="ui right red button" id="btnEliminarC">
+                        Eliminar
+                    </button>
+                </div>
+
+</div>
 
 </div>
 
@@ -114,11 +139,7 @@ var app = new Vue({
                     type: 'hidden'
                 }
 
-            ],
-            campos_eliminar: [{
-                name: 'idEliminar',
-                type: 'hidden'
-            }]
+            ]
         },
         methods: {
             refrescarTabla() {
@@ -131,7 +152,7 @@ var app = new Vue({
             cargarDatos() {
                 var id = $("#idDetalle").val();
 
-                fetch("?1=EgresosController&2=cargarDatosChequeras&id=" + id)
+                fetch("?1=EgresosController&2=cargarDatosCargos&id=" + id)
                     .then(response => {
                         return response.json();
                     })
@@ -140,8 +161,9 @@ var app = new Vue({
                         console.log(dat);
 
                         
-                        $('#frmEditar input[name="chequera"]').val(dat.chequera);
-                        $('#frmEditar input[name="numeroCuenta"]').val(dat.numeroCuenta);
+                        $('#frmEditar input[name="conceptoRe"]').val(dat.concepto);
+                        $('#frmEditar input[name="monto"]').val(dat.monto);
+                        $('#frmEditar select[name="selectChequera"]').dropdown('set selected', dat.idChequera);
                         
                     })
                     .catch(err => {
@@ -157,11 +179,14 @@ var app = new Vue({
 <script>
 $(document).ready(function(){
     $("#frmRegistrar input[name='monto']").mask("###0.00", {reverse: true});
+    $('#frmEditar input[name="monto"]').mask("###0.00", {reverse: true});
 });
-$(document).on("click", ".btnEliminar", function () {
-            $('#modalEliminar').modal('setting', 'closable', false).modal('show');
-            $('#idEliminar').val($(this).attr("id"));
-        });
+var eliminar=(ele)=>{
+            $('#eliminarCargo').modal('setting', 'closable', false).modal('show');
+            $('#idEliminar').val($(ele).attr("id"));
+            $('#montoE').val($(ele).attr("monto"));
+            $('#idCheque').val($(ele).attr("idChequera"));
+        }
 
         var editar=(ele)=>{
             $('#modalEditar').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
@@ -171,4 +196,44 @@ $(document).on("click", ".btnEliminar", function () {
         
             app.cargarDatos();
         }
+
+
+        $("#btnEliminarC").click(function(){
+            var  idEliminar = $('#idEliminar').val();
+              var  montoE = $('#montoE').val();
+              var  idCheque = $('#idCheque').val();
+
+         
+            
+            
+            $.ajax({
+                    type: 'POST',
+                    url: '?1=RemesasController&2=eliminarCargo',
+					data: {
+                        idEliminar: idEliminar,
+                        montoE: montoE,
+                        idCheque: idCheque,
+    
+                    },
+                    success: function(r) {
+                                    if(r == 1) {
+                                        $('#eliminarCargo').modal('hide');
+                                        swal({
+                                            title: 'Cargo bancario eliminado',
+                                            text: 'Se actualizó el monto de la cuenta',
+                                            type: 'success',
+                                            showConfirmButton: false,
+                                             timer: 1700
+
+                                        }).then((result) => {
+                                            if (result.value) {
+                                                location.href = '?';
+                                            }
+                                        }); 
+                                        $('#dtCargos').DataTable().ajax.reload();
+                                        //limpiar();
+                                    } 
+                                }
+            });
+        });
 </script>
