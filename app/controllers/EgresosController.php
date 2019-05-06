@@ -208,7 +208,7 @@ class EgresosController extends ControladorBase {
         $dao = new DaoEgresos();
 
         $chequeP = $_REQUEST["cheque"];
-        //$conceptoEgresoP = $_REQUEST["conceptoEgreso"];
+        $chequera = $_REQUEST["chequera"];
         $cantidadP = $_REQUEST["cantidad"];
         //$retencionP = $_REQUEST["retencionMonto"];
        // $pagadoP = $_REQUEST["pagado"];
@@ -223,11 +223,17 @@ class EgresosController extends ControladorBase {
         $dao->objeto->setPagado($cantidadP);
         $dao->objeto->setMes($meses);
         $dao->objeto->setAnio($anios);
-
+        $dao->objeto->setIdCheque($chequera);
+        
         $daoC = new DaoCajaChica();
         $daoC->objeto->setCantidad($cantidadP);
 
+        $daoR = new DaoRemesasCargos();
+        $daoR->objeto->setCantidad($cantidadP);
+        $daoR->objeto->setIdCheque($chequera);
+
         echo $daoC->reintegroCajaG();
+        echo $daoR->restarCargo();
         echo $dao->registrar();
     }
 
@@ -236,7 +242,7 @@ class EgresosController extends ControladorBase {
         $dao = new DaoEgresos();
 
         $chequeP = $_REQUEST["cheque"];
-        //$conceptoEgresoP = $_REQUEST["conceptoEgreso"];
+        $chequera = $_REQUEST["chequera"];
         $cantidadP = $_REQUEST["cantidad"];
         //$retencionP = $_REQUEST["retencionMonto"];
        // $pagadoP = $_REQUEST["pagado"];
@@ -251,11 +257,18 @@ class EgresosController extends ControladorBase {
         $dao->objeto->setPagado($cantidadP);
         $dao->objeto->setMes($meses);
         $dao->objeto->setAnio($anios);
+        $dao->objeto->setAnio($anios);
+        $dao->objeto->setIdCheque($chequera);
 
         $daoC = new DaoCajaChica();
         $daoC->objeto->setCantidad($cantidadP);
 
+        $daoR = new DaoRemesasCargos();
+        $daoR->objeto->setCantidad($cantidadP);
+        $daoR->objeto->setIdCheque($chequera);
+
         echo $daoC->reintegroCajaA();
+        echo $daoR->restarCargo();
         echo $dao->registrar();
     }
 

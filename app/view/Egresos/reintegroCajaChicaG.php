@@ -203,12 +203,13 @@ $(function () {
               var  cantidadP = $('#cantidad').val();
               var  meses = $('#mes').val();
               var  anios = $('#anio').val();
+              var  chequera = $('#chequera').val();
             $.ajax({
                     type: 'POST',
                     url: '?1=EgresosController&2=reintegroCajaGe',
 					data: {
                         cheque: chequeP,
-                     //   conceptoEgreso: conceptoEgresoP,
+                        chequera: chequera,
                         cantidad: cantidadP,
                         //retencionMonto: retencionP,
                        // pagado: pagadoP,

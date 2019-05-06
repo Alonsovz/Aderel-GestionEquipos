@@ -25,6 +25,9 @@ $(function() {
                 },
                 {
                     "data": "pagado"
+                },
+                {
+                    "data": "chequera"
                 },  
                 {
                     "data": "fechaEgreso"
