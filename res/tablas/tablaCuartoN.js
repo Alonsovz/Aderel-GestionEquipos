@@ -37,12 +37,6 @@ $(function() {
                 },
                 {
                     "data": "telefono"
-                },
-                {
-                    "data": "fechaInscripcion"
-                },
-                {
-                    "data": "fechaFinal"
                 }
                 
             ],

@@ -93,8 +93,6 @@
                             <th style="background-color: #FACC2E; color:white;">Carnet Min.</th>
                             <th style="background-color: #FACC2E; color:white;">Encargado</th>
                             <th style="background-color: #FACC2E; color:white;">Teléfono</th>
-                            <th style="background-color: #FACC2E; color:white;">Fecha de Inscripción</th>
-                            <th style="background-color: #FACC2E; color:white;">Inscrito hasta</th>
                             
                            
                         </tr>
@@ -695,5 +693,44 @@ resultadoE();
 
 
 });
+
+var mover=(ele)=>{
+    var id = $(ele).attr("id");
+    alertify.confirm("¿Desea movel el jugador al cuarto nivel?",
+            function(){
+             $.ajax({
+                type: 'POST',
+                url: '?1=EscFutbolController&2=moverTercerN',
+                data: {
+
+                    id : id,
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        swal({
+                            title: 'Listo!',
+                            text: 'Jugador ya es parte del cuarto nivel',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            if (result.value) {
+                                location.href = '?';
+                            }
+                        }); 
+                        $('#dtTercerN').DataTable().ajax.reload();
+                        
+                    } 
+                }
+
+             });
+            },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            }); 
+}
 
 </script>

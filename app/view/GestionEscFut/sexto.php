@@ -93,8 +93,6 @@
                             <th style="background-color: #A901DB; color:white;">Carnet Min.</th>
                             <th style="background-color: #A901DB; color:white;">Encargado</th>
                             <th style="background-color: #A901DB; color:white;">Teléfono</th>
-                            <th style="background-color: #A901DB; color:white;">Fecha de Inscripción</th>
-                            <th style="background-color: #A901DB; color:white;">Inscrito hasta</th>
                             
                            
                         </tr>

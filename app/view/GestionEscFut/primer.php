@@ -92,8 +92,6 @@
                             <th style="background-color: #04B4AE; color:white;">Carnet Min.</th>
                             <th style="background-color: #04B4AE; color:white;">Encargado</th>
                             <th style="background-color: #04B4AE; color:white;">Teléfono</th>
-                            <th style="background-color: #04B4AE; color:white;">Fecha de Inscripción</th>
-                            <th style="background-color: #04B4AE; color:white;">Inscrito hasta</th>
                             
                            
                         </tr>
@@ -510,7 +508,7 @@ return false;
 
 var mover=(ele)=>{
     var id = $(ele).attr("id");
-    alertify.confirm("¿Desea movel el jugador al siguiente nivel?",
+    alertify.confirm("¿Desea movel el jugador al segundo nivel?",
             function(){
              $.ajax({
                 type: 'POST',

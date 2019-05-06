@@ -36,13 +36,7 @@ $(function() {
                     "data": "encargado"
                 },
                 {
-                    "data": "dui"
-                },
-                {
-                    "data": "fechaInscripcion"
-                },
-                {
-                    "data": "fechaFinal"
+                    "data": "telefono"
                 }
                 
             ],

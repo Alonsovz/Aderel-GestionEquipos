@@ -19,11 +19,7 @@ class DaoEscuela extends DaoBase {
 
         $_json = '';
         
-        $fechaMinima = date('Y-m-d');
-        $fechaMin = strtotime ( '-1 day' , strtotime ( $fechaMinima ) ) ;
-        $fechaMini = date ( 'Y-m-d' , $fechaMin );
-        $dia = date('d');
-        $mes = date('m');
+        
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -41,14 +37,11 @@ class DaoEscuela extends DaoBase {
             $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
             $btnInscribir = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnVencidos icon violet small button\" onclick=\"reinscribirUsuario(this)\"><i class=\"pencil alternate icon\"></i>Inscripción</button>';
 
-            if($dia>=$fila["dia"] && $fila["mes"] == $mes && $fila["edad"]>7){
-                $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
-            }
-            else if($fila["estado"]==1){
+             if($fila["estado"]==1){
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             else{
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
                 
             
@@ -124,11 +117,7 @@ class DaoEscuela extends DaoBase {
 
         $_json = '';
         
-        $fechaMinima = date('Y-m-d');
-        $fechaMin = strtotime ( '-1 day' , strtotime ( $fechaMinima ) ) ;
-        $fechaMini = date ( 'Y-m-d' , $fechaMin );
-        $dia = date('d');
-        $mes = date('m');
+        
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -146,14 +135,11 @@ class DaoEscuela extends DaoBase {
             $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
             $btnInscribir = '<button id=\"'.$fila["idUsuario"].'\" class=\"ui btnVencidos icon violet small button\" onclick=\"reinscribirUsuario(this)\"><i class=\"pencil alternate icon\"></i>Inscripción</button>';
 
-            if($dia>=$fila["dia"] && $fila["mes"] == $mes && $fila["edad"]>9){
-                $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
-            }
-            else if($fila["estado"]==1){
+            if($fila["estado"]==1){
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             else{
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
                 
             
@@ -228,11 +214,7 @@ class DaoEscuela extends DaoBase {
 
         $_json = '';
         
-        $fechaMinima = date('Y-m-d');
-        $fechaMin = strtotime ( '-1 day' , strtotime ( $fechaMinima ) ) ;
-        $fechaMini = date ( 'Y-m-d' , $fechaMin );
-        $dia = date('d');
-        $mes = date('m');
+        
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -251,14 +233,11 @@ class DaoEscuela extends DaoBase {
 
             $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
-            if($dia>=$fila["dia"] && $fila["mes"] == $mes && $fila["edad"]>11){
-                $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
-            }
-            else if($fila["estado"]==1){
+             if($fila["estado"]==1){
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             else{
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
 
@@ -331,11 +310,7 @@ class DaoEscuela extends DaoBase {
 
         $_json = '';
         
-        $fechaMinima = date('Y-m-d');
-        $fechaMin = strtotime ( '-1 day' , strtotime ( $fechaMinima ) ) ;
-        $fechaMini = date ( 'Y-m-d' , $fechaMin );
-        $dia = date('d');
-        $mes = date('m');
+        
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -354,14 +329,11 @@ class DaoEscuela extends DaoBase {
 
             $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
-            if($dia>=$fila["dia"] && $fila["mes"] == $mes && $fila["edad"]>13){
-                $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
-            }
-            else if($fila["estado"]==1){
+            if($fila["estado"]==1){
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             else{
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
 
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
@@ -435,11 +407,7 @@ class DaoEscuela extends DaoBase {
 
         $_json = '';
         
-        $fechaMinima = date('Y-m-d');
-        $fechaMin = strtotime ( '-1 day' , strtotime ( $fechaMinima ) ) ;
-        $fechaMini = date ( 'Y-m-d' , $fechaMin );
-        $dia = date('d');
-        $mes = date('m');
+       
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -457,14 +425,11 @@ class DaoEscuela extends DaoBase {
             
             $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
-            if($dia>=$fila["dia"] && $fila["mes"] == $mes && $fila["edad"]>15){
-                $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
-            }
-            else if($fila["estado"]==1){
+             if($fila["estado"]==1){
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             else{
-                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$btnMover.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
 
@@ -537,11 +502,7 @@ class DaoEscuela extends DaoBase {
 
         $_json = '';
         
-        $fechaMinima = date('Y-m-d');
-        $fechaMin = strtotime ( '-1 day' , strtotime ( $fechaMinima ) ) ;
-        $fechaMini = date ( 'Y-m-d' , $fechaMin );
-        $dia = date('d');
-        $mes = date('m');
+  
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -559,10 +520,7 @@ class DaoEscuela extends DaoBase {
             
             $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
 
-            if($dia>=$fila["dia"] && $fila["mes"] == $mes && $fila["edad"]>17){
-                $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnEditar.''.$reporte.'</center></td><td><center>'.$imagen.'</center></td></table>"';
-            }
-            else if($fila["estado"]==1)
+             if($fila["estado"]==1)
             {
                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center>'.$btnEditar.' '.$btnEliminar.''.$btnInscribir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
             }
@@ -706,6 +664,61 @@ class DaoEscuela extends DaoBase {
             return 0;
         }
     }
+
+    public function moverSegundoN() {
+        
+        $_query = "update escuelaFut set idEscuela=3 where idUsuario = ".$this->objeto->getIdJugador();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function moverTercerN() {
+        
+        $_query = "update escuelaFut set idEscuela=4 where idUsuario = ".$this->objeto->getIdJugador();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function moverCuartoN() {
+        
+        $_query = "update escuelaFut set idEscuela=5 where idUsuario = ".$this->objeto->getIdJugador();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public function moverQuintoN() {
+        
+        $_query = "update escuelaFut set idEscuela=6 where idUsuario = ".$this->objeto->getIdJugador();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+   
+
 
     public function gestionGeneral(){
 

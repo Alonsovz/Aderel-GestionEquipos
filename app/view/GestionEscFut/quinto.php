@@ -93,8 +93,6 @@
                             <th style="background-color: #86B404; color:white;">Carnet Min.</th>
                             <th style="background-color: #86B404; color:white;">Encargado</th>
                             <th style="background-color: #86B404; color:white;">Teléfono</th>
-                            <th style="background-color: #86B404; color:white;">Fecha de Inscripción</th>
-                            <th style="background-color: #86B404; color:white;">Inscrito hasta</th>
                             
                            
                         </tr>
@@ -689,5 +687,44 @@ resultadoE();
 
 });
 
+
+var mover=(ele)=>{
+    var id = $(ele).attr("id");
+    alertify.confirm("¿Desea movel el jugador al sexto nivel?",
+            function(){
+             $.ajax({
+                type: 'POST',
+                url: '?1=EscFutbolController&2=moverQuintoN',
+                data: {
+
+                    id : id,
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        swal({
+                            title: 'Listo!',
+                            text: 'Jugador ya es parte del sexto nivel',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            if (result.value) {
+                                location.href = '?';
+                            }
+                        }); 
+                        $('#dtQuintoN').DataTable().ajax.reload();
+                        
+                    } 
+                }
+
+             });
+            },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            }); 
+}
 
 </script>

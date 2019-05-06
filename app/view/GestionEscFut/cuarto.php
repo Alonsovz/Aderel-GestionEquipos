@@ -94,8 +94,6 @@
                             <th style="background-color: #CD2020; color:white;">Carnet Min.</th>
                             <th style="background-color: #CD2020; color:white;">Encargado</th>
                             <th style="background-color: #CD2020; color:white;">Teléfono</th>
-                            <th style="background-color: #CD2020; color:white;">Fecha de Inscripción</th>
-                            <th style="background-color: #CD2020; color:white;">Inscrito hasta</th>
                            
                         </tr>
                     </thead>
@@ -687,5 +685,45 @@ resultadoE();
 
 
 });
+
+
+var mover=(ele)=>{
+    var id = $(ele).attr("id");
+    alertify.confirm("¿Desea movel el jugador al quinto nivel?",
+            function(){
+             $.ajax({
+                type: 'POST',
+                url: '?1=EscFutbolController&2=moverCuartoN',
+                data: {
+
+                    id : id,
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        swal({
+                            title: 'Listo!',
+                            text: 'Jugador ya es parte del quinto nivel',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            if (result.value) {
+                                location.href = '?';
+                            }
+                        }); 
+                        $('#dtCuartoN').DataTable().ajax.reload();
+                        
+                    } 
+                }
+
+             });
+            },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            }); 
+}
 
 </script>
