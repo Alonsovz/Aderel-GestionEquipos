@@ -392,7 +392,7 @@ Cancelar
 </div>
 </div>
 
-<div class="ui  modal" id="equipoWinner">
+<form class="ui  modal" id="equipoWinner">
     <div class="header">
         <i class="sort amount up icon"></i> Equipo Ganador
     </div>
@@ -404,10 +404,10 @@ Cancelar
         <button class="ui black deny button">
         Cancelar
         </button>
-        <button id="guardarTodo" class="ui violet button"><i class="save icon"></i> Guardar
+        <button onclick='guardarGanadores()' id='btnwinner' type='button' class="ui violet button"><i class="save icon"></i> Guardar
         </button>
     </div>
-</div>
+</form>
 
 
 <div class="ui tiny modal" id="eleccionRpt">
@@ -1078,19 +1078,19 @@ const equipoWinner = (elem)=>{
         data: {idTorneo: id},
         success(data){
             data = JSON.parse(data);
-            
             let html='';
             html+=`<h3>Etapa: ${data[0].etapa}</h3>`;
-            data.forEach(element => {
+            data.forEach((element,i) => {
                 html += `
                 <div class="field">
                     <h4>Partido: ${element.equipo1.nombre} vs ${element.equipo2.nombre}</h4>
                     <label>Equipo ganador</label>
-                    <select class="ui fluid dropdown" name='equipoWinner'>
+                    <select class="ui fluid dropdown" name='equipoWinner${i+1}'>
                         <option value='${element.equipo1.id}'>${element.equipo1.nombre}</option>
                         <option value='${element.equipo2.id}'>${element.equipo2.nombre}</option>
                     </select>
                 </div>
+                <input type="hidden" name='clasificatoria${i+1}' value='${element.idClasificatoria}'>
                 
                 <br>
                 <div class='ui divider'></div>`;
@@ -1104,5 +1104,24 @@ const equipoWinner = (elem)=>{
         }
     });    
 };
+
+function guardarGanadores() {
+    const datos= $('#equipoWinner').serializeArray();
+    
+    for (let index = 0; index < datos.length; index+=2) {
+        const equipoId = datos[index][`value`];
+        const clasificatoriaId = datos[index+1][`value`];
+        
+        $.ajax({
+            type: 'POST',
+            url: '?1=TorneosController&2=guardarGanador',
+            data: {idClasificatoria: clasificatoriaId, idEquipo: equipoId},
+            success(data){
+                //  agrar contador de oks
+            }
+        });
+    }
+    window.location = `?1=TorneosController&2=gestionM`;
+}
 
 </script>
