@@ -12,8 +12,9 @@ class Reporte {
     
 
 
-    public function reporteConsilidado($mes,$anio, $totalIngresos, $cuentaCorriente,$totalCuentas,$efectivo,$cajaChicaA,$cajaChicaG,$totalCajas,
-    $nuevoSaldo,$ingresosMes,$egresosMes,$validar,$saldoAnterior,$totalIng,$totalCantidad,$totalRetencion,$totalPagado)
+    public function reporteConsilidado($mes,$anio, $totalIngresos, $cuentaCorriente,$totalCuentas,$efectivo,$cajaChicaG,$cajaChicaA,$totalCajas,
+    $nuevoSaldo,$ingresosMes,$egresosMes,$validar,$saldoAnterior1,$saldoAnterior2,$totalIng,$totalCantidad,$totalRetencion,$totalPagado,
+    $SumtotalIngresos)
     {   
         $nombreMes ="";
         if($mes == "01"){
@@ -54,6 +55,16 @@ class Reporte {
         }
         $validacion = $validar->fetch_assoc();
         $validacion = $validacion['totalSaldoIngresos'];
+
+        $totalSaldo = $SumtotalIngresos->fetch_assoc();
+        $totalSaldo = $totalSaldo['totalSaldoIngresos'];
+
+        $totalSaldoA1 = $saldoAnterior1->fetch_assoc();
+        $totalSaldoA1 = $totalSaldoA1['saldoAnterior'];
+
+        $totalSaldoA2 = $saldoAnterior2->fetch_assoc();
+        $totalSaldoA2 = $totalSaldoA2['saldoAnterior'];
+
         if($validar=="")
         {
             $tabla = '<h1>El rango de fechas seleccionado no contiene ningún registro</h1>';
@@ -112,6 +123,7 @@ class Reporte {
                 <th bgcolor='#F3F781'>Cantidad</th>
                 <th bgcolor='#F3F781'>Retención</th>
                 <th bgcolor='#F3F781'>Pagado</th>
+                <th bgcolor='#F3F781'>Cuenta</th>
                 <th bgcolor='#F3F781'>Fecha</th>
             </tr>
 
@@ -121,10 +133,20 @@ class Reporte {
             $tabla.="<tr>
                         <td>".$fila['chNo']."</td>
                         <td>".$fila['conceptoEgreso']."</td>
-                        <td>".$fila['cantidad']."</td>
-                        <td>".$fila['retencion']."</td>
-                        <td>".$fila['pagado']."</td>
-                        <td>".$fila['fechaEgreso']."</td>
+                        <td>$ ".$fila['cantidad']."</td>
+                        <td>$ ".$fila['retencion']."</td>
+                        <td>$ ".$fila['pagado']."</td>";
+                        if($fila['idChequera'] == 1){
+                            $tabla .= "<td style='background-color:#F5A9A9;'>".$fila['chequera']."</td>";
+                        }else 
+                        if($fila['idChequera'] == 2){
+                            $tabla .= "<td style='background-color:#BCF5A9;'>".$fila['chequera']."</td>";
+                        }
+                        else if($fila['idChequera'] == 3){
+                            $tabla .= "<td style='background-color:#F5DA81;'>".$fila['chequera']."</td>";
+                        }
+
+                        $tabla .= "<td>".$fila['fechaEgreso']."</td>
                      </tr>";
         }
 
@@ -157,7 +179,7 @@ class Reporte {
         while($fila = $ingresosMes->fetch_assoc()) {
             $tabla.="<tr>
             <td>".$fila['title']."</td>
-            <td>".$fila['cantidad']."</td>
+            <td> $".$fila['cantidad']."</td>
             <td>".$fila['start']."</td>
            
          </tr>";
@@ -168,16 +190,17 @@ class Reporte {
             $tabla .= "<p align='right'><b><font color='#172961'>Total de Ingresos:</font> $".$fila['total']."</b></p><hr>";
     
             }
-            $tabla .= "<h2><font color='#BA9B1E'>Totales del Mes:</font></h2>";
-        while($fila = $saldoAnterior->fetch_assoc()) {
-            $tabla .= "<b><font color='#172961'>Saldo Anterior:</font> $".$fila['nuevoSaldo']."</b>";
-    
-            }
-        while($fila = $totalIngresos->fetch_assoc()) {
-        $tabla .= "<br><b><font color='#172961'>Suma de Ingresos más saldo de mes anterior:</font> $".$fila['totalSaldoIngresos']."</b>";
 
-        }
-        $tabla .= " <hr><table style='border: 1px solid white;'>
+            $tabla .= "<hr><h2><font color='#BA9B1E'>Totales del Mes:</font></h2>";
+           
+               $tabla .= "<b><font color='#172961'>Saldo Anterior cuenta 1:</font> $".$totalSaldoA1."</b><br>";
+               $tabla .= "<b><font color='#172961'>Saldo Anterior cuenta 2:</font> $".$totalSaldoA2."</b>";
+       
+               
+           
+           $tabla .= "<br><b><font color='#172961'>Dinero en efectivo:</font> $".$efectivo."</b><br><hr>";
+           
+        $tabla .= " <table style='border: 1px solid white;'>
         <tr style='border: 1px solid white;'>
         <th style='border: 1px solid white; font-size:18px;'><font color='#DBA901'>Cuentas de Banco:</font></th>
        
@@ -200,7 +223,7 @@ class Reporte {
         <table style='border: 1px solid white;'>
             <tr style='border: 1px solid white;'>
             <hr>
-                <th style='border: 1px solid white;color:white;'>-----------------------<b></th>
+                <th style='border: 1px solid white;color:white;'>------------<b></th>
                 <th style='border: 1px solid white;'>Total de dinero en cuentas</th>
                 ";
 
@@ -211,9 +234,9 @@ class Reporte {
             </tr>";
         }
         $tabla .= "</table><hr>";
-         while($fila = $efectivo->fetch_assoc()) {
-                $tabla .= "<br><b><font color='#172961'>Efectivo:</font> $".$fila['efectivo']."</b>";
-             }  
+         
+               
+              
              $tabla .= "<table style='border: 1px solid white;'>
              <tr style='border: 1px solid white;'>
              <th style='border: 1px solid white;font-size:18px;'><font color='#DBA901'>Cajas:</font></th>
@@ -260,6 +283,9 @@ class Reporte {
               ";
            } 
            
+          
+            
+           
            $tabla .= "<br><br><br><br><table>
                     <tr>
                     <th style='border: 1px solid black;border-left:0; border-bottom:0;border-top:0;'>F._______________________________<br>
@@ -277,7 +303,7 @@ class Reporte {
         $html = $tabla;
 
 
-        $pdf = new \Mpdf\Mpdf();
+        $pdf = new \Mpdf\Mpdf(['orientation' => 'L']);
         $pdf->WriteHTML($html);
         $pdf->Output();
 

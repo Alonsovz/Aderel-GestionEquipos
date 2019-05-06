@@ -23,8 +23,8 @@ class DaoRemanente extends DaoBase {
     }
 
 
-    public function totalSaldo() {
-        $query = "select format(( (select nuevoSaldo from remanentes where idRemanente=(select max(idRemanente) from remanentes))
+    public function totalSaldo1() {
+        $query = "select format(( (select nuevoSaldo1 from remanentes where idRemanente=(select max(idRemanente) from remanentes))
         + ( select sum(cantidad) as total from ingresos where mes='{$this->objeto->getMes()}'
          and anio= '{$this->objeto->getAnio()}'  and idEliminado=1)),2)
         as totalSaldoIngresos";
@@ -32,6 +32,42 @@ class DaoRemanente extends DaoBase {
         $resultado = $this->con->ejecutar($query);
 
         return $resultado;
+    }
+
+
+   
+
+    public function nuevoSaldo1() {
+        $query = "select format(nuevoSaldo1,2) as nuevoSaldo from remanentes
+         where idRemanente=(select max(idRemanente) from remanentes)
+         and mes='{$this->objeto->getMes()}' and anio='{$this->objeto->getAnio()}'";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function saldoAnteriorMes1() {
+        $_query = "select format(nuevoSaldo1,2) as saldoAnterior from remanentes 
+        where idRemanente=(select max(idRemanente) from remanentes) ";
+
+        $resultado = $this->con->ejecutar($_query);
+
+        return $resultado;
+        
+    }
+
+    
+
+    public function saldoAnteriorMes2() {
+        $_query = "select format(nuevoSaldo2,2) as saldoAnterior from remanentes where 
+        idRemanente=(select max(idRemanente) from remanentes);";
+
+
+        $resultado = $this->con->ejecutar($_query);
+        
+        return $resultado;
+        
     }
 
 
@@ -51,15 +87,7 @@ class DaoRemanente extends DaoBase {
         return $resultado;
     }
 
-    public function efectivo() {
-        $query = "select format(efectivo,2) as efectivo from remanentes 
-        where idRemanente=(select max(idRemanente) from remanentes)
-        and mes='{$this->objeto->getMes()}' and anio='{$this->objeto->getAnio()}'";
-
-        $resultado = $this->con->ejecutar($query);
-
-        return $resultado;
-    }
+    
 
     public function cajaChicaGeneral() {
         $query = "select *, format(montoActual,2) as montoActual from tipoCaja where idTipo=1";
@@ -83,39 +111,6 @@ class DaoRemanente extends DaoBase {
         $resultado = $this->con->ejecutar($query);
 
         return $resultado;
-    }
-
-    public function nuevoSaldo() {
-        $query = "select format(nuevoSaldo,2) as nuevoSaldo from remanentes
-         where idRemanente=(select max(idRemanente) from remanentes)
-         and mes='{$this->objeto->getMes()}' and anio='{$this->objeto->getAnio()}'";
-
-        $resultado = $this->con->ejecutar($query);
-
-        return $resultado;
-    }
-
-    public function saldoAnterior() {
-        $_query = "select format(nuevoSaldo,2) as nuevoSaldo from remanentes 
-        where idRemanente=(select max(idRemanente) from remanentes) ";
-
-        $resultado = $this->con->ejecutar($_query);
-
-        $json = json_encode($resultado->fetch_assoc());
-
-        return $json;
-        
-    }
-
-    public function saldoAnteriorMes() {
-        $_query = "select format(nuevoSaldo,2) as nuevoSaldo from remanentes where 
-        idRemanente=(select max(idRemanente) from remanentes);";
-
-
-        $resultado = $this->con->ejecutar($_query);
-        
-        return $resultado;
-        
     }
 
 

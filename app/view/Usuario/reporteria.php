@@ -417,6 +417,37 @@
     </div>
 </div>
 
+
+<div class="ui tiny modal" id="efectivoModal">
+    <div class="header">
+    <i class="file icon"></i>Reporte Consolidado
+    </div>
+
+    <div class="content" >
+        <form class="ui form">
+            <div class="field">
+                <div class="fields">
+                        <div class="five wide field">
+                            <label><i class="dollar icon"></i>Dinero en efectivo:</label>
+                        </div>
+                        <div class="eleven wide field">
+                            <input type="text" name="txtEfectivo" id="txtEfectivo">
+                        </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="actions">
+        <button class="ui red deny button">
+        Cancelar
+        </button>
+        <button class="ui blue button" id="verReporteC">
+        Reporte
+        </button>
+    </div>
+</div>
+
 <script>
 $(document).ready(function(){
     var d = new Date();
@@ -437,13 +468,22 @@ var n = month[d.getMonth()];
 
 
  $("#mes").val(n);
+
+ $("#txtEfectivo").mask("###0.00", {reverse: true});
 });
 
 
 $(document).on("click", "#btnReporteC", function () {
-        var mes = $('#mes').val();
+
+    $('#efectivoModal').modal('setting', 'autofocus', true).modal('setting', 'closable', false).modal('show');
+      
+});
+
+$(document).on("click", "#verReporteC", function () {
+    var mes = $('#mes').val();
         var anio = $('#anio').val();
-        window.open('?1=UsuarioController&2=reporteConsolidado&mes='+mes+'&anio='+anio,'_blank');
+        var efectivo = $('#txtEfectivo').val();
+        window.open('?1=UsuarioController&2=reporteConsolidado&mes='+mes+'&anio='+anio+'&efectivo='+efectivo,'_blank');
         return false;
 });
 

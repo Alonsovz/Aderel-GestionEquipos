@@ -10,7 +10,7 @@ class EquipoController extends ControladorBase {
         $categoriasCMB = $daoC->mostrarCategoriasCmb();
 
         $daoT = new DaoTorneos();
-        $torneos = $daoT->cargarTorneos();
+        $torneos = $daoT->cargarTorneosM();
         require_once './app/view/GestionExp/GestionEquipos.php';
     }
 

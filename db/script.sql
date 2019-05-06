@@ -105,12 +105,8 @@ idEliminado int
 
 create table remanentes(
 idRemanente int primary key unique auto_increment,
-saldoAnterior double,
-totalSaldoIngresos double,
-cuentaCorriente double,
-efectivo double,
-cajaChica double,
-nuevoSaldo double,
+nuevoSaldo1 double,
+nuevoSaldo2 double,
 mes varchar(10),
 anio varchar(10)
 );
@@ -250,6 +246,21 @@ CREATE TABLE castigos (
   observacion varchar(500),
   partidos int
 );
+
+CREATE TABLE clasificatoria (
+  idClasificatoria int primary key auto_increment,
+  partidoN int(11) NOT NULL,
+  etapa varchar(25) NOT NULL,
+  idEquipo1 int(11) NOT NULL,
+  idEquipo2 int(11) NOT NULL,
+  idTorneo int(11) NOT NULL,
+  fecha varchar(45) DEFAULT NULL,
+  hora varchar(45) DEFAULT NULL,
+  idEquipoGanador int(11) DEFAULT NULL,
+  cancha int(11) DEFAULT NULL
+);
+
+--
 
  
 create table gimnasio(
@@ -410,7 +421,7 @@ insert into remesas values(null, 'Abono a cuenta' , 200 , curdate(),1,1);
 insert into egresos values(null,4089,'Pago de impuestos de la renta',1000,160,840,'2019-05-01','05','2019',1,1);
 insert into egresos values(null,4090,'Pago de recibos',1000,160,840,'2019-05-02','05','2019',1,1);
 
-insert into remanentes values(null,5000,10000,4000,500,300,7000,'05','2019');
+insert into remanentes values(null,4000,7000,'05','2019');
 
 
 insert into categorias values (null, 'Sin Categoria',0,1,1,1,1);
@@ -696,5 +707,6 @@ $$
 
 
 
-
+select format(nuevoSaldo1,2) as saldoAnterior from remanentes 
+        where idRemanente=(select max(idRemanente) from remanentes)
 
