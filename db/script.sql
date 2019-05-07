@@ -166,6 +166,18 @@ CREATE TABLE posiciones (
   partidosGanados int
 );
 
+create table historialE(
+idHistorial int primary key auto_increment,
+equipoLocal varchar(50),
+golesLocal int,
+equipoVisitante varchar(50),
+golesVisitante int,
+vuelta int,
+jornada int,
+fecha date,
+idTorneo int
+);
+
 
 create table inscripcion(
 idInscripcion int primary key auto_increment,
@@ -684,5 +696,6 @@ begin
 end	
 $$
 
-
+                
+                
                 
