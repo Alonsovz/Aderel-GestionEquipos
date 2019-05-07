@@ -474,6 +474,8 @@ class TorneosController extends ControladorBase {
         $hora = $_REQUEST["hora"];
         $fecha = $_REQUEST["fecha"];
         $partido = $_REQUEST["partido"];
+        $jornada = $_REQUEST["jornada"];
+        $vuelta = $_REQUEST["vuelta"];
 
         $dao = new DaoTorneos();
 
@@ -504,9 +506,12 @@ class TorneosController extends ControladorBase {
             $dao->objeto->setHora($hora);
             $dao->objeto->setFecha($fecha);
             $dao->objeto->setIdPartido($partido);
+            $dao->objeto->setJornada($jornada);
+            $dao->objeto->setVuelta($vuelta);
 
 
             echo $dao->guardarDatos();
+            echo $dao->guardarHistorial();
 
         }
         else if($golesLocal < $golesVisita){
@@ -536,8 +541,12 @@ class TorneosController extends ControladorBase {
             $dao->objeto->setHora($hora);
             $dao->objeto->setFecha($fecha);
             $dao->objeto->setIdPartido($partido);
+            $dao->objeto->setJornada($jornada);
+            $dao->objeto->setVuelta($vuelta);
+
 
             echo $dao->guardarDatos();
+            echo $dao->guardarHistorial();
 
         }
         else if($golesLocal == $golesVisita){
@@ -567,9 +576,12 @@ class TorneosController extends ControladorBase {
             $dao->objeto->setHora($hora);
             $dao->objeto->setFecha($fecha);
             $dao->objeto->setIdPartido($partido);
+            $dao->objeto->setJornada($jornada);
+            $dao->objeto->setVuelta($vuelta);
 
 
             echo $dao->guardarDatos();
+            echo $dao->guardarHistorial();
 
            
 

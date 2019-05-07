@@ -551,6 +551,18 @@ class DaoTorneos extends DaoBase {
 
         return $resultado;
     }
+
+    public function guardarHistorial(){
+        $query="Insert into historialE values (null,'".$this->objeto->getEquipo1()."','".$this->objeto->getGoles1()."',
+        '".$this->objeto->getEquipo2()."','".$this->objeto->getGoles2()."','".$this->objeto->getVuelta()."',
+        '".$this->objeto->getJornada()."','".$this->objeto->getFecha()."','".$this->objeto->getIdTorneo()."')";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    
     
 
     public function registrarAmarilla(){

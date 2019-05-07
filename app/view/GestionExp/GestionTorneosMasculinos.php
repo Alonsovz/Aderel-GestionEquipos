@@ -844,6 +844,12 @@ var appE = new Vue({
                     });
                 }
 
+                },
+                historial(idTorneo, nombre){
+                    var idTorneo = idTorneo;
+                    var nombre = nombre;
+            window.open('?1=EquipoController&2=historial&idTorneo='+idTorneo+'&nombre='+nombre,'_blank');
+            return false;
                 }
 
 
@@ -1007,6 +1013,8 @@ $("#guardarTodo").click(function(){
                var hora = $('#hora').val();
                var fecha = $('#fecha').val();
                var partido = $('#idPartido').val();
+               var vuelta = $('#vuelta').val();
+               var jornada = $('#jornada').val();
 
          
         
@@ -1022,9 +1030,11 @@ $("#guardarTodo").click(function(){
                     hora : hora,
                     fecha : fecha,
                     partido : partido,
+                    jornada : jornada,
+                    vuelta : vuelta,
                 },
                 success: function(r) {
-                    if(r == 11) {
+                    if(r == 111) {
                         $('#modalResultados').modal('hide');
                         swal({
                             title: 'Listo!',
