@@ -172,6 +172,7 @@ class JugadoresController extends ControladorBase {
         $dao->objeto->setIdTorneo($idTorneo);
 
         echo $dao->inscribirJugadorM();
+        echo $dao->registrarAmarilla();
     }
 
     public function getDui()
@@ -199,6 +200,7 @@ class JugadoresController extends ControladorBase {
         $daoE = new DaoEquipos();
         $daoE->objeto->setIdEquipo($idEquipo);
         echo $daoE->actualizarCupos();
+        echo $dao->registrarAmarilla();
     }
 
 

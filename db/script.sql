@@ -217,6 +217,7 @@ fechaInscripcion date
 );
 
 
+
 CREATE TABLE goleadores (
   idGoleador int primary key auto_increment,
   idJugador int,
@@ -225,14 +226,23 @@ CREATE TABLE goleadores (
 );
 
 
-CREATE TABLE castigos (
+CREATE TABLE tarjetasAmarilla (
+  idTarejeta int primary key auto_increment,
+  idJugador int,
+  idTorneo int,
+  tarjetas int
+);
+
+CREATE TABLE expulsiones (
   idCastigo int primary key auto_increment,
   idJugador int,
   idTorneo int,
-  tarjeta varchar(30),
-  observacion varchar(500),
-  partidos int
+  tarjeta varchar(20),
+  partidos int,
+  observaciones varchar(500),
+  estado int
 );
+
 
 CREATE TABLE clasificatoria (
   idClasificatoria int primary key auto_increment,
@@ -382,8 +392,6 @@ alter table posiciones add constraint fk_posiciones_torneos foreign key (idTorne
 alter table goleadores add constraint fk_goleadores_jugadores foreign key (idJugador) references jugadores(idJugador);
 alter table goleadores add constraint fk_goleadores_torneos foreign key (idTorneo) references torneos(idTorneo);
 
-	alter table castigos add constraint fk_castigos_jugadores foreign key (idJugador) references jugadores(idJugador);
-	alter table castigos add constraint fk_castigos_torneos foreign key (idTorneo) references torneos(idTorneo);
 
 
 
@@ -408,7 +416,7 @@ insert into remesas values(null, 'Abono a cuenta' , 200 , curdate(),1,1);
 insert into egresos values(null,4089,'Pago de impuestos de la renta',1000,160,840,'2019-05-01','05','2019',1,1);
 insert into egresos values(null,4090,'Pago de recibos',1000,160,840,'2019-05-02','05','2019',1,1);
 
-insert into remanentes values(null,4000,7000,'05','2019');
+
 
 
 insert into categorias values (null, 'Sin Categoria',0,1,1,1,1);
@@ -650,22 +658,6 @@ end $$
 -- Remanentes
 -- ===========================================================================
 
-delimiter $$
-create procedure registrarRemanente(
-	in total double,
-    in saldo double,
-    in cuenta double,
-    in efectivo double,
-    in caja double,
-    in nuevo double,
-    in mes varchar(10),
-    in anio varchar(10)
-)
-begin
-	insert into remanentes values (null, saldo,total, cuenta, efectivo, caja, nuevo, mes, anio);
-end
-$$
-
 -- ===========================================================================
 -- Procedimientos Egresos
 -- ===========================================================================
@@ -693,3 +685,4 @@ end
 $$
 
 
+                

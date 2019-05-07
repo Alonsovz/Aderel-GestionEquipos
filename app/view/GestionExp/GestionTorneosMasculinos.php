@@ -17,6 +17,7 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
 <modal-posiciones :detalles="detalles"></modal-posiciones>
 <modal-goleo :detalles="detalles"></modal-goleo>
 <modal-castigos :detalles="detalles"></modal-castigos>
+<modal-suspendidos :detalles="detalles"></modal-suspendidos>
 
     <div class="ui grid">
             <div class="row">
@@ -301,7 +302,7 @@ Categorías de Torneo
                              </select>
                             </td>
                             <td>  
-                            <select class="ui search dropdown"  name="tarjeta" id="tarjeta" v-model="castigo.tarjeta">
+                            <select class="ui  dropdown"  name="tarjeta" id="tarjeta" v-model="castigo.tarjeta">
                             <option value="Tarjeta Amarilla" selected>Tarjeta Amarilla</option>
                             <option value="Doble Amarilla">Doble Amarilla</option>
                             <option value="Roja Directa">Roja  Directa</option>
@@ -365,20 +366,26 @@ Cancelar
 <input type="hidden" id="idTorneoEs">
     <div class="row tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
 
-    <button class="ui red inverted segment"  style="width: 30%; text-align:center;" id="verPosiciones">
+    <button class="ui blue inverted segment"  style="width: 23%; text-align:center;" id="verPosiciones">
      Posiciones
      <div class="ui divider"></div>
      <i class="futbol icon"></i> <i class="calendar icon"></i>
     </button>
 
-    <button class="ui orange inverted segment" id="tablaGol" style="width: 30%; text-align:center;">
+    <button class="ui orange inverted segment" id="tablaGol" style="width: 23%; text-align:center;">
     Goleadores
     <div class="ui divider"></div>
     <i class="futbol icon"></i> <i class="male icon"></i>
     </button>
 
-    <button class="ui yellow inverted segment" id="tablaCast" style="width: 30%; text-align:center;">
-     Jugadores Castigados
+    <button class="ui yellow inverted segment" id="tablaSus" style="width: 23%; text-align:center;">
+     Jugadores suspendidos
+     <div class="ui divider"></div>
+     <i class="futbol icon"></i> <i class="trash icon"></i>
+    </button>
+
+    <button class="ui red inverted segment" id="tablaExp" style="width: 23%; text-align:center;">
+     Jugadores expulsados
      <div class="ui divider"></div>
      <i class="futbol icon"></i> <i class="trash icon"></i>
     </button>
@@ -499,6 +506,7 @@ Cancelar
 <script src="./res/js/modalPosicionesTorneo.js"></script>
 <script src="./res/js/modalGoleadores.js"></script>
 <script src="./res/js/modalCastigos.js"></script>
+<script src="./res/js/modalSuspendidos.js"></script>
 <script>
 var appE = new Vue({
         el: "#appE",
@@ -511,7 +519,7 @@ var appE = new Vue({
                
             }],
             castigos : [{
-                goleadores: '2',
+                goleadores: '3',
                 tarjeta: 'Tarjeta Amarilla',
                 observacion: '',
 
@@ -650,7 +658,7 @@ var appE = new Vue({
                 $('#frmDetalles').addClass('loading');
                 $.ajax({
                 type: 'POST',
-                url: '?1=TorneosController&2=amonestados',
+                url: '?1=TorneosController&2=expulsados',
                 data: {
                 id: id
                 },
@@ -661,6 +669,25 @@ var appE = new Vue({
                 });
 
             },
+
+            susp(id) {
+
+                this.idTorneo = parseInt(id);
+
+                $('#frmDetalles').addClass('loading');
+                $.ajax({
+                type: 'POST',
+                url: '?1=TorneosController&2=amonestados',
+                data: {
+                id: id
+                },
+                success: function (data) {
+                appE.detalles = JSON.parse(data);
+                $('#frmDetalles').removeClass('loading');
+                }
+                });
+
+                },
             
             cerrarModal() {
                 this.detalles = [];
@@ -738,30 +765,23 @@ var appE = new Vue({
             },
             agregarDetalle() {
                 this.envios.push({
-                    goleadores: '2',
+                    goleadores: '3',
                     goles: '',
             
                 });
-            $('.ui.search.dropdown.selection').dropdown();
-          //  $('.ui.search.dropdown.selection').addClass('ui search selection dropdown');
-            $('.ui.search.dropdown.selection').css('max-width', '100%');
-            $('.ui.search.dropdown.selection').css('min-width', '100%');
-            $('.ui.search.dropdown.selection').css('width', '100%');
+            
             },
             eliminarDetalleC(index) {
                 this.castigos.splice(index, 1);
             },
             agregarDetalleC() {
                 this.castigos.push({
-                    goleadores: '2',
+                    goleadores: '3',
                 tarjeta: 'Tarjeta Amarilla',
                 observacion: '',
             
                 });
-            $('.ui.search.dropdown.selection').dropdown();
-            $('.ui.search.dropdown.selection').css('max-width', '100%');
-            $('.ui.search.dropdown.selection').css('min-width', '100%');
-            $('.ui.search.dropdown.selection').css('width', '100%');
+            
             },
             guardarGoleador() {
                 var idTor = $("#idTo").val();
@@ -781,7 +801,7 @@ var appE = new Vue({
                             if (r == 1) {
                                 
                                         appE.envios = [{
-                                            goleadores: '2',
+                                            goleadores: '3',
                                             goles: ''
                                         }];
 
@@ -812,7 +832,7 @@ var appE = new Vue({
                             if (r == 1) {
                                 
                                         appE.castigos = [{
-                                            goleadores: '2',
+                                            goleadores: '3',
                                             tarjeta: 'Tarjeta Amarilla',
                                             observacion: '',
                                         }];
@@ -824,6 +844,12 @@ var appE = new Vue({
                     });
                 }
 
+                },
+                historial(idTorneo, nombre){
+                    var idTorneo = idTorneo;
+                    var nombre = nombre;
+            window.open('?1=EquipoController&2=historial&idTorneo='+idTorneo+'&nombre='+nombre,'_blank');
+            return false;
                 }
 
 
@@ -902,10 +928,17 @@ var calendarizacion=(ele)=>{
      .modal('show');
   });
 
-  $("#tablaCast").click(function(){
+  $("#tablaExp").click(function(){
     appE.suspendidos($("#idTorneoEs").val());
     
     $('#modalCastigos').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+  });
+
+  $("#tablaSus").click(function(){
+    appE.susp($("#idTorneoEs").val());
+    
+    $('#modalSuspendidos').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
      .modal('show');
   });
 
@@ -980,6 +1013,8 @@ $("#guardarTodo").click(function(){
                var hora = $('#hora').val();
                var fecha = $('#fecha').val();
                var partido = $('#idPartido').val();
+               var vuelta = $('#vuelta').val();
+               var jornada = $('#jornada').val();
 
          
         
@@ -995,9 +1030,11 @@ $("#guardarTodo").click(function(){
                     hora : hora,
                     fecha : fecha,
                     partido : partido,
+                    jornada : jornada,
+                    vuelta : vuelta,
                 },
                 success: function(r) {
-                    if(r == 11) {
+                    if(r == 111) {
                         $('#modalResultados').modal('hide');
                         swal({
                             title: 'Listo!',

@@ -18,17 +18,24 @@ Vue.component('modal-detalles', {
                 <table v-if="detalles" class="ui selectable very compact single line table">
                     <thead>
                         <tr>
-                        
+                        <th style="background-color: white;"></th>
                             <th style="background-color: #BEF781;">Nombre del Equipo</th>
                             <th style="background-color: #BEF781;">Encargado</th>
                             <th style="background-color: #BEF781;">Encargado Auxiliar</th>
+                            <th style="background-color: #BEF781;">Historial</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="detalle in detalles" :codigo-torneo="detalle.idTorneo">
-                                <td>{{detalle.nombre}}</td>
+                        <td style="background-color: white;color:white;">{{detalle.idTorneo}}</td>      
+                        <td>{{detalle.nombre}}</td>
                                 <td>{{detalle.encargado}}</td>
                                 <td>{{detalle.encargadoAux}}</td>
+                                <td>
+                                <button class="ui blue button" @click="$parent.historial(detalle.idTorneo, detalle.nombre)">
+                                <i class="clock icon"></i><i class="file icon"></i>
+                                </button>
+                                </td>
                                 
                         </tr>
                     </tbody>

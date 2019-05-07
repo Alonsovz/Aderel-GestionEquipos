@@ -349,6 +349,28 @@ class TorneosController extends ControladorBase {
         echo'['.$json.']';
     }
 
+    public function expulsados(){
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoTorneos();
+
+        $dao->objeto->setIdTorneo($id);
+
+        $resultado =$dao->castigos();
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $json .= json_encode($fila).',';
+
+        }
+
+        $json = substr($json, 0, strlen($json) - 1);
+
+        echo'['.$json.']';
+    }
+
     public function amonestados(){
         $id = $_REQUEST["id"];
 
@@ -356,7 +378,7 @@ class TorneosController extends ControladorBase {
 
         $dao->objeto->setIdTorneo($id);
 
-        $resultado =$dao->suspendidos();
+        $resultado =$dao->amonestados();
 
         $json = '';
 
@@ -407,25 +429,32 @@ class TorneosController extends ControladorBase {
         $dao = new DaoTorneos();
 
         foreach($detalles as $detalle) {
-            $dao->objeto->setIdJugador($detalle->goleadores);
-            $dao->objeto->setTarjeta($detalle->tarjeta);
-            $dao->objeto->setObservacion($detalle->observacion);
+            
 
-            if($detalle->tarjeta=="Doble Amarilla"){
+            if($detalle->tarjeta=="Tarjeta Amarilla"){
+                $dao->objeto->setIdTorneo($idTor);
+                $dao->objeto->setIdJugador($detalle->goleadores);
+                $dao->updateAmarilla();
+
+            }else if($detalle->tarjeta=="Doble Amarilla"){
+                $dao->objeto->setIdJugador($detalle->goleadores);
+                $dao->objeto->setTarjeta($detalle->tarjeta);
+                $dao->objeto->setObservacion($detalle->observacion);
+                $dao->objeto->setIdTorneo($idTor);
                 $dao->objeto->setPartidos(1);
-            }else if($detalle->tarjeta=="Roja Directa"){
-                $dao->objeto->setPartidos(2);
+                $dao->registrarDirecto();
+            
+                
             }else{
-                $dao->objeto->setPartidos(0);
+                $dao->objeto->setIdJugador($detalle->goleadores);
+                $dao->objeto->setTarjeta($detalle->tarjeta);
+                $dao->objeto->setObservacion($detalle->observacion);
+                $dao->objeto->setIdTorneo($idTor);
+                $dao->objeto->setPartidos(2);
+                $dao->registrarDirecto();
+
             }
 
-           $dao->objeto->setIdTorneo($idTor);
-
-            if($dao->registrarCastigos()) {
-                $contador++;
-            } else {
-                echo 'nell';
-            }
         }
 
         if($contador == count($detalles)) {
@@ -445,6 +474,8 @@ class TorneosController extends ControladorBase {
         $hora = $_REQUEST["hora"];
         $fecha = $_REQUEST["fecha"];
         $partido = $_REQUEST["partido"];
+        $jornada = $_REQUEST["jornada"];
+        $vuelta = $_REQUEST["vuelta"];
 
         $dao = new DaoTorneos();
 
@@ -475,9 +506,12 @@ class TorneosController extends ControladorBase {
             $dao->objeto->setHora($hora);
             $dao->objeto->setFecha($fecha);
             $dao->objeto->setIdPartido($partido);
+            $dao->objeto->setJornada($jornada);
+            $dao->objeto->setVuelta($vuelta);
 
 
             echo $dao->guardarDatos();
+            echo $dao->guardarHistorial();
 
         }
         else if($golesLocal < $golesVisita){
@@ -507,8 +541,12 @@ class TorneosController extends ControladorBase {
             $dao->objeto->setHora($hora);
             $dao->objeto->setFecha($fecha);
             $dao->objeto->setIdPartido($partido);
+            $dao->objeto->setJornada($jornada);
+            $dao->objeto->setVuelta($vuelta);
+
 
             echo $dao->guardarDatos();
+            echo $dao->guardarHistorial();
 
         }
         else if($golesLocal == $golesVisita){
@@ -538,9 +576,12 @@ class TorneosController extends ControladorBase {
             $dao->objeto->setHora($hora);
             $dao->objeto->setFecha($fecha);
             $dao->objeto->setIdPartido($partido);
+            $dao->objeto->setJornada($jornada);
+            $dao->objeto->setVuelta($vuelta);
 
 
             echo $dao->guardarDatos();
+            echo $dao->guardarHistorial();
 
            
 
