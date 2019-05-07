@@ -402,6 +402,24 @@ public function registrarF() {
        echo $daoT->disponiblesM();
     }
 
+    public function historial(){
+        $idT = $_REQUEST["idTorneo"];
+        $equipo = $_REQUEST["nombre"];
+
+        $dao = new DaoEquipos();
+
+        $dao->objeto->setNombreEquipo($equipo);
+        $dao->objeto->setIdTorneo($idT);
+
+        require_once './app/reportes/historial.php';
+        $reporte = new Reporte();
+
+        $resultado = $dao->historial();
+        $resultado1 = $dao->historial();
+
+        $reporte->historial($resultado,$resultado1,$equipo);
+    }
+
    
 
 }

@@ -32,6 +32,7 @@ Vue.component('modal-detalles', {
                                 <td>{{detalle.encargado}}</td>
                                 <td>{{detalle.encargadoAux}}</td>
                                 <td>
+                                </form>
                                 <button class="ui blue button" @click="$parent.historial(detalle.idTorneo, detalle.nombre)">
                                 <i class="clock icon"></i><i class="file icon"></i>
                                 </button>
@@ -40,7 +41,7 @@ Vue.component('modal-detalles', {
                         </tr>
                     </tbody>
                 </table>
-            </form>
+            
         </div>
         <div class="actions">
             <button @click="$parent.cerrarModal" class="ui deny black button">

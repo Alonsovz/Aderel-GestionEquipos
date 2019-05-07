@@ -599,6 +599,18 @@ class DaoEquipos extends DaoBase {
 
     }
 
+    public function historial(){
+        $query = "select h.*,t.nombreTorneo as torneo from historialE h
+        inner join torneos t on t.idTorneo = h.idTorneo
+         where h.equipoLocal='".$this->objeto->getNombreEquipo()."' or h.equipoVisitante='".$this->objeto->getNombreEquipo()."'
+         and h.idTorneo= ".$this->objeto->getIdTorneo();
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+
+    }
+
 
 }
 

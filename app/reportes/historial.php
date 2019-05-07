@@ -9,9 +9,10 @@ class Reporte {
         require_once './vendor/autoload.php';
     }
 
-    public function historial($resultado) {
+    public function historial($resultado,$resultado1,$equipo) {
 
-        
+        $torneo = $resultado1 ->fetch_assoc();
+        $torneo = $torneo["torneo"];
         
         
         $tabla = '';
@@ -45,8 +46,9 @@ class Reporte {
             <tr>
             <th style='font-size:22px; border: 1px solid white;'>
                 <center>
-                <br>Asociación Deportiva y Recreativa Lourdense (ADEREL)<br>
-                Programación Torneo <font color='red'>
+                <br>Historial de partidos jugados por el equipo: <font color='blue'>".$equipo."</font><br>
+                En el torneo : <font color='green'>".$torneo."</font><br>
+                
                 
             </th>
             <th style='font-size:22px; border: 1px solid white;'>
@@ -58,35 +60,36 @@ class Reporte {
             <hr>";
 
           
-        $tabla.="<h2>4ta Vuelta</h2><table class='tabla'>
+        $tabla.="<table class='tabla'>
         <tr>
-            <th bgcolor='#A9E2F3'>Jornada</th>           
-            <th bgcolor='#A9E2F3'>Descansa</th>
-            <th bgcolor='#A9E2F3'>Enfrentamiento</th>
-            <th bgcolor='#A9E2F3'>Resultado</th>
-            <th bgcolor='#A9E2F3'>Partido</th>
-            <th bgcolor='#A9E2F3'>Cancha</th>
+        <th bgcolor='#A9E2F3'>Vuelta</th>
+            <th bgcolor='#A9E2F3'>Jornada</th>
+            <th bgcolor='#A9E2F3'>Local</th>           
+            <th bgcolor='#A9E2F3'>Goles</th>
+            <th bgcolor='#A9E2F3'>Visitante</th>
             <th bgcolor='#A9E2F3'>Fecha</th>
-            <th bgcolor='#A9E2F3'>Hora</th>
         </tr>
         ";
 
-    while($fila = $resultado4->fetch_assoc()) {
+    while($fila = $resultado->fetch_assoc()) {
         $tabla.="<tr>
-                    <td >".$fila['jornada']."</td>
-                    <td bgcolor='#F78181'>".$fila['descansa']."</td>
-                    <td>".$fila['equipo1']." vs ".$fila['equipo2']."</td>
-                    <td></td>
-                    <td>".$fila['partido']."</td>
-                    ";
-                            if($can4==0){
-                                $tabla.="<td></td>";
-                             }  else{
-                                $tabla.="<td>".$fila['cancha']."</td>";
-                             } 
-                                
-                             $tabla.="<td>".$fila['fecha']."</td>
-                                <td>".$fila['hora']."</td>
+                    <td >".$fila['vuelta']."</td>
+                    <td>".$fila['jornada']."</td>";
+                    if($fila["equipoLocal"] == $equipo){
+                    $tabla.="<td style='background-color:#F79F81;'>".$fila['equipoLocal']."</td>";
+                    }else{
+                        $tabla.="<td>".$fila['equipoLocal']."</td>";
+                    }
+                    
+                    $tabla.="<td>".$fila['golesLocal']." -- ".$fila['golesVisitante']."</td>";
+                            
+                    if($fila["equipoVisitante"] == $equipo){
+                        $tabla.="<td style='background-color:#F79F81;'>".$fila['equipoVisitante']."</td>";
+                        }else{
+                            $tabla.="<td>".$fila['equipoVisitante']."</td>";
+                        }
+                    
+                    $tabla.="<td>".$fila['fecha']."</td>
                              </tr>";
     }
             

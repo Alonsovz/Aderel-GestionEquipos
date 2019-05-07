@@ -846,6 +846,12 @@ var appE = new Vue({
                     });
                 }
 
+                },
+                historial(idTorneo, nombre){
+                    var idTorneo = idTorneo;
+                    var nombre = nombre;
+            window.open('?1=EquipoController&2=historial&idTorneo='+idTorneo+'&nombre='+nombre,'_blank');
+            return false;
                 }
 
 
