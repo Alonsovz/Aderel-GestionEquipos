@@ -601,6 +601,16 @@ class TorneosController extends ControladorBase {
         echo $daoTorneo->equiposClasificacion($idTorneo);
     }
 
+    public function getEquiposGanadores()
+    {
+        $idTorneo=$_REQUEST['id'];
+        $etapa=$_REQUEST['etapa'];
+        $daoTorneo = new DaoTorneos();
+
+        $datos= $daoTorneo->clasificatoriaEnProceso($idTorneo, $etapa);
+        echo json_encode($datos);
+    }
+
 }
 
 

@@ -1021,52 +1021,12 @@ $("#guardarTodo").click(function(){
             });
 });
 
-function finalistas(element) {
+function finalistas(element,etapa) {
     var idTorneo = $(element).attr('id');
-    window.location = '?1=TorneosController&2=getPreviewClasificatoria&torneo='+idTorneo;
 
-    $.ajax({
-        type: 'POST',
-        url: '?1=TorneosController&2=posiciones',
-        data: {
-            id: idTorneo
-        },
-        success: function (data) {
-            var datos = JSON.parse(data);
-            let equipos_finalistas;
-            const clasificatorias = [];
+    if(etapa) window.location = `?1=TorneosController&2=getPreviewClasificatoria&torneo=${idTorneo}&etapa=${etapa}`;
+    else    window.location = '?1=TorneosController&2=getPreviewClasificatoria&torneo='+idTorneo;
 
-            if(datos.length>=10){
-                //solo los primeros 8 equipos
-                equipos_finalistas = datos.slice(0,8);
-                for (let index = 0; index < 4; index++) {
-                    clasificatorias.push({
-                        partidoN:index+1,
-                        etapa:'cuartos',
-                        equiposId:[equipos_finalistas[index].idEquipo,equipos_finalistas[8-index-1].idEquipo],
-                        idTorneo:idTorneo,
-                    });
-                }
-            }else{
-                equipos_finalistas = datos.slice(0,4);
-                for (let index = 0; index < 2; index++) {
-                    clasificatorias.push({
-                        partidoN:index+1,
-                        etapa:'semifinales',
-                        equiposId:[equipos_finalistas[index].idEquipo,equipos_finalistas[4-index-1].idEquipo],
-                        idTorneo:idTorneo,
-                    });
-                }
-            }
-            console.log('clasificatorias :', clasificatorias);
-            $.ajax({
-                type: 'POST',
-                url: '?1=TorneosController&2=guardarClasificatorias',
-                data: {datos: JSON.stringify(clasificatorias)}
-            });
-            
-        }
-    });
 }
 
 const equipoWinner = (elem)=>{
@@ -1117,11 +1077,15 @@ function guardarGanadores() {
             url: '?1=TorneosController&2=guardarGanador',
             data: {idClasificatoria: clasificatoriaId, idEquipo: equipoId},
             success(data){
-                //  agrar contador de oks
+                swal({
+                    title: 'Listo!',
+                    text: 'Guardado con éxito',
+                    type: 'success',
+                    showConfirmButton: true
+                }).then((result) => window.location='?1=TorneosController&2=gestionM'); 
             }
         });
     }
-    window.location = `?1=TorneosController&2=gestionM`;
 }
 
 </script>

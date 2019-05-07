@@ -604,13 +604,37 @@ class DaoTorneos extends DaoBase {
                 $htmlButton='<button id=\"'.$idTorneo.'\" class=\"ui  icon orange small button\" onclick=\"finalistas(this)\"><i class=\"calendar icon\"></i>Semifinal</button>';
             
         }else{
-            $etapa;
+            $etapa=null;
             
             while($fila = $clasi->fetch_assoc()) {
-                if($fila['idEquipoGanador']==null) $etapa=$fila['etapa'];
+                if($fila['idEquipoGanador']==null) $etapa=$fila['etapa'];       //etapa en progreso
             }
+
+            if($etapa==null){
+                $_query="SELECT * FROM `clasificatoria` WHERE fecha=(SELECT max(fecha) from clasificatoria) and idTorneo=".$idTorneo;
+                $result = $this->con->ejecutar($_query);
+                $siguienteEtapa = $result->fetch_assoc();
+
+                switch ($siguienteEtapa['etapa']) {
+                    case 'cuartos de final':
+                        $etapa='semifinal';
+                        break;
+
+                    case 'semifinal':
+                        $etapa='final';
+                        break;
+
+                    case 'final':
+                        return '';
+                        break;    
+                }
+                $htmlButton='<button id=\"'.$idTorneo.'\" class=\"ui  icon orange small button\" onclick=\"finalistas(this,`'.$siguienteEtapa['etapa'].'`)\"><i class=\"calendar icon\"></i>'.$etapa.'</button>';
+
+            }else{
+                $htmlButton='<button id=\"'.$idTorneo.'\"  class=\"ui  icon orange small button\" onclick=\'equipoWinner(this)\'><i class=\"calendar icon\"></i>Ganadores '.$etapa.'</button>';
+            }
+
             
-            $htmlButton='<button id=\"'.$idTorneo.'\"  class=\"ui  icon orange small button\" onclick=\'equipoWinner(this)\'><i class=\"calendar icon\"></i>Ganadores '.$etapa.'</button>';
 
         }
         return $htmlButton;
@@ -645,6 +669,17 @@ class DaoTorneos extends DaoBase {
         return $datos;
     }
 
+    public function clasificatoriaEnProceso($idTorneo, $etapa)
+    {
+        $_query = 'SELECT c.partidoN, c.idEquipoGanador, (SELECT nombre from equipos where idEquipo= c.idEquipoGanador ) as equipoGanador FROM clasificatoria c WHERE `idTorneo`='.$idTorneo.' and etapa="'.$etapa.'" order by partidoN;';
+        $clasi=$this->con->ejecutar($_query);
+        
+        $filas=[];
+        while($fila = $clasi->fetch_assoc()) 
+            array_push($filas,$fila);
+        
+        return $filas;
+    }
 
 }
 
