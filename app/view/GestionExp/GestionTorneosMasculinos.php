@@ -17,6 +17,7 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
 <modal-posiciones :detalles="detalles"></modal-posiciones>
 <modal-goleo :detalles="detalles"></modal-goleo>
 <modal-castigos :detalles="detalles"></modal-castigos>
+<modal-suspendidos :detalles="detalles"></modal-suspendidos>
 
     <div class="ui grid">
             <div class="row">
@@ -365,20 +366,26 @@ Cancelar
 <input type="hidden" id="idTorneoEs">
     <div class="row tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
 
-    <button class="ui red inverted segment"  style="width: 30%; text-align:center;" id="verPosiciones">
+    <button class="ui blue inverted segment"  style="width: 23%; text-align:center;" id="verPosiciones">
      Posiciones
      <div class="ui divider"></div>
      <i class="futbol icon"></i> <i class="calendar icon"></i>
     </button>
 
-    <button class="ui orange inverted segment" id="tablaGol" style="width: 30%; text-align:center;">
+    <button class="ui orange inverted segment" id="tablaGol" style="width: 23%; text-align:center;">
     Goleadores
     <div class="ui divider"></div>
     <i class="futbol icon"></i> <i class="male icon"></i>
     </button>
 
-    <button class="ui yellow inverted segment" id="tablaCast" style="width: 30%; text-align:center;">
-     Jugadores Castigados
+    <button class="ui yellow inverted segment" id="tablaSus" style="width: 23%; text-align:center;">
+     Jugadores suspendidos
+     <div class="ui divider"></div>
+     <i class="futbol icon"></i> <i class="trash icon"></i>
+    </button>
+
+    <button class="ui red inverted segment" id="tablaExp" style="width: 23%; text-align:center;">
+     Jugadores expulsados
      <div class="ui divider"></div>
      <i class="futbol icon"></i> <i class="trash icon"></i>
     </button>
@@ -499,6 +506,7 @@ Cancelar
 <script src="./res/js/modalPosicionesTorneo.js"></script>
 <script src="./res/js/modalGoleadores.js"></script>
 <script src="./res/js/modalCastigos.js"></script>
+<script src="./res/js/modalSuspendidos.js"></script>
 <script>
 var appE = new Vue({
         el: "#appE",
@@ -650,7 +658,7 @@ var appE = new Vue({
                 $('#frmDetalles').addClass('loading');
                 $.ajax({
                 type: 'POST',
-                url: '?1=TorneosController&2=amonestados',
+                url: '?1=TorneosController&2=expulsados',
                 data: {
                 id: id
                 },
@@ -661,6 +669,25 @@ var appE = new Vue({
                 });
 
             },
+
+            susp(id) {
+
+                this.idTorneo = parseInt(id);
+
+                $('#frmDetalles').addClass('loading');
+                $.ajax({
+                type: 'POST',
+                url: '?1=TorneosController&2=amonestados',
+                data: {
+                id: id
+                },
+                success: function (data) {
+                appE.detalles = JSON.parse(data);
+                $('#frmDetalles').removeClass('loading');
+                }
+                });
+
+                },
             
             cerrarModal() {
                 this.detalles = [];
@@ -895,10 +922,17 @@ var calendarizacion=(ele)=>{
      .modal('show');
   });
 
-  $("#tablaCast").click(function(){
+  $("#tablaExp").click(function(){
     appE.suspendidos($("#idTorneoEs").val());
     
     $('#modalCastigos').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+  });
+
+  $("#tablaSus").click(function(){
+    appE.susp($("#idTorneoEs").val());
+    
+    $('#modalSuspendidos').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
      .modal('show');
   });
 

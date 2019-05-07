@@ -462,12 +462,25 @@ class DaoTorneos extends DaoBase {
     }
 
     public function castigos(){
-        $query = "select c.*,e.nombre as equipo, t.nombreTorneo as torneo, j.nombre as nombre, j.apellido as apellido from castigos c
+        $query = "select c.*,e.nombre as equipo, t.nombreTorneo as torneo, j.nombre as nombre, j.apellido as apellido from expulsiones c
         inner join inscriJugador i on i.idJugador = c.idJugador
                 inner join equipos e on e.idEquipo = i.idEquipo
                 inner join torneos t on t.idTorneo = c.idTorneo
                 inner join jugadores j on j.idJugador = i.idJugador
-                where c.idTorneo = ".$this->objeto->getIdTorneo()."  and c.tarjeta='Doble Amarilla' or c.tarjeta='Roja Directa'";
+                where c.idTorneo = ".$this->objeto->getIdTorneo()."  and c.estado=1";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function amonestados(){
+        $query = "select c.*,e.nombre as equipo, t.nombreTorneo as torneo, j.nombre as nombre, j.apellido as apellido from tarjetasAmarilla c
+        inner join inscriJugador i on i.idJugador = c.idJugador
+                inner join equipos e on e.idEquipo = i.idEquipo
+                inner join torneos t on t.idTorneo = c.idTorneo
+                inner join jugadores j on j.idJugador = i.idJugador
+                where c.idTorneo = ".$this->objeto->getIdTorneo()."  and tarjetas=3";
 
         $resultado = $this->con->ejecutar($query);
 

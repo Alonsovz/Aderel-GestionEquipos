@@ -349,7 +349,7 @@ class TorneosController extends ControladorBase {
         echo'['.$json.']';
     }
 
-    public function amonestados(){
+    public function expulsados(){
         $id = $_REQUEST["id"];
 
         $dao = new DaoTorneos();
@@ -357,6 +357,28 @@ class TorneosController extends ControladorBase {
         $dao->objeto->setIdTorneo($id);
 
         $resultado =$dao->castigos();
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $json .= json_encode($fila).',';
+
+        }
+
+        $json = substr($json, 0, strlen($json) - 1);
+
+        echo'['.$json.']';
+    }
+
+    public function amonestados(){
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoTorneos();
+
+        $dao->objeto->setIdTorneo($id);
+
+        $resultado =$dao->amonestados();
 
         $json = '';
 
