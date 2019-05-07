@@ -356,7 +356,7 @@ class TorneosController extends ControladorBase {
 
         $dao->objeto->setIdTorneo($id);
 
-        $resultado =$dao->suspendidos();
+        $resultado =$dao->castigos();
 
         $json = '';
 
@@ -407,25 +407,32 @@ class TorneosController extends ControladorBase {
         $dao = new DaoTorneos();
 
         foreach($detalles as $detalle) {
-            $dao->objeto->setIdJugador($detalle->goleadores);
-            $dao->objeto->setTarjeta($detalle->tarjeta);
-            $dao->objeto->setObservacion($detalle->observacion);
+            
 
-            if($detalle->tarjeta=="Doble Amarilla"){
+            if($detalle->tarjeta=="Tarjeta Amarilla"){
+                $dao->objeto->setIdTorneo($idTor);
+                $dao->objeto->setIdJugador($detalle->goleadores);
+                $dao->updateAmarilla();
+
+            }else if($detalle->tarjeta=="Doble Amarilla"){
+                $dao->objeto->setIdJugador($detalle->goleadores);
+                $dao->objeto->setTarjeta($detalle->tarjeta);
+                $dao->objeto->setObservacion($detalle->observacion);
+                $dao->objeto->setIdTorneo($idTor);
                 $dao->objeto->setPartidos(1);
-            }else if($detalle->tarjeta=="Roja Directa"){
-                $dao->objeto->setPartidos(2);
+                $dao->registrarDirecto();
+            
+                
             }else{
-                $dao->objeto->setPartidos(0);
+                $dao->objeto->setIdJugador($detalle->goleadores);
+                $dao->objeto->setTarjeta($detalle->tarjeta);
+                $dao->objeto->setObservacion($detalle->observacion);
+                $dao->objeto->setIdTorneo($idTor);
+                $dao->objeto->setPartidos(2);
+                $dao->registrarDirecto();
+
             }
 
-           $dao->objeto->setIdTorneo($idTor);
-
-            if($dao->registrarCastigos()) {
-                $contador++;
-            } else {
-                echo 'nell';
-            }
         }
 
         if($contador == count($detalles)) {

@@ -217,6 +217,7 @@ fechaInscripcion date
 );
 
 
+
 CREATE TABLE goleadores (
   idGoleador int primary key auto_increment,
   idJugador int,
@@ -225,14 +226,23 @@ CREATE TABLE goleadores (
 );
 
 
-CREATE TABLE castigos (
+CREATE TABLE tarjetasAmarilla (
+  idTarejeta int primary key auto_increment,
+  idJugador int,
+  idTorneo int,
+  tarjetas int
+);
+
+CREATE TABLE expulsiones (
   idCastigo int primary key auto_increment,
   idJugador int,
   idTorneo int,
-  tarjeta varchar(30),
-  observacion varchar(500),
-  partidos int
+  tarjeta varchar(20),
+  partidos int,
+  observaciones varchar(500),
+  estado int
 );
+
 
 CREATE TABLE clasificatoria (
   idClasificatoria int primary key auto_increment,
@@ -382,8 +392,6 @@ alter table posiciones add constraint fk_posiciones_torneos foreign key (idTorne
 alter table goleadores add constraint fk_goleadores_jugadores foreign key (idJugador) references jugadores(idJugador);
 alter table goleadores add constraint fk_goleadores_torneos foreign key (idTorneo) references torneos(idTorneo);
 
-	alter table castigos add constraint fk_castigos_jugadores foreign key (idJugador) references jugadores(idJugador);
-	alter table castigos add constraint fk_castigos_torneos foreign key (idTorneo) references torneos(idTorneo);
 
 
 
@@ -693,3 +701,4 @@ end
 $$
 
 
+                

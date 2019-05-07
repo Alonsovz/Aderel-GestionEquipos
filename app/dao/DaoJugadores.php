@@ -650,6 +650,14 @@ class DaoJugadores extends DaoBase {
 
             return $resultado;
     }
+
+    public function registrarAmarilla(){
+        $query="Insert into tarjetasAmarilla values (null,'".$this->objeto->getIdJugador()."','".$this->objeto->getIdTorneo()."',0)";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
         
         
         

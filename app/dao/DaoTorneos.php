@@ -467,7 +467,7 @@ class DaoTorneos extends DaoBase {
                 inner join equipos e on e.idEquipo = i.idEquipo
                 inner join torneos t on t.idTorneo = c.idTorneo
                 inner join jugadores j on j.idJugador = i.idJugador
-                where c.idTorneo = ".$this->objeto->getIdTorneo()."  and c.tarjeta='Doble Amarilla' or c.tarjeta='Tarjeta Directa'";
+                where c.idTorneo = ".$this->objeto->getIdTorneo()."  and c.tarjeta='Doble Amarilla' or c.tarjeta='Roja Directa'";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -487,7 +487,7 @@ class DaoTorneos extends DaoBase {
         $_query = "select j.*, equipos.nombre as idEquipo from jugadores j 
         inner join inscrijugador incri on j.idJugador= incri.idJugador 
         inner join equipos on equipos.idEquipo= incri.idEquipo
-        where j.idEliminado=1 and j.idFondo = 1 and j.idJugador>1 and j.idGenero=2 group by incri.idJugador";
+        where j.idEliminado=1 and j.idFondo = 1 and j.correlativo != 'FM000001' and j.idGenero=2 and incri.pago=2  group by incri.idJugador";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -506,7 +506,7 @@ class DaoTorneos extends DaoBase {
         $_query = "select j.*, equipos.nombre as idEquipo from jugadores j 
         inner join inscrijugador incri on j.idJugador= incri.idJugador 
         inner join equipos on equipos.idEquipo= incri.idEquipo
-        where j.idEliminado=1 and j.idFondo = 1 and j.idJugador>1 and j.idGenero=1 group by incri.idJugador";
+        where j.idEliminado=1 and j.idFondo = 1 and j.correlativo != 'FF000001' and j.idGenero=1 and incri.pago=2 group by incri.idJugador";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -540,9 +540,26 @@ class DaoTorneos extends DaoBase {
     }
     
 
-    public function registrarCastigos(){
-        $query="Insert into castigos values (null,'".$this->objeto->getIdJugador()."','".$this->objeto->getIdTorneo()."',
-        '".$this->objeto->getTarjeta()."','".$this->objeto->getObservacion()."','".$this->objeto->getPartidos()."')";
+    public function registrarAmarilla(){
+        $query="Insert into tarjetasAmarilla values (null,'".$this->objeto->getIdJugador()."','".$this->objeto->getIdTorneo()."',0)";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function registrarDirecto(){
+        $query="Insert into expulsiones values (null,'".$this->objeto->getIdJugador()."','".$this->objeto->getIdTorneo()."',
+        '".$this->objeto->getTarjeta()."','".$this->objeto->getPartidos()."','".$this->objeto->getObservacion()."',1)";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function updateAmarilla(){
+        $query="update tarjetasAmarilla set tarjetas = tarjetas + 1 where idJugador= '".$this->objeto->getIdJugador()."'
+         and idTorneo= ".$this->objeto->getIdTorneo();
 
         $resultado = $this->con->ejecutar($query);
 

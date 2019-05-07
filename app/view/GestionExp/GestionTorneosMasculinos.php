@@ -301,7 +301,7 @@ Categorías de Torneo
                              </select>
                             </td>
                             <td>  
-                            <select class="ui search dropdown"  name="tarjeta" id="tarjeta" v-model="castigo.tarjeta">
+                            <select class="ui  dropdown"  name="tarjeta" id="tarjeta" v-model="castigo.tarjeta">
                             <option value="Tarjeta Amarilla" selected>Tarjeta Amarilla</option>
                             <option value="Doble Amarilla">Doble Amarilla</option>
                             <option value="Roja Directa">Roja  Directa</option>
@@ -511,7 +511,7 @@ var appE = new Vue({
                
             }],
             castigos : [{
-                goleadores: '2',
+                goleadores: '3',
                 tarjeta: 'Tarjeta Amarilla',
                 observacion: '',
 
@@ -738,30 +738,23 @@ var appE = new Vue({
             },
             agregarDetalle() {
                 this.envios.push({
-                    goleadores: '2',
+                    goleadores: '3',
                     goles: '',
             
                 });
-            $('.ui.search.dropdown.selection').dropdown();
-          //  $('.ui.search.dropdown.selection').addClass('ui search selection dropdown');
-            $('.ui.search.dropdown.selection').css('max-width', '100%');
-            $('.ui.search.dropdown.selection').css('min-width', '100%');
-            $('.ui.search.dropdown.selection').css('width', '100%');
+            
             },
             eliminarDetalleC(index) {
                 this.castigos.splice(index, 1);
             },
             agregarDetalleC() {
                 this.castigos.push({
-                    goleadores: '2',
+                    goleadores: '3',
                 tarjeta: 'Tarjeta Amarilla',
                 observacion: '',
             
                 });
-            $('.ui.search.dropdown.selection').dropdown();
-            $('.ui.search.dropdown.selection').css('max-width', '100%');
-            $('.ui.search.dropdown.selection').css('min-width', '100%');
-            $('.ui.search.dropdown.selection').css('width', '100%');
+            
             },
             guardarGoleador() {
                 var idTor = $("#idTo").val();
@@ -781,7 +774,7 @@ var appE = new Vue({
                             if (r == 1) {
                                 
                                         appE.envios = [{
-                                            goleadores: '2',
+                                            goleadores: '3',
                                             goles: ''
                                         }];
 
@@ -812,7 +805,7 @@ var appE = new Vue({
                             if (r == 1) {
                                 
                                         appE.castigos = [{
-                                            goleadores: '2',
+                                            goleadores: '3',
                                             tarjeta: 'Tarjeta Amarilla',
                                             observacion: '',
                                         }];
