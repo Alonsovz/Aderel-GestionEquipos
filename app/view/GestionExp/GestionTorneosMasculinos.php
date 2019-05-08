@@ -413,7 +413,7 @@ Cancelar
 </div>
 </div>
 
-<form class="ui  modal" id="equipoWinner">
+<form class="ui tiny modal" id="equipoWinner">
     <div class="header">
         <i class="sort amount up icon"></i> Equipo Ganador
     </div>
@@ -1188,9 +1188,9 @@ function guardarWinner(evt) {
                             if (result.value) {
                                 appE.guardarGoleador();
                                 appE.guardarAmonestado();
-                                $('#modalDetallesJornadasM').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                                $('#equipoWinner').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                                 .modal('show');
-                                        appE.cargarDetallesJornadas($("#idTo").val());   
+                                           
                             }
                         }); 
         }
