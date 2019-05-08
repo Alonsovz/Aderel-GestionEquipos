@@ -13,7 +13,7 @@ class Reporte {
 
 
     public function reporteConsilidado($mes,$anio, $cuentaCorriente,$totalCuentas,$efectivo,$cajaChicaG,$cajaChicaA,$totalCajas,
-    $ingresosMes,$egresosMes,$totalIng,$totalCantidad,$totalRetencion,$totalPagado)
+    $ingresosMes,$egresosMes,$totalIng,$totalCantidad,$totalRetencion,$totalPagado,$remesas,$cargos)
     {   
         $nombreMes ="";
         if($mes == "01"){
@@ -173,7 +173,7 @@ class Reporte {
     
             }
 
-            $tabla .= "<hr><h2><font color='#BA9B1E'>Totales del Mes:</font></h2>";
+            $tabla .= "<h2><font color='#BA9B1E'>Totales del Mes:</font></h2>";
                                 
            
            $tabla .= "<br><b><font color='#172961'>Dinero en efectivo:</font> $".$efectivo."</b><br><hr>";
@@ -223,7 +223,56 @@ class Reporte {
         }
         $tabla .= "</table><hr>";
 
-        $tabla .= " <table style='border: 1px solid white;'>
+        $tabla .= " 
+        <h3>Remesas</h3>
+        <table class='tabla'>
+        <tr>
+            <th  bgcolor='#A9F5A9'>Concepto</th>
+                <th  bgcolor='#A9F5A9'>Monto</th>
+                <th  bgcolor='#A9F5A9'>Fecha</th>
+                <th  bgcolor='#A9F5A9'>Cuenta</th>
+            </tr>";
+        while($fila = $remesas->fetch_assoc()) {
+         $tabla.="
+         <tr>
+         
+            <td>".$fila['concepto']. "</td>
+             <td>$".$fila['monto']."</td>
+             <td>".$fila['fecha']."</td>
+             <td>".$fila['chequera']."</td>
+            
+             </tr>  
+         ";
+        }
+        $tabla .= "</table><br><hr>";
+
+
+        $tabla .= " 
+        <h3>Cargos Bancarios</h3>
+        <table class='tabla'>
+        <tr>
+            <th  bgcolor='#F5D0A9'>Concepto</th>
+                <th  bgcolor='#F5D0A9'>Monto</th>
+                <th  bgcolor='#F5D0A9'>Fecha</th>
+                <th  bgcolor='#F5D0A9'>Cuenta</th>
+            </tr>";
+        while($fila = $cargos->fetch_assoc()) {
+         $tabla.="
+         <tr>
+         
+            <td>".$fila['concepto']. "</td>
+             <td>$".$fila['monto']."</td>
+             <td>".$fila['fecha']."</td>
+             <td>".$fila['chequera']."</td>
+            
+             </tr>  
+         ";
+        }
+        $tabla .= "</table><br><hr>";
+
+        
+
+        $tabla .= " <br><table style='border: 1px solid white;'>
         <tr style='border: 1px solid white;'>
         <th style='border: 1px solid white; font-size:18px;'><font color='#DBA901'>Cuentas de Banco:</font></th>
        
@@ -242,7 +291,7 @@ class Reporte {
         }
         $tabla .= "</table>";
 
-        $tabla .= "<b>
+        $tabla .= "<hr><br>
         <table style='border: 1px solid white;'>
             <tr style='border: 1px solid white;'>
             <hr>

@@ -51,8 +51,7 @@
                             <th style="background-color: #04B4AE; color:white;">DUI / Carnet Minoridad</th>
                             <th style="background-color: #04B4AE; color:white;">Encargado</th>
                             <th style="background-color: #04B4AE; color:white;">Tel. Encargado</th>
-                            <th style="background-color: #04B4AE; color:white;">Fecha de Inscripción</th>
-                            <th style="background-color: #04B4AE; color:white;">Fecha Final</th>
+                            
                             
                            
                         </tr>
@@ -129,6 +128,10 @@
                                     <div class="ui red pointing label"  id="labelDui"
                                     style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
                                     Completa este campo
+                                    </div>
+                                    <div class="ui red pointing label"  id="labelError"
+                                    style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                    Ya existe
                                     </div>
                         </div>
                        
@@ -580,7 +583,38 @@ resultadoF();
 });
 
 
+$('#duiJ').change(function(){
 
+var dui=$('#duiJ').val();
+
+$.ajax({
+type: 'POST',
+url: '?1=NatacionController&2=getDui',
+data:{dui},
+success: function(r) {
+
+    if(r==1)
+    {
+       $('#labelError').show();
+       
+       $("#btnGuardarU").attr("disabled", true);
+    }    
+    else{
+
+       $("#btnGuardarU").attr("disabled", false);
+    }  
+}
+});
+
+
+});
+
+$('#duiJ').keyup(function(){
+
+$('#labelError').hide();
+$("#btnGuardarU").attr("disabled", false);
+
+});
 
 
 </script>

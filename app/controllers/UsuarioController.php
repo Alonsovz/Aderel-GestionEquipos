@@ -311,6 +311,7 @@ class UsuarioController extends ControladorBase {
         $daoI = new DaoIngresos();
         $daoE = new DaoEgresos();
         $daoR = new DaoRemanente();
+        $daoRC = new DaoRemesasCargos();
         
         require_once './app/reportes/ReporteConsolidado.php';
         
@@ -330,6 +331,9 @@ class UsuarioController extends ControladorBase {
 
        $daoR->objeto->setMes($mes);
        $daoR->objeto->setAnio($anio);
+
+       $daoRC->objeto->setMes($mes);
+       $daoRC->objeto->setAnio($anio);
 
       
 
@@ -351,8 +355,11 @@ class UsuarioController extends ControladorBase {
         $totalRetencion = $daoE->totalRetencion();
         $totalPagado = $daoE->totalPagado();
 
+        $remesas = $daoRC->reporteRemesas();
+        $cargos = $daoRC->reporteCargos();
+
         $reporte->reporteConsilidado($mes,$anio, $cuentaCorriente,$totalCuentas,$efectivo,$cajaChicaG,$cajaChicaA,$totalCajas,
-        $ingresosMes,$egresosMes,$totalIng,$totalCantidad,$totalRetencion,$totalPagado);
+        $ingresosMes,$egresosMes,$totalIng,$totalCantidad,$totalRetencion,$totalPagado,$remesas,$cargos);
     }
 
 

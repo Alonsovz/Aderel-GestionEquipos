@@ -25,7 +25,7 @@ class DaoEgresos extends DaoBase {
             $btnEditar = '<button id=\"'.$fila["idEgreso"].'\" class=\"ui btnEditar icon blue small button\"><i class=\"edit icon\"></i> Editar</button>';
             $btnEliminar = '<button id=\"'.$fila["idEgreso"].'\" class=\"ui btnEliminar icon negative small button\"><i class=\"trash icon\"></i> Anular</button>';
 
-            $acciones = ', "Acciones": "'.$btnEditar.' '.$btnEliminar.'"';
+            $acciones = ', "Acciones": "'.$btnEliminar.'"';
 
             $object = substr_replace($object, $acciones, strlen($object) -1, 0);
 

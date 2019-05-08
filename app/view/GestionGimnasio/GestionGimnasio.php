@@ -51,8 +51,7 @@
                             <th style="background-color: #EF7B2E; color:white;">Fecha de Nacimiento</th>
                             <th style="background-color: #EF7B2E; color:white;">Edad</th>
                             <th style="background-color: #EF7B2E; color:white;">DUI / Carnet Minoridad</th>
-                            <th style="background-color: #EF7B2E; color:white;">Fecha de Inscripción</th>
-                            <th style="background-color: #EF7B2E; color:white;">Inscrito hasta</th>
+                           
                             
                            
                         </tr>
@@ -71,7 +70,7 @@
 <i class="male icon"></i><i class="weight icon"></i> Agregar nuevo usuario del gimnasio
 </div>
 <div class="content" class="ui equal width form">
-    <form class="ui form" id="frmUsuariosNa" method="POST" enctype="multipart/form-data" action='?1=NatacionController&2=registrar'> 
+    <form class="ui form"> 
         <div class="field">
             <div class="fields">
                     <div class="eight wide field">
@@ -129,6 +128,11 @@
                                     <div class="ui red pointing label"  id="labelDui"
                                     style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
                                     Completa este campo
+                                    </div>
+
+                                    <div class="ui red pointing label"  id="labelError"
+                                    style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                    Ya existe
                                     </div>
                         </div>
                        
@@ -498,34 +502,41 @@ resultadoF();
 
 });
 
-$('#frmRegistrar input[name="dui"]').change(function(){
+$('#duiJ').change(function(){
 
-var dui=$('#frmRegistrar input[name="dui"]').val();
+    var dui=$('#duiJ').val();
 
-     $.ajax({
-     type: 'POST',
-     url: '?1=GimnasioController&2=getDui',
-     data:{dui},
-     success: function(r) {
+$.ajax({
+type: 'POST',
+url: '?1=GimnasioController&2=getDui',
+data:{dui},
+success: function(r) {
 
-             if(r==1)
-             {
-                $('#frmRegistrar input[name="label-error"]').show();
-                $('#frmRegistrar input[name="label-error"]').val('Documento de Identidad ya existe');
-                
-                $('#frmRegistrar input[name="label-error"]').css("background-color","#D358F7");
-                $('#frmRegistrar input[name="label-error"]').css("font-size","bold");
-                $('#frmRegistrar input[name="label-error"]').css("color","black");
-                
-             }    
-             else{
+        if(r==1)
+        {
+           $('#labelError').show();
+           
+           $("#btnGuardarU").attr("disabled", true);
+        }    
+        else{
 
-                $("#btnGuardar").attr("disabled", false);
-             }  
-     }
-         });
+           $("#btnGuardarU").attr("disabled", false);
+        }  
+}
+    });
+
 
 });
+
+$('#duiJ').keyup(function(){
+
+    $('#labelError').hide();
+    $("#btnGuardarU").attr("disabled", false);
+
+});
+
+
+
 
 
 

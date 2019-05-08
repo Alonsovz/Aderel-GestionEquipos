@@ -283,7 +283,7 @@ class EscFutbolController extends ControladorBase {
         $dao->objeto->setApellido($_REQUEST["apellido"]);
         $dao->objeto->setEdad($_REQUEST["edad"]);
         $dao->objeto->setFechaNacimiento($_REQUEST["fechaNac"]);
-        $dao->objeto->setCarnet($_REQUEST["carnet"]);
+        $dao->objeto->setCarnet($_REQUEST["carnetMin"]);
         $dao->objeto->setEncargado($_REQUEST["encargado"]);
         $dao->objeto->setTelefono($_REQUEST["telefono"]);
         $dao->objeto->setDui($_REQUEST["dui"]);
@@ -469,6 +469,15 @@ class EscFutbolController extends ControladorBase {
 
     
 
+    }
+
+    public function getDui()
+    {
+        $dao = new DaoEscuela();
+        $dui=$_REQUEST["dui"];
+        $dao->objeto->setCarnet($dui);
+
+        echo $dao->getDdi();
     }
 
     

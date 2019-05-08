@@ -1,39 +1,24 @@
-var tablaNatacion;
+var tablaHistorialTF;
 
 $(function() {
-    if($('#dtNatacion').length) {
-        tablaNatacion = $('#dtNatacion').DataTable({
+    if($('#dtHistorialTF').length) {
+        tablaHistorialTF = $('#dtHistorialTF').DataTable({
             "ajax": {
-                "url": "?1=NatacionController&2=mostrarNatacion",
+                "url": "?1=GestionExpController&2=mostrarTorneosHistorialF",
                 "type": "POST"
             },
             "columns": [
                 {
-                    "data": "idUsuario"
+                    "data": "idTorneo"
                 },
                 {
-                    "data": "Acciones"             
+                    "data": "nombreTorneo"
                 },
                 {
-                    "data": "correlativo"
+                    "data": "categoria"
                 },
                 {
-                    "data": "nombre"
-                },
-                {
-                    "data": "apellido"
-                },
-                {
-                    "data": "edad"
-                },
-                {
-                    "data": "ddi"
-                },
-                {
-                    "data": "encargado"
-                },
-                {
-                    "data": "telefono"
+                    "data": "Acciones"
                 }
                 
             ],
@@ -67,6 +52,6 @@ $(function() {
         });
 
          // Ocultar columna de id de Usuario
-         tablaNatacion.column(0).visible(false);
+         tablaHistorialTF.column(0).visible(false);
     }
 });

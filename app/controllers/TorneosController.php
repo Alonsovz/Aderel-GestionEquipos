@@ -21,6 +21,18 @@ class TorneosController extends ControladorBase {
         require_once './app/view/GestionExp/GestionTorneosMasculinos.php';
     }
 
+    public function historialM()
+    {
+        self::loadMain();
+        require_once './app/view/GestionExp/historialTorneosM.php';
+    }
+
+    public function historialF()
+    {
+        self::loadMain();
+        require_once './app/view/GestionExp/historialTorneosF.php';
+    }
+
     public function sorteo()
     {
         self::loadMain();
@@ -151,6 +163,50 @@ class TorneosController extends ControladorBase {
         $dao->objeto->setIdTorneo($datos);
 
         echo $dao->eliminarF();
+    }
+
+    public function mostrarEquiposHM() {
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoTorneos();
+
+        $dao->objeto->setIdTorneo($id);
+
+        $resultado =$dao->mostrarEquiposHM();
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $json .= json_encode($fila).',';
+
+        }
+
+        $json = substr($json, 0, strlen($json) - 1);
+
+        echo'['.$json.']';
+    }
+
+    public function mostrarEquiposHF() {
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoTorneos();
+
+        $dao->objeto->setIdTorneo($id);
+
+        $resultado =$dao->mostrarEquiposHF();
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $json .= json_encode($fila).',';
+
+        }
+
+        $json = substr($json, 0, strlen($json) - 1);
+
+        echo'['.$json.']';
     }
 
     public function mostrarEquiposCM() {

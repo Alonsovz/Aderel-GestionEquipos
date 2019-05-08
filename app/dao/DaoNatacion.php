@@ -386,4 +386,24 @@ class DaoNatacion extends DaoBase {
         return $resultado;
     }
 
+    public function getDdi()
+    {
+
+        $_query="select idUsuario,ddi from natacion WHERE ddi='".$this->objeto->getDui()."' and idEliminado=1";
+       
+
+        $resultado=$this->con->ejecutar($_query)->fetch_assoc();
+        if($resultado['ddi']!=null)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+        
+        
+
+    }
+
 }   

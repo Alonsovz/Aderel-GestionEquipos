@@ -972,6 +972,26 @@ class DaoEscuela extends DaoBase {
         return $resultado;
     }
 
+    public function getDdi()
+    {
+
+        $_query="select idUsuario,carnet from escuelaFut WHERE carnet='".$this->objeto->getCarnet()."' and idEliminado=1";
+       
+
+        $resultado=$this->con->ejecutar($_query)->fetch_assoc();
+        if($resultado['carnet']!=null)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+        
+        
+
+    }
+
 
 
 

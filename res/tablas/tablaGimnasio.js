@@ -31,12 +31,6 @@ $(function() {
                 },
                 {
                     "data": "ddi"
-                },
-                {
-                    "data": "fechaInscripcion"
-                },
-                {
-                    "data": "fechaFinal"
                 }
             ],
             "order": [

@@ -50,6 +50,67 @@ class DaoTorneos extends DaoBase {
         echo '{"data": ['.$_json .']}';
     }
 
+    public function mostrarTorneosHistorialM()
+    {
+        $_query = "select t.*, c.nombreCategoria as categoria from torneos t
+        inner join categorias c on c.idCategoria  = t.idCategoria
+        where t.idEliminado = 3 and t.idTorneo>2 and t.idGenero=2";
+        
+        $resultado = $this->con->ejecutar($_query);
+        
+        $_json = '';
+        while($fila = $resultado->fetch_assoc()) {
+            $object = json_encode($fila);
+            
+            
+
+            
+            $btnVer = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon blue small button\" onclick=\"verEquipos(this)\"><i class=\"users icon\"></i> Equipos</button>';
+            $btnEstad = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon red small button\" onclick=\"verEstadisticas(this)\"><i class=\"sort amount up icon\"></i> Estadisticas</button>';
+           
+            $acciones = ', "Acciones": "'.$btnVer.''.$btnEstad.'"';
+            
+            
+
+            $object = substr_replace($object, $acciones, strlen($object) -1,0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        echo '{"data": ['.$_json .']}';
+    }
+
+    public function mostrarTorneosHistorialF()
+    {
+        $_query = "select t.*, c.nombreCategoria as categoria from torneos t
+        inner join categorias c on c.idCategoria  = t.idCategoria
+        where t.idEliminado = 3 and t.idTorneo>1 and t.idGenero=1";
+        
+        $resultado = $this->con->ejecutar($_query);
+        
+        $_json = '';
+        while($fila = $resultado->fetch_assoc()) {
+            $object = json_encode($fila);
+            
+            $btnVer = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon blue small button\" onclick=\"verEquipos(this)\"><i class=\"users icon\"></i> Equipos</button>';
+            $btnEstad = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon red small button\" onclick=\"verEstadisticas(this)\"><i class=\"sort amount up icon\"></i> Estadisticas</button>';
+           
+                $acciones = ', "Acciones": "'.$btnVer.''.$btnEstad.'"';
+            
+            
+
+            $object = substr_replace($object, $acciones, strlen($object) -1,0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        echo '{"data": ['.$_json .']}';
+    }
+
     public function mostrarTorneosF()
     {
         $_query = "select t.*, c.nombreCategoria as categoria from torneos t
@@ -326,6 +387,22 @@ class DaoTorneos extends DaoBase {
 
     public function mostrarEquiposCM(){
         $_query = "select * from equipos where idEliminado=1 and idGenero=2 and  idTorneo=".$this->objeto->getIdTorneo();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        return $resultado;
+    }
+
+    public function mostrarEquiposHM(){
+        $_query = "select * from equipos where idEliminado=3 and idGenero=2 and  idTorneo=".$this->objeto->getIdTorneo();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        return $resultado;
+    }
+
+    public function mostrarEquiposHF(){
+        $_query = "select * from equipos where idEliminado=3 and idGenero=1 and  idTorneo=".$this->objeto->getIdTorneo();
 
         $resultado = $this->con->ejecutar($_query);
 

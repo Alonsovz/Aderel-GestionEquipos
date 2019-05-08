@@ -219,7 +219,7 @@ class EgresosController extends ControladorBase {
         $dao->objeto->setIdCheque($chequera);
 
         $daoR = new DaoRemesasCargos();
-        $daoR->objeto->setCantidad($cantidadP);
+        $daoR->objeto->setCantidad($pagadoP);
         $daoR->objeto->setIdCheque($chequera);
 
         echo $dao->registrar();
