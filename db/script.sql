@@ -272,7 +272,8 @@ CREATE TABLE clasificatoria (
   fecha varchar(45) DEFAULT NULL,
   hora varchar(45) DEFAULT NULL,
   idEquipoGanador int(11) DEFAULT NULL,
-  cancha int(11) DEFAULT NULL
+  cancha int(11) DEFAULT NULL,
+  tipo_gane varchar(45) DEFAULT NULL
 );
 
 --
