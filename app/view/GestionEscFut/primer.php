@@ -158,6 +158,11 @@
                         <div class="six wide field">
                         <label><i class="address card icon"></i>Carnet Minoridad:</label>
                             <input type="text" name="carnet" placeholder="Carnet del jugador" id="carnet">
+
+                            <div class="ui red pointing label"  id="labelError"
+                                    style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                    Ya existe
+                                    </div>
                         </div>                        
                         
                         </div>
@@ -352,7 +357,7 @@ var app = new Vue({
                 },
                 {
                     label: 'Carnet Min:',
-                    name: 'carnet',
+                    name: 'carnetMin',
                     type: 'text'
                 },
                 {
@@ -405,7 +410,7 @@ var app = new Vue({
                        $('#frmEditar input[name="apellido"]').val(dat.apellido);
                        $('#frmEditar input[name="fechaNac"]').val(dat.fechaNacimiento);
                        $('#frmEditar input[name="edad"]').val(dat.edad);
-                       $('#frmEditar input[name="carnet"]').val(dat.carnet);
+                       $('#frmEditar input[name="carnetMin"]').val(dat.carnet);
                        $('#frmEditar input[name="encargado"]').val(dat.encargado);
                        $('#frmEditar input[name="dui"]').val(dat.dui);
                        $('#frmEditar input[name="imagenNueva"]').val(dat.foto);
@@ -730,6 +735,40 @@ Edad(fecha);
 $('#frmEditar input[name="carnet"]').val('');
 resultadoE();
 
+
+});
+
+
+$('#carnet').change(function(){
+
+var dui=$('#carnet').val();
+
+$.ajax({
+type: 'POST',
+url: '?1=EscFutbolController&2=getDui',
+data:{dui},
+success: function(r) {
+
+    if(r==1)
+    {
+       $('#labelError').show();
+       
+       $("#btnGuardarJugador").attr("disabled", true);
+    }    
+    else{
+
+       $("#btnGuardarJugador").attr("disabled", false);
+    }  
+}
+});
+
+
+});
+
+$('#carnet').keyup(function(){
+
+$('#labelError').hide();
+$("#btnGuardarJugador").attr("disabled", false);
 
 });
 

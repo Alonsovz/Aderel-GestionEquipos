@@ -63,6 +63,14 @@ class NatacionController extends ControladorBase {
         echo $dao->eliminar();
     }
 
+    public function getDui()
+    {
+        $dao = new DaoNatacion();
+        $dui=$_REQUEST["dui"];
+        $dao->objeto->setDui($dui);
+
+        echo $dao->getDdi();
+    }
 
 
     public function cargarDatosNatacion() {
