@@ -74,7 +74,9 @@ class JugadoresController extends ControladorBase {
         $dao->objeto->setIdEquipo($idEquipo);
         $dao->objeto->setIdTorneo($idTorneo);
 
+        echo $dao->registrarAmarilla();
         echo $dao->inscribirF();
+        echo $dao->goleador();
     }
 
     
@@ -172,6 +174,7 @@ class JugadoresController extends ControladorBase {
         $dao->objeto->setIdTorneo($idTorneo);
 
         echo $dao->inscribirJugadorM();
+        echo $dao->goleador();
         echo $dao->registrarAmarilla();
     }
 
@@ -201,6 +204,7 @@ class JugadoresController extends ControladorBase {
         $daoE->objeto->setIdEquipo($idEquipo);
         echo $daoE->actualizarCupos();
         echo $dao->registrarAmarilla();
+        echo $dao->goleador();
     }
 
 

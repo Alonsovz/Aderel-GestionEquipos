@@ -1188,9 +1188,7 @@ function guardarWinner(evt) {
                             if (result.value) {
                                 appE.guardarGoleador();
                                 appE.guardarAmonestado();
-                                $('#equipoWinner').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
-                                .modal('show');
-                                           
+                               // equipoWinner($("#idTo").val());
                             }
                         }); 
         }
