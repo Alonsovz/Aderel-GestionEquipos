@@ -51,6 +51,8 @@ idCargo int primary key unique auto_increment,
 concepto varchar(500),
 monto double,
 fecha date,
+mes varchar(10),
+anio varchar(10),
 idChequera int,
 idEliminado int
 );
@@ -60,9 +62,13 @@ idRemesa int primary key unique auto_increment,
 concepto varchar(500),
 monto double,
 fecha date,
+mes varchar(10),
+anio varchar(10),
 idChequera int,
 idEliminado int
 );
+
+
 
 create table egresos(
 idEgreso int primary key unique auto_increment,
@@ -421,9 +427,7 @@ insert into ingresos values (null,'Fondo Comun','Pago de Juanito de fondo comun'
 
 insert into chequeras values(null, 'Chequera Banco America Central','090123123',2500,1);
 
-insert into cargosBancarios values(null, 'Cargo por cheque en blanco' , 200 , curdate(),1,1);
 
-insert into remesas values(null, 'Abono a cuenta' , 200 , curdate(),1,1);
 
 insert into egresos values(null,4089,'Pago de impuestos de la renta',1000,160,840,'2019-05-01','05','2019',1,1);
 insert into egresos values(null,4090,'Pago de recibos',1000,160,840,'2019-05-02','05','2019',1,1);
@@ -649,9 +653,10 @@ create procedure reporteEgresosPorMes(
     in anios varchar(10)
 )
 begin
-select idEgreso,chNo,conceptoEgreso,format(cantidad,2) as cantidad, format(retencion,2) as retencion, format(pagado,2) as pagado,
-DATE_FORMAT(fechaEgreso, '%d/%m/%Y') as fechaEgreso,mes,anio,idEliminado from egresos
-where mes= mess and anio= anios and idEliminado = 1 order by idEgreso DESC ;
+select e.*, c.chequera as chequera, format(e.cantidad,2) as cantidad, format(e.retencion,2) as retencion, format(pagado,2) as pagado,
+        DATE_FORMAT(e.fechaEgreso, '%d/%m/%Y') as fechaEgreso from egresos e
+        inner join chequeras c on c.idChequera = e.idChequera
+where e.mes= mess and e.anio= anios and e.idEliminado = 1 order by idEgreso DESC ;
 end $$
 
 
@@ -696,6 +701,5 @@ begin
 end	
 $$
 
-                
-                
+	
                 

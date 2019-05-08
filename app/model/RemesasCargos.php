@@ -5,11 +5,47 @@ class RemesasCargos extends ModeloBase{
     private $cantidad;
     private $idCheque;
     private $id;
+    private $mes;
+    private $anio;
    
 
 
     public function __construct() {
 
+    }
+
+    public function getMes()
+    {
+        return $this->mes;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */ 
+    public function setMes($mes)
+    {
+        $this->mes = $mes;
+
+        return $this;
+    }
+
+    public function getAnio()
+    {
+        return $this->anio;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */ 
+    public function setAnio($anio)
+    {
+        $this->anio = $anio;
+
+        return $this;
     }
 
     public function getId()

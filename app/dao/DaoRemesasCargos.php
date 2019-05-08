@@ -68,7 +68,7 @@ class DaoRemesasCargos extends DaoBase {
 
     public function registrarRemesa(){
         $_query = "insert into remesas values(null,'".$this->objeto->getConcepto()."','".$this->objeto->getCantidad()."',
-        curdate(),'".$this->objeto->getIdCheque()."',1) ";
+        curdate(),DATE_FORMAT(CURDATE(),'%m'),year(CURRENT_DATE()),'".$this->objeto->getIdCheque()."',1) ";
     
             $resultado = $this->con->ejecutar($_query);
     
@@ -100,7 +100,7 @@ class DaoRemesasCargos extends DaoBase {
 
             public function registrarCargo(){
                 $_query = "insert into cargosBancarios values(null,'".$this->objeto->getConcepto()."','".$this->objeto->getCantidad()."',
-                curdate(),'".$this->objeto->getIdCheque()."',1) ";
+                curdate(),DATE_FORMAT(CURDATE(),'%m'),year(CURRENT_DATE()),'".$this->objeto->getIdCheque()."',1) ";
             
                     $resultado = $this->con->ejecutar($_query);
             
@@ -181,5 +181,27 @@ class DaoRemesasCargos extends DaoBase {
                     return $json;
                 }
 
+
+                public function reporteRemesas() {
+
+                    $query = "select c.*, format(c.monto,2) as monto,  ch.chequera as chequera,DATE_FORMAT(c.fecha, '%d/%m/%Y') as fecha from remesas c
+                    inner join chequeras ch on ch.idChequera = c.idChequera
+                     where c.mes='{$this->objeto->getMes()}' and c.anio='{$this->objeto->getAnio()}';";
+
+                    $resultado = $this->con->ejecutar($query);
+
+                    return $resultado;
+                }
+
+                public function reporteCargos() {
+
+                    $query = "select c.*, format(c.monto,2) as monto,  ch.chequera as chequera,DATE_FORMAT(c.fecha, '%d/%m/%Y') as fecha from cargosBancarios c
+                    inner join chequeras ch on ch.idChequera = c.idChequera
+                     where c.mes='{$this->objeto->getMes()}' and c.anio='{$this->objeto->getAnio()}';";
+
+                    $resultado = $this->con->ejecutar($query);
+
+                    return $resultado;
+                }
 
 }
