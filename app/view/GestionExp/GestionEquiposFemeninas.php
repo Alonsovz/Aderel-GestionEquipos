@@ -521,7 +521,7 @@ var inscribir=(ele)=>{
                     idTorneo : idTorneo,
                 },
                 success: function(r) {
-                    if(r == 1) {
+                    if(r == 111) {
                         appE.datosDetalle = [];
                         $('#modalCambios').modal('hide');
                         swal({
@@ -576,7 +576,7 @@ var idEquipo = $("#idEqui").val();
                     idTorneo : idTorneo,
                 },
                 success: function(r) {
-                    if(r == 1) {
+                    if(r == 111) {
                         $('#modalCambios').modal('hide');
                         swal({
                             title: 'Jugadora Inscrita',

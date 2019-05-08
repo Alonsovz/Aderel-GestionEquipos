@@ -674,6 +674,14 @@ class DaoJugadores extends DaoBase {
 
         return $resultado;
     }
+
+    public function goleador(){
+        $query="Insert into goleadores values (null,'".$this->objeto->getIdJugador()."','".$this->objeto->getIdTorneo()."',0)";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
         
         
         

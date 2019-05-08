@@ -1,15 +1,19 @@
-
+<style>
+    .hide{
+        display:none;
+    }
+</style>
 
 <br><div id="appE">
 
-<modal-registrar id_form="frmRegistrarT" id="modalRegistrarT" url="?1=TorneosController&2=registrarF" titulo="Registrar Torneo"
+<modal-registrar id_form="frmRegistrarT" id="modalRegistrarT" url="?1=TorneosController&2=registrarM" titulo="Registrar Torneo"
 :campos="campos_registroT" tamanio='tiny' ></modal-registrar>
 
 
-<modal-editar id_form="frmEditarT" id="modalEditarT" url="?1=TorneosController&2=editarF" titulo="Editar Torneo"
+<modal-editar id_form="frmEditarT" id="modalEditarT" url="?1=TorneosController&2=editarM" titulo="Editar Torneo"
 :campos="campos_editarT" tamanio='tiny'></modal-editar>
 
-<modal-eliminar id_form="frmEliminarT" id="modalEliminarT" url="?1=TorneosController&2=eliminarF" titulo="Eliminar Torneo"
+<modal-eliminar id_form="frmEliminarT" id="modalEliminarT" url="?1=TorneosController&2=eliminarM" titulo="Eliminar Torneo"
 sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_eliminarT" tamanio='tiny'></modal-eliminar>
 
 <modal-detalles :detalles="detalles"></modal-detalles>
@@ -56,7 +60,7 @@ if($_SESSION["descRol"] == 'Administrador') {
 <?php }else{ ?>
 
 <button class="ui pink button">
-<a href="?1=CategoriaController&2=gestionM"  style="color:white;">
+<a href="?1=CategoriaController&2=gestionF"  style="color:white;">
 <i class="chart bar outline icon"></i>
 Categorías de Torneo
  </a>
@@ -65,12 +69,13 @@ Categorías de Torneo
 <?php } ?>
                         </div>
             </div>
+            
             <div class="row title-bar">
-                    <div class="sixteen wide column">
-                    <a class='ui right floated purple button' href="?1=TorneosController&2=historialF">
+                    
+            <div class="sixteen wide column">
+                    <a class='ui right floated purple button' href="?1=TorneosController&2=historialM">
             <i class="time icon"></i>Historial de Torneos
             </a>
-
                         <button class="ui right floated green labeled icon button" @click="modalRegistrarT" id="btnModalRegistroEquipo">
                             <i class="plus icon"></i>
                             Agregar Torneo
@@ -142,6 +147,7 @@ Categorías de Torneo
 </div>
 
 </div>
+
 <div class="ui fullscreen longer modal" id="modalResultados">
 
 <div class="header">
@@ -157,6 +163,7 @@ Categorías de Torneo
             <label><center>Torneo</center></label>
                         <input type="text" id="nombreTor" name="nombreTor" readonly>
                         <input type="hidden" id="idTo" name="idTo" readonly>
+                        
             </div>
 
         <div class="one wide field">
@@ -196,7 +203,13 @@ Categorías de Torneo
 <div class="five wide field">
     <h3><i class="futbol icon"></i> Marcador del partido</h3>
     </div>
-        
+        <div class="four wide field hide content" id='contTipoGane'>
+            <label><center>Tipo Gane</center></label>
+            <select name="tipoGane" id="tipoGane" class='ui dropdown'>
+                <option value="Tiempo normal">Tiempo normal</option>
+                <option value="Penalti">Penalti</option>
+            </select>
+        </div>
             
                 <div class="three wide field">
                 <label><center><i class="users icon"></i>Equipo</center></label>
@@ -282,7 +295,7 @@ Categorías de Torneo
         <span style="float:right;">
                     <button @click="agregarDetalleC" class="ui olive circular icon button"><i class="plus icon"></i> Agregar</button>
         </span>        <br><br><br>
-        <form action="" id="frmAmonestados">
+        <form action="" class="ui form" id="frmAmonestados">
                 <table class="ui selectable very compact celled table" style="width:100%; margin:auto;">
                         <thead>
                             <tr>
@@ -303,7 +316,7 @@ Categorías de Torneo
                              </select>
                             </td>
                             <td>  
-                            <select class="ui search dropdown"  name="tarjeta" id="tarjeta" v-model="castigo.tarjeta">
+                            <select class="ui  dropdown"  name="tarjeta" id="tarjeta" v-model="castigo.tarjeta">
                             <option value="Tarjeta Amarilla" selected>Tarjeta Amarilla</option>
                             <option value="Doble Amarilla">Doble Amarilla</option>
                             <option value="Roja Directa">Roja  Directa</option>
@@ -348,10 +361,10 @@ Cancelar
 
 
 <div class="ui  modal" id="eleccion">
-    <div class="header">
-        <i class="sort amount up icon"></i> Estadísticas
+<div class="header">
+<i class="sort amount up icon"></i> Estadísticas
 
-                <div class="row title-bar">
+<div class="row title-bar">
                     <div class="sixteen wide column">
 
                         <button class="ui right floated green labeled icon button"  id="imprimirEs">
@@ -360,9 +373,10 @@ Cancelar
                         </button>
                     </div>
                  </div>
-     </div>
-<div class="content">
+</div>
 
+<div class="content">
+<br>
 <input type="hidden" id="idTorneoEs">
     <div class="row tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
 
@@ -398,6 +412,22 @@ Cancelar
 </button>
 </div>
 </div>
+
+<form class="ui tiny modal" id="equipoWinner">
+    <div class="header">
+        <i class="sort amount up icon"></i> Equipo Ganador
+    </div>
+
+    <div class="content">
+        <!-- PURO JQUERY -->
+    </div>
+    <div class="actions">
+        <button class="ui black deny button" type='button' onclick='guardarGanadores()'>
+        Cancelar
+        </button>
+    </div>
+</form>
+
 
 <div class="ui tiny modal" id="eleccionRpt">
     <div class="header">
@@ -460,7 +490,7 @@ Cancelar
             <div class="six wide field"></div>
                 <div class="eight wide field">
                 
-                    <a id="imprimirRpt" class="ui red button" style="margin:auto;">
+                    <a id="imprimirRpt" class="ui yellow button" style="margin:auto;">
                      <i class="print icon"></i>Imprimir
                     </a>
                  </div>
@@ -478,7 +508,7 @@ Cancelar
 </div>
 
 </div>
-<script src="./res/js/modalCastigos.js"></script>
+
 <script src="./res/tablas/tablaTorneosF.js"></script>
 <script src="./res/js/modalRegistrar.js"></script>
 <script src="./res/js/modalEditar.js"></script>
@@ -487,8 +517,13 @@ Cancelar
 <script src="./res/js/modalJornadasTorneo.js"></script>
 <script src="./res/js/modalPosicionesTorneo.js"></script>
 <script src="./res/js/modalGoleadores.js"></script>
+<script src="./res/js/modalCastigos.js"></script>
 <script src="./res/js/modalSuspendidos.js"></script>
 <script>
+var clasifiId=0;
+var equipo1Id=0;
+var equipo2Id=0;
+
 var appE = new Vue({
         el: "#appE",
         data: {
@@ -500,7 +535,7 @@ var appE = new Vue({
                
             }],
             castigos : [{
-                goleadores: '2',
+                goleadores: '3',
                 tarjeta: 'Tarjeta Amarilla',
                 observacion: '',
 
@@ -631,43 +666,44 @@ var appE = new Vue({
                 });
 
             },
+
             suspendidos(id) {
 
-            this.idTorneo = parseInt(id);
+                this.idTorneo = parseInt(id);
 
-            $('#frmDetalles').addClass('loading');
-            $.ajax({
-            type: 'POST',
-            url: '?1=TorneosController&2=expulsados',
-            data: {
-            id: id
-            },
-            success: function (data) {
-            appE.detalles = JSON.parse(data);
-            $('#frmDetalles').removeClass('loading');
-            }
-            });
+                $('#frmDetalles').addClass('loading');
+                $.ajax({
+                type: 'POST',
+                url: '?1=TorneosController&2=expulsados',
+                data: {
+                id: id
+                },
+                success: function (data) {
+                appE.detalles = JSON.parse(data);
+                $('#frmDetalles').removeClass('loading');
+                }
+                });
 
             },
 
             susp(id) {
 
-            this.idTorneo = parseInt(id);
+                this.idTorneo = parseInt(id);
 
-            $('#frmDetalles').addClass('loading');
-            $.ajax({
-            type: 'POST',
-            url: '?1=TorneosController&2=amonestados',
-            data: {
-            id: id
-            },
-            success: function (data) {
-            appE.detalles = JSON.parse(data);
-            $('#frmDetalles').removeClass('loading');
-            }
-            });
+                $('#frmDetalles').addClass('loading');
+                $.ajax({
+                type: 'POST',
+                url: '?1=TorneosController&2=amonestados',
+                data: {
+                id: id
+                },
+                success: function (data) {
+                appE.detalles = JSON.parse(data);
+                $('#frmDetalles').removeClass('loading');
+                }
+                });
 
-            },
+                },
             
             cerrarModal() {
                 this.detalles = [];
@@ -688,7 +724,7 @@ var appE = new Vue({
             },
 
             refrescarTabla() {
-                tablaTorneosF.ajax.reload();  
+                tablaTorneosM.ajax.reload();  
             },
             modalRegistrarT() {
                 $('#modalRegistrarT').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal(
@@ -725,11 +761,19 @@ var appE = new Vue({
                 $("#idTo").val(idTor);
                 $("#idPartido").val(idPartido);
 
+                $("#nombreTor").removeAttr('hidden');
+                $("#jornada").removeAttr('hidden');
+                $("#vuelta").removeAttr('hidden');
+                $("#fecha").removeAttr('disabled');
+                $("#hora").removeAttr('disabled');
+                $('#guardarTodo').removeAttr('onclick');
+                $('#contTipoGane').addClass('hide');
+
                 
                 const arrayJugadores = this.jugadores.filter((goleador,i)=>{
                     return goleador.idEquipo == equipo1 || goleador.idEquipo == equipo2;
                 });
-                console.log('arrayJugadores :', arrayJugadores);
+                
 
                 this.goleadoresOps.splice(0,this.goleadoresOps.length);
                 arrayJugadores.forEach((value,i)=>{
@@ -740,54 +784,28 @@ var appE = new Vue({
                     .modal('show');
 
             },
-            
-            suspendidos(id) {
-
-                this.idTorneo = parseInt(id);
-
-                $('#frmDetalles').addClass('loading');
-                $.ajax({
-                type: 'POST',
-                url: '?1=TorneosController&2=amonestados',
-                data: {
-                id: id
-                },
-                success: function (data) {
-                appE.detalles = JSON.parse(data);
-                $('#frmDetalles').removeClass('loading');
-                }
-                });
-
-},
             eliminarDetalle(index) {
                 this.envios.splice(index, 1);
             },
             agregarDetalle() {
                 this.envios.push({
-                    goleadores: '2',
+                    goleadores: '3',
                     goles: '',
             
                 });
-            $('.ui.search.dropdown.selection').dropdown();
-          //  $('.ui.search.dropdown.selection').addClass('ui search selection dropdown');
-            $('.ui.search.dropdown.selection').css('max-width', '100%');
-            $('.ui.search.dropdown.selection').css('min-width', '100%');
-            $('.ui.search.dropdown.selection').css('width', '100%');
+            
             },
             eliminarDetalleC(index) {
                 this.castigos.splice(index, 1);
             },
             agregarDetalleC() {
                 this.castigos.push({
-                    goleadores: '2',
+                    goleadores: '3',
                 tarjeta: 'Tarjeta Amarilla',
                 observacion: '',
             
                 });
-            $('.ui.search.dropdown.selection').dropdown();
-            $('.ui.search.dropdown.selection').css('max-width', '100%');
-            $('.ui.search.dropdown.selection').css('min-width', '100%');
-            $('.ui.search.dropdown.selection').css('width', '100%');
+            
             },
             guardarGoleador() {
                 var idTor = $("#idTo").val();
@@ -807,11 +825,12 @@ var appE = new Vue({
                             if (r == 1) {
                                 
                                         appE.envios = [{
-                                            goleadores: '2',
+                                            goleadores: '3',
                                             goles: ''
                                         }];
 
-                                              
+                                       
+                                            
                             }
                             
                         }
@@ -837,12 +856,12 @@ var appE = new Vue({
                             if (r == 1) {
                                 
                                         appE.castigos = [{
-                                            goleadores: '2',
+                                            goleadores: '3',
                                             tarjeta: 'Tarjeta Amarilla',
                                             observacion: '',
                                         }];
-
-                                            
+                                    
+                                          
                             }
                             
                         }
@@ -857,13 +876,6 @@ var appE = new Vue({
             return false;
                 }
 
-
-
-
-            
-            
-           
-            
 
         }
     });
@@ -891,30 +903,16 @@ $("#btnGoleo").click(function(){
     
 });
 
-$("#tablaExp").click(function(){
-    appE.suspendidos($("#idTorneoEs").val());
+$("#guardarGol").click(function(){
     
-    $('#modalCastigos').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
-     .modal('show');
-  });
+    
+});
 
-  $("#tablaSus").click(function(){
-    appE.susp($("#idTorneoEs").val());
-    
-    $('#modalSuspendidos').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
-     .modal('show');
-  });
 $("#btnAmonestados").click(function(){
     $("#goles").hide('10');
     $("#amonestados").show('10');
     
     
-});
-
-$("#imprimirEs").click(function(){
-    var id = $("#idTorneoEs").val();
-window.open('?1=TorneosController&2=posicionesRpt&id='+id,'_blank');
-return false;
 });
 
 var eliminarTorneo=(ele)=>{
@@ -947,7 +945,21 @@ var calendarizacion=(ele)=>{
      .modal('show');
   });
 
-  var reporte=(ele)=>{
+  $("#tablaExp").click(function(){
+    appE.suspendidos($("#idTorneoEs").val());
+    
+    $('#modalCastigos').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+  });
+
+  $("#tablaSus").click(function(){
+    appE.susp($("#idTorneoEs").val());
+    
+    $('#modalSuspendidos').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+     .modal('show');
+  });
+
+var reporte=(ele)=>{
     $('#eleccionRpt').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
      .modal('show');
     $("#idTorneoRpt").val($(ele).attr('id'));
@@ -967,6 +979,11 @@ $("#imprimirRpt").click(function(){
 window.open('?1=TorneosController&2=calendarioFiltro&vuelta='+vuelta+'&jornada='+jornada+'&id='+id,'_blank');
 return false;
 });
+
+
+    
+
+
 
 var editarTorneo=(ele)=>{
             $('#modalEditarT').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
@@ -989,21 +1006,35 @@ var sorteos=(ele)=>{
 }
 
 
+$("#imprimirEs").click(function(){
+    var id = $("#idTorneoEs").val();
+window.open('?1=TorneosController&2=posicionesRpt&id='+id,'_blank');
+return false;
+});
+    
+
+
+
 function cerrar(){
     $('#sorteos').modal('hide');
 }
 
 
-$("#guardarTodo").click(function(){
+$("#guardarTodo").click(function(evt){
+    const isOnClick = evt.target.getAttribute('onclick');
+    // console.log('isOnClick :', isOnClick);
+    if(isOnClick) return;   //si hay evento para clasificatoria
     
     var idTorneo = $('#idTo').val();
-               var equipo1 = $('#equipo1').val();
-               var equipo2 = $('#equipo2').val();
-               var goles1 = $('#goles1').val();
-               var goles2 = $('#goles2').val();
-               var hora = $('#hora').val();
-               var fecha = $('#fecha').val();
-               var partido = $('#idPartido').val();
+    var equipo1 = $('#equipo1').val();
+    var equipo2 = $('#equipo2').val();
+    var goles1  = $('#goles1').val();
+    var goles2  = $('#goles2').val();
+    var hora    = $('#hora').val();
+    var fecha   = $('#fecha').val();
+    var partido = $('#idPartido').val();
+    var vuelta  = $('#vuelta').val();
+    var jornada = $('#jornada').val();
 
          
         
@@ -1019,9 +1050,11 @@ $("#guardarTodo").click(function(){
                     hora : hora,
                     fecha : fecha,
                     partido : partido,
+                    jornada : jornada,
+                    vuelta : vuelta,
                 },
                 success: function(r) {
-                    if(r == 11) {
+                    if(r == 111) {
                         $('#modalResultados').modal('hide');
                         swal({
                             title: 'Listo!',
@@ -1045,51 +1078,121 @@ $("#guardarTodo").click(function(){
             });
 });
 
-function finalistas(element) {
+function finalistas(element,etapa) {
     var idTorneo = $(element).attr('id');
-    window.location = '?1=TorneosController&2=getPreviewClasificatoriaF&torneo='+idTorneo;
 
+    if(etapa) window.location = `?1=TorneosController&2=getPreviewClasificatoriaF&torneo=${idTorneo}&etapa=${etapa}`;
+    else    window.location = '?1=TorneosController&2=getPreviewClasificatoriaF&torneo='+idTorneo;
+
+}
+
+const equipoWinner = (elem)=>{
+
+    const id= $(elem).attr('id');
     $.ajax({
         type: 'POST',
-        url: '?1=TorneosController&2=posiciones',
-        data: {
-            id: idTorneo
-        },
-        success: function (data) {
-            var datos = JSON.parse(data);
-            let equipos_finalistas;
-            const clasificatorias = [];
-
-            if(datos.length>=10){
-                //solo los primeros 8 equipos
-                equipos_finalistas = datos.slice(0,8);
-                for (let index = 0; index < 4; index++) {
-                    clasificatorias.push({
-                        partidoN:index+1,
-                        etapa:'cuartos',
-                        equiposId:[equipos_finalistas[index].idEquipo,equipos_finalistas[8-index-1].idEquipo],
-                        idTorneo:idTorneo,
-                    });
-                }
-            }else{
-                equipos_finalistas = datos.slice(0,4);
-                for (let index = 0; index < 2; index++) {
-                    clasificatorias.push({
-                        partidoN:index+1,
-                        etapa:'semifinales',
-                        equiposId:[equipos_finalistas[index].idEquipo,equipos_finalistas[4-index-1].idEquipo],
-                        idTorneo:idTorneo,
-                    });
-                }
-            }
-            console.log('clasificatorias :', clasificatorias);
-            $.ajax({
-                type: 'POST',
-                url: '?1=TorneosController&2=guardarClasificatorias',
-                data: {datos: JSON.stringify(clasificatorias)}
+        url: '?1=TorneosController&2=getClasificatoria',
+        data: {idTorneo: id},
+        success(data){
+            data = JSON.parse(data);
+            console.log('data :', data);
+            let html='';
+            html+=`<h3>Etapa: ${data[0].etapa}</h3>`;
+            data.forEach((element,i) => {
+                html += `
+                <div class="field">
+                    <strong>Partido: ${element.equipo1.nombre} vs ${element.equipo2.nombre}</strong> 
+                    <a href='#' class='ui button' onclick="resultadoClasificatoria(event,{id:${element.equipo1.id}, nombre:'${element.equipo1.nombre}'},{id:${element.equipo2.id}, nombre:'${element.equipo2.nombre}'},'${element.hora}', '${element.fecha}',${element.idTorneo}, ${element.idClasificatoria})">Resultados</a>
+                    `+
+                    
+                    // <label>Equipo ganador</label>
+                    // <select class="ui fluid dropdown" name='equipoWinner${i+1}'>
+                    //     <option value='${element.equipo1.id}'>${element.equipo1.nombre}</option>
+                    //     <option value='${element.equipo2.id}'>${element.equipo2.nombre}</option>
+                    // </select>
+                `</div>
+                <input type="hidden" name='clasificatoria${i+1}' value='${element.idClasificatoria}'>
+                
+                <br>
+                <div class='ui divider'></div>`;
             });
+
+            $('#equipoWinner .content').html(html);
+            $('select.dropdown').dropdown();
             
+            $('#equipoWinner').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal('show');
+
+        }
+    });    
+};
+
+function guardarGanadores() {
+    $('#equipoWinner').modal('hide');
+}
+
+function resultadoClasificatoria(evt,equipo1,equipo2, hora, fecha, idTorneo, idCategoria) {
+    evt.preventDefault();
+    appE.resultados(equipo1.nombre,equipo2.nombre,null, null, hora,fecha,null,idTorneo);
+    $("#nombreTor").attr('hidden',true);
+    $("#jornada").attr('hidden',true);
+    $("#vuelta").attr('hidden',true);
+    $('#contTipoGane').removeClass('hide');
+
+    $('#guardarTodo').attr('onclick','guardarWinner(event)');
+    clasifiId=idCategoria;
+    equipo1Id=equipo1.id;
+    equipo2Id=equipo2.id;
+}
+
+function guardarWinner(evt) {
+    
+    var idTorneo = $('#idTo').val();
+    var equipo1 = $('#equipo1').val();
+    var equipo2 = $('#equipo2').val();
+    var goles1  = $('#goles1').val();
+    var goles2  = $('#goles2').val();
+    var hora    = $('#hora').val();
+    var fecha   = $('#fecha').val();
+    var partido = $('#idPartido').val();
+    var vuelta  = $('#vuelta').val();
+    var jornada = $('#jornada').val();
+    var tipoGane = $('#tipoGane').val();
+
+    
+    $.ajax({
+        type: 'POST',
+        url: '?1=TorneosController&2=guardarResultado&clasifi=true',
+        data: {
+            idTorneo: idTorneo,
+            equipo1 : equipo1,
+            equipo1Id:equipo1Id,
+            equipo2 : equipo2,
+            equipo2Id:equipo2Id,
+            goles2  : goles2,
+            goles1  : goles1,
+            hora    : hora,
+            fecha   : fecha,
+            partido : partido,
+            jornada : jornada,
+            vuelta  : vuelta,
+            clasifiId:clasifiId,
+            tipoGane:tipoGane
+        },
+        success(data){
+            swal({
+                title: 'Listo!',
+                text: 'Guardado con éxito',
+                type: 'success',
+                showConfirmButton: true
+            }).then((result) => {
+                            if (result.value) {
+                                appE.guardarGoleador();
+                                appE.guardarAmonestado();
+                               // equipoWinner($("#idTo").val());
+                            }
+                        }); 
         }
     });
 }
+
 </script>

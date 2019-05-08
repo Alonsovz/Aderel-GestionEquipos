@@ -130,21 +130,22 @@ class DaoTorneos extends DaoBase {
                
                
                
-                $btnEditar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEditarT icon blue small button\" onclick=\"editarTorneo(this)\"><i class=\"edit icon\"></i> Editar </button>';
-                $btnEliminar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEliminarT icon negative small button\" onclick=\"eliminarTorneo(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
-                $btnVer = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon green small button\" onclick=\"verEquipos(this)\"><i class=\"users icon\"></i> Equipos</button>';
-                $sorteo = '<button id=\"'.$fila["idTorneo"].'\"  equipos=\"'.$fila["inscritos"]. '\" name=\"'.$fila["nombreTorneo"]. '\"  class=\"ui icon yellow small button\" onclick=\"sorteos(this)\"><i class=\"futbol icon\"></i>Sorteo</button>';
-                $btnReporte = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon olive small button\" onclick=\"reporte(this)\"><i class=\"calendar icon\"></i>Calendarización</button>';
-                $btnGestion = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon orange small button\" onclick=\"calendarizacion(this)\"><i class=\"calendar icon\"></i>Gestionar</button>';
-                $btnFinal = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon orange small button\" onclick=\"finalistas(this)\"><i class=\"calendar icon\"></i>Cuartos?</button>';
-
-                $btnEstad = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon blue small button\" onclick=\"estadisticas(this)\"><i class=\"sort amount up icon\"></i>Estadísticas</button>';
-
-                if($fila["sorteo"]==1){
-                    $acciones = ', "Acciones": "'.$btnVer.''.$sorteo .''.$btnEditar.' '.$btnEliminar.'"';
-                }else{
-                    $acciones = ', "Acciones": "'.$btnVer.''.$btnEstad.''.$btnReporte .''.$btnGestion.''.$btnFinal.'"';
-                }
+                $btnEditar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEditarT icon blue small button\" onclick=\"editarTorneo(this)\"><i class=\"edit icon\"></i> Editar</button>';
+            $btnEliminar = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui btnEliminarT icon negative small button\" onclick=\"eliminarTorneo(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
+            $btnVer = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon green small button\" onclick=\"verEquipos(this)\"><i class=\"users icon\"></i> Equipos</button>';
+            $sorteo = '<button id=\"'.$fila["idTorneo"].'\"  equipos=\"'.$fila["inscritos"]. '\" name=\"'.$fila["nombreTorneo"]. '\"  class=\"ui icon yellow small button\" onclick=\"sorteos(this)\"><i class=\"futbol icon\"></i> Sorteo</button>';
+            $btnReporte = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon purple small button\" onclick=\"reporte(this)\"><i class=\"calendar icon\"></i>Calendarización</button>';
+            $btnGestion = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon orange small button\" onclick=\"calendarizacion(this)\"><i class=\"calendar icon\"></i>Gestionar</button>';
+            $btnEstad = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui  icon blue small button\" onclick=\"estadisticas(this)\"><i class=\"sort amount up icon\"></i>Estadísticas</button>';
+            
+            $btnFinal = $this->clasificacionButton($fila["idTorneo"]);
+            
+            
+            if($fila["sorteo"]==1){
+                $acciones = ', "Acciones": "'.$btnVer.''.$sorteo .''.$btnEditar.' '.$btnEliminar.'"';
+            }else{
+                $acciones = ', "Acciones": "'.$btnVer.''.$btnEstad.''.$btnReporte .''.$btnGestion.''.$btnFinal.'"';
+            }
                 
                 
 
@@ -526,12 +527,12 @@ class DaoTorneos extends DaoBase {
     }
 
     public function goleadores(){
-        $query = "select g.*, SUM(distinct(g.goles)) as goles, e.nombre as equipo, t.nombreTorneo as torneo, j.nombre as nombre, j.apellido as apellido from goleadores g
+        $query = "select g.*, e.nombre as equipo, t.nombreTorneo as torneo, j.nombre as nombre, j.apellido as apellido from goleadores g
         inner join inscriJugador i on i.idJugador = g.idJugador
         inner join equipos e on e.idEquipo = i.idEquipo
         inner join torneos t on t.idTorneo = g.idTorneo
         inner join jugadores j on j.idJugador = i.idJugador
-        where g.idTorneo = ".$this->objeto->getIdTorneo()."  group by g.idJugador order by goles desc";
+        where g.idTorneo = ".$this->objeto->getIdTorneo()."  group by g.idJugador order by g.goles desc LIMIT 5";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -612,8 +613,8 @@ class DaoTorneos extends DaoBase {
     }
 
     public function registrarGoleador(){
-        $query="Insert into goleadores values (null,'".$this->objeto->getIdJugador()."','".$this->objeto->getIdTorneo()."',
-        '".$this->objeto->getGoles()."')";
+        $query="update  goleadores set goles = goles + '".$this->objeto->getGoles()."' where idJugador ='".$this->objeto->getIdJugador()."' and
+        idTorneo = ".$this->objeto->getIdTorneo();
 
         $resultado = $this->con->ejecutar($query);
 
@@ -622,7 +623,7 @@ class DaoTorneos extends DaoBase {
 
     public function guardarDatos(){
         $query="update partidos set fecha ='".$this->objeto->getFecha()."', hora ='".$this->objeto->getHora()."', 
-        hora ='".$this->objeto->getHora()."', estado=2 where id=".$this->objeto->getIdPartido();;
+        hora ='".$this->objeto->getHora()."', estado=2 where id=".$this->objeto->getIdPartido();
 
         $resultado = $this->con->ejecutar($query);
 
