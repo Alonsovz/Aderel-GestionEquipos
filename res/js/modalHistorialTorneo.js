@@ -10,7 +10,7 @@ Vue.component('modal-detalles', {
     
     template: `<div class="ui  modal" id="modalDetalles" >
         <div class="header">
-          Equipos inscritos en el torneo
+          Equipos que fueron parte del torneo
         </div>
     
         <div class="scrolling content">
@@ -27,7 +27,7 @@ Vue.component('modal-detalles', {
                     </thead>
                     <tbody>
                         <tr v-for="detalle in detalles" :codigo-torneo="detalle.idTorneo">
-                       
+                           
                         <td>{{detalle.nombre}}</td>
                                 <td>{{detalle.encargado}}</td>
                                 <td>{{detalle.encargadoAux}}</td>

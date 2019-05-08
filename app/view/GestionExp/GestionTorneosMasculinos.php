@@ -65,9 +65,13 @@ Categorías de Torneo
 <?php } ?>
                         </div>
             </div>
+            
             <div class="row title-bar">
-                    <div class="sixteen wide column">
-
+                    
+            <div class="sixteen wide column">
+                    <a class='ui right floated purple button' href="?1=TorneosController&2=historialM">
+            <i class="time icon"></i>Historial de Torneos
+            </a>
                         <button class="ui right floated green labeled icon button" @click="modalRegistrarT" id="btnModalRegistroEquipo">
                             <i class="plus icon"></i>
                             Agregar Torneo
@@ -852,13 +856,6 @@ var appE = new Vue({
             return false;
                 }
 
-
-
-
-            
-            
-           
-            
 
         }
     });
