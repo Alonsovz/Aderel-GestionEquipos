@@ -1136,8 +1136,6 @@ function resultadoClasificatoria(evt,equipo1,equipo2, hora, fecha, idTorneo, idC
     $("#nombreTor").attr('hidden',true);
     $("#jornada").attr('hidden',true);
     $("#vuelta").attr('hidden',true);
-    $("#fecha").attr('disabled',true);
-    $("#hora").attr('disabled',true);
     $('#contTipoGane').removeClass('hide');
 
     $('#guardarTodo').attr('onclick','guardarWinner(event)');
@@ -1186,7 +1184,15 @@ function guardarWinner(evt) {
                 text: 'Guardado con éxito',
                 type: 'success',
                 showConfirmButton: true
-            }).then((result) => window.location='?1=TorneosController&2=gestionM'); 
+            }).then((result) => {
+                            if (result.value) {
+                                appE.guardarGoleador();
+                                appE.guardarAmonestado();
+                                $('#modalDetallesJornadasM').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                                .modal('show');
+                                        appE.cargarDetallesJornadas($("#idTo").val());   
+                            }
+                        }); 
         }
     });
 }
