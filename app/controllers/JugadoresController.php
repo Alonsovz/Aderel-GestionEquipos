@@ -36,9 +36,10 @@ class JugadoresController extends ControladorBase {
     }
 
     public function inscripcionM() {
+        $idCategoria = (isset($_REQUEST['idCategoria']))? $_REQUEST['idCategoria']:0;
         $dao = new DaoJugadores();
 
-        echo $dao->inscripcionM();
+        echo $dao->inscripcionM($idCategoria);
     }
 
     public function mostrarJugPenPago() {

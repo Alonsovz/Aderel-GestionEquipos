@@ -625,6 +625,7 @@ var verJugadoresE=(ele)=>{
   }
 
   var modalCambiar=(ele)=>{
+    mostrarJugadores($(ele).attr('idcategoria'));
                 
                 appE.datosDetalle.nombre= $(ele).attr("nombre");
                 appE.datosDetalle.Categoria= $(ele).attr("categoria");

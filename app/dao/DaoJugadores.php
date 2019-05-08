@@ -171,7 +171,7 @@ class DaoJugadores extends DaoBase {
             echo '{"data": ['.$_json .']}';
     }
 
-    public function inscripcionM()
+    public function inscripcionM($idCategoria=0)
     {
         $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,
         DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento from jugadores j
@@ -180,11 +180,27 @@ class DaoJugadores extends DaoBase {
         
 
             $resultado = $this->con->ejecutar($_query);
-
             $_json = '';
 
             
             while($fila = $resultado->fetch_assoc()) {
+                $_query='SELECT * from inscrijugador ins where ins.idJugador='.$fila["idJugador"].';';
+                $res = $this->con->ejecutar($_query);
+                
+
+                $continuar=true;
+                if($res->num_rows>0){   //esta inscrito en algun equipo aunque no necesariamente en la misma categoria
+
+                    while($incri = $res->fetch_assoc()) {   //verficar si el equipo inscrito pertenece a la misma categoria
+                        $_query='SELECT * FROM `equipos` where `idCategoria`='.$idCategoria.' and idEquipo='.$incri['idEquipo'].';';
+                        $result = $this->con->ejecutar($_query);
+
+                        if($result->num_rows>0) //pertenece a la misma categoria
+                            $continuar=false;
+                    }   
+                }
+                if(!$continuar) continue;   //se salta este jugador
+
                     
                 $object = json_encode($fila);
 
