@@ -27,16 +27,31 @@ class DaoClasificatoria extends DaoBase {
         }
     }
 
-    public function guardaGanador($idClasificatoria, $idEquipo)
+    public function guardaGanador($idClasificatoria, $idEquipo, $tipoGane)
     {
         try {
-            $_query = "UPDATE `clasificatoria` SET `idEquipoGanador`=".$idEquipo." where `idClasificatoria`=".$idClasificatoria;
+            $_query = "UPDATE `clasificatoria` SET `idEquipoGanador`=".$idEquipo.", `tipo_gane`='".$tipoGane."' where `idClasificatoria`=".$idClasificatoria;
+            $this->con->ejecutar($_query);
+            
+            $_query = "SELECT * FROM `clasificatoria` where `idClasificatoria` = ".$idClasificatoria;
+            $res    = $this->con->ejecutar($_query);
+            $res    = $res->fetch_assoc();
 
-            return $this->con->ejecutar($_query);
+            if($res['etapa']=='final')
+                $this->historiaTorneo($res['idTorneo']);
             
         } catch (\Throwable $th) {
             echo $th;
         }
+    }
+
+    public function historiaTorneo($idTorneo)
+    {
+        $_query = 'UPDATE `torneos` SET `idEliminado`=3 WHERE `idTorneo`='.$idTorneo;
+        $clasi=$this->con->ejecutar($_query);
+
+        $_query='UPDATE `equipos` SET `idEliminado`=3 WHERE `idTorneo`='.$idTorneo;
+        $this->con->ejecutar($_query);
     }
 
 }

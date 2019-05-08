@@ -466,16 +466,18 @@ class TorneosController extends ControladorBase {
 
 
     public function guardarResultado(){
-        $golesLocal = $_REQUEST["goles1"];
+        $golesLocal  = $_REQUEST["goles1"];
         $golesVisita = $_REQUEST["goles2"];
-        $equipo1 = $_REQUEST["equipo1"];
-        $equipo2 = $_REQUEST["equipo2"];
-        $idTorneo = $_REQUEST["idTorneo"];
-        $hora = $_REQUEST["hora"];
-        $fecha = $_REQUEST["fecha"];
-        $partido = $_REQUEST["partido"];
-        $jornada = $_REQUEST["jornada"];
-        $vuelta = $_REQUEST["vuelta"];
+        $equipo1     = $_REQUEST["equipo1"];
+        $equipo2     = $_REQUEST["equipo2"];
+        $idTorneo    = $_REQUEST["idTorneo"];
+        $hora        = $_REQUEST["hora"];
+        $fecha       = $_REQUEST["fecha"];
+        $partido     = $_REQUEST["partido"];
+        $jornada     = $_REQUEST["jornada"];
+        $vuelta      = $_REQUEST["vuelta"];
+
+        $isClasificatoria = isset($_REQUEST["clasifi"]);
 
         $dao = new DaoTorneos();
 
@@ -510,7 +512,8 @@ class TorneosController extends ControladorBase {
             $dao->objeto->setVuelta($vuelta);
 
 
-            echo $dao->guardarDatos();
+            if(!$isClasificatoria) echo $dao->guardarDatos();
+
             echo $dao->guardarHistorial();
 
         }
@@ -545,7 +548,7 @@ class TorneosController extends ControladorBase {
             $dao->objeto->setVuelta($vuelta);
 
 
-            echo $dao->guardarDatos();
+            if(!$isClasificatoria) echo $dao->guardarDatos();
             echo $dao->guardarHistorial();
 
         }
@@ -580,11 +583,18 @@ class TorneosController extends ControladorBase {
             $dao->objeto->setVuelta($vuelta);
 
 
-            echo $dao->guardarDatos();
+            if(!$isClasificatoria) echo $dao->guardarDatos();
             echo $dao->guardarHistorial();
+        }
 
-           
+        if($isClasificatoria){
+            $clasifiId   = $_REQUEST["clasifiId"];
 
+            if($_REQUEST["goles1"]>$_REQUEST["goles2"])
+                $this->guardarGanador($clasifiId, $_REQUEST["equipo1Id"], $_REQUEST['tipoGane']);
+            
+            else
+                $this->guardarGanador($clasifiId, $_REQUEST["equipo2Id"], $_REQUEST['tipoGane']);
         }
 
     }
@@ -612,13 +622,13 @@ class TorneosController extends ControladorBase {
         echo 'ok';
     }
 
-    public function guardarGanador()
+    public function guardarGanador($idClasificatoria, $idEquipo, $tipoGane)
     {
-        $idClasificatoria = $_REQUEST['idClasificatoria'];
-        $idEquipo = $_REQUEST['idEquipo'];
+        $idClasificatoria = (isset($_REQUEST['idClasificatoria']))?$_REQUEST['idClasificatoria']:$idClasificatoria;
+        $idEquipo = (isset($_REQUEST['idEquipo']))?$_REQUEST['idEquipo']:$idEquipo;
         $daoClasi = new DaoClasificatoria();
 
-        $daoClasi->guardaGanador($idClasificatoria, $idEquipo);
+        $daoClasi->guardaGanador($idClasificatoria, $idEquipo, $tipoGane);
         
         return 'ok';
     }

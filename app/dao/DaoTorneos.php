@@ -697,7 +697,10 @@ class DaoTorneos extends DaoBase {
                 $equipos=$this->con->ejecutar($_query);
                 $nomEquipos=$equipos->fetch_assoc();
                 $datos[$cont]['etapa']             = $etapa;
+                $datos[$cont]['fecha']             = $fila['fecha'];
+                $datos[$cont]['hora']              = $fila['hora'];
                 $datos[$cont]['idClasificatoria']  = $fila['idClasificatoria'];
+                $datos[$cont]['idTorneo']          = $fila['idTorneo'];
                 $datos[$cont]['equipo1']['id']     = $fila['idEquipo1'];
                 $datos[$cont]['equipo1']['nombre'] = $nomEquipos['equipo1'];
                 $datos[$cont]['equipo2']['id']     = $fila['idEquipo2'];
@@ -721,6 +724,15 @@ class DaoTorneos extends DaoBase {
             array_push($filas,$fila);
         
         return $filas;
+    }
+
+    public function historiaTorneo($idTorneo)
+    {
+        $_query = 'UPDATE `torneos` SET `idEliminado`=3 WHERE `idTorneo`='.$idTorneo;
+        $clasi=$this->con->ejecutar($_query);
+
+        $_query='UPDATE `equipos` SET `idEliminado`=3 WHERE `idTorneo`='.$idTorneo;
+        $this->con->ejecutar($_query);
     }
 
 }

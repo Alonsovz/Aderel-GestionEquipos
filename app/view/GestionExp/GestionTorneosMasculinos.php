@@ -1,4 +1,8 @@
-
+<style>
+    .hide{
+        display:none;
+    }
+</style>
 
 <br><div id="appE">
 
@@ -195,7 +199,13 @@ Categorías de Torneo
 <div class="five wide field">
     <h3><i class="futbol icon"></i> Marcador del partido</h3>
     </div>
-        
+        <div class="four wide field hide content" id='contTipoGane'>
+            <label><center>Tipo Gane</center></label>
+            <select name="tipoGane" id="tipoGane" class='ui dropdown'>
+                <option value="Tiempo normal">Tiempo normal</option>
+                <option value="Penalti">Penalti</option>
+            </select>
+        </div>
             
                 <div class="three wide field">
                 <label><center><i class="users icon"></i>Equipo</center></label>
@@ -408,10 +418,8 @@ Cancelar
         <!-- PURO JQUERY -->
     </div>
     <div class="actions">
-        <button class="ui black deny button">
+        <button class="ui black deny button" type='button' onclick='guardarGanadores()'>
         Cancelar
-        </button>
-        <button onclick='guardarGanadores()' id='btnwinner' type='button' class="ui violet button"><i class="save icon"></i> Guardar
         </button>
     </div>
 </form>
@@ -508,6 +516,10 @@ Cancelar
 <script src="./res/js/modalCastigos.js"></script>
 <script src="./res/js/modalSuspendidos.js"></script>
 <script>
+var clasifiId=0;
+var equipo1Id=0;
+var equipo2Id=0;
+
 var appE = new Vue({
         el: "#appE",
         data: {
@@ -745,11 +757,19 @@ var appE = new Vue({
                 $("#idTo").val(idTor);
                 $("#idPartido").val(idPartido);
 
+                $("#nombreTor").removeAttr('hidden');
+                $("#jornada").removeAttr('hidden');
+                $("#vuelta").removeAttr('hidden');
+                $("#fecha").removeAttr('disabled');
+                $("#hora").removeAttr('disabled');
+                $('#guardarTodo').removeAttr('onclick');
+                $('#contTipoGane').addClass('hide');
+
                 
                 const arrayJugadores = this.jugadores.filter((goleador,i)=>{
                     return goleador.idEquipo == equipo1 || goleador.idEquipo == equipo2;
                 });
-                console.log('arrayJugadores :', arrayJugadores);
+                
 
                 this.goleadoresOps.splice(0,this.goleadoresOps.length);
                 arrayJugadores.forEach((value,i)=>{
@@ -1003,18 +1023,21 @@ function cerrar(){
 }
 
 
-$("#guardarTodo").click(function(){
+$("#guardarTodo").click(function(evt){
+    const isOnClick = evt.target.getAttribute('onclick');
+    // console.log('isOnClick :', isOnClick);
+    if(isOnClick) return;   //si hay evento para clasificatoria
     
     var idTorneo = $('#idTo').val();
-               var equipo1 = $('#equipo1').val();
-               var equipo2 = $('#equipo2').val();
-               var goles1 = $('#goles1').val();
-               var goles2 = $('#goles2').val();
-               var hora = $('#hora').val();
-               var fecha = $('#fecha').val();
-               var partido = $('#idPartido').val();
-               var vuelta = $('#vuelta').val();
-               var jornada = $('#jornada').val();
+    var equipo1 = $('#equipo1').val();
+    var equipo2 = $('#equipo2').val();
+    var goles1  = $('#goles1').val();
+    var goles2  = $('#goles2').val();
+    var hora    = $('#hora').val();
+    var fecha   = $('#fecha').val();
+    var partido = $('#idPartido').val();
+    var vuelta  = $('#vuelta').val();
+    var jornada = $('#jornada').val();
 
          
         
@@ -1075,18 +1098,22 @@ const equipoWinner = (elem)=>{
         data: {idTorneo: id},
         success(data){
             data = JSON.parse(data);
+            console.log('data :', data);
             let html='';
             html+=`<h3>Etapa: ${data[0].etapa}</h3>`;
             data.forEach((element,i) => {
                 html += `
                 <div class="field">
-                    <h4>Partido: ${element.equipo1.nombre} vs ${element.equipo2.nombre}</h4>
-                    <label>Equipo ganador</label>
-                    <select class="ui fluid dropdown" name='equipoWinner${i+1}'>
-                        <option value='${element.equipo1.id}'>${element.equipo1.nombre}</option>
-                        <option value='${element.equipo2.id}'>${element.equipo2.nombre}</option>
-                    </select>
-                </div>
+                    <strong>Partido: ${element.equipo1.nombre} vs ${element.equipo2.nombre}</strong> 
+                    <a href='#' class='ui button' onclick="resultadoClasificatoria(event,{id:${element.equipo1.id}, nombre:'${element.equipo1.nombre}'},{id:${element.equipo2.id}, nombre:'${element.equipo2.nombre}'},'${element.hora}', '${element.fecha}',${element.idTorneo}, ${element.idClasificatoria})">Resultados</a>
+                    `+
+                    
+                    // <label>Equipo ganador</label>
+                    // <select class="ui fluid dropdown" name='equipoWinner${i+1}'>
+                    //     <option value='${element.equipo1.id}'>${element.equipo1.nombre}</option>
+                    //     <option value='${element.equipo2.id}'>${element.equipo2.nombre}</option>
+                    // </select>
+                `</div>
                 <input type="hidden" name='clasificatoria${i+1}' value='${element.idClasificatoria}'>
                 
                 <br>
@@ -1103,26 +1130,68 @@ const equipoWinner = (elem)=>{
 };
 
 function guardarGanadores() {
-    const datos= $('#equipoWinner').serializeArray();
+    $('#equipoWinner').modal('hide');
+}
+
+function resultadoClasificatoria(evt,equipo1,equipo2, hora, fecha, idTorneo, idCategoria) {
+    evt.preventDefault();
+    appE.resultados(equipo1.nombre,equipo2.nombre,null, null, hora,fecha,null,idTorneo);
+    $("#nombreTor").attr('hidden',true);
+    $("#jornada").attr('hidden',true);
+    $("#vuelta").attr('hidden',true);
+    $("#fecha").attr('disabled',true);
+    $("#hora").attr('disabled',true);
+    $('#contTipoGane').removeClass('hide');
+
+    $('#guardarTodo').attr('onclick','guardarWinner(event)');
+    clasifiId=idCategoria;
+    equipo1Id=equipo1.id;
+    equipo2Id=equipo2.id;
+}
+
+function guardarWinner(evt) {
     
-    for (let index = 0; index < datos.length; index+=2) {
-        const equipoId = datos[index][`value`];
-        const clasificatoriaId = datos[index+1][`value`];
-        
-        $.ajax({
-            type: 'POST',
-            url: '?1=TorneosController&2=guardarGanador',
-            data: {idClasificatoria: clasificatoriaId, idEquipo: equipoId},
-            success(data){
-                swal({
-                    title: 'Listo!',
-                    text: 'Guardado con éxito',
-                    type: 'success',
-                    showConfirmButton: true
-                }).then((result) => window.location='?1=TorneosController&2=gestionM'); 
-            }
-        });
-    }
+    var idTorneo = $('#idTo').val();
+    var equipo1 = $('#equipo1').val();
+    var equipo2 = $('#equipo2').val();
+    var goles1  = $('#goles1').val();
+    var goles2  = $('#goles2').val();
+    var hora    = $('#hora').val();
+    var fecha   = $('#fecha').val();
+    var partido = $('#idPartido').val();
+    var vuelta  = $('#vuelta').val();
+    var jornada = $('#jornada').val();
+    var tipoGane = $('#tipoGane').val();
+
+    
+    $.ajax({
+        type: 'POST',
+        url: '?1=TorneosController&2=guardarResultado&clasifi=true',
+        data: {
+            idTorneo: idTorneo,
+            equipo1 : equipo1,
+            equipo1Id:equipo1Id,
+            equipo2 : equipo2,
+            equipo2Id:equipo2Id,
+            goles2  : goles2,
+            goles1  : goles1,
+            hora    : hora,
+            fecha   : fecha,
+            partido : partido,
+            jornada : jornada,
+            vuelta  : vuelta,
+            clasifiId:clasifiId,
+            tipoGane:tipoGane
+        },
+        success(data){
+            swal({
+                title: 'Listo!',
+                text: 'Guardado con éxito',
+                type: 'success',
+                showConfirmButton: true
+            }).then((result) => window.location='?1=TorneosController&2=gestionM'); 
+        }
+    });
 }
 
 </script>
