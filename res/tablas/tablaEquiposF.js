@@ -21,12 +21,6 @@ $(function() {
                     "data": "telefonoE"
                 },
                 {
-                    "data": "encargadoAux"
-                },
-                {
-                    "data": "telefonoAux"
-                },
-                {
                     "data": "Categoria"
                 },
                 {

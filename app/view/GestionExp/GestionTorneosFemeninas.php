@@ -73,7 +73,7 @@ Categorías de Torneo
             <div class="row title-bar">
                     
             <div class="sixteen wide column">
-                    <a class='ui right floated purple button' href="?1=TorneosController&2=historialM">
+                    <a class='ui right floated purple button' href="?1=TorneosController&2=historialF">
             <i class="time icon"></i>Historial de Torneos
             </a>
                         <button class="ui right floated green labeled icon button" @click="modalRegistrarT" id="btnModalRegistroEquipo">
@@ -97,12 +97,12 @@ Categorías de Torneo
                                     <tr>
                                     
                                         <th style="background-color: #FACC2E; color:white;">N°</th>
-                                        <th style="background-color: #1CC647; color:white;">Nombre del Torneo</th>
-                                        <th style="background-color: #1CC647; color:white;">Máximo de Equipos</th>
-                                        <th style="background-color: #1CC647; color:white;">Cupos Disponibles</th>
-                                        <th style="background-color: #1CC647; color:white;">Equipos Inscritos</th>
-                                        <th style="background-color: #1CC647; color:white;">Categoría del Torneo</th>
-                                        <th style="background-color: #1CC647; color:white;">Acciones</th>
+                                        <th style="background-color: #A901DB; color:white;">Nombre del Torneo</th>
+                                        <th style="background-color: #A901DB; color:white;">Máximo de Equipos</th>
+                                        <th style="background-color: #A901DB; color:white;">Cupos Disponibles</th>
+                                        <th style="background-color: #A901DB; color:white;">Equipos Inscritos</th>
+                                        <th style="background-color: #A901DB; color:white;">Categoría del Torneo</th>
+                                        <th style="background-color: #A901DB; color:white;">Acciones</th>
                                        
                                         
                                         
@@ -1064,8 +1064,8 @@ $("#guardarTodo").click(function(evt){
 
                         }).then((result) => {
                             if (result.value) {
-                                appE.guardarGoleador();
-                                appE.guardarAmonestado();
+                               appE.guardarGoleador();
+                               appE.guardarAmonestado();
                                 $('#modalDetallesJornadasM').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                                 .modal('show');
                                         appE.cargarDetallesJornadas($("#idTo").val());   
@@ -1188,7 +1188,8 @@ function guardarWinner(evt) {
                             if (result.value) {
                                 appE.guardarGoleador();
                                 appE.guardarAmonestado();
-                               // equipoWinner($("#idTo").val());
+                                $('#dtTorneosF').DataTable().ajax.reload();
+                               $('#modalResultados').modal('hide');
                             }
                         }); 
         }

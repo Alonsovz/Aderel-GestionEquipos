@@ -75,8 +75,6 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
                                         <th style="background-color: #217CD1; color:white;">Nombre del  Equipo</th>
                                         <th style="background-color: #217CD1; color:white;">Encargado del Equipo</th>
                                         <th style="background-color: #217CD1; color:white;">Tel. Encargado</th>
-                                        <th style="background-color: #217CD1; color:white;">Encargado Aux</th>
-                                        <th style="background-color: #217CD1; color:white;">Tel. Aux</th>
                                         <th style="background-color: #217CD1; color:white;">Categoría</th>
                                         <th style="background-color: #217CD1; color:white;">Torneo </th>
                                         <th style="background-color: #217CD1; color:white;">Acciones</th>
@@ -391,6 +389,10 @@ var appE = new Vue({
                 $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
             },
+            cerrarModalE() {
+                this.detalles = [];
+                ;
+            },
             cerrarModalD() {
                 this.detalles = [];
 
@@ -463,7 +465,7 @@ var appE = new Vue({
                 cerrar()
             {
                 $('#modalCambios').modal('hide');
-               // dtInscriM.ajax.reload(); 
+                location.href = "?1=EquipoController&2=gestionM";
             },
             cerrarJ()
             {
@@ -625,6 +627,7 @@ var verJugadoresE=(ele)=>{
   }
 
   var modalCambiar=(ele)=>{
+    
     mostrarJugadores($(ele).attr('idcategoria'));
                 
                 appE.datosDetalle.nombre= $(ele).attr("nombre");
@@ -638,6 +641,7 @@ var verJugadoresE=(ele)=>{
                 $("#cupos").text($(ele).attr("cuposM"));
                 $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
+                           
             }
 
 var enviarFondo=(ele)=>{

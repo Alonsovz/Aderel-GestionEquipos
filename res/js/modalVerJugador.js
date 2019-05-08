@@ -25,6 +25,7 @@ Vue.component('modal-jugador', {
                             <th style="background-color: #BEF781;">Torneo</th>
                             <th style="background-color: #BEF781;">Categoria</th>
                             <th style="background-color: #BEF781;">Estado</th>
+                            <th style="background-color: #BEF781;">En Caja</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,6 +36,16 @@ Vue.component('modal-jugador', {
                                 <td>{{detalle.torneo}}</td>
                                 <td>{{detalle.categoria}}</td>
                                 <td v-if="detalle.estado == 2" style="background-color: #81BEF7">Activo</td>
+                                <td v-else-if="detalle.estado == 3" style="background-color: #F5BCA9;">
+                                Terminado
+                            </td>
+                            <td v-if="detalle.pago == 2" style="background-color: #A9F5BC;">
+                                Solvente
+                            </td>
+                            <td v-if="detalle.pago == 1" style="background-color: #F5BCA9;">
+                                Esperando Cobro
+                            </td>
+                            
                         </tr>
                     </tbody>
                 </table>

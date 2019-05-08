@@ -1,4 +1,4 @@
-<div class="ui search fluid selection dropdown" style="color:black; background-color:#9F81F7;">
+<div class="ui fluid selection dropdown" style="color:black; background-color:#9F81F7;">
 <i class="dropdown icon"></i>
     <div class="default text" style="color:black; background-color:#9F81F7;">
             <i class="dollar icon"></i>

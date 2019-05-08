@@ -1,10 +1,11 @@
 var tablaInscripcionF;
 
-$(function() {
+function mostrarJugadores(idCategoria) {
+
     if($('#dtInscriF').length) {
         tablaInscripcionF = $('#dtInscriF').DataTable({
             "ajax": {
-                "url": "?1=JugadoresController&2=inscripcionF",
+                "url": "?1=JugadoresController&2=inscripcionF&idCategoria="+idCategoria,
                 "type": "POST"
             },
             "columns": [
@@ -67,4 +68,4 @@ $(function() {
          // Ocultar columna de id de Usuario
          tablaInscripcionF.column(0).visible(false);
     }
-});
+}

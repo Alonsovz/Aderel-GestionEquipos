@@ -49,9 +49,11 @@ class JugadoresController extends ControladorBase {
     }
 
     public function inscripcionF() {
+        $idCategoria = (isset($_REQUEST['idCategoria']))? $_REQUEST['idCategoria']:0;
         $dao = new DaoJugadores();
 
-        echo $dao->inscripcionF();
+
+        echo $dao->inscripcionF($idCategoria);
     }
 
     public function eliminarF() {

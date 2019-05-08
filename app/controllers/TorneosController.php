@@ -449,6 +449,28 @@ class TorneosController extends ControladorBase {
         echo'['.$json.']';
     }
 
+    public function campeon(){
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoTorneos();
+
+        $dao->objeto->setIdTorneo($id);
+
+        $resultado =$dao->campeon();
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $json .= json_encode($fila).',';
+
+        }
+
+        $json = substr($json, 0, strlen($json) - 1);
+
+        echo'['.$json.']';
+    }
+
     public function registrarGoleador(){
         $detalles = json_decode($_REQUEST["goleos"]);
         $idTor = $_REQUEST["idTor"];

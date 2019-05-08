@@ -66,7 +66,7 @@ class DaoTorneos extends DaoBase {
 
             
             $btnVer = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon blue small button\" onclick=\"verEquipos(this)\"><i class=\"users icon\"></i> Equipos</button>';
-            $btnEstad = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon red small button\" onclick=\"verEstadisticas(this)\"><i class=\"sort amount up icon\"></i> Estadisticas</button>';
+            $btnEstad = '<button id=\"'.$fila["idTorneo"].'\" torneo=\"'.$fila["nombreTorneo"].'\" class=\"ui icon red small button\" onclick=\"verEstadisticas(this)\"><i class=\"sort amount up icon\"></i> Estadisticas</button>';
            
             $acciones = ', "Acciones": "'.$btnVer.''.$btnEstad.'"';
             
@@ -95,7 +95,7 @@ class DaoTorneos extends DaoBase {
             $object = json_encode($fila);
             
             $btnVer = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon blue small button\" onclick=\"verEquipos(this)\"><i class=\"users icon\"></i> Equipos</button>';
-            $btnEstad = '<button id=\"'.$fila["idTorneo"].'\" class=\"ui icon red small button\" onclick=\"verEstadisticas(this)\"><i class=\"sort amount up icon\"></i> Estadisticas</button>';
+            $btnEstad = '<button id=\"'.$fila["idTorneo"].'\" torneo=\"'.$fila["nombreTorneo"].'\"  class=\"ui icon red small button\" onclick=\"verEstadisticas(this)\"><i class=\"sort amount up icon\"></i> Estadisticas</button>';
            
                 $acciones = ', "Acciones": "'.$btnVer.''.$btnEstad.'"';
             
@@ -532,7 +532,20 @@ class DaoTorneos extends DaoBase {
         inner join equipos e on e.idEquipo = i.idEquipo
         inner join torneos t on t.idTorneo = g.idTorneo
         inner join jugadores j on j.idJugador = i.idJugador
-        where g.idTorneo = ".$this->objeto->getIdTorneo()."  group by g.idJugador order by g.goles desc LIMIT 5";
+        where e.idTorneo =  ".$this->objeto->getIdTorneo()."  and g.idTorneo=  ".$this->objeto->getIdTorneo()." 
+          group by g.idTorneo, g.idJugador order by g.goles desc LIMIT 5";
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function campeon(){
+        $query = "select c.*, e.nombre as equipo, e.encargado as encargado, e.encargadoAux as encargadoAux, 
+        t.nombreTorneo as torneo from clasificatoria c
+        inner join equipos e on e.idEquipo = c.idEquipoGanador 
+        inner join torneos t on t.idTorneo = c.idTorneo
+        where c.idTorneo  = ".$this->objeto->getIdTorneo()." and c.etapa= 'final'";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -578,7 +591,7 @@ class DaoTorneos extends DaoBase {
         $_query = "select j.*, equipos.nombre as idEquipo from jugadores j 
         inner join inscrijugador incri on j.idJugador= incri.idJugador 
         inner join equipos on equipos.idEquipo= incri.idEquipo
-        where j.idEliminado=1 and j.idFondo = 1 and j.correlativo != 'FM000001' and j.idGenero=2 and incri.pago=2  group by incri.idJugador";
+        where j.idEliminado=1 and j.idFondo = 1 and j.correlativo != 'FM000001' and j.idGenero=2 and incri.pago=2";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -597,7 +610,7 @@ class DaoTorneos extends DaoBase {
         $_query = "select j.*, equipos.nombre as idEquipo from jugadores j 
         inner join inscrijugador incri on j.idJugador= incri.idJugador 
         inner join equipos on equipos.idEquipo= incri.idEquipo
-        where j.idEliminado=1 and j.idFondo = 1 and j.correlativo != 'FF000001' and j.idGenero=1 and incri.pago=2 group by incri.idJugador";
+        where j.idEliminado=1 and j.idFondo = 1 and j.correlativo != 'FF000001' and j.idGenero=1 and incri.pago=2";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -678,7 +691,7 @@ class DaoTorneos extends DaoBase {
          partidosJugados = partidosJugados + 1,  partidosEmpatados = partidosEmpatados + '".$this->objeto->getPartidosEmpatados1()."' ,
          partidosGanados = partidosGanados + '".$this->objeto->getPartidosGanados1()."' ,
          partidosPerdidos = partidosPerdidos + '".$this->objeto->getPartidosPerdidos1()."' 
-        where idEquipo = (select idEquipo from equipos where nombre= '".$this->objeto->getEquipo1()."') 
+        where idEquipo = (select idEquipo from equipos where nombre= '".$this->objeto->getEquipo1()."' and idTorneo='".$this->objeto->getIdTorneo()."') 
         and idTorneo  = ".$this->objeto->getIdTorneo();
 
         $resultado = $this->con->ejecutar($_query);
@@ -699,7 +712,7 @@ class DaoTorneos extends DaoBase {
          partidosJugados = partidosJugados + 1,  partidosEmpatados = partidosEmpatados + '".$this->objeto->getPartidosEmpatados2()."' ,
          partidosGanados = partidosGanados + '".$this->objeto->getPartidosGanados2()."' ,
          partidosPerdidos = partidosPerdidos + '".$this->objeto->getPartidosPerdidos2()."' 
-        where idEquipo = (select idEquipo from equipos where nombre= '".$this->objeto->getEquipo2()."') 
+        where idEquipo = (select idEquipo from equipos where nombre= '".$this->objeto->getEquipo2()."' and idTorneo='".$this->objeto->getIdTorneo()."') 
         and idTorneo  = ".$this->objeto->getIdTorneo();
 
         $resultado = $this->con->ejecutar($_query);

@@ -1,5 +1,5 @@
 
-<div class="ui search fluid selection dropdown" style="color:black; background-color:#F7D358;">
+<div class="ui fluid selection dropdown" style="color:black; background-color:#F7D358;">
 <i class="dropdown icon"></i>
     <div class="default text" style="color:black; background-color:#F7D358;">
             <i class="desktop icon"></i>
@@ -34,19 +34,13 @@
 
     </div>
 
-    <div class="item">
-    <a href="?1=UsuarioController&2=gestion" class="item menu-it" style="color:black;">
-        <i class="database icon"></i>
-        Copia de Base de Datos
-    </a>
-
-    </div>
+    
     </div>
 
 
 </div>
 <br>
-<div class="ui search fluid selection dropdown" style="color:black; background-color:#9F81F7;">
+<div class="ui fluid selection dropdown" style="color:black; background-color:#9F81F7;">
 <i class="dropdown icon"></i>
     <div class="default text" style="color:black; background-color:#9F81F7;">
             <i class="dollar icon"></i>
@@ -62,13 +56,7 @@
 
     </div>
 
-    <div class="item">
-    <a href="?1=IngresosController&2=cierreMes" class="item menu-it" style="color:black;">
-    <i class="cut icon"></i><i class="dollar icon"></i>
-       Cierre de Mes
-    </a>
-
-    </div>
+    
 
     <div class="item">
     <a href="?1=EgresosController&2=chequeras" class="item menu-it" style="color:black;">
@@ -108,7 +96,7 @@
 
 
 <br>
-<div class="ui search fluid selection dropdown" style="color:black; background-color:pink;">
+<div class="ui fluid selection dropdown" style="color:black; background-color:pink;">
 <i class="dropdown icon"></i>
     <div class="default text" style="color:black; background-color:pink;">
             <i class="female icon"></i>
@@ -160,7 +148,7 @@
 </div>
 
 <br>
-<div class="ui search fluid selection dropdown" style="color:black; background-color:lightblue;">
+<div class="ui fluid selection dropdown" style="color:black; background-color:lightblue;">
 <i class="dropdown icon"></i>
     <div class="default text" style="color:black; background-color:lightblue;">
             <i class="male icon"></i>
@@ -212,7 +200,7 @@
 
 
 <br>
-<div class="ui search fluid selection dropdown" style="color:black; background-color:#BCF5A9;">
+<div class="ui fluid selection dropdown" style="color:black; background-color:#BCF5A9;">
     <i class="dropdown icon"></i>
         <div class="default text" style="color:black; background-color:#BCF5A9;">
                 <i class="futbol icon"></i>

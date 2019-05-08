@@ -1,5 +1,5 @@
 <br>
-<div class="ui search fluid selection dropdown" style="color:black; background-color:pink;">
+<div class="ui fluid selection dropdown" style="color:black; background-color:pink;">
 <i class="dropdown icon"></i>
     <div class="default text" style="color:black; background-color:pink;">
             <i class="female icon"></i>
@@ -29,7 +29,7 @@
 </div>
 
 <br>
-<div class="ui search fluid selection dropdown" style="color:black; background-color:lightblue;">
+<div class="ui fluid selection dropdown" style="color:black; background-color:lightblue;">
 <i class="dropdown icon"></i>
     <div class="default text" style="color:black; background-color:lightblue;">
             <i class="male icon"></i>

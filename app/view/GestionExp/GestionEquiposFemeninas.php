@@ -73,8 +73,6 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
                                         <th style="background-color: #86B404; color:white;">Nombre del  Equipo</th>
                                         <th style="background-color: #86B404; color:white;">Encar. del Equipo</th>
                                         <th style="background-color: #86B404; color:white;">Tel. Encargado</th>
-                                        <th style="background-color: #86B404; color:white;">Encargado Aux</th>
-                                        <th style="background-color: #86B404; color:white;">Tel. Aux</th>
                                         <th style="background-color: #86B404; color:white;">Categoría</th>
                                         <th style="background-color: #86B404; color:white;">Torneo </th>
                                         <th style="background-color: #86B404; color:white;">Acciones</th>
@@ -464,6 +462,7 @@ var appE = new Vue({
             cerrar()
             {
                 $('#modalCambios').modal('hide');
+                location.href = "?1=EquipoController&2=gestionF";
             }
            
             
@@ -544,7 +543,7 @@ var inscribir=(ele)=>{
                         
 );
                         }); 
-                        $('#dtInscriM').DataTable().ajax.reload();
+                        $('#dtInscriF').DataTable().ajax.reload();
                         
                     } 
                 }
@@ -588,7 +587,7 @@ var idEquipo = $("#idEqui").val();
                             $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show')
                         }); 
-                        $('#dtInscriM').DataTable().ajax.reload();
+                        $('#dtInscriF').DataTable().ajax.reload();
                         
                     } 
                 }
@@ -603,7 +602,7 @@ var idEquipo = $("#idEqui").val();
         }
 }
 var modalCambiar=(ele)=>{
-                
+    mostrarJugadores($(ele).attr('idcategoria'));
                 appE.datosDetalle.nombre= $(ele).attr("nombre");
                 appE.datosDetalle.Categoria= $(ele).attr("categoria");
                 appE.datosDetalle.encargado= $(ele).attr("encargado");

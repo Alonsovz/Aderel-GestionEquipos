@@ -52,6 +52,9 @@ class DaoClasificatoria extends DaoBase {
 
         $_query='UPDATE `equipos` SET `idEliminado`=3 WHERE `idTorneo`='.$idTorneo;
         $this->con->ejecutar($_query);
+
+        $_query='update inscriJugador set estado=3 where idEquipo IN (select idEquipo from equipos where idTorneo='.$idTorneo.')';
+        $this->con->ejecutar($_query);
     }
 
 }

@@ -175,7 +175,7 @@ class DaoJugadores extends DaoBase {
     {
         $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,
         DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento from jugadores j
-         where j.idEliminado = 1 and j.idGenero = 2 and j.idJugador>1";
+         where j.idEliminado = 1 and j.idGenero = 2 and j.idJugador>1 and j.idFondo=1";
 
         
 
@@ -274,45 +274,58 @@ class DaoJugadores extends DaoBase {
 
     }
 
-    public function inscripcionF()
+    public function inscripcionF($idCategoria=0)
     {
         $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,
         DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento from jugadores j
-         where j.idEliminado = 1 and j.idGenero = 1  and j.idJugador>1";
+         where j.idEliminado = 1 and j.idGenero = 1  and j.idJugador>1 and j.idFondo=1";
 
-        
+         $resultado = $this->con->ejecutar($_query);
+         $_json = '';
 
-            $resultado = $this->con->ejecutar($_query);
+         
+         while($fila = $resultado->fetch_assoc()) {
+             $_query='SELECT * from inscrijugador ins where ins.idJugador='.$fila["idJugador"].';';
+             $res = $this->con->ejecutar($_query);
+             
 
-            $_json = '';
+             $continuar=true;
+             if($res->num_rows>0){   //esta inscrito en algun equipo aunque no necesariamente en la misma categoria
 
+                 while($incri = $res->fetch_assoc()) {   //verficar si el equipo inscrito pertenece a la misma categoria
+                     $_query='SELECT * FROM `equipos` where `idCategoria`='.$idCategoria.' and idEquipo='.$incri['idEquipo'].';';
+                     $result = $this->con->ejecutar($_query);
+
+                     if($result->num_rows>0) //pertenece a la misma categoria
+                         $continuar=false;
+                 }   
+             }
+             if(!$continuar) continue;   //se salta este jugador
+
+                 
+             $object = json_encode($fila);
+
+             $btnVer = '<button id=\"'.$fila["idJugador"].'\" class=\"ui icon yellow small button\" onclick=\"ver(this)\"><i class=\"list icon\"></i> Detalles </button>';
+             $btnInscrbir = '<button id=\"'.$fila["idJugador"].'\" edad=\"'.$fila["edad"].'\" class=\"ui btnInscribir icon blue small button\" onclick=\"inscribir(this)\"><i class=\"edit icon\"></i><i class=\"futbol icon\"></i> Inscribir</button>';
+             $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
+
+             if($fila["idFondo"]==2){
+                 $acciones = ', "Acciones": "<table  style=width:100%;><td style=background-color:#FE2E2E><center> '.$btnVer.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+             }
+             else{
+                 $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnVer.''.$btnInscrbir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+             }
             
-            while($fila = $resultado->fetch_assoc()) {
-                    
-                $object = json_encode($fila);
+             
 
-                $btnVer = '<button id=\"'.$fila["idJugador"].'\" class=\"ui icon blue small button\" onclick=\"ver(this)\"><i class=\"list icon\"></i> Historial</button>';
-                $btnInscrbir = '<button  id=\"'.$fila["idJugador"].'\" edad=\"'.$fila["edad"].'\" class=\"ui btnInscribir icon red small button\" onclick=\"inscribir(this)\"><i class=\"futbol icon\"></i> Inscribir</button>';
-                $btnEditar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEditarJ icon blue small button\" onclick=\"editarJugador(this)\"><i class=\"edit icon\"></i> Editar</button>';
-                $btnEliminar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui btnEliminarJ icon negative small button\" onclick=\"eliminarJugador(this)\"><i class=\"trash icon\"></i> Eliminar</button>';
-                $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
-
-                if($fila["idFondo"]==2){
-                    $acciones = ', "Acciones": "<table  style=width:100%;><td style=background-color:#FE2E2E><center> '.$btnVer.'</center></td><td><center>'.$imagen.'</center></td></table>"';
-                }
-                else{
-                    $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnVer.''.$btnInscrbir.'</center></td><td><center>'.$imagen.'</center></td></table>"';
-                }
-                
-
-                $object = substr_replace($object, $acciones, strlen($object) -1,0);
-    
-                $_json .= $object.',';
-            }
-    
-            $_json = substr($_json,0, strlen($_json) - 1);
-    
-            echo '{"data": ['.$_json .']}';
+             $object = substr_replace($object, $acciones, strlen($object) -1,0);
+ 
+             $_json .= $object.',';
+         }
+ 
+         $_json = substr($_json,0, strlen($_json) - 1);
+ 
+         echo '{"data": ['.$_json .']}';
     }
 
     public function eliminarM() {
@@ -559,13 +572,13 @@ class DaoJugadores extends DaoBase {
     }
 
     public function detalles(){
-        $_query="select i.*, j.nombre as name, j.apellido as apellido, e.nombre as equipo,
-         t.nombreTorneo as torneo, c.nombreCategoria as categoria from inscriJugador i
-        inner join jugadores j on j.idJugador = i.idJugador
-        inner join torneos t on t.idTorneo = i.idTorneo
-        inner join equipos e on e.idEquipo = i.idEquipo
-        inner join categorias c on c.idCategoria = t.idTorneo
-        where i.idJugador =".$this->objeto->getIdJugador()." group by e.nombre";
+        $_query="select i.*,i.pago as pago, j.nombre as name, j.apellido as apellido, e.nombre as equipo,
+        t.nombreTorneo as torneo, c.nombreCategoria as categoria from inscriJugador i
+       inner join jugadores j on j.idJugador = i.idJugador
+       inner join equipos e on e.idEquipo = i.idEquipo
+       inner join torneos t on t.idTorneo = e.idTorneo
+       inner join categorias c on c.idCategoria = t.idTorneo
+       where i.idJugador = ".$this->objeto->getIdJugador()." group by e.nombre ";
         $resultado = $this->con->ejecutar($_query);
 
         return $resultado;
@@ -611,7 +624,7 @@ class DaoJugadores extends DaoBase {
             inner join jugadores j on j.idJugador = i.idJugador
             inner join torneos t on t.idTorneo = e.idTorneo
             inner join categorias c on c.idCategoria = t.idCategoria
-            where i.pago=1 and i.estado=2 group by i.idJugador";
+            where i.pago=1 and i.estado=2";
 
 
         $resultado = $this->con->ejecutar($_query);

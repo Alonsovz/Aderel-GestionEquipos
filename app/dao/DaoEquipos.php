@@ -600,7 +600,7 @@ class DaoEquipos extends DaoBase {
     }
 
     public function historial(){
-        $query = "select h.*,t.nombreTorneo as torneo from historialE h
+        $query = "select h.*,t.nombreTorneo as torneo,DATE_FORMAT(fecha, '%d/%m/%Y') as fecha from historialE h
         inner join torneos t on t.idTorneo = h.idTorneo
          where h.equipoLocal='".$this->objeto->getNombreEquipo()."' or h.equipoVisitante='".$this->objeto->getNombreEquipo()."'
          and h.idTorneo= ".$this->objeto->getIdTorneo();
@@ -610,6 +610,8 @@ class DaoEquipos extends DaoBase {
         return $resultado;
 
     }
+
+    
 
 
 }

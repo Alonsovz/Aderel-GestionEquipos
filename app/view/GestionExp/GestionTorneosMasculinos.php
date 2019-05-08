@@ -1188,7 +1188,8 @@ function guardarWinner(evt) {
                             if (result.value) {
                                 appE.guardarGoleador();
                                 appE.guardarAmonestado();
-                               // equipoWinner($("#idTo").val());
+                                $('#dtTorneosM').DataTable().ajax.reload();
+                               $('#modalResultados').modal('hide');
                             }
                         }); 
         }
