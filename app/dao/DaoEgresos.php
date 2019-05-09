@@ -68,7 +68,7 @@ class DaoEgresos extends DaoBase {
     }
 
     public function mostrarChequeras() {
-        $_query = "select *, format(monto,2) as monto from chequeras where idEliminado=1";
+        $_query = "select *, concat('$',format(monto,2)) as monto from chequeras where idEliminado=1";
 
         $resultado = $this->con->ejecutar($_query);
 

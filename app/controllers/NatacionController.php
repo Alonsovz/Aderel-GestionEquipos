@@ -178,6 +178,7 @@ class NatacionController extends ControladorBase {
     public function cobrar(){
         $id = $_REQUEST["idCobroN"];
         $cantidad = $_REQUEST["cantidadN"];
+        $user = $_REQUEST["userNat"];
 
         $dao = new DaoNatacion();
 
@@ -187,8 +188,11 @@ class NatacionController extends ControladorBase {
 
         $daoI = new DaoIngresos();
 
-        $daoI->objeto->setTitle("Escuela de Natación");
+        $daoI->objeto->setDescripcion("Escuela de Natación");
+        $daoI->objeto->setTitle("Pago de escuela  de natación de ".$user);
         $daoI->objeto->setCantidad($cantidad);
+        $daoI->objeto->setIdTorneo(0);
+        $daoI->objeto->setCategoria('Ninguna');
 
         
         echo $daoI->guardarOtro();

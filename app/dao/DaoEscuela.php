@@ -864,7 +864,8 @@ class DaoEscuela extends DaoBase {
         TIMESTAMPDIFF(YEAR,e.fechaNacimiento,CURDATE()) AS edad,
         n.nivel as nivel from escuelaFut e
         inner join nivelEscuela n on n.idEscuela = e.idEscuela
-        where  e.idEliminado=1 and e.idUsuario>1 and e.estado=2;";
+        inner join pagoEscuelaFut p on p.idUsuario = e.idUsuario
+        where  e.idEliminado=1 and e.idUsuario>1 and e.estado=2 and p.estado=1 group by p.idUsuario;";
 
         $resultado = $this->con->ejecutar($_query);
 

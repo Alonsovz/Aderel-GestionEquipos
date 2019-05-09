@@ -295,11 +295,12 @@ class DaoNatacion extends DaoBase {
 
     public function mostrarNatacionPagos()
     {
-        $_query = "select *,DATE_FORMAT(fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
-        DATE_FORMAT(fechaInscripcion, '%d/%m/%Y') as fechaInscripcion,
-        DATE_FORMAT(fechaFinal, '%d/%m/%Y') as fechaFinal,
-        TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from natacion
-        where  idEliminado=1 and idUsuario>1 and estado=2;";
+        $_query = "select n.*,DATE_FORMAT(n.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        DATE_FORMAT(n.fechaInscripcion, '%d/%m/%Y') as fechaInscripcion,
+        DATE_FORMAT(n.fechaFinal, '%d/%m/%Y') as fechaFinal,
+        TIMESTAMPDIFF(YEAR,n.fechaNacimiento,CURDATE()) AS edad from natacion n
+        inner join pagoNatacion p on p.idUsuario = n.idUsuario
+        where  n.idEliminado=1 and n.idUsuario>1 and n.estado=2 and p.estado=1 group by p.idUsuario;";
 
         $resultado = $this->con->ejecutar($_query);
 

@@ -18,11 +18,7 @@ sub_titulo="¿Está seguro de querer eliminar esta categoria?" :campos="campos_e
                             <i class="female icon"></i>  Categorías Femeninas<font color="#DF01A5" size="20px">.</font>
                            
 
-                            <?php
-
-if($_SESSION["descRol"] == 'Administrador') {
-
-    ?>                           
+                       
 
                             <button class="ui purple button">
                             <a href="?1=TorneosController&2=gestionF"  style="color:white;">
@@ -45,16 +41,9 @@ if($_SESSION["descRol"] == 'Administrador') {
                             </a>
                             </button>
 
-                            <?php }else{ ?>
+                           
 
-                                <button class="ui purple button">
-                            <a href="?1=TorneosController&2=gestionF"  style="color:white;">
-                            <i class="trophy icon"></i>
-                            Torneos
-                            </a>
-                            </button>
 
-<?php } ?>
                     </div>
         </div>
                     <div class="row title-bar">

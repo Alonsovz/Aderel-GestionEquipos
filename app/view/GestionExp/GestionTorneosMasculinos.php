@@ -29,11 +29,7 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
                     <i class="trophy icon"></i> <i class="futbol icon"></i>
                         Torneos Masculinos<font color="#1CC647" size="20px">.</font>
                     
-                        <?php
-
-if($_SESSION["descRol"] == 'Administrador') {
-
-    ?>
+    
 
                            <button class="ui red button">
                               <a href="?1=CategoriaController&2=gestionM"  style="color:white;">
@@ -57,16 +53,6 @@ if($_SESSION["descRol"] == 'Administrador') {
                             </a>
                             </button>
 
-<?php }else{ ?>
-
-<button class="ui pink button">
-<a href="?1=CategoriaController&2=gestionM"  style="color:white;">
-<i class="chart bar outline icon"></i>
-Categorías de Torneo
- </a>
-</button>
-
-<?php } ?>
                         </div>
             </div>
             

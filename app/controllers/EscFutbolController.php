@@ -440,6 +440,7 @@ class EscFutbolController extends ControladorBase {
     public function cobrar(){
         $id = $_REQUEST["idCobroEF"];
         $cantidad = $_REQUEST["cantidadEF"];
+        $user = $_REQUEST["userEsc"];
 
         $dao = new DaoEscuela();
 
@@ -449,8 +450,11 @@ class EscFutbolController extends ControladorBase {
 
         $daoI = new DaoIngresos();
 
-        $daoI->objeto->setTitle("Escuela de Fútbol");
+        $daoI->objeto->setDescripcion("Escuela de Fútbol");
+        $daoI->objeto->setTitle("Pago de escuela  de fútbol de ".$user);
         $daoI->objeto->setCantidad($cantidad);
+        $daoI->objeto->setIdTorneo(0);
+        $daoI->objeto->setCategoria('Ninguna');
 
         
         echo $daoI->guardarOtro();

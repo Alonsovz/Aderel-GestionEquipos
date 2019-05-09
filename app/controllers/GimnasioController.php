@@ -192,6 +192,7 @@ class GimnasioController extends ControladorBase {
     public function cobrar(){
         $id = $_REQUEST["idCobro"];
         $cantidad = $_REQUEST["cantidadG"];
+        $user = $_REQUEST["userGim"];
 
         $dao = new DaoGimnasio();
 
@@ -201,8 +202,11 @@ class GimnasioController extends ControladorBase {
 
         $daoI = new DaoIngresos();
 
-        $daoI->objeto->setTitle("Gimnasio");
+        $daoI->objeto->setDescripcion("Gimnasio");
+        $daoI->objeto->setTitle("Pago del Gimnasio de ".$user);
         $daoI->objeto->setCantidad($cantidad);
+        $daoI->objeto->setIdTorneo(0);
+        $daoI->objeto->setCategoria('Ninguna');
 
         
         echo $daoI->guardarOtro();

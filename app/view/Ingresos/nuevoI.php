@@ -327,6 +327,7 @@
         <form class="ui form" id="frmCobroGim">
         <input type="hidden" id="idUsuario">
             <input type="hidden" id="idCobro" name="idCobro">
+            <input type="hidden" id="userGim" name="userGim">
             <div class="field">
             <i class="dollar icon"></i> Cantidad a pagar:
             <input type="text" id="cantidadG" name="cantidadG" >
@@ -362,6 +363,7 @@
         <form class="ui form" id="frmCobroEscuelaFutbol">
         <input type="hidden" id="idUsuarioEF" name="idUsuarioEF">
             <input type="hidden" id="idCobroEF" name="idCobroEF">
+            <input type="hidden" id="userEsc" name="userEsc">
             <div class="field">
             <i class="dollar icon"></i> Cantidad a pagar:
             <input type="text" id="cantidadEF" name="cantidadEF" >
@@ -395,6 +397,7 @@
         <form class="ui form" id="frmCobroNa">
         <input type="hidden" id="idUsuarioN">
             <input type="hidden" id="idCobroN" name="idCobroN">
+            <input type="hidden" id="userNat" name="userNat">
             <div class="field">
             <i class="dollar icon"></i> Cantidad a pagar:
             <input type="text" id="cantidadN" name="cantidadN" >
@@ -709,6 +712,7 @@ var app = new Vue({
                 $("#nombreG").text(nombre);
                 $("#apellidoG").text(apellido);
                 $("#fechaPagoG").text(fecha);
+                $("#userGim").val(nombre +' '+ apellido);
                 
                 $('#modalCobroGim').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
@@ -722,6 +726,7 @@ var app = new Vue({
                 $("#nombreN").text(nombre);
                 $("#apellidoN").text(apellido);
                 $("#fechaPagoN").text(fecha);
+                $("#userNat").val(nombre +' '+ apellido);
                 
                 $('#modalCobroNa').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
@@ -750,6 +755,7 @@ var app = new Vue({
                 $("#apellidoEF").text(apellido);
                 $("#fechaPagoEF").text(fecha);
                 $("#nivelEF").text(nivel);
+                $("#userEsc").val(nombre +' '+ apellido);
                 
                 $('#modalCobroEscFubol').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');

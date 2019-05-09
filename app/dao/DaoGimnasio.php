@@ -62,11 +62,12 @@ class DaoGimnasio extends DaoBase {
 
     public function mostrarGimnasioPagos()
     {
-        $_query = "select *,DATE_FORMAT(fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
-        DATE_FORMAT(fechaInscripcion, '%d/%m/%Y') as fechaInscripcion,
-        DATE_FORMAT(fechaFinal, '%d/%m/%Y') as fechaFinal,
-        TIMESTAMPDIFF(YEAR,fechaNacimiento,CURDATE()) AS edad from gimnasio
-        where  idEliminado=1 and idUsuario>1 and estado=2;";
+        $_query = "select g.*,DATE_FORMAT(g.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento,
+        DATE_FORMAT(g.fechaInscripcion, '%d/%m/%Y') as fechaInscripcion,
+        DATE_FORMAT(g.fechaFinal, '%d/%m/%Y') as fechaFinal,
+        TIMESTAMPDIFF(YEAR,g.fechaNacimiento,CURDATE()) AS edad from gimnasio g
+        inner join pagoGimnasio p on p.idUsuario = g.idUsuario
+        where  g.idEliminado=1 and g.idUsuario>1 and g.estado=2 and p.estado=1 group by p.idUsuario;";
 
         $resultado = $this->con->ejecutar($_query);
 

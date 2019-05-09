@@ -70,7 +70,7 @@
 <i class="male icon"></i><i class="weight icon"></i> Agregar nuevo usuario del gimnasio
 </div>
 <div class="content" class="ui equal width form">
-    <form class="ui form"> 
+    <form class="ui form" id="frmUsuariosG" method="POST" enctype="multipart/form-data" action='?1=NatacionController&2=registrar'> 
         <div class="field">
             <div class="fields">
                     <div class="eight wide field">
@@ -341,7 +341,7 @@ function limpiar(){
 }
 
 $("#btnGuardarU").click(function(){
-    const form = $('#frmUsuariosNa');
+    const form = $('#frmUsuariosG');
 
                 const datosFormulario = new FormData(form[0]);
          

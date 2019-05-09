@@ -9,7 +9,7 @@ class DaoRemesasCargos extends DaoBase {
 
     public function mostrarCargos()
     {
-        $_query = "select c.*, format(c.monto,2) as monto,  ch.chequera as chequera,DATE_FORMAT(c.fecha, '%d/%m/%Y') as fecha from cargosBancarios c
+        $_query = "select c.*, concat('$',format(c.monto,2)) as monto,  ch.chequera as chequera,DATE_FORMAT(c.fecha, '%d/%m/%Y') as fecha from cargosBancarios c
         inner join chequeras ch on ch.idChequera = c.idChequera
           where c.idEliminado=1;";
 
@@ -38,7 +38,7 @@ class DaoRemesasCargos extends DaoBase {
 
     public function mostrarRemesas()
     {
-        $_query = "select c.*, format(c.monto,2) as monto,  ch.chequera as chequera,DATE_FORMAT(c.fecha, '%d/%m/%Y') as fecha from remesas c
+        $_query = "select c.*, concat('$',format(c.monto,2)) as monto,  ch.chequera as chequera,DATE_FORMAT(c.fecha, '%d/%m/%Y') as fecha from remesas c
         inner join chequeras ch on ch.idChequera = c.idChequera
           where c.idEliminado=1;";
 
