@@ -19,7 +19,7 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
     
             <div class="row">
                  <div class="titulo">
-                    <i class="Female icon"></i>Equipos Femeninos<font color="#86B404" size="20px">.</font>
+                    <i class="female icon"></i>Equipos Femeninos<font color="#86B404" size="20px">.</font>
                             
                             <button class="ui pink button">
                             <a href="?1=CategoriaController&2=gestionF"  style="color:white;">
@@ -326,12 +326,6 @@ var appE = new Vue({
                     type: 'text'
                 },
                 {
-                    label: 'Categoría del Equipo:',
-                    name: 'selectCategoria',
-                    type: 'select',
-                    options: <?php echo $categoriasCMB;?>,
-                },
-                {
                     name: 'idDetalleE',
                     type: 'hidden'
                 }
@@ -347,10 +341,10 @@ var appE = new Vue({
             }]
         },
         methods: {
-            cargarDetalles(id, categoria) {
+            cargarDetalles(id) {
 
             this.idEquipo = parseInt(id);
-            this.categoria = categoria;
+           
 
             $('#frmDetalles').addClass('loading');
             $.ajax({
@@ -398,6 +392,10 @@ var appE = new Vue({
                 $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                             .modal('show');
             },
+            cerrarModalE() {
+                this.detalles = [];
+                
+            },
             cerrarModalD() {
                 this.detalles = [];
 
@@ -428,7 +426,7 @@ var appE = new Vue({
                         $('#frmEditarE input[name="encargadoAux"]').val(dat.encargadoAux);
                         $('#frmEditarE input[name="telefonoE"]').val(dat.telefonoE);
                         $('#frmEditarE input[name="telefonoAux"]').val(dat.telefonoAux);
-                        $('#frmEditarE select[name="selectCategoria"]').dropdown('set selected', dat.idCategoria);
+                      //  $('#frmEditarE select[name="selectCategoria"]').dropdown('set selected', dat.idCategoria);
                     })
                     .catch(err => {
                         console.log(err);
@@ -463,6 +461,91 @@ var appE = new Vue({
             {
                 $('#modalCambios').modal('hide');
                 location.href = "?1=EquipoController&2=gestionF";
+            },
+            eliminarIns(idEquipo,idJugador,mayor){
+                var idE = idEquipo;
+                var idJ = idJugador;
+                var idMayor = mayor;
+                
+         if(idMayor == 2){
+        alertify.confirm("¿Desea eliminar la inscripción de este jugador? (El cupo quedará libre para inscribir un jugador mayor al equipo)",
+            function(){
+                $.ajax({
+                type: 'POST',
+                url: '?1=JugadoresController&2=eliminarJugadorMayor',
+                data: {
+                    idEquipo : idE,
+                    idJugador : idJ,
+                    
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        //appE.datosDetalle = [];
+                        $('#modalDetalles').modal('hide');
+                        swal({
+                            title: 'Inscripción eliminada',
+                            text: 'Cupo disponible para nuevo jugador',
+                            type: 'success',
+                            showConfirmButton: true,
+
+                        }).then((result) => {
+                            
+                            location.href = "?1=EquipoController&2=gestionF";
+                        
+                        }); 
+                        
+                        
+                    } 
+                }
+
+             });
+            },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            }); 
+                }else{
+          alertify.confirm("¿Desea eliminar la inscripción de este jugador?",
+            function(){
+
+                $.ajax({
+                type: 'POST',
+                url: '?1=JugadoresController&2=eliminarInscripcion',
+                data: {
+                    idEquipo : idE,
+                    idJugador : idJ,
+                    
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        //appE.datosDetalle = [];
+                        $('#modalDetalles').modal('hide');
+                        swal({
+                            title: 'Inscripción eliminada',
+                            text: 'Cupo disponible para nuevo jugador',
+                            type: 'success',
+                            showConfirmButton: true,
+
+                        }).then((result) => {
+                            $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+                            appE.cargarDetalles(idE);
+                        }); 
+                        
+                        
+                    } 
+                }
+
+             });
+
+            },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            });
+                }
             }
            
             
@@ -478,6 +561,7 @@ $(document).ready(function(){
     $('#frmEditarE input[name="telefonoAux"]').mask("9999-9999");
     $('#frmRegistrarE input[name="telefonoE"]').mask("9999-9999");
     $('#frmRegistrarE input[name="telefonoAux"]').mask("9999-9999");
+    $('#frmInscribirE input[name="nombreEquipo"]').prop('disabled',true);
 });
 
 var nomina=(ele)=>{
@@ -629,7 +713,7 @@ var enviarFondo=(ele)=>{
 var verJugadoresE=(ele)=>{
      $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
      .modal('show');
-    appE.cargarDetalles($(ele).attr('id'),$(ele).attr("categoria"));
+    appE.cargarDetalles($(ele).attr('id'));
   }
 
 var editarEquipo=(ele)=>{

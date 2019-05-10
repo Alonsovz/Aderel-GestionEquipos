@@ -24,6 +24,9 @@ class UsuarioController extends ControladorBase {
         $daoT = new DaoTorneos();
         $torneos = $daoT->cargarTorneosRpt();
 
+        $daoC = new DaoEgresos();
+        $chequerasCMB = $daoC->mostrarChequerasCMB();
+       
 
         $daoC = new DaoCategorias();
         $categoriasCMB = $daoC->mostrarCategoriasRpt();

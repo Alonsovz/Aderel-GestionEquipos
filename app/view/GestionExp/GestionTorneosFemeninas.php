@@ -6,14 +6,14 @@
 
 <br><div id="appE">
 
-<modal-registrar id_form="frmRegistrarT" id="modalRegistrarT" url="?1=TorneosController&2=registrarM" titulo="Registrar Torneo"
+<modal-registrar id_form="frmRegistrarT" id="modalRegistrarT" url="?1=TorneosController&2=registrarF" titulo="Registrar Torneo"
 :campos="campos_registroT" tamanio='tiny' ></modal-registrar>
 
 
-<modal-editar id_form="frmEditarT" id="modalEditarT" url="?1=TorneosController&2=editarM" titulo="Editar Torneo"
+<modal-editar id_form="frmEditarT" id="modalEditarT" url="?1=TorneosController&2=editarF" titulo="Editar Torneo"
 :campos="campos_editarT" tamanio='tiny'></modal-editar>
 
-<modal-eliminar id_form="frmEliminarT" id="modalEliminarT" url="?1=TorneosController&2=eliminarM" titulo="Eliminar Torneo"
+<modal-eliminar id_form="frmEliminarT" id="modalEliminarT" url="?1=TorneosController&2=eliminarF" titulo="Eliminar Torneo"
 sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_eliminarT" tamanio='tiny'></modal-eliminar>
 
 <modal-detalles :detalles="detalles"></modal-detalles>
@@ -711,7 +711,7 @@ var appE = new Vue({
             },
 
             refrescarTabla() {
-                tablaTorneosM.ajax.reload();  
+                tablaTorneosF.ajax.reload();  
             },
             modalRegistrarT() {
                 $('#modalRegistrarT').modal('setting', 'autofocus', false).modal('setting', 'closable', false).modal(

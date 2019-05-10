@@ -210,6 +210,42 @@ class JugadoresController extends ControladorBase {
         echo $dao->goleador();
     }
 
+    public function eliminarJugadorMayor() {
+        $idJ = $_REQUEST["idJugador"];
+        $idEquipo = $_REQUEST["idEquipo"];
+    //    $idTorneo = $_REQUEST["idTorneo"];
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setIdJugador($idJ);
+        $dao->objeto->setIdEquipo($idEquipo);
+      //  $dao->objeto->setIdTorneo($idTorneo);
+
+        echo $dao->eliminarJugadorIns();
+
+        $daoE = new DaoEquipos();
+        $daoE->objeto->setIdEquipo($idEquipo);
+        echo $daoE->actualizarCupoEliminado();
+       
+    }
+
+    public function eliminarInscripcion() {
+        $idJ = $_REQUEST["idJugador"];
+        $idEquipo = $_REQUEST["idEquipo"];
+    //    $idTorneo = $_REQUEST["idTorneo"];
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setIdJugador($idJ);
+        $dao->objeto->setIdEquipo($idEquipo);
+      //  $dao->objeto->setIdTorneo($idTorneo);
+
+        echo $dao->eliminarJugadorIns();
+
+      
+       
+    }
+
 
     public function guardarJugadorM() {
         // var_dump($_REQUEST);

@@ -186,7 +186,7 @@ class DaoRemesasCargos extends DaoBase {
 
                     $query = "select c.*, format(c.monto,2) as monto,  ch.chequera as chequera,DATE_FORMAT(c.fecha, '%d/%m/%Y') as fecha from remesas c
                     inner join chequeras ch on ch.idChequera = c.idChequera
-                     where c.mes='{$this->objeto->getMes()}' and c.anio='{$this->objeto->getAnio()}';";
+                     where c.idEliminado=1 and c.mes='{$this->objeto->getMes()}' and c.anio='{$this->objeto->getAnio()}';";
 
                     $resultado = $this->con->ejecutar($query);
 
@@ -197,7 +197,43 @@ class DaoRemesasCargos extends DaoBase {
 
                     $query = "select c.*, format(c.monto,2) as monto,  ch.chequera as chequera,DATE_FORMAT(c.fecha, '%d/%m/%Y') as fecha from cargosBancarios c
                     inner join chequeras ch on ch.idChequera = c.idChequera
-                     where c.mes='{$this->objeto->getMes()}' and c.anio='{$this->objeto->getAnio()}';";
+                     where c.idEliminado=1 and c.mes='{$this->objeto->getMes()}' and c.anio='{$this->objeto->getAnio()}';";
+
+                    $resultado = $this->con->ejecutar($query);
+
+                    return $resultado;
+                }
+
+
+                public function reporteRemesasCuenta() {
+
+                    $query = "select c.*, format(c.monto,2) as monto,  ch.chequera as chequera,
+                    DATE_FORMAT(c.fecha, '%d/%m/%Y') as fecha from remesas c
+                    inner join chequeras ch on ch.idChequera = c.idChequera
+                    where c.idEliminado=1  and c.mes='{$this->objeto->getMes()}' and c.anio='{$this->objeto->getAnio()}' and
+                    c.idChequera=".$this->objeto->getIdCheque();
+
+                    $resultado = $this->con->ejecutar($query);
+
+                    return $resultado;
+                }
+
+                public function reporteCargosCuentas() {
+
+                    $query = "select c.*, format(c.monto,2) as monto,  ch.chequera as chequera,DATE_FORMAT(c.fecha, '%d/%m/%Y') as fecha from cargosBancarios c
+                    inner join chequeras ch on ch.idChequera = c.idChequera
+                     where  c.idEliminado=1  and c.mes='{$this->objeto->getMes()}' and c.anio='{$this->objeto->getAnio()}' and
+                     c.idChequera=".$this->objeto->getIdCheque();
+
+                    $resultado = $this->con->ejecutar($query);
+
+                    return $resultado;
+                }
+
+
+                public function reporteCantidadCuenta() {
+
+                    $query = "select *,format(monto,2) as monto from chequeras where idChequera=".$this->objeto->getIdCheque();
 
                     $resultado = $this->con->ejecutar($query);
 

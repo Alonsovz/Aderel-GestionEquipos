@@ -227,6 +227,15 @@ class DaoEquipos extends DaoBase {
         
     }
 
+    public function actualizarCupoEliminado() {
+
+        $_query = "update equipos set cuposMayores= cuposMayores + 1 where idEquipo = ".$this->objeto->getIdEquipo();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        
+    }
+
     public function inscribirM() {
         $_query = "update equipos set idInscripcion=2, idTorneo='".$this->objeto->getIdTorneo()."'
          where idGenero=2 and idEquipo= ".$this->objeto->getIdEquipo();
@@ -506,9 +515,11 @@ class DaoEquipos extends DaoBase {
     }
 
     public function mostrarJugadoresInsM(){
-        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,i.estado,i.idEquipo as idE, i.pago as pago,e.nombre as equipo from inscriJugador i
-        inner join equipos e on e.idEquipo = i.idEquipo
-        inner join jugadores j on j.idJugador = i.idJugador
+        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,i.estado,i.idEquipo as idE,
+        i.pago as pago, i.idMayor as mayor, 
+        e.nombre as equipo from inscriJugador i
+             inner join equipos e on e.idEquipo = i.idEquipo
+             inner join jugadores j on j.idJugador = i.idJugador
         where i.idEquipo='".$this->objeto->getIdEquipo()."'  and i.estado=2 group by i.idJugador";
 
         $resultado = $this->con->ejecutar($_query);

@@ -274,6 +274,20 @@ class DaoJugadores extends DaoBase {
 
     }
 
+    public function eliminarJugadorIns(){
+        $_query = "delete from inscriJugador where idEquipo ='".$this->objeto->getIdEquipo()."'
+        and idJugador =".$this->objeto->getIdJugador();
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+
+    }
+
     public function inscripcionF($idCategoria=0)
     {
         $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,
@@ -293,7 +307,7 @@ class DaoJugadores extends DaoBase {
              if($res->num_rows>0){   //esta inscrito en algun equipo aunque no necesariamente en la misma categoria
 
                  while($incri = $res->fetch_assoc()) {   //verficar si el equipo inscrito pertenece a la misma categoria
-                     $_query='SELECT * FROM `equipos` where `idCategoria`='.$idCategoria.' and idEquipo='.$incri['idEquipo'].';';
+                     $_query='SELECT * FROM `equipos` where  `idCategoria`='.$idCategoria.' and idEquipo='.$incri['idEquipo'].';';
                      $result = $this->con->ejecutar($_query);
 
                      if($result->num_rows>0) //pertenece a la misma categoria

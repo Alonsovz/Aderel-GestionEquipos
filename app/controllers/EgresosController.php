@@ -407,4 +407,42 @@ class EgresosController extends ControladorBase {
 
         $reporte->reporteEgresosPorMes($mes,$anio, $resultado, $resultado1,$cantidad,$retencion,$pagado);
     }
+
+    public function rptCuentas() {
+        $idCheque = $_REQUEST["cuentas"];
+        
+        $mes = $_REQUEST["mes"];
+        $anio = $_REQUEST["anio"];
+
+        require_once './app/reportes/rptCuentas.php';
+        
+        $daoRC = new DaoRemesasCargos();
+        $dao = new DaoEgresos();
+
+        $daoRC->objeto->setIdCheque($idCheque);
+        $daoRC->objeto->setMes($mes);
+       $daoRC->objeto->setAnio($anio);
+       $dao->objeto->setMes($mes);
+       $dao->objeto->setAnio($anio);
+       $dao->objeto->setIdCheque($idCheque);
+
+        $reporte = new Reporte();
+
+        $remesas = $daoRC->reporteRemesasCuenta();
+        $cargos = $daoRC->reporteCargosCuentas();
+        //$cheques = $daoRC->cheques();
+
+
+       
+        $resultado = $dao->reporteEgresosPorMesCuentas();
+        $resultado1 = $dao->reporteEgresosPorMesCuentas();
+        $cuenta = $daoRC->reporteCantidadCuenta();
+        $cantidad = $dao->totalCantidadCuentas();
+        $retencion = $dao->totalRetencionCuentas();
+        $pagado = $dao->totalPagadoCuentas();
+        $total = $daoRC->reporteCantidadCuenta();
+
+
+        $reporte->rptCuentas($remesas,$cargos, $resultado,$resultado1,$cantidad,$retencion,$pagado,$mes,$anio,$total,$cuenta);
+    }
  }

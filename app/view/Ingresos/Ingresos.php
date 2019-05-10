@@ -5,22 +5,7 @@
 <script src="./res/tablas/tablaIngresos.js"></script>
 
  </head>
-<script>
-<?php
-            $fechaMaxima = date('Y-m-d');
-            $fechaMax = strtotime ( '-0 day' , strtotime ( $fechaMaxima ) ) ;
-            $fechaMax = date ( 'Y-m-d' , $fechaMax );
-             
-            $fechaMinima = date('Y-m-d');
-            $fechaMin = strtotime ( '-1 day' , strtotime ( $fechaMinima ) ) ;
-            $fechaMin = date ( 'Y-m-d' , $fechaMin );
 
-            $año= date('Y');
-?>
-
-
-            
-</script>
 
 
 <style>
@@ -142,12 +127,12 @@
           <div class="fields">
             <div class="eight wide field"><br>
                       <label><i class="calendar icon"></i>Fecha inicial:</label>
-                      <input type="date" name="fecha1" id="fecha1"  required max=<?php echo $fechaMin;?>>
+                      <input type="date" name="fecha1" id="fecha1"  required>
             </div>
 
             <div class="eight wide field"><br>
                  <label> <i class="calendar icon"></i>Fecha final: </label>
-                  <input type="date" name="fecha2" id="fecha2" class="form-control" required max=<?php echo $fechaMax;?>>
+                  <input type="date" name="fecha2" id="fecha2" class="form-control" required>
             </div>    
 
             </div>

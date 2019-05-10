@@ -146,20 +146,20 @@ sub_titulo="¿Está seguro de enviar este equipo a fondo común?" :campos="campo
         <div class="item" style="font-size:16px;">
         <i class="users icon"></i>
             <div class="content" style="font-size:16px;">
-               {{datosDetalle.nombre}}
+               <a id="nomEqui"></a>
             </div>
         </div>
         <div class="item" style="font-size:16px;">
         <i class="chart bar outline icon"></i>
             <div class="content" style="font-size:16px;">
-            {{datosDetalle.Categoria}}
+            <a id="catEqui"></a>
             {{datosDetalle.idCategoria}}
             </div>
         </div>
         <div class="item" style="font-size:16px;">
         <i class="user outline icon"></i>
             <div class="content" style="font-size:16px;">
-          {{datosDetalle.encargado}}
+          <a id="encEqui"></a>
             </div>
             <input type="hidden" id="idEqui" >
             <input type="hidden" id="idTor" >
@@ -327,12 +327,7 @@ var appE = new Vue({
                     name: 'telefonoAux',
                     type: 'text'
                 },
-                {
-                    label: 'Categoría del Equipo:',
-                    name: 'selectCategoria',
-                    type: 'select',
-                    options: <?php echo $categoriasCMB;?>,
-                },
+                
                 {
                     name: 'idDetalleE',
                     type: 'hidden'
@@ -391,7 +386,7 @@ var appE = new Vue({
             },
             cerrarModalE() {
                 this.detalles = [];
-                ;
+                
             },
             cerrarModalD() {
                 this.detalles = [];
@@ -433,7 +428,7 @@ var appE = new Vue({
                         $('#frmEditarE input[name="encargadoAux"]').val(dat.encargadoAux);
                         $('#frmEditarE input[name="telefonoE"]').val(dat.telefonoE);
                         $('#frmEditarE input[name="telefonoAux"]').val(dat.telefonoAux);
-                        $('#frmEditarE select[name="selectCategoria"]').dropdown('set selected', dat.idCategoria);
+                     //   $('#frmEditarE select[name="selectCategoria"]').dropdown('set selected', dat.idCategoria);
                     })
                     .catch(err => {
                         console.log(err);
@@ -471,6 +466,91 @@ var appE = new Vue({
             {
                 $('#modalJugadoresE').modal('hide');
                // dtInscriM.ajax.reload(); 
+            },
+            eliminarIns(idEquipo,idJugador,mayor){
+                var idE = idEquipo;
+                var idJ = idJugador;
+                var idMayor = mayor;
+                
+         if(idMayor == 2){
+        alertify.confirm("¿Desea eliminar la inscripción de este jugador? (El cupo quedará libre para inscribir un jugador mayor al equipo)",
+            function(){
+                $.ajax({
+                type: 'POST',
+                url: '?1=JugadoresController&2=eliminarJugadorMayor',
+                data: {
+                    idEquipo : idE,
+                    idJugador : idJ,
+                    
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        //appE.datosDetalle = [];
+                        $('#modalDetalles').modal('hide');
+                        swal({
+                            title: 'Inscripción eliminada',
+                            text: 'Cupo disponible para nuevo jugador',
+                            type: 'success',
+                            showConfirmButton: true,
+
+                        }).then((result) => {
+                            
+                            location.href = "?1=EquipoController&2=gestionM";
+                        
+                        }); 
+                        
+                        
+                    } 
+                }
+
+             });
+            },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            }); 
+                }else{
+          alertify.confirm("¿Desea eliminar la inscripción de este jugador?",
+            function(){
+
+                $.ajax({
+                type: 'POST',
+                url: '?1=JugadoresController&2=eliminarInscripcion',
+                data: {
+                    idEquipo : idE,
+                    idJugador : idJ,
+                    
+                },
+                success: function(r) {
+                    if(r == 1) {
+                        //appE.datosDetalle = [];
+                        $('#modalDetalles').modal('hide');
+                        swal({
+                            title: 'Inscripción eliminada',
+                            text: 'Cupo disponible para nuevo jugador',
+                            type: 'success',
+                            showConfirmButton: true,
+
+                        }).then((result) => {
+                            $('#modalDetalles').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
+                            .modal('show');
+                            appE.cargarDetalles(idE);
+                        }); 
+                        
+                        
+                    } 
+                }
+
+             });
+
+            },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            });
+                }
             }
             
             
@@ -487,6 +567,7 @@ $(document).ready(function(){
     $('#frmEditarE input[name="telefonoAux"]').mask("9999-9999");
     $('#frmRegistrarE input[name="telefonoE"]').mask("9999-9999");
     $('#frmRegistrarE input[name="telefonoAux"]').mask("9999-9999");
+    $('#frmEditarE input[name="nombre"]').prop('readonly',true);
 });
 var inscribir=(ele)=>{
     if($(ele).attr("edad")<$("#edadMinima").text()){
@@ -589,7 +670,7 @@ var inscribir=(ele)=>{
 
                         }).then((result) => {
                             $('#modalCambios').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
-                            .modal('show')
+                            .modal('show');
                         }); 
                         $('#dtInscriM').DataTable().ajax.reload();
                         
@@ -630,9 +711,9 @@ var verJugadoresE=(ele)=>{
     
     mostrarJugadores($(ele).attr('idcategoria'));
                 
-                appE.datosDetalle.nombre= $(ele).attr("nombre");
-                appE.datosDetalle.Categoria= $(ele).attr("categoria");
-                appE.datosDetalle.encargado= $(ele).attr("encargado");
+                $("#nomEqui").text($(ele).attr("nombre"));
+                $("#catEqui").text($(ele).attr("categoria"));
+                $("#encEqui").text($(ele).attr("encargado"));
                 //appE.datosDetalle.idCategoria= $(ele).attr("idCategoria");
                 $("#idEqui").val($(ele).attr("id"));
                 $("#idTor").val($(ele).attr("idTorneo"));

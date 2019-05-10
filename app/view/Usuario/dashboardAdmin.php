@@ -1,16 +1,3 @@
-<?php
-            $fechaMaxima = date('Y-m-d');
-            $fechaMax = strtotime ( '-0 day' , strtotime ( $fechaMaxima ) ) ;
-            $fechaMax = date ( 'Y-m-d' , $fechaMax );
-             
-            $fechaMinima = date('Y-m-d');
-            $fechaMin = strtotime ( '-1 day' , strtotime ( $fechaMinima ) ) ;
-            $fechaMini = date ( 'Y-m-d' , $fechaMin );
-
-            $anio= date('Y');
-            $mes = date('M');
-            $mesN = date('m')
-?>
 
 
 <div id="app">
@@ -24,17 +11,17 @@
 
     
 
-    <button id="btnReportes" style="width:33%; text-align:center;"  class="ui blue inverted segment">
+    <a href="?1=UsuarioController&2=reporteria"  style="width: 33%; text-align:center;"  class="ui blue inverted segment">
         Reportes
         <div class="ui divider"></div>
         <i class="file outline icon"></i>
-    </button>
+    </a>
 
-    <button style="width: 33%; text-align:center;"  class="ui yellow inverted segment" id="btnCierre">
-        Cierre de <?php echo $mes?>_<?php echo $anio ?>
+    <a href="?1=EgresosController&2=chequeras"  style="width: 33%; text-align:center;" class="ui yellow inverted segment">
+        Cuentas de Banco
         <div class="ui divider"></div>
         <i class="dollar icon"></i>
-    </button>
+    </a>
    
     
 </div>

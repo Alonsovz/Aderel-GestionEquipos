@@ -74,13 +74,7 @@
 
     </div>
 
-    <div class="item">
-    <a href="?1=RemesasController&2=remesas" class="item menu-it" style="color:black;">
-        <i class="share icon"></i><i class="dollar icon"></i>
-       Remesar cuentas
-    </a>
-
-    </div>
+    
 
     <div class="item">
     <a href="?1=RemesasController&2=cargoBancario" class="item menu-it" style="color:black;">

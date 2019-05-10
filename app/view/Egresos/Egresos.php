@@ -4,19 +4,7 @@ $(function() {
 });
 </script>
 <br>
-<?php
-            $fechaMaxima = date('Y-m-d');
-            $fechaMax = strtotime ( '-0 day' , strtotime ( $fechaMaxima ) ) ;
-            $fechaMax = date ( 'Y-m-d' , $fechaMax );
-             
-            $fechaMinima = date('Y-m-d');
-            $fechaMin = strtotime ( '-1 day' , strtotime ( $fechaMinima ) ) ;
-            $fechaMin = date ( 'Y-m-d' , $fechaMin );
 
-            $anio= date('Y');
-            $mes = date('M');
-            $mesN = date('m')
-?>
 <div id="app">
 
     <modal-registrar id_form="frmRegistrar" id="modalRegistrar" url="?1=EgresosController&2=registrar" titulo="Registrar Egreso"
@@ -66,13 +54,13 @@ $(function() {
 
                                     <label>
                                     <i class="calendar icon"></i>Fecha inicial:</label>
-                                    <input type="date" name="fecha1" id="fecha1" required max=<?php echo $fechaMin;?>>
+                                    <input type="date" name="fecha1" id="fecha1" required>
                                 </div>
 
                                 <div class="seven wide field">
                                     <label>
                                     <i class="calendar icon"></i>Fecha final:</label>
-                                    <input type="date" name="fecha2" id="fecha2" required max=<?php echo $fechaMax;?>>
+                                    <input type="date" name="fecha2" id="fecha2" required >
                                 </div>
 
                             </div>
@@ -394,9 +382,10 @@ month[9] = "10";
 month[10] = "11";
 month[11] = "12";
 var n = month[d.getMonth()];
-
+var anio = d.getFullYear();
 
  $("#mes").val(n);
+ $("#anio").val(anio);
 });
 $(document).ready(function(){
     

@@ -418,4 +418,47 @@ class DaoEgresos extends DaoBase {
         return '['.$json.']';
     }
 
+
+    public function totalCantidadCuentas() {
+        $query = "select format(sum(cantidad),2) as cantidad from egresos where mes='{$this->objeto->getMes()}'
+        and anio= '{$this->objeto->getAnio()}' and idEliminado=1 and idChequera=".$this->objeto->getIdCheque();
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function totalRetencionCuentas() {
+        $query = "select format(sum(retencion),2) as retencion from egresos where mes='{$this->objeto->getMes()}'
+        and anio= '{$this->objeto->getAnio()}' and idEliminado=1 and idChequera=".$this->objeto->getIdCheque();
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+    public function totalPagadoCuentas() {
+        $query = "select format(sum(pagado),2) as pagado from egresos where mes='{$this->objeto->getMes()}'
+         and anio= '{$this->objeto->getAnio()}' and idEliminado=1 and idChequera=".$this->objeto->getIdCheque();
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+
+    public function reporteEgresosPorMesCuentas() {
+        $query = "select e.*, c.chequera as chequera, format(e.cantidad,2) as cantidad, format(e.retencion,2) as retencion, format(pagado,2) as pagado,
+        DATE_FORMAT(e.fechaEgreso, '%d/%m/%Y') as fechaEgreso from egresos e
+        inner join chequeras c on c.idChequera = e.idChequera
+        where e.mes='{$this->objeto->getMes()}'
+        and e.anio= '{$this->objeto->getAnio()}' and e.idEliminado=1 and e.idChequera=".$this->objeto->getIdCheque();
+
+        $resultado = $this->con->ejecutar($query);
+
+        return $resultado;
+    }
+
+
+    
 }    

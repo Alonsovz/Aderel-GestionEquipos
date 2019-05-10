@@ -1,16 +1,4 @@
-<?php
-            $fechaMaxima = date('Y-m-d');
-            $fechaMax = strtotime ( '-0 day' , strtotime ( $fechaMaxima ) ) ;
-            $fechaMax = date ( 'Y-m-d' , $fechaMax );
-             
-            $fechaMinima = date('Y-m-d');
-            $fechaMin = strtotime ( '-1 day' , strtotime ( $fechaMinima ) ) ;
-            $fechaMini = date ( 'Y-m-d' , $fechaMin );
 
-            $anio= date('Y');
-            $mes = date('M');
-            $mesN = date('m')
-?>
 
 <div id="app">
 <br><br>
@@ -27,7 +15,7 @@
 <br><br>
 <div class="row tiles" style="display: flex !important; align-items: baseline; justify-content: space-between">
 <input type="hidden"  id="mes" name="mes" >
-   <input type="hidden"  id="anio" name="anio" value="<?php echo $anio ?>">
+   <input type="hidden"  id="anio" name="anio">
 
 <button  style="width: 32%; text-align:center;" class="ui yellow inverted segment" id="btnReporteC">
         Consolidado de mes
@@ -62,12 +50,14 @@
         <i class="trash icon"></i>
     </button>
 
-    <button style="width: 32%; text-align:center;"  class="ui green inverted segment" id="btnEscuelaFut">
-   Escuela de Futbol
+    <button style="width: 32%; text-align:center;"  class="ui gray inverted segment" id="btnCuentas">
+   Cuentas de Banco
         <div class="ui divider"></div>
-        <i class="futbol icon"></i>
-        <i class="file icon"></i>
+        <i class="building icon"></i>
+        <i class="dollar  icon"></i>
     </button>
+
+   
 
     <button style="width: 32%; text-align:center;"  class="ui olive inverted segment" id="btnOtros">
     Otros Reportes
@@ -85,6 +75,13 @@
         <div class="ui divider"></div>
         <i class="dollar icon"></i>
         <i class="trophy icon"></i>
+    </button>
+
+    <button style="width: 32%; text-align:center;"  class="ui green inverted segment" id="btnEscuelaFut">
+   Escuela de Futbol
+        <div class="ui divider"></div>
+        <i class="futbol icon"></i>
+        <i class="file icon"></i>
     </button>
 
     <button style="width: 32%; text-align:center;"  class="ui purple inverted segment" id="btnCategoriasRpt">
@@ -139,13 +136,13 @@
 
                                     <label>
                                     <i class="calendar icon"></i>Fecha inicial:</label>
-                                    <input type="date" name="fecha1" id="fecha1" required max=<?php echo $fechaMin;?>>
+                                    <input type="date" name="fecha1" id="fecha1">
                                 </div>
 
                                 <div class="seven wide field">
                                     <label>
                                     <i class="calendar icon"></i>Fecha final:</label>
-                                    <input type="date" name="fecha2" id="fecha2" required max=<?php echo $fechaMax;?>>
+                                    <input type="date" name="fecha2" id="fecha2">
                                 </div>
 
                             </div>
@@ -205,12 +202,12 @@
                     <div class="fields">
                         <div class="eight wide field"><br>
                                 <label><i class="calendar icon"></i>Fecha inicial:</label>
-                                <input type="date" name="fecha1I" id="fecha1I"  required max=<?php echo $fechaMin;?>>
+                                <input type="date" name="fecha1I" id="fecha1I" >
                         </div>
 
                         <div class="eight wide field"><br>
                             <label> <i class="calendar icon"></i>Fecha final: </label>
-                            <input type="date" name="fecha2I" id="fecha2I"  required max=<?php echo $fechaMax;?>>
+                            <input type="date" name="fecha2I" id="fecha2I">
                         </div>    
 
                         </div>
@@ -329,6 +326,38 @@
                     <label><br></label>
                     <a id="verPorCat" class="ui blue button">
                     Ver Reporte
+                    </a>
+                </div>
+            </div>
+        </div> 
+    </form>
+    </div>
+    <div class="actions">
+    <button class="ui black deny button" id="">
+            Cancelar
+        </button>
+    </div>
+</div>
+
+<div class="ui modal" id="rptCuentas" style="width:40%;">
+    <div class="header">
+    <i class="dollar icon"></i>Reporte por cuentas bancarias<font color="#DFD102" size="20px">.</font>
+    </div><br>
+    <div class="content" class="ui equal width form">
+    <form class="ui form">
+        <div class="field">
+            <div class="fields">      
+            
+                <div class="fourteen wide field">
+                    <label><i class="dollar icon"></i>Selecciona la cuenta: </label>
+                    <select class="ui  dropdown" id="cuentas">
+    
+                    </select>
+                </div>
+                <div class="two wide field">
+                    <label><br></label>
+                    <a id="verRptCuentas" class="ui blue button">
+                    <i class="file icon"></i>
                     </a>
                 </div>
             </div>
@@ -465,11 +494,18 @@ month[9] = "10";
 month[10] = "11";
 month[11] = "12";
 var n = month[d.getMonth()];
-
+var anio = d.getFullYear();
 
  $("#mes").val(n);
+ $("#anio").val(anio);
+
+ 
+
 
  $("#txtEfectivo").mask("###0.00", {reverse: true});
+
+
+
 });
 
 
@@ -533,6 +569,16 @@ return false;
 });
 
 
+$(document).on("click", "#verRptCuentas", function () {
+
+    var mes = $('#mes').val();
+        var anio = $('#anio').val();
+        var cuentas = $('#cuentas').val();
+window.open('?1=EgresosController&2=rptCuentas&cuentas='+cuentas+'&mes='+mes+'&anio='+anio,'_blank');
+return false;
+});
+
+
 $(document).on("click", "#verPorTorneos", function () {
         var torneos = $('#torneos').val();
 window.open('?1=IngresosController&2=rptTorneos&torneos='+torneos);
@@ -542,6 +588,10 @@ return false;
 
 $(document).on("click", "#btnMora", function () {
     $('#rptMora').modal('setting', 'autofocus', true).modal('setting', 'closable', false).modal('show');
+});
+
+$(document).on("click", "#btnCuentas", function () {
+    $('#rptCuentas').modal('setting', 'autofocus', true).modal('setting', 'closable', false).modal('show');
 });
 
 
@@ -652,6 +702,19 @@ $(function() {
                 opcion = `<option value="${this.nombreCategoria}">Categoria: ${this.nombreCategoria}</option>`;
 
                 $('#categoria').append(opcion);
+            });
+
+        });
+
+
+        $(function() {
+    var ops = '';
+            var cuentas = '<?php echo $chequerasCMB?>';
+
+            $.each(JSON.parse(cuentas), function() {
+                ops = `<option value="${this.idChequera}">Categoria: ${this.chequera} -- N° Cuenta: ${this.numeroCuenta}</option>`;
+
+                $('#cuentas').append(ops);
             });
 
         });

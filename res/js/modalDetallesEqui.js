@@ -25,6 +25,7 @@ Vue.component('modal-detalles', {
                             <th>Apellido</th>
                             <th>Edad</th>
                             <th>Equipo</th>
+                            <th>Cupo</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -36,18 +37,25 @@ Vue.component('modal-detalles', {
                                 <td>{{detalle.apellido}}</td>
                                 <td>{{detalle.edad}}</td>
                                 <td style="background-color: lightblue;">{{detalle.equipo}}</td>
+                                <td v-if="detalle.mayor == '1'" style="background-color: #D8D8D8;">
+                                Normal
+                                </td>
+                                <td v-if="detalle.mayor == '2'" style="background-color: #F5D0A9;">
+                                Mayor
+                                </td>
                                 <td v-if="detalle.pago == '1'" style="background-color: #FA5858;">
                                 <b>Pendiente de Pago</b>--
-                                <button @click="" type="button" class="ui gray button" style="color: black; font-weight:bold;">
-                                    <i class="dollar icon"></i>
+                                <a @click="$parent.eliminarIns(detalle.idE,detalle.idJugador,detalle.mayor)"
+                                class="ui gray button" style="color: black; font-weight:bold;">
+                                    <i class="trash icon"></i>
                                     Eliminar
-                                </button>
+                                </a>
                             </td>
                             <td v-else-if="detalle.pago == '2'">
-                            <button @click="$parent.traspasos(detalle.nombre, detalle.apellido ,detalle.equipo,detalle.idJugador,detalle.idE)" type="button" class="ui olive button">
+                            <a @click="$parent.traspasos(detalle.nombre, detalle.apellido ,detalle.equipo,detalle.idJugador,detalle.idE)" type="button" class="ui olive button">
                                     <i class="dollar icon"></i>
                                     Traspasos
-                                </button>
+                                </a>
 
                             </td>
                         </tr>
