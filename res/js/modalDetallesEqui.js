@@ -52,11 +52,15 @@ Vue.component('modal-detalles', {
                                 </a>
                             </td>
                             <td v-else-if="detalle.pago == '2'">
-                            <a @click="$parent.traspasos(detalle.nombre, detalle.apellido ,detalle.equipo,detalle.idJugador,detalle.idE)" type="button" class="ui olive button">
+                            <a @click="$parent.traspasos(detalle.nombre, detalle.apellido ,detalle.equipo,detalle.idJugador,detalle.idE)"  class="ui olive button">
                                     <i class="dollar icon"></i>
                                     Traspasos
                                 </a>
-
+                                <div @click="$parent.eliminarIns(detalle.idE,detalle.idJugador,detalle.mayor)"
+                                class="ui red button">
+                                    <i class="trash icon"></i>
+                                    Eliminar
+                                </div>
                             </td>
                         </tr>
                     </tbody>

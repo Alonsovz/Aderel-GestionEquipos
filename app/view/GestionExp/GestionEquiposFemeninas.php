@@ -459,8 +459,9 @@ var appE = new Vue({
             },
             cerrar()
             {
-                $('#modalCambios').modal('hide');
-                location.href = "?1=EquipoController&2=gestionF";
+                var table = $('#dtInscriF').DataTable();
+                table.destroy();
+                $("#modalCambios").modal('hide');
             },
             eliminarIns(idEquipo,idJugador,mayor){
                 var idE = idEquipo;

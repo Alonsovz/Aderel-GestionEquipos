@@ -459,8 +459,9 @@ var appE = new Vue({
             },
                 cerrar()
             {
-                $('#modalCambios').modal('hide');
-                location.href = "?1=EquipoController&2=gestionM";
+                var table = $('#dtInscriM').DataTable();
+                table.destroy();
+                $("#modalCambios").modal('hide');
             },
             cerrarJ()
             {

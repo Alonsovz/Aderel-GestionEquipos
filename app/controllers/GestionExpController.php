@@ -15,6 +15,17 @@ class GestionExpController extends ControladorBase {
         require_once './app/view/GestionExp/sancionesM.php';
     }
 
+    public static function sancionesTorneoM()
+    {
+        self::loadMain();
+        require_once './app/view/GestionExp/sancionesPorTorneo.php';
+    }
+    public static function sancionesTorneoF()
+    {
+        self::loadMain();
+        require_once './app/view/GestionExp/sancionesPorTorneoF.php';
+    }
+
     public function mostrarEquiposM() {
         $dao = new DaoEquipos();
 
@@ -51,6 +62,18 @@ class GestionExpController extends ControladorBase {
         $dao = new DaoTorneos();
 
         echo $dao->mostrarTorneosM();
+    }
+
+
+    public function mostrarTorneosSancionM() {
+        $dao = new DaoTorneos();
+
+        echo $dao->mostrarTorneosSancionM();
+    }
+    public function mostrarTorneosSancionF() {
+        $dao = new DaoTorneos();
+
+        echo $dao->mostrarTorneosSancionF();
     }
 
     public function mostrarTorneosHistorialM() {

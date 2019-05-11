@@ -56,6 +56,14 @@ class JugadoresController extends ControladorBase {
         echo $dao->inscripcionF($idCategoria);
     }
 
+    public function inscripcionSancionM() {
+        $idTorneo = (isset($_REQUEST['idTorneo']))? $_REQUEST['idTorneo']:0;
+        $dao = new DaoJugadores();
+
+
+        echo $dao->inscripcionSancionM($idTorneo);
+    }
+
     public function eliminarF() {
         $datos = $_REQUEST["id"];
 

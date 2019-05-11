@@ -709,6 +709,39 @@ class DaoJugadores extends DaoBase {
 
         return $resultado;
     }
+
+
+    public function inscripcionSancionM($idTorneo=0){
+        $_query="select i.*,i.pago as pago,i.idJugador as idJugador, j.*,
+         j.nombre as name, j.correlativo as correlativo, j.apellido as apellido, e.nombre as equipo,
+        t.nombreTorneo as torneo,e.idTorneo as idTorneo,i.idEquipo as idEquipo from inscriJugador i
+       inner join jugadores j on j.idJugador = i.idJugador
+       inner join equipos e on e.idEquipo = i.idEquipo
+       inner join torneos t on t.idTorneo = e.idTorneo
+       where i.pago=2 and e.idTorneo = ".$idTorneo." group by i.idJugador";
+
+       $resultado = $this->con->ejecutar($_query);
+        
+       $_json = '';
+       while($fila = $resultado->fetch_assoc()) {
+           $object = json_encode($fila);
+
+           $btnVer = '<button idTor=\"'.$fila["idTorneo"].'\" nombre=\"'.$fila["nombre"].'\"  apellido=\"'.$fila["apellido"].'\" equipo=\"'.$fila["equipo"].'\" id=\"'.$fila["idJugador"].'\" idE=\"'.$fila["idEquipo"].'\"  class=\"ui icon blue small button\" onclick=\"sancionar(this)\"><i class=\"close icon\"></i> Sancionar</button>';
+           $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
+           
+           $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnVer.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+           
+           
+
+           $object = substr_replace($object, $acciones, strlen($object) -1,0);
+
+           $_json .= $object.',';
+       }
+
+       $_json = substr($_json,0, strlen($_json) - 1);
+
+       echo '{"data": ['.$_json .']}';
+    }
         
         
         

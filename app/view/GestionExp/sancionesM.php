@@ -15,7 +15,13 @@
                     <div class="titulo">
                     <i class="male icon"></i><i class="futbol icon"></i><i class="close icon"></i>
                         Sanciones graves<font color="#DFD102" size="20px">.</font>
+
+                        <a href="?1=GestionExpController&2=sancionesTorneoM" class="ui olive button">
+                   <i class="close icon"></i> Sanciones por torneo
+                    </a>
                     </div>
+
+                    
             </div>
 
             <div class="row title-bar">

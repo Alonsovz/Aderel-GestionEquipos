@@ -50,6 +50,65 @@ class DaoTorneos extends DaoBase {
         echo '{"data": ['.$_json .']}';
     }
 
+
+    public function mostrarTorneosSancionM()
+    {
+        $_query = "select t.*, c.nombreCategoria as categoria from torneos t
+        inner join categorias c on c.idCategoria  = t.idCategoria
+        where t.idEliminado = 1 and t.idTorneo>2 and t.idGenero=2 and sorteo=2";
+        
+        $resultado = $this->con->ejecutar($_query);
+        
+        $_json = '';
+        while($fila = $resultado->fetch_assoc()) {
+            $object = json_encode($fila);
+
+            $btnVer = '<button id=\"'.$fila["idTorneo"].'\" torneo=\"'.$fila["nombreTorneo"].'\" class=\"ui icon red small button\" onclick=\"verJugadores(this)\"><i class=\"users icon\"></i> Jugadores</button>';
+            
+            
+                $acciones = ', "Acciones": "'.$btnVer.'"';
+            
+            
+
+            $object = substr_replace($object, $acciones, strlen($object) -1,0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        echo '{"data": ['.$_json .']}';
+    }
+
+    public function mostrarTorneosSancionF()
+    {
+        $_query = "select t.*, c.nombreCategoria as categoria from torneos t
+        inner join categorias c on c.idCategoria  = t.idCategoria
+        where t.idEliminado = 1 and t.idTorneo>2 and t.idGenero=1 and sorteo=2";
+        
+        $resultado = $this->con->ejecutar($_query);
+        
+        $_json = '';
+        while($fila = $resultado->fetch_assoc()) {
+            $object = json_encode($fila);
+
+            $btnVer = '<button id=\"'.$fila["idTorneo"].'\" torneo=\"'.$fila["nombreTorneo"].'\" class=\"ui icon red small button\" onclick=\"verJugadores(this)\"><i class=\"users icon\"></i> Jugadores</button>';
+            
+            
+                $acciones = ', "Acciones": "'.$btnVer.'"';
+            
+            
+
+            $object = substr_replace($object, $acciones, strlen($object) -1,0);
+
+            $_json .= $object.',';
+        }
+
+        $_json = substr($_json,0, strlen($_json) - 1);
+
+        echo '{"data": ['.$_json .']}';
+    }
+
     public function mostrarTorneosHistorialM()
     {
         $_query = "select t.*, c.nombreCategoria as categoria from torneos t
