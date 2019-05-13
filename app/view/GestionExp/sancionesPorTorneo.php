@@ -16,8 +16,8 @@
                     <i class="male icon"></i><i class="futbol icon"></i><i class="close icon"></i>
                         Sanciones definitivas del torneo<font color="#DFD102" size="20px">.</font>
 
-                        <a href="?1=GestionExpController&2=sancionesTorneoM" class="ui olive button">
-                   <i class="close icon"></i> Sanciones por torneo
+                        <a href="?1=GestionExpController&2=sancionesM" class="ui red button">
+                   <i class="close icon"></i> Sanciones definitivas
                     </a>
                     </div>
 
@@ -145,6 +145,7 @@
 <script src="./res/tablas/tablaTorneosSancionM.js"></script>
 <script src="./res/tablas/tablaJugadoresSancionM.js"></script>
 <script>
+
 $("#btnModalRegistro").click(function(){
    $("#modalSancion").modal('setting', 'closable', false).modal('show');
 });
@@ -184,6 +185,54 @@ var sancionar=(ele)=>{
     
     $("#modalSancion").modal('setting', 'closable', false).modal('show');
 }
+
+$("#aplicar").click(function(){
+    var idJugador =  $("#idJugador").val();
+    var idEquipo = $("#idEquipo").val();
+    var motivo = $("#motivo").val();
+
+    alertify.confirm("¿Desea aplicar la sanción al jugador?",
+            function(){
+    $.ajax({
+                
+                type: 'POST',
+                url: '?1=JugadoresController&2=sancionTorneo',
+                data: {
+                    idEquipo : idEquipo,
+                    idJugador : idJugador,
+                    motivo : motivo,
+                },
+                success: function(r) {
+                    if(r == 11) {
+                        $('#modalSancion').modal('hide');
+                        swal({
+                            title: 'Listo',
+                            text: 'Sanción aplicada con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            if (result.value) {
+                                location.href = '?';
+                            }
+                        }); 
+                        var table = $('#dtInscriM').DataTable();
+                        table.destroy();
+                        
+                        mostrarJugadores($("#idTorneo").val());
+                       // $("#nombreT").text($(ele).attr('torneo'));
+                        $("#modalCambios").modal('setting', 'closable', false).modal('show');
+                    } 
+                }
+            });
+        },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            });
+});
 
 
 </script>

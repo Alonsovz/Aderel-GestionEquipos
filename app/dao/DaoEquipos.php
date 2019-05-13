@@ -520,7 +520,7 @@ class DaoEquipos extends DaoBase {
         e.nombre as equipo from inscriJugador i
              inner join equipos e on e.idEquipo = i.idEquipo
              inner join jugadores j on j.idJugador = i.idJugador
-        where i.idEquipo='".$this->objeto->getIdEquipo()."'  and i.estado=2 group by i.idJugador";
+        where i.idEquipo='".$this->objeto->getIdEquipo()."'  and i.estado!=3 group by i.idEquipo,i.idJugador";
 
         $resultado = $this->con->ejecutar($_query);
 

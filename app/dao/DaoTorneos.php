@@ -647,10 +647,10 @@ class DaoTorneos extends DaoBase {
     }
 
     public function mostrarGoleadoresCmb() {
-        $_query = "select j.*, equipos.nombre as idEquipo from jugadores j 
+        $_query = "select j.*, equipos.nombre as idEquipo,equipos.nombre as equipo from jugadores j 
         inner join inscrijugador incri on j.idJugador= incri.idJugador 
         inner join equipos on equipos.idEquipo= incri.idEquipo
-        where j.idEliminado=1 and j.idFondo = 1 and j.correlativo != 'FM000001' and j.idGenero=2 and incri.pago=2";
+        where j.idEliminado=1 and j.idFondo = 1 and j.correlativo != 'FM000001' and j.idGenero=2 and incri.pago=2 and incri.estado!=5";
 
         $resultado = $this->con->ejecutar($_query);
 
@@ -666,10 +666,10 @@ class DaoTorneos extends DaoBase {
     }
 
     public function mostrarGoleadorasCmb() {
-        $_query = "select j.*, equipos.nombre as idEquipo from jugadores j 
+        $_query = "select j.*, equipos.nombre as idEquipo,,equipos.nombre as equipo from jugadores j 
         inner join inscrijugador incri on j.idJugador= incri.idJugador 
         inner join equipos on equipos.idEquipo= incri.idEquipo
-        where j.idEliminado=1 and j.idFondo = 1 and j.correlativo != 'FF000001' and j.idGenero=1 and incri.pago=2";
+        where j.idEliminado=1 and j.idFondo = 1 and j.correlativo != 'FF000001' and j.idGenero=1 and incri.pago=2 and incri.estado!=5";
 
         $resultado = $this->con->ejecutar($_query);
 

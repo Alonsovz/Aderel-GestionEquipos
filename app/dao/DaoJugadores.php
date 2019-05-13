@@ -97,6 +97,46 @@ class DaoJugadores extends DaoBase {
             echo '{"data": ['.$_json .']}';
     }
 
+    public function mostrarJugadoresSancionM()
+    {
+        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,
+        DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento from jugadores j
+         where j.idEliminado = 1 and j.idGenero = 2 and j.idJugador>1";
+
+        
+
+            $resultado = $this->con->ejecutar($_query);
+
+            $_json = '';
+
+            
+            while($fila = $resultado->fetch_assoc()) {
+                    
+                $object = json_encode($fila);
+
+
+                $btnQuitar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui  icon purple small button\" onclick=\"quitarFondo(this)\"><i class=\"close icon\"></i> Sancionar</button>';
+                $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
+
+                if($fila["idFondo"]==2){
+                    $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E: color:white;><center> En fondo común</center></td><td><center>'.$imagen.'</center></td></table>"';
+                }
+                else{
+                    $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnQuitar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                }
+               
+                
+
+                $object = substr_replace($object, $acciones, strlen($object) -1,0);
+    
+                $_json .= $object.',';
+            }
+    
+            $_json = substr($_json,0, strlen($_json) - 1);
+    
+            echo '{"data": ['.$_json .']}';
+    }
+
 
     public function mostrarJugadoresE()
     {
@@ -515,6 +555,46 @@ class DaoJugadores extends DaoBase {
             echo '{"data": ['.$_json .']}';
     }
 
+
+    public function mostrarJugadoresSancionF()
+    {
+        $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,
+        DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento from jugadores j
+         where j.idEliminado = 1 and j.idGenero=1 and j.idJugador>1";
+
+        
+
+            $resultado = $this->con->ejecutar($_query);
+
+            $_json = '';
+
+            
+            while($fila = $resultado->fetch_assoc()) {
+                    
+                $object = json_encode($fila);
+
+               
+                
+                $btnQuitar = '<button id=\"'.$fila["idJugador"].'\" class=\"ui  icon purple small button\" onclick=\"quitarFondo(this)\"><i class=\"dollar icon\"></i> Sancionar</button>';
+                $imagen='<img src=\"'.$fila['foto'].'\" width=\"50px\" height=\"50px\" />';
+
+                if($fila["idFondo"]==2){
+                    $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E;color:white;><center> En fondo común</center></td><td><center>'.$imagen.'</center></td></table>"';
+                }
+                else{
+                    $acciones = ', "Acciones": "<table  style=width:100%;><td><center> '.$btnQuitar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
+                }
+                
+
+                $object = substr_replace($object, $acciones, strlen($object) -1,0);
+    
+                $_json .= $object.',';
+            }
+    
+            $_json = substr($_json,0, strlen($_json) - 1);
+    
+            echo '{"data": ['.$_json .']}';
+    }
     public function eliminarF() {
         $_query = "update jugadores set idEliminado=2 where idGenero = 1 and idJugador = ".$this->objeto->getIdJugador();
 
@@ -681,6 +761,38 @@ class DaoJugadores extends DaoBase {
 
     }
 
+    public function sancionTorneo()
+    {
+        
+
+        $_query="update inscriJugador set estado=5 where idJugador=".$this->objeto->getIdJugador()." 
+        and idEquipo = ".$this->objeto->getIdEquipo();
+       
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+
+    }
+
+    public function registrarSancion(){
+        $_query="Insert into sancionTorneo values(null,'".$this->objeto->getIdJugador()."',
+        '".$this->objeto->getIdEquipo()."','".$this->objeto->getDescripcion()."',1,curdate())";
+       
+
+        $resultado = $this->con->ejecutar($_query);
+
+        if($resultado) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     public function fondoComunRpt()
     {
         $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,
@@ -718,7 +830,7 @@ class DaoJugadores extends DaoBase {
        inner join jugadores j on j.idJugador = i.idJugador
        inner join equipos e on e.idEquipo = i.idEquipo
        inner join torneos t on t.idTorneo = e.idTorneo
-       where i.pago=2 and e.idTorneo = ".$idTorneo." group by i.idJugador";
+       where  i.estado!=5 and i.pago=2 and e.idTorneo = ".$idTorneo." group by i.idJugador";
 
        $resultado = $this->con->ejecutar($_query);
         

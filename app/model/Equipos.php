@@ -11,10 +11,13 @@ class Equipos extends ModeloBase{
     private $telefonoE;
     private $carnets;
     private $idJugador;
+   
 
     public function __construct() {
 
     }
+
+    
 
     public function getIdJugador()
     {

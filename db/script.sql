@@ -245,22 +245,16 @@ CREATE TABLE goleadores (
 
 
 
-CREATE TABLE tarjetasAmarilla (
-  idTarejeta int primary key auto_increment,
-  idJugador int,
-  idTorneo int,
-  tarjetas int
-);
 
-CREATE TABLE expulsiones (
+CREATE TABLE sancionTorneo (
   idCastigo int primary key auto_increment,
   idJugador int,
-  idTorneo int,
-  tarjeta varchar(20),
-  partidos int,
+  idEquipo int,
   observaciones varchar(500),
-  estado int
+  estado int,
+  fecha date
 );
+
 
 
 CREATE TABLE clasificatoria (
@@ -424,11 +418,15 @@ insert into usuario values(null,'Fabio Alonso','Mejia Velasquez','mejia','fabiom
 insert into usuario values(null,'Alonso','Mejia','alonso','mejiafabio383@gmail.com',sha1('123'),2,1);
 insert into usuario values(null,'Juan','Perez','juan','juanPerez383@gmail.com',sha1('123'),3,1);
 
+insert into ingresos values (null,'Escuela','Pago de escuela','2019-05-01',2000,'#140E93','#E6C404','05','2019',1,'Ninguna',1);
+insert into ingresos values (null,'Fondo Comun','Pago de Juanito de fondo comun','2019-05-02',2000,'#140E93','#E6C404','05','2019',1,'Ninguna',1);
 
-insert into chequeras values(null, 'Chequera Banco America Central','090123123',0,1);
+insert into chequeras values(null, 'Chequera Banco America Central','090123123',2500,1);
 
 
 
+insert into egresos values(null,4089,'Pago de impuestos de la renta',1000,160,840,'2019-05-01','05','2019',1,1);
+insert into egresos values(null,4090,'Pago de recibos',1000,160,840,'2019-05-02','05','2019',1,1);
 
 
 
@@ -464,8 +462,8 @@ insert into nivelEscuela values(null,'6to nivel','Jorge Cardoza','Martes y Jueve
 
 insert into escuelaFut values(null,'','','','','1999-02-01','','','','',curdate(),curdate(),1,1,1);
 
-insert into tipoCaja values(null,'Caja General',0,0);
-insert into tipoCaja values(null,'Caja Aderel',0,0);
+insert into tipoCaja values(null,'Caja General',200,200);
+insert into tipoCaja values(null,'Caja Aderel',200,200);
 
 -- ===========================================================================
 -- Procedimientos Usuarios
@@ -700,4 +698,13 @@ end
 $$
 
 
+
+        
+        
+        
        
+       
+       select j.*, equipos.nombre as equipo from jugadores j 
+        inner join inscrijugador incri on j.idJugador= incri.idJugador 
+        inner join equipos on equipos.idEquipo= incri.idEquipo
+        where j.idEliminado=1 and j.idFondo = 1 and j.correlativo != 'FM000001' and j.idGenero=2 and incri.pago=2 and incri.estado!=5

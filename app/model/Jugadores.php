@@ -12,9 +12,26 @@ class Jugadores extends ModeloBase{
     private $img;
     private $idTorneo;
     private $telefono;
+    private $descripcion;
 
     public function __construct() {
 
+    }
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */ 
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
     }
 
     public function getTelefono()

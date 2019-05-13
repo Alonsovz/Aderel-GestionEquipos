@@ -58,6 +58,18 @@ class GestionExpController extends ControladorBase {
         echo $dao->mostrarJugadoresM();
     }
 
+    public function mostrarJugadoresSancionM() {
+        $dao = new DaoJugadores();
+
+        echo $dao->mostrarJugadoresSancionM();
+    }
+
+    public function mostrarJugadoresSancionF() {
+        $dao = new DaoJugadores();
+
+        echo $dao->mostrarJugadoresSancionF();
+    }
+
     public function mostrarTorneosM() {
         $dao = new DaoTorneos();
 

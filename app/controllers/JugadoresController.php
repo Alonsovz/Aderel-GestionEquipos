@@ -85,9 +85,26 @@ class JugadoresController extends ControladorBase {
         $dao->objeto->setIdEquipo($idEquipo);
         $dao->objeto->setIdTorneo($idTorneo);
 
-        echo $dao->registrarAmarilla();
+       // echo $dao->registrarAmarilla();
         echo $dao->inscribirF();
         echo $dao->goleador();
+    }
+
+
+    public function sancionTorneo() {
+        $idJ = $_REQUEST["idJugador"];
+        $idEquipo = $_REQUEST["idEquipo"];
+        $motivo = $_REQUEST["motivo"];
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setIdJugador($idJ);
+        $dao->objeto->setIdEquipo($idEquipo);
+        $dao->objeto->setDescripcion($motivo);
+
+        echo $dao->sancionTorneo();
+        echo $dao->registrarSancion();
+        
     }
 
     
@@ -186,7 +203,7 @@ class JugadoresController extends ControladorBase {
 
         echo $dao->inscribirJugadorM();
         echo $dao->goleador();
-        echo $dao->registrarAmarilla();
+       // echo $dao->registrarAmarilla();
     }
 
     public function getDui()
@@ -214,7 +231,7 @@ class JugadoresController extends ControladorBase {
         $daoE = new DaoEquipos();
         $daoE->objeto->setIdEquipo($idEquipo);
         echo $daoE->actualizarCupos();
-        echo $dao->registrarAmarilla();
+       // echo $dao->registrarAmarilla();
         echo $dao->goleador();
     }
 

@@ -39,22 +39,23 @@
             </div>
             <div class="row">
                 <div class="sixteen wide column">
-                    <table id="" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
-                        <thead>
-                            <tr>
-                            
-                                <th style="background-color: #E6C404;">N°</th>
-                                <th style="background-color: #E6C404;">Nombres</th>
-                                <th style="background-color: #E6C404;">Apellido</th>
-                                <th style="background-color: #E6C404;">Motivo</th>
-                                <th style="background-color: #E6C404;">Tiempo</th>
-                                <th style="background-color: #E6C404;">Acciones</th>
-                            
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                <table id="dtJugadoresF" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                                <thead>
+                                    <tr>
+                                    
+                                        <th style="background-color: #FACC2E; color:white;">N°</th>
+                                        <th style="background-color: #7401DF; color:white;" ></th>
+                                        <th style="background-color: #7401DF; color:white;">Cod. Expediente</th>
+                                        <th style="background-color: #7401DF; color:white;">Nombre</th>
+                                        <th style="background-color: #7401DF; color:white;">Apellido</th>
+                                        <th style="background-color: #7401DF; color:white;">Dui / Carnet Minoridad</th>
+                                        <th style="background-color: #7401DF; color:white;">Fecha de Nacimiento</th>
+                                        <th style="background-color: #7401DF; color:white;">Edad del Jugador</th>        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
                 </div>
             </div>
     </div>
@@ -104,7 +105,7 @@
     </div>
 </div>
 
-
+<script src="./res/tablas/tablaJugadoresSancionGF.js"></script>
 <script>
 $("#btnModalRegistro").click(function(){
    $("#modalSancion").modal('setting', 'closable', false).modal('show');

@@ -165,9 +165,13 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
        </div>
         
 
-        <div class="three wide field">
+       <div class="three wide field">
             <label><center><i class="calendar icon"></i>Fecha</center></label>
-                        <input type="date" id="fecha" name="fecha" >
+                        <input type="date" id="fecha" name="fecha">
+                        <div class="ui red pointing label"  id="labelFecha"
+                                    style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                    Completa este campo
+                                    </div>
             
         </div>
 
@@ -175,7 +179,10 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
             <label><center><i class="time icon"></i>Hora</center></label>
                         <input type="time" id="hora" name="hora" >
                         <input type="hidden" id="idPartido" name="idPartido" >
-            
+                        <div class="ui red pointing label"  id="labelHora"
+                                    style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                    Completa este campo
+                                    </div>
         </div>
 
     </div>
@@ -251,8 +258,8 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
                             <td>
                             <select v-model="envio.goleadores" class="ui search selection dropdown" id="goleadores"
                              name="goleadores">
-                               <option v-for="option in goleadoresOps" :key='option.idJugador' :value="option.idJugador"> {{option.nombre}} {{option.apellido}}--
-                               {{option.correlativo}}
+                             <option v-for="option in goleadoresOps" :key='option.idJugador' :value="option.idJugador"> {{option.nombre}} {{option.apellido}}--
+                               {{option.correlativo}} -- {{option.equipo}}
                                </option>
                              </select>
                             </td>
@@ -273,60 +280,7 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
         
         </div>
 
-        <div id="amonestados">
-
-        <div class="ui divider"></div>
-        <a style="font-size:22px; color:black;"><i class="thumbs down icon"></i>Amonestados del partido</a>
-        <br> 
-        <b>Nota:</b> Si un jugador será suspendido por un período mas extenso, debe gestionarse en el módulo de sanciones.
-        <span style="float:right;">
-                    <button @click="agregarDetalleC" class="ui olive circular icon button"><i class="plus icon"></i> Agregar</button>
-        </span>        <br><br><br>
-        <form action="" class="ui form" id="frmAmonestados">
-                <table class="ui selectable very compact celled table" style="width:100%; margin:auto;">
-                        <thead>
-                            <tr>
-                                <th style="background-color: #CD2020; color: white;"><i class="male icon"></i>Jugador</th>
-                                <th style="background-color: #CD2020; color: white;"><i class="futbol icon"></i>Tarjeta</th>
-                                <th style="background-color: #CD2020; color: white;"><i class="futbol icon"></i>Observación</th>
-                                <th style="background-color: #CD2020; color: white;"><i class="trash icon"></i>Eliminar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(castigo, index) in castigos">
-                            <td>
-                            <select v-model="castigo.goleadores" class="ui search selection dropdown" id="amonestado"
-                             name="amonestado">
-                               <option v-for="option in goleadoresOps" :key='option.idJugador' :value="option.idJugador">{{option.nombre}} {{option.apellido}} --
-                                {{option.correlativo}}
-                               </option>
-                             </select>
-                            </td>
-                            <td>  
-                            <select class="ui  dropdown"  name="tarjeta" id="tarjeta" v-model="castigo.tarjeta">
-                            <option value="Tarjeta Amarilla" selected>Tarjeta Amarilla</option>
-                            <option value="Doble Amarilla">Doble Amarilla</option>
-                            <option value="Roja Directa">Roja  Directa</option>
-                            </select>
-                            </td>
-                            <td>
-                            <textarea rows="2" name="observacion"  id="observacion" v-model="castigo.observacion" placeholder="Observación"></textarea>
-                            </td>
-                        
-                            <td>
-        </form>
-                            <center>
-                              <button type="button" @click="eliminarDetalleC(index)" class="ui negative mini circular icon button"><i
-                                  class="times icon"></i></button>
-                                  </center>
-                            </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <br>
         
-
-        </div>
 </div>
 
 </div>
@@ -1005,9 +959,28 @@ return false;
 function cerrar(){
     $('#sorteos').modal('hide');
 }
+$('#fecha').keyup(function(){
+    $("#labelFecha").css("display","none");
+                    $("#guardarTodo").attr("disabled", false);
+});
 
+$('#hora').keyup(function(){
+    $("#labelHora").css("display","none");
+                    $("#guardarTodo").attr("disabled", false);
+});
 
 $("#guardarTodo").click(function(evt){
+    if( $('#fecha').val() == ''){
+        $("#labelFecha").css("display","block");
+                    $("#guardarTodo").attr("disabled", true);
+    }
+    else if($('#hora').val() == ''){
+        $("#labelHora").css("display","block");
+                    $("#guardarTodo").attr("disabled", true);
+    }
+    else{
+        alertify.confirm("¿Desea guardar el resultado de la jornada?",
+            function(){
     const isOnClick = evt.target.getAttribute('onclick');
     // console.log('isOnClick :', isOnClick);
     if(isOnClick) return;   //si hay evento para clasificatoria
@@ -1052,7 +1025,7 @@ $("#guardarTodo").click(function(evt){
                         }).then((result) => {
                             if (result.value) {
                                appE.guardarGoleador();
-                               appE.guardarAmonestado();
+                             //  appE.guardarAmonestado();
                                 $('#modalDetallesJornadasM').modal('setting', 'autofocus', false).modal('setting', 'closable', false)
                                 .modal('show');
                                         appE.cargarDetallesJornadas($("#idTo").val());   
@@ -1063,6 +1036,13 @@ $("#guardarTodo").click(function(evt){
                     } 
                 }
             });
+        },
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            });
+        }
 });
 
 function finalistas(element,etapa) {
@@ -1132,6 +1112,17 @@ function resultadoClasificatoria(evt,equipo1,equipo2, hora, fecha, idTorneo, idC
 }
 
 function guardarWinner(evt) {
+    if( $('#fecha').val() == ''){
+        $("#labelFecha").css("display","block");
+                    $("#guardarTodo").attr("disabled", true);
+    }
+    else if($('#hora').val() == ''){
+        $("#labelHora").css("display","block");
+                    $("#guardarTodo").attr("disabled", true);
+    }
+    else{
+        alertify.confirm("¿Desea guardar el resultado?",
+            function(){
     
     var idTorneo = $('#idTo').val();
     var equipo1 = $('#equipo1').val();
@@ -1174,13 +1165,20 @@ function guardarWinner(evt) {
             }).then((result) => {
                             if (result.value) {
                                 appE.guardarGoleador();
-                                appE.guardarAmonestado();
+                              //  appE.guardarAmonestado();
                                 $('#dtTorneosF').DataTable().ajax.reload();
                                $('#modalResultados').modal('hide');
                             }
                         }); 
         }
     });
+},
+            function(){
+                //$("#modalCalendar").modal('toggle');
+                alertify.error('Cancelado');
+                
+            });
+}
 }
 
 </script>

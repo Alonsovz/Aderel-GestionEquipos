@@ -8,7 +8,7 @@ Vue.component('modal-detalles', {
     },
     
     
-    template: `<div class="ui  modal" id="modalDetalles">
+    template: `<div class="ui fullscreen modal" id="modalDetalles">
         <div class="header">
             <i class="futbol icon"></i>Jugadores del Equipo 
         </div>
@@ -26,6 +26,7 @@ Vue.component('modal-detalles', {
                             <th>Edad</th>
                             <th>Equipo</th>
                             <th>Cupo</th>
+                            <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -43,6 +44,14 @@ Vue.component('modal-detalles', {
                                 <td v-if="detalle.mayor == '2'" style="background-color: #F5D0A9;">
                                 Mayor
                                 </td>
+
+                                <td v-if="detalle.estado == '2'" style="background-color: #81F7D8;">
+                                Activo
+                                </td>
+                                <td v-if="detalle.estado == '5'" style="background-color: #F5A9A9;">
+                                Sancionado
+                                </td>
+
                                 <td v-if="detalle.pago == '1'" style="background-color: #FA5858;">
                                 <b>Pendiente de Pago</b>--
                                 <a @click="$parent.eliminarIns(detalle.idE,detalle.idJugador,detalle.mayor)"
@@ -51,7 +60,7 @@ Vue.component('modal-detalles', {
                                     Eliminar
                                 </a>
                             </td>
-                            <td v-else-if="detalle.pago == '2'">
+                            <td v-else-if="detalle.pago == '2' && detalle.estado!='5'">
                             <a @click="$parent.traspasos(detalle.nombre, detalle.apellido ,detalle.equipo,detalle.idJugador,detalle.idE)"  class="ui olive button">
                                     <i class="dollar icon"></i>
                                     Traspasos
