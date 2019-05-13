@@ -1664,25 +1664,8 @@ $(document).ready(function(){
 });
 
  
-$('#txtTitulo').typeahead({
- source: function(query, result)
- {
-  $.ajax({
-   url:"./app/view/Ingresos/fetch.php",
-   method:"POST",
-   data:{query:query},
-   dataType:"json",
-   success:function(data)
-   {
-    result($.map(data, function(item){
-     return item;
-    }));
-   }
-  })
- }
-});
+
 
 });
 
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script> 
