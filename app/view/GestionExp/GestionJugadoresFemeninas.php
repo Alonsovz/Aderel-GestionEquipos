@@ -76,107 +76,107 @@
                     
         </div>
 
-<div class="ui  modal" id="modalAgregarJugador"  style="overflow: scroll;">
+       <div class="ui  modal" id="modalAgregarJugador"  style="overflow: scroll;">
 
-<div class="header">
-<i class="female icon"></i><i class="futbol icon"></i> Agregar nueva jugadora
-</div>
-<div class="content" class="ui equal width form">
-    <form class="ui form" id="frmJugador" method="POST" enctype="multipart/form-data" action='?1=JugadoresController&2=guardarJugadorF'> 
-        <div class="field">
-            <div class="fields">
-                    <div class="eight wide field">
-                        <label><i class="user icon"></i>Nombre de Jugadora</label>
-                        <input type="text" name="nombreJ" placeholder="Nombre del Jugador" id="nombreJ">
-                            
-                            <div class="ui red pointing label"  id="labelNombre"
-                            style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
-                            Completa este campo</div>
-                    </div>
-                    <div class="eight wide field">
-                        <label><i class="user icon"></i>Apellido de Jugadora</label>
-                        <input type="text" name="apellidoJ" placeholder="Apellido del Jugador" id="apellidoJ">
-                        <div class="ui red pointing label"  id="labelApellido"
-                        style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
-                        Completa este campo</div>
-                    </div>     
-            </div>
-        </div>  
-        <div class="field">
-            <div class="fields">
-                        <div class="ten wide field">
-                            <label><i class="photo icon"></i>Foto</label>
-                                <input type="file" name="Imagen" placeholder="Cargar Foto del jugador" id="Imagen">
-                                    <div class="ui red pointing label"  id="labelFoto"
-                                    style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
-                                    Completa este campo
-                                    </div>
-                                <input type="hidden" name="img" id='img'>
-                        </div>    
-                        <div class="six wide field">
-                            <label><i class="calendar icon"></i>Fecha de Nacimiento</label>
-                                <input type="date" id="fechaNac" name="fechaNac">
-                                    <div class="ui red pointing label"  id="labelFecha"
-                                        style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
-                                        Completa este campo</div>
-                                    </div>                              
-                        
-                        </div>
-                        
-            </div>   
-            
-                <div class="field">
-                        <div class="fields">
-                        
-                        <div class="three wide field">
-                            
-                            <b><label><i class="male icon"></i>Edad: </label></b>
-                            <input type="text" id="edad" name="edad" readonly>
-                           
-                        </div>
-                        <div class="six wide field">
-                            
-                            <b><label><i class="phone icon"></i>Teléfono de jugadora:</label></b>
-                            <input type="text" id="telefono" name="telefono" placeholder="Tel. del jugador">
-                           
-                        </div>
-                        <div class="eight wide field">
-                        <label><i class="address card icon"></i>N° Dui de Jugadora</label>
-                            <input type="text" name="duiJ" placeholder="DUI del jugador" id="duiJ">
-                                    <div class="ui red pointing label"  id="labelDui"
-                                    style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
-                                    Completa este campo
-                                    </div>
-
-                                    <div class="ui red pointing label"  id="duiC"
-                                    style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
-                                    Dui ya existe
-                                    </div>
-                        </div>
-
-                       
-
-                            
-                        </div>
-                </div>
-                
+        <div class="header">
+        <i class="female icon"></i><i class="futbol icon"></i> Agregar nueva jugadora
         </div>
-    </form>
+        <div class="content" class="ui equal width form">
+            <form class="ui form" id="frmJugador" method="POST" enctype="multipart/form-data" action='?1=JugadoresController&2=guardarJugadorF'> 
+                <div class="field">
+                    <div class="fields">
+                            <div class="eight wide field">
+                                <label><i class="user icon"></i>Nombre de Jugadora</label>
+                                <input type="text" name="nombreJ" placeholder="Nombre del Jugador" id="nombreJ">
+                                    
+                                    <div class="ui red pointing label"  id="labelNombre"
+                                    style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                    Completa este campo</div>
+                            </div>
+                            <div class="eight wide field">
+                                <label><i class="user icon"></i>Apellido de Jugadora</label>
+                                <input type="text" name="apellidoJ" placeholder="Apellido del Jugador" id="apellidoJ">
+                                <div class="ui red pointing label"  id="labelApellido"
+                                style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                Completa este campo</div>
+                            </div>     
+                    </div>
+                </div>  
+                <div class="field">
+                    <div class="fields">
+                                <div class="ten wide field">
+                                    <label><i class="photo icon"></i>Foto</label>
+                                        <input type="file" name="Imagen" placeholder="Cargar Foto del jugador" id="Imagen">
+                                            <div class="ui red pointing label"  id="labelFoto"
+                                            style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                            Completa este campo
+                                            </div>
+                                        <input type="hidden" name="img" id='img'>
+                                </div>    
+                                <div class="six wide field">
+                                    <label><i class="calendar icon"></i>Fecha de Nacimiento</label>
+                                        <input type="date" id="fechaNac" name="fechaNac">
+                                            <div class="ui red pointing label"  id="labelFecha"
+                                                style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                                Completa este campo</div>
+                                            </div>                              
+                                
+                                </div>
+                                
+                    </div>   
+                    
+                        <div class="field">
+                                <div class="fields">
+                                
+                                <div class="three wide field">
+                                    
+                                    <b><label><i class="male icon"></i>Edad: </label></b>
+                                    <input type="text" id="edad" name="edad" readonly>
+                                
+                                </div>
+                                <div class="six wide field">
+                                    
+                                    <b><label><i class="phone icon"></i>Teléfono de jugadora:</label></b>
+                                    <input type="text" id="telefono" name="telefono" placeholder="Tel. del jugador">
+                                
+                                </div>
+                                <div class="eight wide field">
+                                <label><i class="address card icon"></i>N° Dui de Jugadora</label>
+                                    <input type="text" name="duiJ" placeholder="DUI del jugador" id="duiJ">
+                                            <div class="ui red pointing label"  id="labelDui"
+                                            style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                            Completa este campo
+                                            </div>
 
-    <div class="actions">
-        <button id="btnCerrar" class="ui yellow button">
-            Cancelar
-        </button>
-        <button class="ui blue button" id="btnGuardarJugador" >
-        Guardar
-        </button>
-    </div>
+                                            <div class="ui red pointing label"  id="duiC"
+                                            style="display: none; margin: 0; text-align:center; width:100%; font-size: 12px;">
+                                            Dui ya existe
+                                            </div>
+                                </div>
+
+                            
+
+                                    
+                                </div>
+                        </div>
+                        
+                </div>
+            </form>
+
+            <div class="actions">
+                <button id="btnCerrar" class="ui yellow button">
+                    Cancelar
+                </button>
+                <button class="ui blue button" id="btnGuardarJugador" >
+                Guardar
+                </button>
+            </div>
+        </div>
+
 </div>
 
-</div>
 
 
-<div class="ui tiny modal" id="modalInscribirJ"  style="overflow: scroll;">
 
 
 

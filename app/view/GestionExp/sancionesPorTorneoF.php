@@ -23,8 +23,15 @@
 
                     
             </div>
+            <div class="sixteen wide column">
+                                <button class="ui right floated violet labeled icon button" id="verSuspendidos">
+                                    <i class="eye icon"></i>
+                                    Ver Sancionados
+                                </button>
+                            </div>
+                        </div>
 
-            
+            <div class="ui divider"></div>
 
 
             <div class="row">
@@ -140,16 +147,79 @@
         </div>
     </div>
 
+    <div class="ui fullscreen modal" id="suspendidos">
+<div class="header">
+Jugadores suspendidos
+</div>
+<div class="content">
+<div class="row">
+                <div class="sixteen wide column">
+                <table id="dtSancionF" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                <thead>
+                                    <tr>
+                                    
+                                        <th style="background-color: #FACC2E; color:white;">N°</th>
+                                        <th style="background-color: #7401DF; color:white;" ></th>
+                                        <th style="background-color: #7401DF; color:white;">Cod. Expediente</th>
+                                        <th style="background-color: #7401DF; color:white;">Nombre</th>
+                                        <th style="background-color: #7401DF; color:white;">Apellido</th>
+                                        <th style="background-color: #7401DF; color:white;">Equipo</th>
+                                        <th style="background-color: #7401DF; color:white;">Torneo</th>
+                                        <th style="background-color: #7401DF; color:white;">Motivo</th>      
+                                        <th style="background-color: #7401DF; color:white;">Fecha</th>        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                </div>
+</div>
+</div>
+<div class="actions">
+<button class="ui black deny button">Cerrar</button>
+</div>
+</div>
+
+<div class="ui tiny modal" id="quitar">
+
+                <div class="header">
+                    Quitar sanción
+                </div>
+                <div class="content">
+                    <h4>¿Quitar sanción a <a id="nom" style="color:black;"></a>  del torneo <a id="torneo" style="color:black;"></a>?</h4>
+                    <form action="" class="ui equal width form" :id="id_form">
+                        <div class="fields">
+                            <div  class="field">
+                                <input type="hidden" name="idJug" id="idJug">
+                                <input type="hidden" name="idEq" id="idEq">
+                            </div>
+                        </div>
+                    </form>        
+                </div>
+                <div class="actions">
+                    <button class="ui black deny button">
+                        Cancelar
+                    </button>
+                    <button class="ui right blue button" id="btnQuitar">
+                        Quitar Sanción
+                    </button>
+                </div>
+     </div>
+     
 </div>
 
 <script src="./res/tablas/tablaTorneoSancionF.js"></script>
 <script src="./res/tablas/tablaJugadoresSancionF.js"></script>
+<script src="./res/tablas/tablaSancionadosF.js"></script>
 <script>
 $("#btnModalRegistro").click(function(){
    $("#modalSancion").modal('setting', 'closable', false).modal('show');
 });
 
+$("#verSuspendidos").click(function(){
 
+$("#suspendidos").modal('setting', 'closable', false).modal('show');
+});
 var verJugadores=(ele)=>{
 
 
@@ -169,6 +239,15 @@ $("#cerrar").click(function(){
     table.destroy();
     $("#modalCambios").modal('hide');
 });
+
+var quitarSancion=(ele)=>{
+    $("#nom").text($(ele).attr("nombre") +" "+$(ele).attr("apellido"));
+   
+    $("#idJug").val($(ele).attr("id"));
+    $("#idEq").val($(ele).attr("idE"));
+    $("#torneo").text($(ele).attr("torneo"));
+    $("#quitar").modal('setting', 'closable', false).modal('show');
+}
 
 var sancionar=(ele)=>{
     $("#nombre").val($(ele).attr("nombre") +" "+$(ele).attr("apellido"));
@@ -216,6 +295,7 @@ $("#aplicar").click(function(){
                                 location.href = '?';
                             }
                         }); 
+                        $('#dtSancionF').DataTable().ajax.reload();
                         var table = $('#dtInscriM').DataTable();
                         table.destroy();
                         
@@ -233,5 +313,42 @@ $("#aplicar").click(function(){
             });
 });
 
+
+$("#btnQuitar").click(function(){
+    var idJugador =  $("#idJug").val();
+    var idEquipo =  $("#idEq").val();
+   
+
+   
+    $.ajax({
+                
+                type: 'POST',
+                url: '?1=JugadoresController&2=quitarSancion',
+                data: {
+                    idJugador : idJugador,
+                    idEquipo : idEquipo,
+                },
+                success: function(r) {
+                    if(r == 11) {
+                        $('#quitar').modal('hide');
+                        swal({
+                            title: 'Listo',
+                            text: 'Sanción eliminada con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            if (result.value) {
+                                location.href = '?';
+                            }
+                        }); 
+                        $('#dtSancionF').DataTable().ajax.reload();
+                        //$("#modalCambios").modal('setting', 'closable', false).modal('show');
+                    } 
+                }
+            });
+        
+});
 
 </script>

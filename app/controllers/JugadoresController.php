@@ -93,17 +93,68 @@ class JugadoresController extends ControladorBase {
 
     public function sancionTorneo() {
         $idJ = $_REQUEST["idJugador"];
-        $idEquipo = $_REQUEST["idEquipo"];
+     $idEquipo = $_REQUEST["idEquipo"];
         $motivo = $_REQUEST["motivo"];
 
         $dao = new DaoJugadores();
 
         $dao->objeto->setIdJugador($idJ);
-        $dao->objeto->setIdEquipo($idEquipo);
+     $dao->objeto->setIdEquipo($idEquipo);
         $dao->objeto->setDescripcion($motivo);
 
         echo $dao->sancionTorneo();
         echo $dao->registrarSancion();
+        
+    }
+
+    public function sancionGrave() {
+        $idJ = $_REQUEST["idJugador"];
+      //  $idEquipo = $_REQUEST["idEquipo"];
+        $motivo = $_REQUEST["motivo"];
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setIdJugador($idJ);
+       // $dao->objeto->setIdEquipo($idEquipo);
+        $dao->objeto->setDescripcion($motivo);
+
+        echo $dao->sancionGrave();
+        echo $dao->registrarSancionGraves();
+        echo $dao->aplicarExpediente();
+        
+    }
+
+    public function quitarSancionGrave() {
+        $idJ = $_REQUEST["idJugador"];
+      //  $idEquipo = $_REQUEST["idEquipo"];
+       // $motivo = $_REQUEST["motivo"];
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setIdJugador($idJ);
+       // $dao->objeto->setIdEquipo($idEquipo);
+       // $dao->objeto->setDescripcion($motivo);
+
+        echo $dao->quitarSancionGraveEquipo();
+        echo $dao->quitarSancionGraves();
+        echo $dao->quitarExpediente();
+        
+    }
+
+    public function quitarSancion() {
+        $idJ = $_REQUEST["idJugador"];
+      $idEquipo = $_REQUEST["idEquipo"];
+       // $motivo = $_REQUEST["motivo"];
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setIdJugador($idJ);
+     $dao->objeto->setIdEquipo($idEquipo);
+       // $dao->objeto->setDescripcion($motivo);
+
+        echo $dao->quitarSancionTorneo();
+        echo $dao->quitarSancionTorneoR();
+       // echo $dao->quitarExpediente();
         
     }
 
@@ -354,6 +405,44 @@ class JugadoresController extends ControladorBase {
 
         echo'['.$json.']';
     }
+
+    public function detallesSancion(){
+        $id = $_REQUEST["id"];
+
+        $dao = new DaoJugadores();
+
+        $dao->objeto->setIdJugador($id);
+
+        $resultado =$dao->detallesSancion();
+
+        $json = '';
+
+        while($fila = $resultado->fetch_assoc()) {
+
+            $json .= json_encode($fila).',';
+
+        }
+
+        $json = substr($json, 0, strlen($json) - 1);
+
+        echo'['.$json.']';
+    }
+
+    public function mostrarSancionM(){
+       // $id = $_REQUEST["id"];
+
+        $dao = new DaoJugadores();
+
+        echo $dao->detallesSancionTorneoM();
+    }
+
+    public function mostrarSancionF(){
+        // $id = $_REQUEST["id"];
+ 
+         $dao = new DaoJugadores();
+ 
+         echo $dao->detallesSancionTorneoF();
+     }
 
     public function mostrarJugadoresFondoComun() {
         $dao = new DaoJugadores();

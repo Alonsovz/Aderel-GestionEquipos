@@ -236,7 +236,7 @@ sub_titulo="¿Está seguro de querer eliminar este torneo?" :campos="campos_elim
         </form><br>
         <div class="ui divider"></div>
         <button class="ui blue button" id="btnGoleo"><i class="futbol icon"></i>Goleadores</button>
-        <button class="ui yellow button" id="btnAmonestados"><i class="thumbs down icon"></i>Amonestados</button>
+        
         
         <div id="goles">
         <div class="ui divider"></div>

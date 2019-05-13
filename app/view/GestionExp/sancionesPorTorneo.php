@@ -1,12 +1,5 @@
 <br><div id="app">
-    <modal-registrar id_form="frmRegistrar" id="modalRegistrar" url="?1=UsuarioController&2=registrar" titulo="Registrar Usuario"
-            :campos="campos_registro" tamanio='tiny' ></modal-registrar>
-
-        <modal-editar id_form="frmEditar" id="modalEditar" url="?1=UsuarioController&2=editar" titulo="Editar Usuario"
-            :campos="campos_editar" tamanio='tiny'></modal-editar>
-
-        <modal-eliminar id_form="frmEliminar" id="modalEliminar" url="?1=UsuarioController&2=eliminar" titulo="Eliminar Usuario"
-            sub_titulo="¿Está seguro de querer eliminar este usuario?" :campos="campos_eliminar" tamanio='tiny'></modal-eliminar>
+    
 
 
 
@@ -23,9 +16,15 @@
 
                     
             </div>
-
+            <div class="sixteen wide column">
+                                <button class="ui right floated violet labeled icon button" id="verSuspendidos">
+                                    <i class="eye icon"></i>
+                                    Ver Sancionados
+                                </button>
+                            </div>
+                        </div>
             
-
+            <div class="ui divider"></div>
             
             <div class="row">
                 <div class="sixteen wide column">
@@ -59,10 +58,10 @@
     Sancionar Jugador de manera definitiva del torneo : <a id="nombreT"></a>
 </div>
 <div class="content">
-        <div style="margin-bottom: 0em !important; width: 100% !important;" class="ui tiny fluid horizontal divided list">
-
         
-        </div>
+<div class="row title-bar">
+                            
+
     
     <div class="ui divider"></div>
                 <div class="row">
@@ -85,6 +84,7 @@
                             </table>
                         </div>
                 </div>
+</div>
 </div>
 <div class="actions">
     <button  class="ui black  button" id="cerrar">
@@ -140,10 +140,71 @@
         </div>
     </div>
 
+    <div class="ui fullscreen modal" id="suspendidos">
+<div class="header">
+Jugadores suspendidos
 </div>
+<div class="content">
+<div class="row">
+                <div class="sixteen wide column">
+                <table id="dtSancionM" class="ui selectable very compact celled table" style="width:100%; margin:auto;">
+                <thead>
+                                    <tr>
+                                    
+                                        <th style="background-color: #FACC2E; color:white;">N°</th>
+                                        <th style="background-color: #7401DF; color:white;" ></th>
+                                        <th style="background-color: #7401DF; color:white;">Cod. Expediente</th>
+                                        <th style="background-color: #7401DF; color:white;">Nombre</th>
+                                        <th style="background-color: #7401DF; color:white;">Apellido</th>
+                                        <th style="background-color: #7401DF; color:white;">Equipo</th>
+                                        <th style="background-color: #7401DF; color:white;">Torneo</th>
+                                        <th style="background-color: #7401DF; color:white;">Motivo</th>      
+                                        <th style="background-color: #7401DF; color:white;">Fecha</th>        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                </div>
+</div>
+</div>
+<div class="actions">
+<button class="ui black deny button">Cerrar</button>
+</div>
+</div>
+
+
+
+
+<div class="ui tiny modal" id="quitar">
+
+                <div class="header">
+                    Quitar sanción
+                </div>
+                <div class="content">
+                    <h4>¿Quitar sanción a <a id="nom" style="color:black;"></a>  del torneo <a id="torneo" style="color:black;"></a>?</h4>
+                    <form action="" class="ui equal width form" :id="id_form">
+                        <div class="fields">
+                            <div  class="field">
+                                <input type="hidden" name="idJug" id="idJug">
+                                <input type="hidden" name="idEq" id="idEq">
+                            </div>
+                        </div>
+                    </form>        
+                </div>
+                <div class="actions">
+                    <button class="ui black deny button">
+                        Cancelar
+                    </button>
+                    <button class="ui right blue button" id="btnQuitar">
+                        Quitar Sanción
+                    </button>
+                </div>
+     </div>
 
 <script src="./res/tablas/tablaTorneosSancionM.js"></script>
 <script src="./res/tablas/tablaJugadoresSancionM.js"></script>
+<script src="./res/tablas/tablaSancionadosM.js"></script>
 <script>
 
 $("#btnModalRegistro").click(function(){
@@ -171,6 +232,11 @@ $("#cerrar").click(function(){
     $("#modalCambios").modal('hide');
 });
 
+$("#verSuspendidos").click(function(){
+
+    $("#suspendidos").modal('setting', 'closable', false).modal('show');
+});
+
 var sancionar=(ele)=>{
     $("#nombre").val($(ele).attr("nombre") +" "+$(ele).attr("apellido"));
 
@@ -185,7 +251,14 @@ var sancionar=(ele)=>{
     
     $("#modalSancion").modal('setting', 'closable', false).modal('show');
 }
-
+var quitarSancion=(ele)=>{
+    $("#nom").text($(ele).attr("nombre") +" "+$(ele).attr("apellido"));
+   
+    $("#idJug").val($(ele).attr("id"));
+    $("#idEq").val($(ele).attr("idE"));
+    $("#torneo").text($(ele).attr("torneo"));
+    $("#quitar").modal('setting', 'closable', false).modal('show');
+}
 $("#aplicar").click(function(){
     var idJugador =  $("#idJugador").val();
     var idEquipo = $("#idEquipo").val();
@@ -217,6 +290,7 @@ $("#aplicar").click(function(){
                                 location.href = '?';
                             }
                         }); 
+                        $('#dtSancionF').DataTable().ajax.reload();
                         var table = $('#dtInscriM').DataTable();
                         table.destroy();
                         
@@ -234,5 +308,40 @@ $("#aplicar").click(function(){
             });
 });
 
+$("#btnQuitar").click(function(){
+    var idJugador =  $("#idJug").val();
+    var idEquipo =  $("#idEq").val();
+   
 
+   
+    $.ajax({
+                
+                type: 'POST',
+                url: '?1=JugadoresController&2=quitarSancion',
+                data: {
+                    idJugador : idJugador,
+                    idEquipo : idEquipo,
+                },
+                success: function(r) {
+                    if(r == 11) {
+                        $('#quitar').modal('hide');
+                        swal({
+                            title: 'Listo',
+                            text: 'Sanción eliminada con éxito',
+                            type: 'success',
+                            showConfirmButton: false,
+                                timer: 1700
+
+                        }).then((result) => {
+                            if (result.value) {
+                                location.href = '?';
+                            }
+                        }); 
+                        $('#dtSancionM').DataTable().ajax.reload();
+                        //$("#modalCambios").modal('setting', 'closable', false).modal('show');
+                    } 
+                }
+            });
+        
+});
 </script>

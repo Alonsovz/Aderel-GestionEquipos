@@ -224,6 +224,15 @@ idFondo int,
 idEliminado int
 );
 
+create table sancionesGraves(
+idSancion int primary key auto_increment,
+idJugador int,
+motivo varchar(500),
+estado int,
+fecha date
+);
+
+
 
 create table inscriJugador(
 idEquipo int,
@@ -242,8 +251,6 @@ CREATE TABLE goleadores (
   idTorneo int,
   goles int
 );
-
-
 
 
 CREATE TABLE sancionTorneo (
@@ -704,7 +711,14 @@ $$
         
        
        
-       select j.*, equipos.nombre as equipo from jugadores j 
-        inner join inscrijugador incri on j.idJugador= incri.idJugador 
-        inner join equipos on equipos.idEquipo= incri.idEquipo
-        where j.idEliminado=1 and j.idFondo = 1 and j.correlativo != 'FM000001' and j.idGenero=2 and incri.pago=2 and incri.estado!=5
+       select j.*, s.estado as estado , s.observaciones as motivo, s.idEquipo as idE, DATE_FORMAT(s.fecha, '%d/%m/%Y') as fecha, 
+        e.nombre as equipo,t.nombreTorneo as torneo  from jugadores j
+        inner join sancionTorneo s on s.idJugador= j.idJugador
+        inner join equipos e on e.idEquipo = s.idEquipo
+        inner join torneos t on t.idTorneo = e.idTorneo
+        where j.idGenero=1  group by s.idCastigo
+       
+       
+       
+       select * from sancionTorneo
+       
