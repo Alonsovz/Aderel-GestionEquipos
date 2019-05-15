@@ -25,3 +25,20 @@
 
     </div>
 </div>
+
+
+<div class="item">
+<hr><br>
+        <a href="?1=UsuarioController&2=reporteria"  style="color:white; ">
+        <i class="file icon"></i> Reportes
+        </a>
+
+        </div>
+
+<div class="item">
+<hr><br>
+        <a href="?1=UsuarioController&2=papeleria"  style="color:white; ">
+           <i class="trash icon"></i> Papelera 
+        </a>
+
+        </div>

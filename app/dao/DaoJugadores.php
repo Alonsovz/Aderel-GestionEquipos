@@ -42,7 +42,7 @@ class DaoJugadores extends DaoBase {
 
         $query = "Insert into jugadores values (null,'".$idExp."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
         '".$this->objeto->getDui()."','".$this->objeto->getImg()."','".$this->objeto->getFechaNacimiento()."',
-        '".$this->objeto->getTelefono()."',2,1,1);";
+        '".$this->objeto->getTelefono()."',2,1,1,1);";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -81,7 +81,7 @@ class DaoJugadores extends DaoBase {
                 if($fila["idFondo"]==2){
                     $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnVer.' '.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
                 }
-                else if($fila["idFondo"]==3){
+                else if($fila["idSancionado"]==2){
                     $acciones = ', "Acciones": "<table  style=width:100%;  color:#FFFFFF;><td style=background-color:#FAAC58;><center> Sancionado '.$btnVer.'</center></td><td><center>'.$imagen.'</center></td></table>"';
                 }
                 else{
@@ -125,7 +125,7 @@ class DaoJugadores extends DaoBase {
                 if($fila["idFondo"]==2){
                     $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E; color:white;><center> En fondo común</center></td><td><center>'.$imagen.'</center></td></table>"';
                 }
-                else if($fila["idFondo"]==3){
+                else if($fila["idSancionado"]==2){
                     $acciones = ', "Acciones": "<table  style=width:100%;  color:#FFFFFF;><td style=background-color:#FAAC58;><center> Sancionado  '.$btnVer.' '.$btnQuitar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
                 }
                 else{
@@ -222,7 +222,7 @@ class DaoJugadores extends DaoBase {
     {
         $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,
         DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento from jugadores j
-         where j.idEliminado = 1 and j.idGenero = 2 and j.idJugador>1 and j.idFondo=1";
+         where j.idEliminado = 1 and j.idGenero = 2 and j.idJugador>1 and j.idFondo=1 and j.idSancionado=1";
 
         
 
@@ -339,7 +339,7 @@ class DaoJugadores extends DaoBase {
     {
         $_query = "select j.*,TIMESTAMPDIFF(YEAR,j.fechaNacimiento,CURDATE()) AS edad,
         DATE_FORMAT(j.fechaNacimiento, '%d/%m/%Y') as fechaNacimiento from jugadores j
-         where j.idEliminado = 1 and j.idGenero = 1  and j.idJugador>1 and j.idFondo=1";
+         where j.idEliminado = 1 and j.idGenero = 1  and j.idJugador>1 and j.idFondo=1 and j.idSancionado=1";
 
          $resultado = $this->con->ejecutar($_query);
          $_json = '';
@@ -507,7 +507,7 @@ class DaoJugadores extends DaoBase {
 
         $query = "Insert into jugadores values (null,'".$idExp."','".$this->objeto->getNombre()."','".$this->objeto->getApellido()."',
         '".$this->objeto->getDui()."','".$this->objeto->getImg()."','".$this->objeto->getFechaNacimiento()."',
-        '".$this->objeto->getTelefono()."',1,1,1);";
+        '".$this->objeto->getTelefono()."',1,1,1,1);";
 
         $resultado = $this->con->ejecutar($query);
 
@@ -547,7 +547,7 @@ class DaoJugadores extends DaoBase {
                 if($fila["idFondo"]==2){
                     $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E><center> '.$btnVer.' '.$btnEliminar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
                 }
-                else if($fila["idFondo"]==3){
+                else if($fila["idSancionado"]==2){
                     $acciones = ', "Acciones": "<table  style=width:100%;  color:#FFFFFF;><td style=background-color:#FAAC58;><center> Sancionada '.$btnVer.'</center></td><td><center>'.$imagen.'</center></td></table>"';
                 }
                 else{
@@ -591,7 +591,7 @@ class DaoJugadores extends DaoBase {
                 if($fila["idFondo"]==2){
                     $acciones = ', "Acciones": "<table  style=width:100%; background-color: red;><td style=background-color:#FE2E2E; color:white;><center> En fondo común</center></td><td><center>'.$imagen.'</center></td></table>"';
                 }
-                else if($fila["idFondo"]==3){
+                else if($fila["idSancionado"]==2){
                     $acciones = ', "Acciones": "<table  style=width:100%;  color:#FFFFFF;><td style=background-color:#FAAC58;><center> Sancionada  '.$btnVer.''.$btnQuitar.'</center></td><td><center>'.$imagen.'</center></td></table>"';
                 }
                 else{
@@ -875,7 +875,7 @@ class DaoJugadores extends DaoBase {
     {
         
 
-        $_query="update jugadores set idFondo=3 where idJugador=".$this->objeto->getIdJugador();
+        $_query="update jugadores set idSancionado=2 where idJugador=".$this->objeto->getIdJugador();
        
 
         $resultado = $this->con->ejecutar($_query);
@@ -918,7 +918,7 @@ class DaoJugadores extends DaoBase {
     {
         
 
-        $_query="update jugadores set idFondo=1 where idJugador=".$this->objeto->getIdJugador();
+        $_query="update jugadores set idSancionado=1 where idJugador=".$this->objeto->getIdJugador();
        
 
         $resultado = $this->con->ejecutar($_query);
